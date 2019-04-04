@@ -27,14 +27,14 @@ import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
 
-class NewDescriptorBuilderV1Test {
+public class NewDescriptorBuilderV1Test {
 
 	SignalBuilderInterface signalBuilder;
 	SignalInterface signal;
 	ArrayList<Group> listOfGroupsABC;
 	
 	@Test
-	void whenComponentsDontCoverThenWholeStringThenGroupIsBuilt() 
+	public void whenComponentsDontCoverThenWholeStringThenGroupIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
@@ -64,7 +64,7 @@ class NewDescriptorBuilderV1Test {
 	}
 	
 	@Test
-	void whenComponentsCoverTheWholeStringAndRDContainerEmptyThenCharStringIsBuilt() 
+	public void whenComponentsCoverTheWholeStringAndRDContainerEmptyThenCharStringIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
@@ -78,7 +78,7 @@ class NewDescriptorBuilderV1Test {
 	}
 	
 	@Test
-	void whenComponentsCoverTheWholeStringAndRDContainerIsntEmptyThenCharStringIsBuilt() 
+	public void whenComponentsCoverTheWholeStringAndRDContainerIsntEmptyThenCharStringIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
@@ -106,7 +106,7 @@ class NewDescriptorBuilderV1Test {
 	}
 	
 	@Test
-	void whenComponentsAreGen2Size1FromFirstLetterThenExpectedNumberOfDescriptorsIsBuilt() 
+	public void whenComponentsAreGen2Size1FromFirstLetterThenExpectedNumberOfDescriptorsIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();

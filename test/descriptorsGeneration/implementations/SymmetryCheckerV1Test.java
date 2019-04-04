@@ -14,7 +14,7 @@ import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
 import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SymmetryCheckerInterface;
 
-class SymmetryCheckerV1Test {
+public class SymmetryCheckerV1Test {
 	
 	private boolean wholeStringIsCovered_true = true;
 	private boolean wholeStringIsCovered_false = false;
@@ -42,7 +42,7 @@ class SymmetryCheckerV1Test {
 	
 
 	@Test
-	void whenTheWholeStringIsntCoveredThenException() throws DescriptorsBuilderCriticalException {
+	public void whenTheWholeStringIsntCoveredThenException() throws DescriptorsBuilderCriticalException {
 		try {
 			enumerationChecker = 
 					new EnumerationCheckerV1(wholeStringIsCovered_false, dimensionEnumeration, listOfReversedValues);	
@@ -57,7 +57,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenDimensionIsIllegalThenThrowsException() {
+	public void whenDimensionIsIllegalThenThrowsException() {
 		try {
 			enumerationChecker = 
 					new EnumerationCheckerV1(wholeStringIsCovered_true, illegalDimension, listOfReversedValues);
@@ -72,7 +72,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenNoSymmetryThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
+	public void whenNoSymmetryThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionEnumeration, listWithNoSymmetry);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -83,7 +83,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenOrderIsReversedAndDimensionIsCommonDiffThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
+	public void whenOrderIsReversedAndDimensionIsCommonDiffThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, listOfReversedValues);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -94,7 +94,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenOrderIsReversedAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
+	public void whenOrderIsReversedAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionPlatonicLetter, listOfReversedValues);
@@ -106,7 +106,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenOrderIsReversedWithLegalCentralElementAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
+	public void whenOrderIsReversedWithLegalCentralElementAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionEnumeration, 
@@ -120,7 +120,7 @@ class SymmetryCheckerV1Test {
 	}
 	
 	@Test
-	void whenOrderIsReversedWithLegalCentralElementAndDimensionIsCommonDiffThenNoSymmetryFound() 
+	public void whenOrderIsReversedWithLegalCentralElementAndDimensionIsCommonDiffThenNoSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 
@@ -135,7 +135,7 @@ class SymmetryCheckerV1Test {
 	
 	
 	@Test
-	void whenValuesAreOppositeAndDimensionIsCommonDiffThenSymmetryFound() 
+	public void whenValuesAreOppositeAndDimensionIsCommonDiffThenSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValues);
@@ -147,7 +147,7 @@ class SymmetryCheckerV1Test {
 	}	
 	
 	@Test
-	void whenValuesAreOppositeWith0AsCentralElementAndDimensionIsCommonDiffThenSymmetryFound() 
+	public void whenValuesAreOppositeWith0AsCentralElementAndDimensionIsCommonDiffThenSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 
@@ -161,7 +161,7 @@ class SymmetryCheckerV1Test {
 	}	
 	
 	@Test
-	void whenValuesAreOppositeWithCentralElementNot0AndDimensionIsCommonDiffThenNoSymmetryFound() 
+	public void whenValuesAreOppositeWithCentralElementNot0AndDimensionIsCommonDiffThenNoSymmetryFound() 
 			throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 

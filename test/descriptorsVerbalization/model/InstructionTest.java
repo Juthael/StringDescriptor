@@ -14,10 +14,10 @@ import verbalization.interfaces.InstructionCoderInterface;
 import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
 import verbalization.interfaces.verbalStructureModel.InstructionInterface;
 
-class InstructionTest {
+public class InstructionTest {
 
 	@Test
-	void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven1() throws VerbalizationException {
+	public void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven1() throws VerbalizationException {
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
 		boolean descriptionIsUnexpected = false;
@@ -40,7 +40,7 @@ class InstructionTest {
 	}
 	
 	@Test
-	void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven2() throws VerbalizationException {
+	public void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven2() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -64,7 +64,7 @@ class InstructionTest {
 	}
 	
 	@Test
-	void whenParameterIsThisRX3GroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsThisRX3GroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -95,7 +95,7 @@ class InstructionTest {
 	}	
 	
 	@Test
-	void whenParameterIsA2ndDegreeEnumGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsA2ndDegreeEnumGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -111,7 +111,7 @@ class InstructionTest {
 	}		
 	
 	@Test
-	void whenParameterIsASize5ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASize5ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -129,7 +129,7 @@ class InstructionTest {
 	}	
 	
 	@Test
-	void whenParameterIsASize2ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASize2ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "2"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -147,7 +147,7 @@ class InstructionTest {
 	}
 	
 	@Test
-	void whenParameterIsAGen2Size1RelationGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsAGen2Size1RelationGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "1"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -165,7 +165,7 @@ class InstructionTest {
 	}	
 	
 	@Test
-	void whenParameterIsASignalElementGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASignalElementGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "0"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();

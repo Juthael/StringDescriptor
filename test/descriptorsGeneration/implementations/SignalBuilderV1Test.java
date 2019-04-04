@@ -12,7 +12,7 @@ import settings.DescGenSettings;
 import syntacticTreesGeneration.implementations.SignalBuilderV1;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class SignalBuilderV1Test {
+public class SignalBuilderV1Test {
 
 	private String legalParameterIfLowerCase = "abc";
 	private String legalParameterIfUpperCase = "ABC";
@@ -23,7 +23,7 @@ class SignalBuilderV1Test {
 	
 	
 	@Test
-	void throwsExceptionIfTheStringParameterLengthExceedValueSpecifiedInSettings() {		
+	public void throwsExceptionIfTheStringParameterLengthExceedValueSpecifiedInSettings() {		
 		try {
 			SignalBuilderInterface signalBuilder = new SignalBuilderV1(stringIsTooLong, legalDirection);
 			SignalInterface signal = signalBuilder.getSignal();
@@ -34,7 +34,7 @@ class SignalBuilderV1Test {
 	}
 	
 	@Test
-	void throwsExceptionIfTheStringParameterContainsIllegalCharacter() {
+	public void throwsExceptionIfTheStringParameterContainsIllegalCharacter() {
 		try {
 			SignalBuilderInterface signalBuilder = new SignalBuilderV1(nonAuthorizedCharacters, legalDirection);
 			SignalInterface signal = signalBuilder.getSignal();
@@ -45,7 +45,7 @@ class SignalBuilderV1Test {
 	}
 	
 	@Test
-	void throwsExceptionIfDirectionStringValueIsIllegal() {
+	public void throwsExceptionIfDirectionStringValueIsIllegal() {
 		String legalString;
 		if (DescGenSettings.USE_LOWERCASE_LETTER)
 		 legalString = legalParameterIfLowerCase;
@@ -60,7 +60,7 @@ class SignalBuilderV1Test {
 	}
 	
 	@Test
-	void buildsSignalIfParametersAreLegal() {
+	public void buildsSignalIfParametersAreLegal() {
 		String legalString;
 		if (DescGenSettings.USE_LOWERCASE_LETTER)
 		 legalString = legalParameterIfLowerCase;

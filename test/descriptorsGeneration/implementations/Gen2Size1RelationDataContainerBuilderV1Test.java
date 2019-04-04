@@ -21,21 +21,21 @@ import syntacticTreesGeneration.interfaces.NewDescriptorBuilderInterface;
 import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class Gen2Size1RelationDataContainerBuilderV1Test {
+public class Gen2Size1RelationDataContainerBuilderV1Test {
 
 	SignalBuilderInterface signalBuilderABC;
 	SignalInterface signalABC;
 	ArrayList<Group> descriptorsSignalABC;	
 	
 	@Before
-	void initialize() throws DescriptorsBuilderCriticalException {
+	public void initialize() throws DescriptorsBuilderCriticalException {
 		signalBuilderABC = new SignalBuilderV1("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
 	}
 	
 	@Test
-	void when1stGenDescriptorCover1stLetterThenRDContainerSizeIsAccordedToSettings() 
+	public void when1stGenDescriptorCover1stLetterThenRDContainerSizeIsAccordedToSettings() 
 			throws DescriptorsBuilderCriticalException {
 		int nbOfRDContainers = 0;
 		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilder = 
@@ -53,7 +53,7 @@ class Gen2Size1RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void when1stGenDescriptorCoverLastLetterThenRDContainerSizeIsAccordedToSettings() 
+	public void when1stGenDescriptorCoverLastLetterThenRDContainerSizeIsAccordedToSettings() 
 			throws DescriptorsBuilderCriticalException {
 		int nbOfRDContainers = 0;
 		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilder = 
@@ -71,7 +71,7 @@ class Gen2Size1RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void when1stGenDescriptorDoesntCoverSpecialPositionThenRDContainerSizeIsAccordedToSettings() 
+	public void when1stGenDescriptorDoesntCoverSpecialPositionThenRDContainerSizeIsAccordedToSettings() 
 			throws DescriptorsBuilderCriticalException {
 		int nbOfRDContainers = 0;
 		SignalBuilderInterface signalBuilderABCD = new SignalBuilderV1("abcd", "fromLeftToRight");
@@ -91,7 +91,7 @@ class Gen2Size1RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
+	public void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		ArrayList<AbstractDescriptorInterface> newGroups = new ArrayList<AbstractDescriptorInterface>();
 		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilderA = 

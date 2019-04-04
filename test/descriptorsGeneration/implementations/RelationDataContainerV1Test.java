@@ -14,10 +14,10 @@ import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
 import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
 
-class RelationDataContainerV1Test {
+public class RelationDataContainerV1Test {
 
 	@Test
-	void redundanciesAreProperlyCleared() throws Exception {
+	public void redundanciesAreProperlyCleared() throws Exception {
 		boolean redundanciesAreProperlyCleared = true;
 		if (DescGenSettings.REDUNDANCIES_IN_RELATIONS_CAN_BE_CLEANED) {
 			String dimension1 = "dimension1";

@@ -23,10 +23,10 @@ import exceptions.DescriptorsBuilderCriticalException;
 import syntacticTreesGeneration.implementations.SignalBuilderV1;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class AbstractDescriptorV1Test {
+public class AbstractDescriptorV1Test {
 
 	@Test
-	void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
+	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
 			throws DescriptorsBuilderCriticalException {
 		boolean containerContainsAllProperties = true;
 		Dimension dimension = new Dimension(false, "dimension1");
@@ -56,7 +56,7 @@ class AbstractDescriptorV1Test {
 	}
 	
 	@Test
-	void whenAllComponentsArentRelevantThenContainerContainsOnlyRelevantProperties() 
+	public void whenAllComponentsArentRelevantThenContainerContainsOnlyRelevantProperties() 
 			throws Exception {
 		boolean groupX3ContainerDoesntContainPlatonicLetter2 = true;
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
@@ -89,7 +89,7 @@ class AbstractDescriptorV1Test {
 	}
 	
 	@Test
-	void onlyClonedGroupsAreRelatedInNewDescriptor() 
+	public void onlyClonedGroupsAreRelatedInNewDescriptor() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean onlyClonedGroupsAreRelatedInNewDescriptor;
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");

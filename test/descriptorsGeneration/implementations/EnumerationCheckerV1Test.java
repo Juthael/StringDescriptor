@@ -11,7 +11,7 @@ import exceptions.DescriptorsBuilderCriticalException;
 import syntacticTreesGeneration.implementations.EnumerationCheckerV1;
 import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
 
-class EnumerationCheckerV1Test {
+public class EnumerationCheckerV1Test {
 
 	private boolean wholeStringIsDescribed_true = true;
 	private boolean wholeStringIsDescribed_false = false;
@@ -24,7 +24,7 @@ class EnumerationCheckerV1Test {
 			new ArrayList<String>(Arrays.asList("1,2","2,3","3,4","4,5","5,6"));
 	
 	@Test
-	void whenValuesArentSize1AndComponentsDoesntCoverWholeStringThenNoEnumerationFound() 
+	public void whenValuesArentSize1AndComponentsDoesntCoverWholeStringThenNoEnumerationFound() 
 			throws DescriptorsBuilderCriticalException {
 		EnumerationCheckerInterface enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSizeMoreThan1Values);
@@ -32,21 +32,21 @@ class EnumerationCheckerV1Test {
 	}
 	
 	@Test 
-	void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws DescriptorsBuilderCriticalException {
+	public void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws DescriptorsBuilderCriticalException {
 		EnumerationCheckerInterface enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, tooBigListOfSizeMoreThan1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), false);
 	}
 	
 	@Test
-	void whenValuesAreSize1ThenEnumerationIsFound() throws DescriptorsBuilderCriticalException {
+	public void whenValuesAreSize1ThenEnumerationIsFound() throws DescriptorsBuilderCriticalException {
 		EnumerationCheckerInterface enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), true);		
 	}
 	
 	@Test 
-	void whenValuesArentSize1ButWholeStringCoveredAndNotTooManyComponentsAndSymmetryThenEnumIsFound() 
+	public void whenValuesArentSize1ButWholeStringCoveredAndNotTooManyComponentsAndSymmetryThenEnumIsFound() 
 			throws DescriptorsBuilderCriticalException{
 		EnumerationCheckerInterface enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, 
@@ -55,7 +55,7 @@ class EnumerationCheckerV1Test {
 	}
 	
 	@Test
-	void whenLessThan2ValuesToCheckThenThrowNoException() {
+	public void whenLessThan2ValuesToCheckThenThrowNoException() {
 		try {
 			EnumerationCheckerInterface enumerationChecker = 
 					new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1);

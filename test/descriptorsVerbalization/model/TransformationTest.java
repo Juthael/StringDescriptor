@@ -14,10 +14,10 @@ import verbalization.implementations.verbalStructureModel.SequenceV2;
 import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
 import verbalization.interfaces.verbalStructureModel.TransformationInterface;
 
-class TransformationTest {
+public class TransformationTest {
 
 	@Test
-	void whenParameterIsAnExpectedCodeThenVerbalDescriptionIsGiven() {
+	public void whenParameterIsAnExpectedCodeThenVerbalDescriptionIsGiven() {
 		List<String> listOfCodes = new ArrayList<String>();
 		listOfCodes.add("oneLetterDecrease");
 		listOfCodes.add("oneLetterEquals");

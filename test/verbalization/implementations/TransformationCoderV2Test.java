@@ -9,10 +9,10 @@ import org.junit.Test;
 
 import verbalization.interfaces.TransformationCoderInterface;
 
-class TransformationCoderV2Test {
+public class TransformationCoderV2Test {
 
 	@Test
-	void whenParameterIsASequenceRelationThenExpectedPredicateCodeIsReturned() {
+	public void whenParameterIsASequenceRelationThenExpectedPredicateCodeIsReturned() {
 		String nbOfComponents = "5"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/letter.platonicLetter");
@@ -37,7 +37,7 @@ class TransformationCoderV2Test {
 	}
 	
 	@Test
-	void whenParameterIsASequenceSubRelationThenExpectedPredicateCodeIsReturned() {
+	public void whenParameterIsASequenceSubRelationThenExpectedPredicateCodeIsReturned() {
 		String nbOfComponents = "5"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/:letter.platonicLetter");
@@ -63,7 +63,7 @@ class TransformationCoderV2Test {
 	}
 	
 	@Test
-	void whenParameterIsAConstantSequenceThenExpectedPredicateCodeIsReturned() {
+	public void whenParameterIsAConstantSequenceThenExpectedPredicateCodeIsReturned() {
 		String nbOfComponents = "5"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/size");
@@ -89,7 +89,7 @@ class TransformationCoderV2Test {
 	}
 	
 	@Test
-	void whenParameterIsAGen2Size1RelationThenExpectedPredicateCodeIsReturned() {
+	public void whenParameterIsAGen2Size1RelationThenExpectedPredicateCodeIsReturned() {
 		String nbOfComponents = "1"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/letter.platonicLetter");
@@ -115,7 +115,7 @@ class TransformationCoderV2Test {
 	}	
 	
 	@Test
-	void whenParameterIsAGen1RelationThenExpectPredicateCodeIsReturned() {
+	public void whenParameterIsAGen1RelationThenExpectPredicateCodeIsReturned() {
 		String nbOfComponents = "0"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/size/1");
@@ -141,7 +141,7 @@ class TransformationCoderV2Test {
 	}
 	
 	@Test
-	void whenParameterContainsManyDimensionsThenExpectedPredicateCodesAreReturned() {
+	public void whenParameterContainsManyDimensionsThenExpectedPredicateCodesAreReturned() {
 		String nbOfComponents = "3"; 
 		List<String> relationListOfProperties = new ArrayList<String>();
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/size");

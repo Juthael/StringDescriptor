@@ -47,7 +47,7 @@ import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 import syntacticTreesGeneration.interfaces.SymmetryCheckerInterface;
 import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
 
-class RelationDataContainerBuilderV1Test {
+public class RelationDataContainerBuilderV1Test {
 	
 	SignalInterface signalABC;
 	SignalInterface signalABCD;
@@ -57,7 +57,7 @@ class RelationDataContainerBuilderV1Test {
 	CharString charStringABC;
 	
 	@Before
-	void initialize() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public void initialize() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		SignalBuilderInterface signalBuilderABC = new SignalBuilderV1("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
@@ -88,7 +88,7 @@ class RelationDataContainerBuilderV1Test {
 	}
 
 	@Test
-	void whenListOfDescriptorsInParameterIsEmptyThenThrowsException() {
+	public void whenListOfDescriptorsInParameterIsEmptyThenThrowsException() {
 		ArrayList<Group> emptyList = new ArrayList<Group>();
 		try {
 			RelationDataContainerBuilderInterface relationDataContainerBuilder = 
@@ -101,7 +101,7 @@ class RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws DescriptorsBuilderCriticalException {
+	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws DescriptorsBuilderCriticalException {
 		ArrayList<Group> listOfGroupWithDifferentSetsOfDimensions = new ArrayList<Group>();
 		listOfGroupWithDifferentSetsOfDimensions.add(abcGroup);
 		listOfGroupWithDifferentSetsOfDimensions.add(descriptorsSignalABCD.get(3));
@@ -114,7 +114,7 @@ class RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws DescriptorsBuilderCriticalException {
+	public void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws DescriptorsBuilderCriticalException {
 		RelationDataContainerBuilderInterface relationDataContainerBuilder = 
 				new RelationDataContainerBuilderV1(signalABC, descriptorsSignalABC);
 		RelationDataContainerInterface relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
@@ -122,7 +122,7 @@ class RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws DescriptorsBuilderCriticalException {
+	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws DescriptorsBuilderCriticalException {
 		ArrayList<Group> listOfRelatedGroups = new ArrayList<Group>();
 		listOfRelatedGroups.add(descriptorsSignalABC.get(0));
 		listOfRelatedGroups.add(descriptorsSignalABC.get(1));
@@ -133,7 +133,7 @@ class RelationDataContainerBuilderV1Test {
 	}
 	
 	@Test
-	void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws DescriptorsBuilderCriticalException {
+	public void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws DescriptorsBuilderCriticalException {
 		boolean enumerationFound;
 		boolean sequenceFound;
 		boolean containerContainsEnumAndSequence;

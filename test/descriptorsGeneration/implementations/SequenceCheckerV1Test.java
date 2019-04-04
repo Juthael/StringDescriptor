@@ -15,7 +15,7 @@ import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
 import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SequenceCheckerInterface;
 
-class SequenceCheckerV1Test {
+public class SequenceCheckerV1Test {
 	
 	private boolean wholeStringIsDescribed_true = true;
 	private boolean wholeStringIsDescribed_false = false;
@@ -35,7 +35,7 @@ class SequenceCheckerV1Test {
 	private SequenceCheckerInterface sequenceChecker;
 
 	@Test
-	void ifValuesArentTheSameSizeThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifValuesArentTheSameSizeThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, listOfValuesOfDifferentSizes);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		sequenceChecker = 
@@ -45,7 +45,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifNoCommonDifferenceValueThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifNoCommonDifferenceValueThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1ValuesWithNoCommonDiff);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		sequenceChecker = 
@@ -55,7 +55,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifNoCommonPatternBtw2ndDegreeValuesThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifNoCommonPatternBtw2ndDegreeValuesThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, listOf2ndDegreeValuesWithNoCommonPatternButCommonDifference);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -67,7 +67,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifIncrementIsSuperiorToTheMaxValueInSettingsThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifIncrementIsSuperiorToTheMaxValueInSettingsThenNoSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfValuesWithIncrementTooBig);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -78,7 +78,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifValuesAreIdenticalThenSequenceIsFound() throws DescriptorsBuilderCriticalException {
+	public void ifValuesAreIdenticalThenSequenceIsFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfIdenticalValues);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -88,7 +88,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifCommonDifferenceBtwSize1ValuesThenSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifCommonDifferenceBtwSize1ValuesThenSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1ValuesWithCommonDiff);
 		EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -99,7 +99,7 @@ class SequenceCheckerV1Test {
 	}
 	
 	@Test
-	void ifCommonDifferenceBtw2ndDegreeValuesWithSamePatternThenSequenceFound() throws DescriptorsBuilderCriticalException {
+	public void ifCommonDifferenceBtw2ndDegreeValuesWithSamePatternThenSequenceFound() throws DescriptorsBuilderCriticalException {
 		enumerationChecker = 
 				new EnumerationCheckerV1(
 						wholeStringIsDescribed_true, dimension, listOf2ndDegreeValuesWithCommonPatternAndDifference);

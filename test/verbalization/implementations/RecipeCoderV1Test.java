@@ -12,10 +12,10 @@ import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface
 import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
 import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
 
-class RecipeCoderV1Test {
+public class RecipeCoderV1Test {
 
 	@Test
-	void whenParameterIsThisListOfPropertiesThenExpectedInstructionCodeGettersAreReturned() {
+	public void whenParameterIsThisListOfPropertiesThenExpectedInstructionCodeGettersAreReturned() {
 		List<String> listOfProperties = new ArrayList<String>();
 		listOfProperties.add("group/size/5");
 		listOfProperties.add("group/position/1");

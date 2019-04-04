@@ -24,10 +24,10 @@ import syntacticTreesGeneration.interfaces.DescriptorsBuildingManagerInterface;
 import syntacticTreesGeneration.interfaces.NewGenOfDescriptorsBuilderInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class DescriptorsBuildingManagerV1Test {
+public class DescriptorsBuildingManagerV1Test {
 
 	@Test
-	void whenComponentListContainsSingleGen1DescriptorThenExpectedNumberOfGen2Size1DescriptorsIsBuilt() 
+	public void whenComponentListContainsSingleGen1DescriptorThenExpectedNumberOfGen2Size1DescriptorsIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean expectedNumberOfGen2Size1DescriptorsIsBuilt;
 		SignalBuilderInterface signalbuilder = new SignalBuilderV1("abc", "fromLeftToRight");
@@ -58,7 +58,7 @@ class DescriptorsBuildingManagerV1Test {
 	}
 	
 	@Test
-	void whenGen1ComponentsThenNewDescriptorsAreBuilt() 
+	public void whenGen1ComponentsThenNewDescriptorsAreBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = false;
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
@@ -79,7 +79,7 @@ class DescriptorsBuildingManagerV1Test {
 	}
 	
 	@Test
-	void whenSetsOfGen1ComponentsThenNewDescriptorsAreBuiltForEachSet() 
+	public void whenSetsOfGen1ComponentsThenNewDescriptorsAreBuiltForEachSet() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean descriptorsAreBuiltForEachSet = true;
 		ArrayList<AbstractDescriptorInterface> newDescriptors = new ArrayList<AbstractDescriptorInterface>();
@@ -105,7 +105,7 @@ class DescriptorsBuildingManagerV1Test {
 	}	
 	
 	@Test
-	void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = true;
 		ArrayList<AbstractDescriptorInterface> newDescriptors = new ArrayList<AbstractDescriptorInterface>();
 		ArrayList<Group> factorizableNewDescriptors = new ArrayList<Group>();
@@ -152,7 +152,7 @@ class DescriptorsBuildingManagerV1Test {
 	}
 	
 	@Test
-	void whenStringIsSize1ThenDescriptorsAreBuilt() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public void whenStringIsSize1ThenDescriptorsAreBuilt() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("a", "fromLeftToRight");
 		SignalInterface signal = signalBuilder.getSignal();
 		DescriptorsBuildingManagerInterface descriptorsBM = new DescriptorsBuildingManagerV1(signal, 1, signal.getGroups());
@@ -167,7 +167,7 @@ class DescriptorsBuildingManagerV1Test {
 	}
 	
 	@Test
-	void whenParameterIsSetOfGen2DescriptorsThenNoExceptionIsThrown() 
+	public void whenParameterIsSetOfGen2DescriptorsThenNoExceptionIsThrown() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException{
 		ArrayList<CharString> listOfDescriptorsCoveringTheWholeString = new ArrayList<CharString>();
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abcde", "fromLeftToRight");

@@ -13,8 +13,8 @@ import syntacticTreesGeneration.implementations.ListOfDescriptorsBuilderV1;
 import syntacticTreesGeneration.interfaces.ListOfDescriptorsBuilderInterface;
 
 public class DescriptionBuilder implements IDescriptionBuilder {
+	
 	private boolean stringCanBeReadInBothDirections = false;
-
 	private Predicate<String> validator;
 
 	public DescriptionBuilder() {
@@ -37,9 +37,7 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 	@Override
 	public List<IDescription> buildList(String stringToBeDescribed) throws DescriptionFormatException {
 		List<IDescription> descs = new ArrayList<>();
-		
 		try {
-
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
 				ListOfDescriptorsBuilderInterface descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderV1(
@@ -54,7 +52,7 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 				if (listOfWholeStringDescriptors.isEmpty())
 					throw new DescriptionFormatException("Unexpected error. List of Descriptors is empty");
 				for (CharString descriptor : listOfWholeStringDescriptors) {
-					DescriptionImpl description = new DescriptionImpl(descriptor);
+					IDescription description = new DescriptionImpl(descriptor);
 					descs.add(description);
 				}
 			}
@@ -63,7 +61,6 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 		} catch (CloneNotSupportedException cloneException) {
 			throw new DescriptionFormatException("Unexpected error. Clone not supported exception");
 		}
-		
 		return descs;
 	}
 

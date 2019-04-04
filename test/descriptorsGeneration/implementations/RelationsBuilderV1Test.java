@@ -24,7 +24,7 @@ import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
 
-class RelationsBuilderV1Test {
+public class RelationsBuilderV1Test {
 
 
 	private static String dimension1 = "dimension1";
@@ -51,7 +51,7 @@ class RelationsBuilderV1Test {
 	private static ArrayList<Group> listOfGroups;
 	
 	@Before
-	static void initialize() throws DescriptorsBuilderCriticalException {
+	public void initialize() throws DescriptorsBuilderCriticalException {
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		SignalInterface signal = signalBuilder.getSignal();
 		listOfGroups = signal.getGroups();
@@ -65,7 +65,7 @@ class RelationsBuilderV1Test {
 	}
 	
 	@Test
-	void whenRDContainerIsEmptyThenThrowsException() throws CloneNotSupportedException {
+	public void whenRDContainerIsEmptyThenThrowsException() throws CloneNotSupportedException {
 		try {
 			RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(emptyContainer, listOfGroups);
 			Relations relations = relationsBuilder.getRelations();
@@ -76,7 +76,7 @@ class RelationsBuilderV1Test {
 	}
 	
 	@Test
-	void whenRDContainerIsOverfilledThenThrowsException() throws CloneNotSupportedException {
+	public void whenRDContainerIsOverfilledThenThrowsException() throws CloneNotSupportedException {
 		otherContainer = new RelationDataContainerV1();
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addEnumeration(enumerationRelationalData2);
@@ -102,7 +102,7 @@ class RelationsBuilderV1Test {
 	}
 	
 	@Test
-	void whenRDContainerContainsOnly1DimensionThenSimpleRelationIsBuilt() 
+	public void whenRDContainerContainsOnly1DimensionThenSimpleRelationIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		otherContainer = new RelationDataContainerV1();
 		otherContainer.addEnumeration(enumerationRelationalData1);
@@ -120,7 +120,7 @@ class RelationsBuilderV1Test {
 	}
 	
 	@Test
-	void whenRDCOntainerContainsEnumSequSymmForSameDimensionThenSequenceAndSymmetryRelIsBuilt() 
+	public void whenRDCOntainerContainsEnumSequSymmForSameDimensionThenSequenceAndSymmetryRelIsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		otherContainer = new RelationDataContainerV1();
 		otherContainer.addEnumeration(enumerationRelationalData1);
@@ -147,7 +147,7 @@ class RelationsBuilderV1Test {
 	}
 	
 	@Test
-	void whenRDContainsRelationDataWith3DimensionsThen3RelationX3IsBuilt() 
+	public void whenRDContainsRelationDataWith3DimensionsThen3RelationX3IsBuilt() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		otherContainer = new RelationDataContainerV1();
 		otherContainer.addEnumeration(enumerationRelationalData1);

@@ -16,10 +16,10 @@ import verbalization.interfaces.DescriptionCoderInterface;
 import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
 import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
 
-class DescriptionCoderV1Test {
+public class DescriptionCoderV1Test {
 
 	@Test
-	void whenParameterIsThisListOfPropertiesThenExpectedNumberOfRecipesIsReturned() 
+	public void whenParameterIsThisListOfPropertiesThenExpectedNumberOfRecipesIsReturned() 
 			throws VerbalizationException, DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		ListOfDescriptorsBuilderInterface listOfDescriptorsBuilder = new ListOfDescriptorsBuilderV1("abcd", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();

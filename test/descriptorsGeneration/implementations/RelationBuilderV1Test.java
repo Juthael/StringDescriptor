@@ -20,7 +20,7 @@ import syntacticTreesGeneration.interfaces.RelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
 import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
 
-class RelationBuilderV1Test {
+public class RelationBuilderV1Test {
 
 	private EnumerationRelationalDataInterface enumerationRelationalData1;
 	private	EnumerationRelationalDataInterface enumerationRelationalData2;
@@ -44,7 +44,7 @@ class RelationBuilderV1Test {
 	}
 	
 	@Test
-	void WhenEmptyListAsParameterThenThrowsException() {
+	public void WhenEmptyListAsParameterThenThrowsException() {
 		ArrayList<RelationalDataInterface> emptyList = new ArrayList<RelationalDataInterface>();
 		
 		try {
@@ -56,7 +56,7 @@ class RelationBuilderV1Test {
 	}
 	
 	@Test
-	void WhenListWithMoreThan3ElementsThenThrowsException() {
+	public void WhenListWithMoreThan3ElementsThenThrowsException() {
 		ArrayList<RelationalDataInterface> tooBigList = new ArrayList<RelationalDataInterface>();
 		tooBigList.add(enumerationRelationalData1);
 		tooBigList.add(sequenceRelationalData1);
@@ -72,7 +72,7 @@ class RelationBuilderV1Test {
 	}
 	
 	@Test
-	void WhenListWithNoEnumerationRelationalDataAsParameterThenThrowsException() {
+	public void WhenListWithNoEnumerationRelationalDataAsParameterThenThrowsException() {
 		ArrayList<RelationalDataInterface> listWithNoEnumeration = new ArrayList<RelationalDataInterface>();
 		listWithNoEnumeration.add(sequenceRelationalData1);
 		listWithNoEnumeration.add(sequenceRelationalData2);
@@ -86,7 +86,7 @@ class RelationBuilderV1Test {
 	}
 	
 	@Test
-	void WhenListWithManyEnumerationRelationalDataAsParameterThenThrowsException() {
+	public void WhenListWithManyEnumerationRelationalDataAsParameterThenThrowsException() {
 		ArrayList<RelationalDataInterface> listWithManyEnumeration = new ArrayList<RelationalDataInterface>();
 		listWithManyEnumeration.add(enumerationRelationalData1);
 		listWithManyEnumeration.add(enumerationRelationalData2);
@@ -100,7 +100,7 @@ class RelationBuilderV1Test {
 	}
 	
 	@Test
-	void WhenParameterContainsEnumerationThenRelationIsBuilt() 
+	public void WhenParameterContainsEnumerationThenRelationIsBuilt() 
 			throws DescriptorsBuilderCriticalException {
 		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
 		conformList.add(enumerationRelationalData1);
@@ -111,7 +111,7 @@ class RelationBuilderV1Test {
 	}	
 	
 	@Test
-	void WhenParameterContainsEnumerationSequenceThenSequenceRelIsBuilt() 
+	public void WhenParameterContainsEnumerationSequenceThenSequenceRelIsBuilt() 
 			throws DescriptorsBuilderCriticalException {
 		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
 		conformList.add(enumerationRelationalData1);
@@ -123,7 +123,7 @@ class RelationBuilderV1Test {
 	}	
 	
 	@Test
-	void WhenParameterContainsEnumerationSequenceSymmetryThenSequenceAndSymmetryRelIsBuilt() 
+	public void WhenParameterContainsEnumerationSequenceSymmetryThenSequenceAndSymmetryRelIsBuilt() 
 			throws DescriptorsBuilderCriticalException {
 		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
 		conformList.add(enumerationRelationalData1);

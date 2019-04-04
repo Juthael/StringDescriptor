@@ -15,12 +15,12 @@ import syntacticTreesGeneration.implementations.SignalBuilderV1;
 import syntacticTreesGeneration.interfaces.NewGenOfDescriptorsBuilderInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class NewGenOfDescriptorsBuilderV1Test {
+public class NewGenOfDescriptorsBuilderV1Test {
 
 	private ArrayList<AbstractDescriptorInterface> fullStringDescriptors = new ArrayList<AbstractDescriptorInterface>();
 	
 	@Test
-	void whenStringLengthAndSettingsAllowItThenReturnsNextGenOfDescriptors() 
+	public void whenStringLengthAndSettingsAllowItThenReturnsNextGenOfDescriptors() 
 			throws Exception {
 		boolean returnsNextGenOfDescriptors = true;
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abcdefghij", "fromLeftToRight");

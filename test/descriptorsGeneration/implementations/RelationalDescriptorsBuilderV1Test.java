@@ -16,10 +16,10 @@ import syntacticTreesGeneration.implementations.SignalBuilderV1;
 import syntacticTreesGeneration.interfaces.RelationalDescriptorsBuilderInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class RelationalDescriptorsBuilderV1Test {
+public class RelationalDescriptorsBuilderV1Test {
 
 	@Test
-	void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;
 		long done;
@@ -60,7 +60,7 @@ class RelationalDescriptorsBuilderV1Test {
 	}
 	
 	@Test
-	void whenStructuredMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() 
+	public void whenStructuredMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;

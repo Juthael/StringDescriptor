@@ -12,10 +12,10 @@ import verbalization.interfaces.InstructionCoderInterface;
 import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
 import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
 
-class InstructionCoderV2Test {
+public class InstructionCoderV2Test {
 
 	@Test
-	void whenRelationXContainsSingleRelationThenExpectedCodeIsReturned() throws VerbalizationException {
+	public void whenRelationXContainsSingleRelationThenExpectedCodeIsReturned() throws VerbalizationException {
 		List<String> listOfReturnedCodes = new ArrayList<String>();
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
@@ -34,7 +34,7 @@ class InstructionCoderV2Test {
 	}
 	
 	@Test
-	void whenRelationXContainsManyRelationsThenExpectedCodesAreReturned() throws VerbalizationException {
+	public void whenRelationXContainsManyRelationsThenExpectedCodesAreReturned() throws VerbalizationException {
 		List<String> listOfReturnedCodes = new ArrayList<String>();
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
