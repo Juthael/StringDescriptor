@@ -1,11 +1,11 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import exceptions.DescriptorsBuilderCriticalException;
 import syntacticTreesGeneration.implementations.EnumerationCheckerV1;

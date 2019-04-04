@@ -1,21 +1,22 @@
-package dao.tools;
+package model.utils;
 
-import exceptions.DAOException;
+import java.util.function.Predicate;
+
+import exceptions.DescriptionFormatException;
 import settings.DescGenSettings;
 
-public class DAOStringValidityCheckerV1 {
+public class DescriptionValidityChecker implements Predicate<String> {
 
-	public DAOStringValidityCheckerV1() {
+	public DescriptionValidityChecker() {
 	}
-	
-	public static void checkStringValidity(String stringToBeChecked) throws DAOException {
+
+	public boolean test(String stringToBeChecked) {
 		int minLegalCharValue;
 		int maxLegalCharValue;
 		if (DescGenSettings.USE_LOWERCASE_LETTER) {
 			minLegalCharValue = 97;
 			maxLegalCharValue = 122;
-		}
-		else {
+		} else {
 			minLegalCharValue = 65;
 			maxLegalCharValue = 90;
 		}
@@ -29,8 +30,9 @@ public class DAOStringValidityCheckerV1 {
 				charIndex++;
 			}
 			if (allValuesAreLegal == false)
-				throw new DAOException("String is invalid.");
+				throw new DescriptionFormatException("String is invalid.");
 		}
+		return false;
 	}
 
 }

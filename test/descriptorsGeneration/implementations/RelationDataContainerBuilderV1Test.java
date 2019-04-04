@@ -1,15 +1,14 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 import copycatModel.grammar.AbsCommonDiff;
 import copycatModel.grammar.CharString;
@@ -30,7 +29,6 @@ import copycatModel.grammar.Structure;
 import copycatModel.interfaces.SignalInterface;
 import exceptions.DescriptorsBuilderCriticalException;
 import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.CharStringBuilderV1;
 import syntacticTreesGeneration.implementations.DescriptorSpanGetterV1;
 import syntacticTreesGeneration.implementations.EnumerationCheckerV1;
 import syntacticTreesGeneration.implementations.RelationBuilderV1;
@@ -58,7 +56,7 @@ class RelationDataContainerBuilderV1Test {
 	Group abcGroup;
 	CharString charStringABC;
 	
-	@BeforeEach
+	@Before
 	void initialize() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		SignalBuilderInterface signalBuilderABC = new SignalBuilderV1("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();

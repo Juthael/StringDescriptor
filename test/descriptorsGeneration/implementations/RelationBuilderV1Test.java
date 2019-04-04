@@ -1,11 +1,13 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 import copycatModel.grammar.Relation;
 import exceptions.DescriptorsBuilderCriticalException;
@@ -26,7 +28,7 @@ class RelationBuilderV1Test {
 	private	SequenceRelationalDataInterface sequenceRelationalData2;
 	private	SymmetryRelationalDataInterface symmetryRelationalData;
 
-	@BeforeEach
+	@Before
 	public void buildListsOfRelationalDataInterfaces() throws DescriptorsBuilderCriticalException {
 		String dimension1 = "group/letter/platonicLetter";
 		String dimension2 = "group/relations/relation/enumeration";

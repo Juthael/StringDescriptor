@@ -1,11 +1,11 @@
 package descriptorsVerbalization.model;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import exceptions.VerbalizationException;
 import verbalization.implementations.InstructionCoderV2;

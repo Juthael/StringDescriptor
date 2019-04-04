@@ -1,18 +1,18 @@
-package dao.transferObjects;
+package model.impl;
 
 import java.util.List;
 
 import copycatModel.grammar.CharString;
-import dao.interfaces.DAODescription;
 import exceptions.VerbalizationException;
+import model.IDescription;
 import verbalization.implementations.VerbalizerV2;
 import verbalization.interfaces.VerbalizerInterface;
 
-public class DAODescriptionV1 implements DAODescription {
+public class DescriptionImpl implements IDescription {
 
 	private CharString wholeStringDescriptor;
 	
-	public DAODescriptionV1(CharString wholeStringDescriptor) {
+	public DescriptionImpl(CharString wholeStringDescriptor) {
 		this.wholeStringDescriptor = wholeStringDescriptor;
 	}
 	

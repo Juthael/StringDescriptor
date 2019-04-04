@@ -1,12 +1,12 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import copycatModel.grammar.CharString;
 import copycatModel.grammar.Group;

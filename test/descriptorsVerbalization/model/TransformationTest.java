@@ -1,11 +1,11 @@
 package descriptorsVerbalization.model;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import verbalization.implementations.dataEncodingModel.TransformationCodeGetterV1;
 import verbalization.implementations.verbalStructureModel.EffectorV2;

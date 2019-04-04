@@ -1,13 +1,11 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import copycatModel.grammar.Group;
 import copycatModel.interfaces.AbstractDescriptorInterface;

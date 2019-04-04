@@ -1,33 +1,29 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import copycatModel.grammar.AbsCommonDiff;
 import copycatModel.grammar.CommonDiff;
 import copycatModel.grammar.Dimension;
 import copycatModel.grammar.DimensionX2;
-import copycatModel.grammar.Direction;
 import copycatModel.grammar.Enumeration;
 import copycatModel.grammar.Group;
 import copycatModel.grammar.GroupX2;
 import copycatModel.grammar.Groups;
 import copycatModel.grammar.HowManyGroups;
-import copycatModel.grammar.PlatonicLetter;
 import copycatModel.grammar.Position;
-import copycatModel.grammar.Relation;
 import copycatModel.grammar.RelationX2;
 import copycatModel.grammar.Relations;
 import copycatModel.grammar.RelationsOrLetter;
 import copycatModel.grammar.Sequence;
 import copycatModel.grammar.SequenceRel;
 import copycatModel.grammar.Size;
-import copycatModel.interfaces.AbstractDescriptorInterface;
 import copycatModel.interfaces.SignalInterface;
 import exceptions.DescriptorsBuilderCriticalException;
 import settings.DescGenSettings;
@@ -42,10 +38,10 @@ import syntacticTreesGeneration.interfaces.NewDescriptorBuilderInterface;
 import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
 import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
 
-class ComponentGrouperV2Test {
+public class ComponentGrouperV2Test {
 
 	@Test
-	void AllSetsCoverAdjacentLetters() throws DescriptorsBuilderCriticalException {
+	public void AllSetsCoverAdjacentLetters() throws DescriptorsBuilderCriticalException {
 		boolean setsCoverAdjacentLetters = true;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -78,7 +74,7 @@ class ComponentGrouperV2Test {
 	}	
 	
 	@Test
-	void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws DescriptorsBuilderCriticalException {
+	public void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws DescriptorsBuilderCriticalException {
 		boolean positionsCoveredAreAsExpectedBelow;
 		HashSet<ArrayList<Integer>> setOfPositionListsExpectedForABCD = new HashSet<ArrayList<Integer>>();
 		HashSet<ArrayList<Integer>> setOfPositionListsFounForABCD = new HashSet<ArrayList<Integer>>();
@@ -123,7 +119,7 @@ class ComponentGrouperV2Test {
 	}	
 	
 	@Test
-	void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws DescriptorsBuilderCriticalException {
+	public void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws DescriptorsBuilderCriticalException {
 		boolean oneSetAtLeastIsSize1 = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -143,7 +139,7 @@ class ComponentGrouperV2Test {
 
 	
 	@Test
-	void whenComponentsArent1stGenerationThenSetsCanNotBeOfSize1() 
+	public void whenComponentsArent1stGenerationThenSetsCanNotBeOfSize1() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean oneSetOfComponentsAtLeastIsSize1 = false;
 		ArrayList<Group> previousDescriptors = new ArrayList<Group>();
@@ -246,7 +242,7 @@ class ComponentGrouperV2Test {
 	}
 	
 	@Test
-	void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws DescriptorsBuilderCriticalException {
+	public void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws DescriptorsBuilderCriticalException {
 		boolean oneSetAtLeastDoNotCoverTheWholeString = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -272,7 +268,7 @@ class ComponentGrouperV2Test {
 
 	
 	@Test
-	void whenNextGenerationWillBeTheLastThenAllSetsCoverTheWholeString() 
+	public void whenNextGenerationWillBeTheLastThenAllSetsCoverTheWholeString() 
 			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
 		boolean oneSetAtLeastDoNotCoverTheWholeString = false;
 		ArrayList<Group> previousDescriptors = new ArrayList<Group>();

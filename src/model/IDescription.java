@@ -1,10 +1,10 @@
-package dao.interfaces;
+package model;
 
 import java.util.List;
 
 import exceptions.VerbalizationException;
 
-public interface DAODescription {
+public interface IDescription {
 
 	List<String> getCompleteDescription();
 

@@ -1,14 +1,14 @@
-package dao.tools;
+package model.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import exceptions.DAOException;
+import exceptions.DescriptionFormatException;
 
-public class DAOKeyboardInputManager {
+public class DescriptionKeyboardInputManager {
 
-	public DAOKeyboardInputManager() {
+	public DescriptionKeyboardInputManager() {
 	}
 	
 	public static String readString() {
@@ -24,14 +24,14 @@ public class DAOKeyboardInputManager {
 		return stringInput;
 	}
 	
-	public static int readInt() throws DAOException {
+	public static int readInt() throws DescriptionFormatException {
 		int n = 0;
 		try {
 			String stringRead = readString();
 			n = Integer.parseInt(stringRead);
 		}
 		catch (NumberFormatException err) {
-			throw new DAOException("Error : illegal input.");
+			throw new DescriptionFormatException("Error : illegal input.");
 		}
 		return n;
 	}

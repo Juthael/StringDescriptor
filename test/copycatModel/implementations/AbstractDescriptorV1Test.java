@@ -1,21 +1,20 @@
 package copycatModel.implementations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import copycatModel.grammar.Dimension;
 import copycatModel.grammar.Enumeration;
 import copycatModel.grammar.Group;
 import copycatModel.grammar.GroupX3;
 import copycatModel.grammar.HowManyGroups;
-import copycatModel.grammar.Letter;
-import copycatModel.grammar.PlatonicLetter;
-import copycatModel.grammar.Position;
 import copycatModel.grammar.Relation;
 import copycatModel.interfaces.PropertyContainerInterface;
 import copycatModel.interfaces.PropertyInterface;

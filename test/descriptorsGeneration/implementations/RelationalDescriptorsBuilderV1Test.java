@@ -1,11 +1,11 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import copycatModel.grammar.CharString;
 import copycatModel.interfaces.SignalInterface;
@@ -86,7 +86,7 @@ class RelationalDescriptorsBuilderV1Test {
 			descriptionIsProceededInLessThan5Sec = false;
 		/* int index = 0;
 		for (CharString descriptor : wholeStringDescriptors) {
-			System.out.println("n°" + index);
+			System.out.println("nï¿½" + index);
 			for (String property : descriptor.getListOfRelevantPropertiesWithPath()) {
 				System.out.println(property);
 			}

@@ -1,17 +1,19 @@
-package controllers;
+package launcher;
 
 import java.util.List;
 
-import dao.tools.DAOKeyboardInputManager;
-import dao.transferObjects.DAODescriptionV1;
-import dao.transferObjects.DAOSetOfDescriptionsV1;
-import exceptions.DAOException;
+import exceptions.DescriptionFormatException;
 import exceptions.VerbalizationException;
+import model.IDescription;
+import model.IDescriptionBuilder;
+import model.impl.DescriptionBuilder;
+import model.utils.DescriptionKeyboardInputManager;
+import model.utils.DescriptionValidityChecker;
 import settings.DescGenSettings;
 
-public class cmdControllerV1 {
+public class LauncherUtils {
 
-	public cmdControllerV1() {
+	private LauncherUtils() {
 	}
 	
 	public static void analyzeStrings() {
@@ -42,22 +44,26 @@ public class cmdControllerV1 {
 		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than " + maxSize + " characters.");
 		System.out.println("Please enter a String : ");
 		System.out.println("");
-		stringToBeDescribed = DAOKeyboardInputManager.readString();
-		DAOSetOfDescriptionsV1 setOfDescriptions = new DAOSetOfDescriptionsV1();
+		stringToBeDescribed = DescriptionKeyboardInputManager.readString();
+		
+		IDescriptionBuilder builder = new DescriptionBuilder().validatedBy(new DescriptionValidityChecker());
+
+		List<IDescription> setOfDescriptions;
 		try {
-			setOfDescriptions.setStringToBeDescribed(stringToBeDescribed);
+			setOfDescriptions  =builder.buildList(stringToBeDescribed);
+			System.out.println("The string analysis has been completed.");
+			displayResults(setOfDescriptions);
 		}
-		catch(DAOException unexpected) {
+		catch(DescriptionFormatException unexpected) {
 			System.out.println(unexpected.getMessage());
 			System.out.println("Please try again");
 			System.out.println("");
 			enterNewString();
 		}
-		System.out.println("The string analysis has been completed.");
-		displayResults(setOfDescriptions);
+	
 	}
 	
-	private static void displayResults(DAOSetOfDescriptionsV1 setOfDescriptions) {
+	private static void displayResults(List<IDescription> setOfDescriptions) {
 		System.out.println("");
 		System.out.println("How would you like the results to be displayed ?");
 		System.out.println("1 - as verbal descriptions.");
@@ -66,20 +72,20 @@ public class cmdControllerV1 {
 		System.out.println("4 - skip results presentation.");
 		System.out.println("Please make your selection : ");
 		int displayMode = -1;
-		List<DAODescriptionV1> listOfDescriptions = setOfDescriptions.getDescriptionsOfThisString();
+		List<IDescription> listOfDescriptions = setOfDescriptions;
 		try {
-			displayMode = DAOKeyboardInputManager.readInt();
+			displayMode = DescriptionKeyboardInputManager.readInt();
 		}
-		catch(DAOException err) {
+		catch(DescriptionFormatException err) {
 			System.out.println(err.getMessage());
 			System.out.println("");
 			displayResults(setOfDescriptions);
 		}
 		int descriptionIndex = 1;
-		for (DAODescriptionV1 description : listOfDescriptions) {
+		for (IDescription description : listOfDescriptions) {
 			try {
 				System.out.println("");
-				System.out.println("***** Description n°" + descriptionIndex + " *****");
+				System.out.println("***** Description nï¿½" + descriptionIndex + " *****");
 				System.out.println("");
 				switch(displayMode) {
 					case 1 : String translationInNL1 = description.getDescriptionInNaturalLanguage();
@@ -126,9 +132,9 @@ public class cmdControllerV1 {
 		System.out.println("Please make your selection :");
 		int whatToDoNext = -1;
 		try {
-			whatToDoNext = DAOKeyboardInputManager.readInt();
+			whatToDoNext = DescriptionKeyboardInputManager.readInt();
 		}
-		catch(DAOException err) {
+		catch(DescriptionFormatException err) {
 			System.out.println(err.getMessage());
 			System.out.println("");
 			chooseWhatToDoNext();

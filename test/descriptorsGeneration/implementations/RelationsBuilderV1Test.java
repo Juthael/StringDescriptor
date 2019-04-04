@@ -1,12 +1,11 @@
 package descriptorsGeneration.implementations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import copycatModel.grammar.Group;
 import copycatModel.grammar.Relations;
@@ -51,7 +50,7 @@ class RelationsBuilderV1Test {
 	private static RelationDataContainerInterface otherContainer;
 	private static ArrayList<Group> listOfGroups;
 	
-	@BeforeAll
+	@Before
 	static void initialize() throws DescriptorsBuilderCriticalException {
 		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
 		SignalInterface signal = signalBuilder.getSignal();
