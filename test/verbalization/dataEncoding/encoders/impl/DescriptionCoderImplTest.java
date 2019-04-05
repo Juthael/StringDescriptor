@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import copycatModel.grammar.CharString;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
@@ -21,7 +21,7 @@ public class DescriptionCoderImplTest {
 
 	@Test
 	public void whenParameterIsThisListOfPropertiesThenExpectedNumberOfRecipesIsReturned() 
-			throws VerbalizationException, DescriptorsBuilderException, CloneNotSupportedException {
+			throws VerbalizationException, SynTreeGenerationException, CloneNotSupportedException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
 		boolean numberOfRecipesIsUnexpected = false;

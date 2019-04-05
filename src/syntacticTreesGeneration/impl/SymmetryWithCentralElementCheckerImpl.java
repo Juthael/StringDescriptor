@@ -3,7 +3,7 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.ISymmetryRelationalData;
 import syntacticTreesGeneration.ISymmetryWithCentralElementChecker;
@@ -19,7 +19,7 @@ public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentr
 	private String typeOfSymmetry = "withCentralElement";	
 
 	public SymmetryWithCentralElementCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
-			IEnumerationRelationalData enumerationRelationalData) throws DescriptorsBuilderException {
+			IEnumerationRelationalData enumerationRelationalData) throws SynTreeGenerationException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -72,14 +72,14 @@ public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentr
 	}
 	
 	@Override
-	public ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException {
+	public ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException {
 		if (symmetryWithCentralElementWasFound == true) {
 			String enumerationValue = enumerationRelationalData.getEnumerationValue();
 			ISymmetryRelationalData symmetryRelationalData = 
 					new SymmetryRelationalDataImpl(dimension, enumerationValue, typeOfSymmetry);
 			return symmetryRelationalData;
 		}
-		else throw new DescriptorsBuilderException("SymmetryWithCentralElementChecker : "
+		else throw new SynTreeGenerationException("SymmetryWithCentralElementChecker : "
 				+ "can't get a symmetry that wasn't found.");
 	}
 	

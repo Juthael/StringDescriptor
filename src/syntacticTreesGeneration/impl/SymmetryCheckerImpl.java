@@ -3,7 +3,7 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.ISymmetryChecker;
 import syntacticTreesGeneration.ISymmetryRelationalData;
@@ -21,7 +21,7 @@ public class SymmetryCheckerImpl implements ISymmetryChecker {
 	private ISymmetryWithNoCentralElementChecker symmetryWithNoCentralElementChecker;
 	
 	public SymmetryCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
-			IEnumerationRelationalData enumerationRelationalData) throws DescriptorsBuilderException {
+			IEnumerationRelationalData enumerationRelationalData) throws SynTreeGenerationException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -43,17 +43,17 @@ public class SymmetryCheckerImpl implements ISymmetryChecker {
 		return symmetryWasFound;
 	}
 	
-	public ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException {
+	public ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException {
 		ISymmetryRelationalData symmetryRelationalData;
 		if (symmetryWasFound == true) {
 			if (symmetryWithCentralElementChecker.getSymmetryWithCentralElementWasFound() == true)
 				symmetryRelationalData = symmetryWithCentralElementChecker.getSymmetryRelationalData();
 			else if (symmetryWithNoCentralElementChecker.getSymmetryWithNoCenterWasFound() == true)
 				symmetryRelationalData = symmetryWithNoCentralElementChecker.getSymmetryRelationalData();
-			else throw new DescriptorsBuilderException(
+			else throw new SynTreeGenerationException(
 					"SymmetryChecker.getSymmetryRelationalData() : inconsistant information");
 		}
-		else throw new DescriptorsBuilderException(
+		else throw new SynTreeGenerationException(
 				"SymmetryChecker.getSymmetryRelationalData() : can't get a relation that was not found.");
 		return symmetryRelationalData;
 	}

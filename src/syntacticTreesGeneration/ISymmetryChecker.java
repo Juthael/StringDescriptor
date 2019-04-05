@@ -1,11 +1,11 @@
 package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface ISymmetryChecker {
 
 	boolean getSymmetryWasFound();
 
-	ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException;
+	ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException;
 
 }

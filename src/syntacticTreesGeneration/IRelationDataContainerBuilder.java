@@ -1,9 +1,9 @@
 package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface IRelationDataContainerBuilder {
 
-	IRelationDataContainer getRelationDataContainer() throws DescriptorsBuilderException;
+	IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException;
 
 }

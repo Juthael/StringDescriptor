@@ -28,7 +28,7 @@ import copycatModel.grammar.RelationX7;
 import copycatModel.grammar.RelationX8;
 import copycatModel.grammar.RelationX9;
 import copycatModel.grammar.Relations;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupsBuilder;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -47,7 +47,7 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 	}
 	
 	@Override
-	public Relations getRelations() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public Relations getRelations() throws SynTreeGenerationException, CloneNotSupportedException {
 		List<Dimension> listOfDimensions = buildListOfDimensions(relationDataContainer);
 		List<Relation> listOfRelations = buildListOfRelations(relationDataContainer);
 		IGroupsBuilder groupsBuilder = new GroupsBuilderImpl(listOfGroups);
@@ -70,7 +70,7 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 	}
 	
 	private HowManyDimensions buildHowManyDimensions(List<Dimension> listOfDimensions) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		HowManyDimensions howManyDimensions;
 		if (listOfDimensions.size() <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
 			switch (listOfDimensions.size()) {
@@ -116,15 +116,15 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 							listOfDimensions.get(2), listOfDimensions.get(3), listOfDimensions.get(4), listOfDimensions.get(5), 
 							listOfDimensions.get(6), listOfDimensions.get(7), listOfDimensions.get(8), listOfDimensions.get(9));
 					break;					
-				default : throw new DescriptorsBuilderException(
+				default : throw new SynTreeGenerationException(
 						"RelationsBuilder : listOfDimensions size is illegal.");
 			}
-		} else throw new DescriptorsBuilderException("RelationsBuilder : listOfDimensions size is empty.");
+		} else throw new SynTreeGenerationException("RelationsBuilder : listOfDimensions size is empty.");
 		return howManyDimensions;		
 	}	
 	
 	private List<Relation> buildListOfRelations(IRelationDataContainer relationDataContainer) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<Relation> listOfRelations = new ArrayList<Relation>();
 		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
 			Relation relation;
@@ -156,7 +156,7 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 		return listOfRelations;		
 	}
 	
-	private HowManyRelations buildHowManyRelations(List<Relation> listOfRelations) throws DescriptorsBuilderException {
+	private HowManyRelations buildHowManyRelations(List<Relation> listOfRelations) throws SynTreeGenerationException {
 		HowManyRelations howManyRelations;
 		if (listOfRelations.size() <= Settings.MAX_NB_OF_RELATION) {
 			switch (listOfRelations.size()) {
@@ -205,10 +205,10 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 							listOfRelations.get(5), listOfRelations.get(6), listOfRelations.get(7), 
 							listOfRelations.get(8), listOfRelations.get(9));
 					break;						
-				default : throw new DescriptorsBuilderException(
+				default : throw new SynTreeGenerationException(
 						"RelationsBuilder : listOfRelations size is illegal.");
 			}
-		} else throw new DescriptorsBuilderException("RelationsBuilder : list Of relations size is illegal.");
+		} else throw new SynTreeGenerationException("RelationsBuilder : list Of relations size is illegal.");
 		return howManyRelations;
 	}	
 	

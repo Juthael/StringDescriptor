@@ -5,7 +5,7 @@ import java.util.List;
 import descriptionModel.IDescription;
 import descriptionModel.IDescriptionBuilder;
 import descriptionModel.impl.DescriptionBuilderImpl;
-import exceptions.DescriptionFormatException;
+import exceptions.StringFormatException;
 import exceptions.VerbalizationException;
 import settings.Settings;
 
@@ -23,12 +23,13 @@ public class CmdController {
 		System.out.println("");
 		System.out.println("********** STRING DESCRIPTOR **********");
 		System.out.println("");
-		System.out.println("This program generates various possible descriptions of the string of characters provided by the user "
-				+ "; although most descriptions seem absurd, each one could later prove relevant if inserted in a "
-				+ "particular context.") ;
-		System.out.println("A description takes the form of a syntactic tree. This structure is almost exhaustive but quite "
-				+ "abstruse ; therefore, the program offer to translate it into a verbal description, formulated as a recipe "
-				+ "for the production of the provided string.");
+		System.out.println("This program generates various possible descriptions of the string of characters ");
+		System.out.println("provided by the user. ");
+		System.out.println("Although most descriptions seem absurd, each one could later prove relevant if inserted ");
+		System.out.println("in a particular context.") ;
+		System.out.println("A description takes the form of a syntactic tree. This structure is almost exhaustive ");
+		System.out.println("but quite abstruse ; therefore, the program offer to translate it into a verbal description, ");
+		System.out.println("formulated as a recipe for the production of the provided string.");
 	}
 	
 	private static void enterNewString() {
@@ -39,20 +40,19 @@ public class CmdController {
 			letterCase = "lowercase";
 		else letterCase = "capitalized";
 		System.out.println("");
-		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than " + maxSize + " characters.");
+		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than ");
+		System.out.println(maxSize + " characters.");
 		System.out.println("Please enter a String : ");
 		System.out.println("");
 		stringToBeDescribed = DescriptionKeyboardInputManager.readString();
-		
 		IDescriptionBuilder builder = new DescriptionBuilderImpl().validatedBy(new DescriptionValidityChecker());
-
 		List<IDescription> setOfDescriptions;
 		try {
-			setOfDescriptions  =builder.buildList(stringToBeDescribed);
+			setOfDescriptions = builder.buildList(stringToBeDescribed);
 			System.out.println("The string analysis has been completed.");
 			displayResults(setOfDescriptions);
 		}
-		catch(DescriptionFormatException unexpected) {
+		catch(Exception unexpected) {
 			System.out.println(unexpected.getMessage());
 			System.out.println("Please try again");
 			System.out.println("");
@@ -74,7 +74,7 @@ public class CmdController {
 		try {
 			displayMode = DescriptionKeyboardInputManager.readInt();
 		}
-		catch(DescriptionFormatException err) {
+		catch(StringFormatException err) {
 			System.out.println(err.getMessage());
 			System.out.println("");
 			displayResults(setOfDescriptions);
@@ -83,7 +83,7 @@ public class CmdController {
 		for (IDescription description : listOfDescriptions) {
 			try {
 				System.out.println("");
-				System.out.println("***** Description nï¿½" + descriptionIndex + " *****");
+				System.out.println("***** Description n°" + descriptionIndex + " *****");
 				System.out.println("");
 				switch(displayMode) {
 					case 1 : String translationInNL1 = description.getDescriptionInNaturalLanguage();
@@ -132,7 +132,7 @@ public class CmdController {
 		try {
 			whatToDoNext = DescriptionKeyboardInputManager.readInt();
 		}
-		catch(DescriptionFormatException err) {
+		catch(StringFormatException err) {
 			System.out.println(err.getMessage());
 			System.out.println("");
 			chooseWhatToDoNext();

@@ -1,11 +1,11 @@
 package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface ISequenceChecker {
 
 	boolean getSequenceWasFound();
 
-	ISequenceRelationalData getSequenceRelationalData() throws DescriptorsBuilderException;
+	ISequenceRelationalData getSequenceRelationalData() throws SynTreeGenerationException;
 
 }

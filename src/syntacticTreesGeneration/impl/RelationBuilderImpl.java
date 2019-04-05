@@ -22,7 +22,7 @@ import copycatModel.grammar.SequenceAndSymmetryRel;
 import copycatModel.grammar.SequenceRel;
 import copycatModel.grammar.Symmetry;
 import copycatModel.grammar.SymmetryRel;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IRelationBuilder;
 import syntacticTreesGeneration.IRelationalData;
@@ -39,18 +39,18 @@ public class RelationBuilderImpl implements IRelationBuilder {
 	 * -if the list contains 3 elements, the 2nd is a SequenceRelationData and the 3rd is a SymmetryRelationData 
 	 */
 	public static Relation buildRelation(List<IRelationalData> relationData) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		HowManyDimensions howManyDimensions = buildDimensions(relationData);
 		Relation relation = buildRelation(howManyDimensions, relationData);
 		return relation;
 	}
 	
 	private static HowManyDimensions buildDimensions(List<IRelationalData> relationData) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<String> dimensions;
 		try {
 			 dimensions = relationData.get(0).getDimensions();
-		} catch (Exception e) {throw new DescriptorsBuilderException("RelationBuilder : parameter is empty");}		
+		} catch (Exception e) {throw new SynTreeGenerationException("RelationBuilder : parameter is empty");}		
 		HowManyDimensions howManyDimensions ; 
 		int numberOfDimensions= dimensions.size();
 		if (numberOfDimensions <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
@@ -146,14 +146,14 @@ public class RelationBuilderImpl implements IRelationBuilder {
 							dimension104, dimension105, dimension106, dimension107, dimension108, dimension109, 
 							dimension110);
 					break;					
-				default : throw new DescriptorsBuilderException("Relation Builder : too many dimensions");
+				default : throw new SynTreeGenerationException("Relation Builder : too many dimensions");
 			}	
-		} else throw new DescriptorsBuilderException("Relation Builder : too many dimensions");
+		} else throw new SynTreeGenerationException("Relation Builder : too many dimensions");
 		return howManyDimensions;		
 	}
 	
 	private static Relation buildRelation(HowManyDimensions howManyDimensions, List<IRelationalData> relationalDataList) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		Relation relation;
 		switch (relationalDataList.size()) {
 			case 1:
@@ -161,7 +161,7 @@ public class RelationBuilderImpl implements IRelationBuilder {
 					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
 					relation = new Relation(false, howManyDimensions, enumeration);
 				}
-				else throw new DescriptorsBuilderException("Relation Builder : unique relation in RelationalDataList "
+				else throw new SynTreeGenerationException("Relation Builder : unique relation in RelationalDataList "
 						+ "isn't an enumeration.");
 				break;
 			case 2:
@@ -182,7 +182,7 @@ public class RelationBuilderImpl implements IRelationBuilder {
 					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());
 					relation = new SymmetryRel(false, howManyDimensions, enumeration, symmetry);
 				}
-				else throw new DescriptorsBuilderException("Relation Builder : list of 2 relations in the "
+				else throw new SynTreeGenerationException("Relation Builder : list of 2 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence] or [enumeration,symmetry].");
 				break;
 			case 3:
@@ -199,10 +199,10 @@ public class RelationBuilderImpl implements IRelationBuilder {
 					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());			
 					relation = new SequenceAndSymmetryRel(false, howManyDimensions, enumeration, sequence, symmetry);
 				}
-				else throw new DescriptorsBuilderException("Relation Builder : list of 3 relations in the "
+				else throw new SynTreeGenerationException("Relation Builder : list of 3 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence,symmetry].");
 				break;
-			default : throw new DescriptorsBuilderException("Relation Builder : the size of the RelationalDataList "
+			default : throw new SynTreeGenerationException("Relation Builder : the size of the RelationalDataList "
 					+ "is illegal");
 		}
 		return relation;

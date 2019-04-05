@@ -3,7 +3,7 @@ package copycatModel;
 import java.util.List;
 import java.util.Map;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface IPropertyContainer {
 
@@ -12,6 +12,6 @@ public interface IPropertyContainer {
 	
 	List<String> getListOfDimensions();	
 	
-	IProperty getProperty(String dimension) throws DescriptorsBuilderException;	
+	IProperty getProperty(String dimension) throws SynTreeGenerationException;	
 	
 }

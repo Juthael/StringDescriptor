@@ -26,7 +26,7 @@ import copycatModel.grammar.Sequence;
 import copycatModel.grammar.SequenceRel;
 import copycatModel.grammar.Size;
 import copycatModel.grammar.Structure;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -56,7 +56,7 @@ public class RelationDataContainerBuilderImplTest {
 	CharString charStringABC;
 	
 	@Before
-	public void initialize() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public void initialize() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
@@ -95,12 +95,12 @@ public class RelationDataContainerBuilderImplTest {
 			IRelationDataContainer relationDataContainer  = relationDataContainerBuilder.getRelationDataContainer();
 			fail();
 		} 
-		catch (DescriptorsBuilderException expected) {
+		catch (SynTreeGenerationException expected) {
 		}
 	}
 	
 	@Test
-	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws DescriptorsBuilderException {
+	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws SynTreeGenerationException {
 		List<Group> listOfGroupWithDifferentSetsOfDimensions = new ArrayList<Group>();
 		listOfGroupWithDifferentSetsOfDimensions.add(abcGroup);
 		listOfGroupWithDifferentSetsOfDimensions.add(descriptorsSignalABCD.get(3));
@@ -113,7 +113,7 @@ public class RelationDataContainerBuilderImplTest {
 	}
 	
 	@Test
-	public void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws DescriptorsBuilderException {
+	public void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws SynTreeGenerationException {
 		IRelationDataContainerBuilder relationDataContainerBuilder = 
 				new RelationDataContainerBuilderImpl(signalABC, descriptorsSignalABC);
 		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
@@ -121,7 +121,7 @@ public class RelationDataContainerBuilderImplTest {
 	}
 	
 	@Test
-	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws DescriptorsBuilderException {
+	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws SynTreeGenerationException {
 		List<Group> listOfRelatedGroups = new ArrayList<Group>();
 		listOfRelatedGroups.add(descriptorsSignalABC.get(0));
 		listOfRelatedGroups.add(descriptorsSignalABC.get(1));
@@ -132,7 +132,7 @@ public class RelationDataContainerBuilderImplTest {
 	}
 	
 	@Test
-	public void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws DescriptorsBuilderException {
+	public void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws SynTreeGenerationException {
 		boolean enumerationFound;
 		boolean sequenceFound;
 		boolean containerContainsEnumAndSequence;
@@ -145,7 +145,7 @@ public class RelationDataContainerBuilderImplTest {
 		assertTrue(containerContainsEnumAndSequence);
 	}
 	
-	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws DescriptorsBuilderException {
+	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
 		String dimension = "charString/groups/group/size";
 		List<String> listOfSizeValues = new ArrayList<String>();
@@ -173,12 +173,12 @@ public class RelationDataContainerBuilderImplTest {
 			}
 			structureRelation = RelationBuilderImpl.buildRelation(listOfRelationalData);
 		}
-		else throw new DescriptorsBuilderException("CharStringBuilder.getStructureRelation() : "
+		else throw new SynTreeGenerationException("CharStringBuilder.getStructureRelation() : "
 				+ "no enumeration was found.");
 		return structureRelation;	
 	}	
 	
-	private String getCharStringSizeValue(List<Group> listOfGroups) throws DescriptorsBuilderException {
+	private String getCharStringSizeValue(List<Group> listOfGroups) throws SynTreeGenerationException {
 		String charStringSizeValue;
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
 		for (Group group : listOfGroups) {

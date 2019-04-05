@@ -2,7 +2,7 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.ISymmetryRelationalData;
 import syntacticTreesGeneration.ISymmetryWithNoCentralElementChecker;
@@ -18,7 +18,7 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 	private String typeOfSymmetry = "withoutCentralElement";
 
 	public SymmetryWithNoCentralElementCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
-			IEnumerationRelationalData enumerationRelationalData) throws DescriptorsBuilderException {
+			IEnumerationRelationalData enumerationRelationalData) throws SynTreeGenerationException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -35,7 +35,7 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 				else if (dimensionLastValue.equals("commonDiff")) {
 					symmetryWithNoCenterWasFound = testIfCommonDiffValuesAreOpposite();
 				}
-				else throw new DescriptorsBuilderException(
+				else throw new SynTreeGenerationException(
 						"SymmetryWithNoCentralElementChecker : unexpected dimension");
 			}
 		}
@@ -47,14 +47,14 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 	}
 	
 	@Override
-	public ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException {
+	public ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException {
 		if (symmetryWithNoCenterWasFound == true) {
 			String enumerationValue = enumerationRelationalData.getEnumerationValue();
 			ISymmetryRelationalData symmetryRelationalData = 
 					new SymmetryRelationalDataImpl(dimension, enumerationValue, typeOfSymmetry);
 			return symmetryRelationalData;
 		}
-		else throw new DescriptorsBuilderException("SymmetryWithNoCentralElementChecker : "
+		else throw new SynTreeGenerationException("SymmetryWithNoCentralElementChecker : "
 				+ "can't get a symmetry that wasn't found.");
 	}
 	

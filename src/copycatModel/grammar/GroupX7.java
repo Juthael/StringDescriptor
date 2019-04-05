@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import copycatModel.impl.SynTreeIntegrableElementImpl;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 
 public class GroupX7 extends HowManyGroups implements Cloneable {
@@ -20,7 +20,7 @@ public class GroupX7 extends HowManyGroups implements Cloneable {
 	private Group group7;
 	
 	public GroupX7(boolean codingDescriptor, Group group1, Group group2, Group group3, Group group4, Group group5,
-			Group group6, Group group7) throws DescriptorsBuilderException, CloneNotSupportedException {
+			Group group6, Group group7) throws SynTreeGenerationException, CloneNotSupportedException {
 		super(codingDescriptor);
 		this.group1 = group1.clone();
 		this.group2 = group2.clone();
@@ -46,7 +46,7 @@ public class GroupX7 extends HowManyGroups implements Cloneable {
 		try {
 			cloneGroupX7 = new GroupX7(isCodingDescriptor, cloneableGroup1, cloneableGroup2, 
 					cloneableGroup3, cloneableGroup4, cloneableGroup5, cloneableGroup6, cloneableGroup7);
-		} catch (DescriptorsBuilderException e) {
+		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("GroupX7 : error error in clone() method.");
 		}
 		return cloneGroupX7;

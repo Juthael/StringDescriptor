@@ -10,7 +10,7 @@ import copycatModel.grammar.PlatonicLetter;
 import copycatModel.grammar.Position;
 import copycatModel.grammar.Size;
 import copycatModel.impl.SignalImpl;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 
@@ -18,7 +18,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
 
 	private ISignal signal;
 	
-	public SignalBuilderImpl(String charString, String directionValue) throws DescriptorsBuilderException {
+	public SignalBuilderImpl(String charString, String directionValue) throws SynTreeGenerationException {
 		boolean charStringIsLegal = testIfCharStringIsLegal(charString);
 		boolean directionValueIsLegal = testIfDirectionValueIsLegal(directionValue);
 		if (charStringIsLegal == true && directionValueIsLegal == true) {
@@ -35,7 +35,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
 			}
 			signal = new SignalImpl(listOfGroups, directionValue);			
 		}
-		else throw new DescriptorsBuilderException("SignalBuilder : illegal parameter.");
+		else throw new SynTreeGenerationException("SignalBuilder : illegal parameter.");
 	}
 	
 	@Override

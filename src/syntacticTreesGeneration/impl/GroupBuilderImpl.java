@@ -7,7 +7,7 @@ import copycatModel.grammar.Group;
 import copycatModel.grammar.Position;
 import copycatModel.grammar.Relations;
 import copycatModel.grammar.Size;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -24,7 +24,7 @@ public class GroupBuilderImpl implements IGroupBuilder {
 	}
 	
 	@Override
-	public Group getGroup() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public Group getGroup() throws SynTreeGenerationException, CloneNotSupportedException {
 		Group group;
 		Size size = new Size(false, Integer.toString(listOfGroups.size()));
 		Position position = new Position(false, Settings.AWAITING_POSITION_VALUE);

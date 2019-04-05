@@ -7,7 +7,7 @@ import java.util.Set;
 import copycatModel.ISignal;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
@@ -23,7 +23,7 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	private static final int[] minSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	
 	public NewGenOfDescriptorsBuilderImpl(int componentsMaxGenerationNumber, ISignal signal, 
-			List<Group> previousGenOfDescriptors) throws DescriptorsBuilderException {
+			List<Group> previousGenOfDescriptors) throws SynTreeGenerationException {
 		this.componentsMaxGenerationNumber = componentsMaxGenerationNumber;
 		this.signal = signal;
 		thisWillBeTheLastGeneration = testIfThisWillBeTheLastGeneration();
@@ -35,7 +35,7 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	
 	@Override
 	public List<ISynTreeIntegrableElement> getNewGenOfDescriptors() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<ISynTreeIntegrableElement> newGenOfDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 		Set<List<Group>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Group> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {

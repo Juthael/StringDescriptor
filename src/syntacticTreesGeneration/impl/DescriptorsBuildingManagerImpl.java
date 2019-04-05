@@ -6,7 +6,7 @@ import java.util.List;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -27,7 +27,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	
 	public DescriptorsBuildingManagerImpl(ISignal signal, int componentsGenerationNumber, 
 			List<Group> listOfFactorizableDescriptors) 
-					throws DescriptorsBuilderException {
+					throws SynTreeGenerationException {
 		this.signal = signal;
 		this.componentsMaxGenerationNumber = componentsGenerationNumber;
 		this.listOfFactorizableDescriptors = listOfFactorizableDescriptors;
@@ -43,7 +43,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 					listOfRelationDataContainers.add(relationDC);
 				}
 			}
-			else throw new DescriptorsBuilderException(
+			else throw new SynTreeGenerationException(
 					"DescriptorsBuildingManager : unexpected type of gen1 Descriptor.");
 		}
 		else {
@@ -55,7 +55,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	
 	@Override
 	public List<ISynTreeIntegrableElement> getListOfNewDescriptors() 
-			throws DescriptorsBuilderException, CloneNotSupportedException{
+			throws SynTreeGenerationException, CloneNotSupportedException{
 		List<ISynTreeIntegrableElement> listOfNewDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 		for (IRelationDataContainer relationDataContainer : listOfRelationDataContainers) {
 			boolean relationDataContainerIsValid = testIfRelationDataContainerIsValid(relationDataContainer);
@@ -70,7 +70,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	}
 	
 	private boolean testIfRelationDataContainerIsValid(IRelationDataContainer relationDataContainer) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		boolean relationDataContainerIsValid = false;
 		boolean newDescriptorIsEligibleForRelation = testIfNewDescriptorIsEligibleForRelation();
 		if (relationDataContainer.getNewDescriptorWillCoverTheFullString() == true) {
@@ -89,7 +89,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		return relationDataContainerIsValid;
 	}
 	
-	private boolean testIfNewDescriptorIsEligibleForRelation() throws DescriptorsBuilderException {
+	private boolean testIfNewDescriptorIsEligibleForRelation() throws SynTreeGenerationException {
 		boolean newDescriptorIsEligibleForRelation = true;
 		if (componentsMaxGenerationNumber != 1) {
 			int numberOfDimensions = 0;
@@ -123,13 +123,13 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 				}
 				else newDescriptorIsEligibleForRelation = false;
 			}
-			else throw new DescriptorsBuilderException("DescriptorsBuildingManager : "
+			else throw new SynTreeGenerationException("DescriptorsBuildingManager : "
 					+ "unexpected number of RelationDataContainers.");
 		}
 		return newDescriptorIsEligibleForRelation;
 	}
 	
-	private boolean testIfNewDescriptorIsEligibleForMultiUnrelatedGroupsDescription() throws DescriptorsBuilderException {
+	private boolean testIfNewDescriptorIsEligibleForMultiUnrelatedGroupsDescription() throws SynTreeGenerationException {
 		boolean newDescriptorIsEligibleForMultiUnrelatedGroupsDescription = false;
 		if (listOfFactorizableDescriptors.size() <= Settings.MAX_NB_OF_UNRELATED_GROUPS) {
 			if (componentsMaxGenerationNumber >= 2) {
@@ -171,7 +171,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		return numberOfSimpleEnumerations;
 	}
 	
-	private boolean testIfThereIsAGen2Size1Descriptor() throws DescriptorsBuilderException {
+	private boolean testIfThereIsAGen2Size1Descriptor() throws SynTreeGenerationException {
 		boolean thereIsAGen2Size1Sequence = false;
 		if (componentsMaxGenerationNumber >= 2) {
 			for (Group group : listOfFactorizableDescriptors) {

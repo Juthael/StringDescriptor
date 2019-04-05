@@ -2,7 +2,7 @@ package launcher.utils;
 
 import java.util.function.Predicate;
 
-import exceptions.DescriptionFormatException;
+import exceptions.StringFormatException;
 import settings.Settings;
 
 public class DescriptionValidityChecker implements Predicate<String> {
@@ -11,6 +11,7 @@ public class DescriptionValidityChecker implements Predicate<String> {
 	}
 
 	public boolean test(String stringToBeChecked) {
+		boolean parameterMatchesThePredicate;
 		int minLegalCharValue;
 		int maxLegalCharValue;
 		if (Settings.USE_LOWERCASE_LETTER) {
@@ -29,10 +30,12 @@ public class DescriptionValidityChecker implements Predicate<String> {
 					allValuesAreLegal = false;
 				charIndex++;
 			}
-			if (allValuesAreLegal == false)
-				throw new DescriptionFormatException("String is invalid.");
+			if (allValuesAreLegal == true)
+				parameterMatchesThePredicate = true;
+			else parameterMatchesThePredicate = false;
 		}
-		return false;
+		else parameterMatchesThePredicate = false;
+		return parameterMatchesThePredicate;
 	}
 
 }

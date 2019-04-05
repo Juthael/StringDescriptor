@@ -7,7 +7,7 @@ import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
@@ -22,7 +22,7 @@ public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsB
 	boolean thisIsTheLastGeneration = false;
 	
 	public RelationalDescriptorsBuilderImpl(ISignal signal) 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		this.signal = signal;
 		previousGenOfFactorizableDescriptors.addAll(this.signal.getGroups());
 		do {
@@ -38,7 +38,7 @@ public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsB
 						listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 					else if (descriptor.getDescriptorName().equals("group"))
 						previousGenOfFactorizableDescriptors.add((Group) descriptor);
-					else throw new DescriptorsBuilderException("RelationalDescriptorsBuilder : "
+					else throw new SynTreeGenerationException("RelationalDescriptorsBuilder : "
 							+ "unexpected type of descriptor was found.");
 				}
 			}

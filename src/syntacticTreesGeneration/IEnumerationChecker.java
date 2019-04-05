@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface IEnumerationChecker {
 
@@ -10,7 +10,7 @@ public interface IEnumerationChecker {
 	
 	boolean getEnumerationWasFound();
 
-	IEnumerationRelationalData getEnumerationRelationalData() throws DescriptorsBuilderException;
+	IEnumerationRelationalData getEnumerationRelationalData() throws SynTreeGenerationException;
 
 	
 

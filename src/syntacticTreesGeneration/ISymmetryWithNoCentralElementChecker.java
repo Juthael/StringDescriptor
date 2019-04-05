@@ -1,11 +1,11 @@
 package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface ISymmetryWithNoCentralElementChecker {
 
 	boolean getSymmetryWithNoCenterWasFound();
 
-	ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException;
+	ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException;
 
 }

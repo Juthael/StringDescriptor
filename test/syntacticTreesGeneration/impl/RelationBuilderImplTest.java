@@ -11,7 +11,7 @@ import org.junit.Test;
 
 
 import copycatModel.grammar.Relation;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
 import syntacticTreesGeneration.ISequenceRelationalData;
@@ -30,7 +30,7 @@ public class RelationBuilderImplTest {
 	private	ISymmetryRelationalData symmetryRelationalData;
 
 	@Before
-	public void buildListsOfRelationalDataInterfaces() throws DescriptorsBuilderException {
+	public void buildListsOfRelationalDataInterfaces() throws SynTreeGenerationException {
 		String dimension1 = "group/letter/platonicLetter";
 		String dimension2 = "group/relations/relation/enumeration";
 		String enumerationValue1 = "1,2,3";
@@ -102,7 +102,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationThenRelationIsBuilt() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		Relation relation = RelationBuilderImpl.buildRelation(conformList);
@@ -113,7 +113,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceThenSequenceRelIsBuilt() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);
@@ -125,7 +125,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceSymmetryThenSequenceAndSymmetryRelIsBuilt() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);

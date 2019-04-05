@@ -3,11 +3,11 @@ package syntacticTreesGeneration;
 import java.util.List;
 
 import copycatModel.ISynTreeIntegrableElement;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface INewGenOfDescriptorsBuilder {
 
-	List<ISynTreeIntegrableElement> getNewGenOfDescriptors() throws DescriptorsBuilderException,
+	List<ISynTreeIntegrableElement> getNewGenOfDescriptors() throws SynTreeGenerationException,
 			CloneNotSupportedException;
 
 }

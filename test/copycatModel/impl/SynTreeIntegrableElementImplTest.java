@@ -20,7 +20,7 @@ import copycatModel.grammar.Group;
 import copycatModel.grammar.GroupX3;
 import copycatModel.grammar.HowManyGroups;
 import copycatModel.grammar.Relation;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
@@ -28,7 +28,7 @@ public class SynTreeIntegrableElementImplTest {
 
 	@Test
 	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		boolean containerContainsAllProperties = true;
 		Dimension dimension = new Dimension(false, "dimension1");
 		Enumeration enumeration = new Enumeration(false, "1");
@@ -91,7 +91,7 @@ public class SynTreeIntegrableElementImplTest {
 	
 	@Test
 	public void onlyClonedGroupsAreRelatedInNewDescriptor() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean onlyClonedGroupsAreRelatedInNewDescriptor;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();

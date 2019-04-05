@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -20,7 +20,7 @@ import syntacticTreesGeneration.impl.SignalBuilderImpl;
 public class RelationalDescriptorsBuilderImplTest {
 
 	@Test
-	public void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;
 		long done;
@@ -62,7 +62,7 @@ public class RelationalDescriptorsBuilderImplTest {
 	
 	@Test
 	public void whenStructuredMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;
 		long done;

@@ -6,7 +6,7 @@ import java.util.List;
 
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.impl.SynTreeIntegrableElementImpl;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrableElement {
 
@@ -16,7 +16,7 @@ public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrabl
 	private RelationsOrLetter relationsOrLetter;
 	
 	public Group(boolean codingDescriptor, Size size, Position position, RelationsOrLetter relationsOrLetter) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		super(codingDescriptor);
 		this.size = size;
 		this.position = position;
@@ -43,7 +43,7 @@ public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrabl
 		Group cloneGroup;
 		try {
 			cloneGroup = new Group(isCodingDescriptor, cloneSize, clonePosition, cloneRelationsOrLetter);
-		} catch (DescriptorsBuilderException e) {
+		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Group : error in clone() method.");
 		}
 		return cloneGroup;

@@ -5,7 +5,7 @@ import java.util.List;
 import copycatModel.ISignal;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.ICharStringBuilder;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.INewDescriptorBuilder;
@@ -25,7 +25,7 @@ public class NewDescriptorBuilderImpl implements INewDescriptorBuilder {
 	}
 	
 	@Override
-	public ISynTreeIntegrableElement getNewDescriptor() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public ISynTreeIntegrableElement getNewDescriptor() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISynTreeIntegrableElement synTreeIntegrableElement;
 		boolean newDescriptorWillCoverTheFullString = relationDataContainer.getNewDescriptorWillCoverTheFullString();
 		if (newDescriptorWillCoverTheFullString == true) {
@@ -40,7 +40,7 @@ public class NewDescriptorBuilderImpl implements INewDescriptorBuilder {
 				IGroupBuilder groupBuilder = new GroupBuilderImpl(listOfFactorizableDescriptors, relationDataContainer);
 				synTreeIntegrableElement = groupBuilder.getGroup();
 			}
-			else throw new DescriptorsBuilderException("NewDescriptorBuilder : "
+			else throw new SynTreeGenerationException("NewDescriptorBuilder : "
 					+ "factorizable descriptors don't cover the full string and aren't related." );
 		}
 		return synTreeIntegrableElement;

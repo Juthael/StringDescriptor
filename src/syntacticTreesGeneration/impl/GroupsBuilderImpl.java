@@ -17,7 +17,7 @@ import copycatModel.grammar.GroupX9;
 import copycatModel.grammar.Groups;
 import copycatModel.grammar.HowManyGroups;
 import copycatModel.grammar.Size;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupsBuilder;
 
@@ -31,15 +31,15 @@ public class GroupsBuilderImpl implements IGroupsBuilder {
 	}
 	
 	public GroupsBuilderImpl(List<Group> listOfGroups, boolean listOfGroupsCoverTheFullString) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		if (listOfGroupsCoverTheFullString == Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING) {
 			this.listOfGroups = listOfGroups;
 			this.listOfGroupsCoverTheFullString = Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING;
-		} else throw new DescriptorsBuilderException("GroupsBuilder : constructor illegal parameter value");
+		} else throw new SynTreeGenerationException("GroupsBuilder : constructor illegal parameter value");
 	}
 	
 	@Override
-	public Groups getGroups() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public Groups getGroups() throws SynTreeGenerationException, CloneNotSupportedException {
 		Groups groups;
 		HowManyGroups howManyGroups;
 		Size size;
@@ -131,9 +131,9 @@ public class GroupsBuilderImpl implements IGroupsBuilder {
 							listOfGroups.get(11).clone());
 					groups = new Groups(false, size, howManyGroups);					
 					break;						
-				default : throw new DescriptorsBuilderException("GroupsBuilder : listOfGroups size is illegal.");
+				default : throw new SynTreeGenerationException("GroupsBuilder : listOfGroups size is illegal.");
 			}
-		} else throw new DescriptorsBuilderException("GroupsBuilder : listOfGroups size is illegal.");
+		} else throw new SynTreeGenerationException("GroupsBuilder : listOfGroups size is illegal.");
 		return groups;	
 	}	
 

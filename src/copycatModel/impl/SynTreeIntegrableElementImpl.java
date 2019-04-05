@@ -8,7 +8,7 @@ import java.util.Map;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.IProperty;
 import copycatModel.IPropertyContainer;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 
 public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTreeIntegrableElement {
@@ -103,7 +103,7 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 	}
 	
 	protected void updateComponentsPosition(int autoPosition, List<SynTreeIntegrableElementImpl> componentDescriptors) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		if (autoPosition == Settings.COMPONENT_AUTO_POSITIONING) {
 			int positionIndex = 1;
 			for (SynTreeIntegrableElementImpl componentDescriptor : componentDescriptors) {
@@ -111,7 +111,7 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 						Integer.toString(positionIndex), componentDescriptor.buildListOfComponents());
 				positionIndex++;			
 			}
-		} else throw new DescriptorsBuilderException(
+		} else throw new SynTreeGenerationException(
 				"AbstractDescriptor.updateComponents() : illegal constant value.");
 	}
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -18,7 +18,7 @@ public class ListOfDescriptorsBuilderImpl implements IListOfDescriptorsBuilder {
 	
 	
 	public ListOfDescriptorsBuilderImpl(String charString, String directionValue) 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		this.charString = charString;
 		this.directionValue = directionValue;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(this.charString, this.directionValue);

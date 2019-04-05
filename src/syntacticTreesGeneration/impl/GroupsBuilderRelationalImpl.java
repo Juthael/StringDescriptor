@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.IGroupsBuilderRelational;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -15,7 +15,7 @@ public class GroupsBuilderRelationalImpl extends GroupsBuilderImpl implements IG
 	private IGroupBuilder groupBuilder;
 	
 	public GroupsBuilderRelationalImpl(List<Group> listOfGroups, IRelationDataContainer relationDataContainer) 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		super(listOfGroups);
 		this.relationDataContainer = relationDataContainer;
 		groupBuilder = new GroupBuilderImpl(super.listOfGroups, this.relationDataContainer);
@@ -26,7 +26,7 @@ public class GroupsBuilderRelationalImpl extends GroupsBuilderImpl implements IG
 	}
 	
 	public GroupsBuilderRelationalImpl(List<Group> listOfGroups, IRelationDataContainer relationDataContainer, 
-			boolean listOfGroupsCoverTheFullString) throws DescriptorsBuilderException, CloneNotSupportedException {
+			boolean listOfGroupsCoverTheFullString) throws SynTreeGenerationException, CloneNotSupportedException {
 		super(listOfGroups, listOfGroupsCoverTheFullString);
 		this.relationDataContainer = relationDataContainer;
 		groupBuilder = new GroupBuilderImpl(super.listOfGroups, this.relationDataContainer);

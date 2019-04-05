@@ -11,7 +11,7 @@ import org.junit.Test;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
 import syntacticTreesGeneration.INewDescriptorBuilder;
@@ -28,7 +28,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	List<Group> descriptorsSignalABC;	
 	
 	@Before
-	public void initialize() throws DescriptorsBuilderException {
+	public void initialize() throws SynTreeGenerationException {
 		signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
@@ -36,7 +36,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void when1stGenDescriptorCover1stLetterThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		int nbOfRDContainers = 0;
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
 				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
@@ -54,7 +54,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void when1stGenDescriptorCoverLastLetterThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		int nbOfRDContainers = 0;
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
 				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(2));
@@ -72,7 +72,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void when1stGenDescriptorDoesntCoverSpecialPositionThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		int nbOfRDContainers = 0;
 		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABCD = signalBuilderABCD.getSignal();
@@ -92,7 +92,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<ISynTreeIntegrableElement> newGroups = new ArrayList<ISynTreeIntegrableElement>();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderA = 
 				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));

@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.impl.EnumerationCheckerImpl;
 
@@ -25,21 +25,21 @@ public class EnumerationCheckerImplTest {
 	
 	@Test
 	public void whenValuesArentSize1AndComponentsDoesntCoverWholeStringThenNoEnumerationFound() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		IEnumerationChecker enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSizeMoreThan1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), false);
 	}
 	
 	@Test 
-	public void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws DescriptorsBuilderException {
+	public void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws SynTreeGenerationException {
 		IEnumerationChecker enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, tooBigListOfSizeMoreThan1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), false);
 	}
 	
 	@Test
-	public void whenValuesAreSize1ThenEnumerationIsFound() throws DescriptorsBuilderException {
+	public void whenValuesAreSize1ThenEnumerationIsFound() throws SynTreeGenerationException {
 		IEnumerationChecker enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), true);		
@@ -47,7 +47,7 @@ public class EnumerationCheckerImplTest {
 	
 	@Test 
 	public void whenValuesArentSize1ButWholeStringCoveredAndNotTooManyComponentsAndSymmetryThenEnumIsFound() 
-			throws DescriptorsBuilderException{
+			throws SynTreeGenerationException{
 		IEnumerationChecker enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, 
 						listOfSizeMoreThan1ValuesWithSymmetry);
@@ -60,7 +60,7 @@ public class EnumerationCheckerImplTest {
 			IEnumerationChecker enumerationChecker = 
 					new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1);
 		}
-		catch (DescriptorsBuilderException expected) {
+		catch (SynTreeGenerationException expected) {
 			fail();
 		}
 	}	

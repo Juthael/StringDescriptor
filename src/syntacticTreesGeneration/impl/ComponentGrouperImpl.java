@@ -10,7 +10,7 @@ import java.util.Set;
 
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IListOfDescriptorsWithPositions;
@@ -24,7 +24,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 	private Group[][][] combinatoryArrayOfDescriptors;
 	
 	public ComponentGrouperImpl(int componentsGenerationNumber, boolean nextGenerationWillBeTheLast, ISignal signal, 
-			List<Group> previousGenOfDescriptors) throws DescriptorsBuilderException {
+			List<Group> previousGenOfDescriptors) throws SynTreeGenerationException {
 		this.componentsGenerationNumber = componentsGenerationNumber;
 		this.signal = signal;
 		this.previousGenOfDescriptors = previousGenOfDescriptors;
@@ -212,7 +212,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 		else return currentSubSets = previousSubSets;
 	}
 	
-	private void setCombinatoryArrayOfDescriptors() throws DescriptorsBuilderException {
+	private void setCombinatoryArrayOfDescriptors() throws SynTreeGenerationException {
 		initializeCombinatoryArrayOfDescriptors();
 		Map<String, List<Group>> positionToListOfDescriptors = mapPositionToListOfDescriptors();
 		List<String> listOfPositions = new ArrayList<String>(positionToListOfDescriptors.keySet());
@@ -236,7 +236,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 	}
 	
 	private Map<String, List<Group>> mapPositionToListOfDescriptors() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		Map<String, List<Group>> positionToListOfDescriptors = new HashMap<String, List<Group>>();
 		for (Group currentDescriptor : previousGenOfDescriptors) {
 			String positionsString = getStringOfLetterPositions(currentDescriptor);
@@ -251,7 +251,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 		return positionToListOfDescriptors;
 	}
 	
-	private String getStringOfLetterPositions(Group group) throws DescriptorsBuilderException{
+	private String getStringOfLetterPositions(Group group) throws SynTreeGenerationException{
 		String positions;
 		List<String> listOfPositions = new ArrayList<String>();
 		List<String> listOfPropertiesWithPath = group.getListOfPropertiesWithPath();
@@ -272,7 +272,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 			positions = sB.toString();
 			return positions;			
 		}
-		else throw new DescriptorsBuilderException("ComponentGrouper : no letter position was found in current descriptor");
+		else throw new SynTreeGenerationException("ComponentGrouper : no letter position was found in current descriptor");
 	}
 
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -35,7 +35,7 @@ public class NewDescriptorBuilderImplTest {
 	
 	@Test
 	public void whenComponentsDontCoverThenWholeStringThenGroupIsBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();	
@@ -65,7 +65,7 @@ public class NewDescriptorBuilderImplTest {
 	
 	@Test
 	public void whenComponentsCoverTheWholeStringAndRDContainerEmptyThenCharStringIsBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();			
@@ -79,7 +79,7 @@ public class NewDescriptorBuilderImplTest {
 	
 	@Test
 	public void whenComponentsCoverTheWholeStringAndRDContainerIsntEmptyThenCharStringIsBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();			
@@ -107,7 +107,7 @@ public class NewDescriptorBuilderImplTest {
 	
 	@Test
 	public void whenComponentsAreGen2Size1FromFirstLetterThenExpectedNumberOfDescriptorsIsBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();	

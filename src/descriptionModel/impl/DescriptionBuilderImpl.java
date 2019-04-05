@@ -7,8 +7,8 @@ import java.util.function.Predicate;
 import copycatModel.grammar.CharString;
 import descriptionModel.IDescription;
 import descriptionModel.IDescriptionBuilder;
-import exceptions.DescriptionFormatException;
-import exceptions.DescriptorsBuilderException;
+import exceptions.StringFormatException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
@@ -18,8 +18,8 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 	private Predicate<String> validator;
 
 	public DescriptionBuilderImpl() {
-		
 	}
+	
 	@Override
 	public IDescriptionBuilder validatedBy(Predicate<String> predicate) {
 		this.validator = predicate;
@@ -34,8 +34,9 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 
 
 	@Override
-	public List<IDescription> buildList(String stringToBeDescribed) throws DescriptionFormatException {
-		List<IDescription> descs = new ArrayList<>();
+	public List<IDescription> buildList(String stringToBeDescribed) 
+			throws SynTreeGenerationException, StringFormatException {
+		List<IDescription> listOfDescriptions = new ArrayList<>();
 		try {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
@@ -49,18 +50,19 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 					listOfWholeStringDescriptors.addAll(descriptorsBuilderRightToLeft.getListOfStringDescriptors());
 				}
 				if (listOfWholeStringDescriptors.isEmpty())
-					throw new DescriptionFormatException("Unexpected error. List of Descriptors is empty");
+					throw new SynTreeGenerationException("Unexpected error. List of Descriptors is empty");
 				for (CharString descriptor : listOfWholeStringDescriptors) {
 					IDescription description = new DescriptionImpl(descriptor);
-					descs.add(description);
+					listOfDescriptions.add(description);
 				}
 			}
-		} catch (DescriptorsBuilderException descException) {
-			throw new DescriptionFormatException("Unexpected error. " + descException.getMessage());
-		} catch (CloneNotSupportedException cloneException) {
-			throw new DescriptionFormatException("Unexpected error. Clone not supported exception");
+			else throw new StringFormatException("String entered is invalid.");
 		}
-		return descs;
+		catch (CloneNotSupportedException cloneException) {
+			throw new SynTreeGenerationException("DescriptionBuilderImpl.buildList() : "
+					+ "CloneNotSupporterException catched");
+		}
+		return listOfDescriptions;
 	}
 
 }

@@ -3,7 +3,7 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
 
@@ -13,12 +13,12 @@ public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerat
 	protected List<String> listOfDimensions = new ArrayList<String>();
 	protected String enumerationValue;
 	
-	public EnumerationRelationalDataImpl(String dimensionValue, String enumerationValue) throws DescriptorsBuilderException {
+	public EnumerationRelationalDataImpl(String dimensionValue, String enumerationValue) throws SynTreeGenerationException {
 		if (!dimensionValue.isEmpty() && !enumerationValue.isEmpty()) {
 			listOfDimensions.add(dimensionValue);
 			this.enumerationValue = enumerationValue;
 		}
-		else throw new DescriptorsBuilderException("EnumerationRelationalData : empty parameter.");
+		else throw new SynTreeGenerationException("EnumerationRelationalData : empty parameter.");
 	}
 	
 	public EnumerationRelationalDataImpl(IEnumerationRelationalData enumerationRelationalData) {

@@ -10,7 +10,7 @@ import copycatModel.IProperty;
 import copycatModel.IPropertyContainer;
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -34,7 +34,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	}
 
 	@Override
-	public IRelationDataContainer getRelationDataContainer() throws DescriptorsBuilderException {
+	public IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException {
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		if (listOfDescriptors.size() > 1) {
 			List<ISynTreeIntegrableElement> listOfAbstractDescriptors = new ArrayList<ISynTreeIntegrableElement>();
@@ -132,7 +132,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 				else relationDataContainer.cleanValuesRedundancies();
 			}
 		} 
-		else throw new DescriptorsBuilderException("RelationDataContainerBuilder : "
+		else throw new SynTreeGenerationException("RelationDataContainerBuilder : "
 				+ "can't find a relation with only one component.");
 		return relationDataContainer;
 	}
@@ -156,7 +156,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	}
 	
 	private List<String> getlistsOfValuesForThisDimension(String dimension) 
-			throws DescriptorsBuilderException{
+			throws SynTreeGenerationException{
 		List<String> listsOfValuesForThisDimension = new ArrayList<String>();
 		for (IPropertyContainer propertyContainer : listOfPropertyContainers) {
 			IProperty property = 
@@ -167,7 +167,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	}
 	
 	private boolean testIfValuesAreIdentical(List<String> listOfValues) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		boolean valuesAreIdentical = true;
 		if (listOfValues.size() > 1) {
 			String referenceValue = listOfValues.get(0);
@@ -178,7 +178,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 				listIndex++;
 			}				
 		}
-		else throw new DescriptorsBuilderException(
+		else throw new SynTreeGenerationException(
 				"RelationContainerBuilder.testIfListsValuesAreIdentical() : illegal parameter.");
 		return valuesAreIdentical;
 	}

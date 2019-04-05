@@ -13,7 +13,7 @@ import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
@@ -29,7 +29,7 @@ public class DescriptorsBuildingManagerImplTest {
 
 	@Test
 	public void whenComponentListContainsSingleGen1DescriptorThenExpectedNumberOfGen2Size1DescriptorsIsBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean expectedNumberOfGen2Size1DescriptorsIsBuilt;
 		ISignalBuilder signalbuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalbuilder.getSignal();
@@ -60,7 +60,7 @@ public class DescriptorsBuildingManagerImplTest {
 	
 	@Test
 	public void whenGen1ComponentsThenNewDescriptorsAreBuilt() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = false;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		List<Group> descriptorsAB = new ArrayList<Group>();
@@ -81,7 +81,7 @@ public class DescriptorsBuildingManagerImplTest {
 	
 	@Test
 	public void whenSetsOfGen1ComponentsThenNewDescriptorsAreBuiltForEachSet() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean descriptorsAreBuiltForEachSet = true;
 		List<ISynTreeIntegrableElement> newDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
@@ -106,7 +106,7 @@ public class DescriptorsBuildingManagerImplTest {
 	}	
 	
 	@Test
-	public void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = true;
 		List<ISynTreeIntegrableElement> newDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 		List<Group> factorizableNewDescriptors = new ArrayList<Group>();
@@ -153,7 +153,7 @@ public class DescriptorsBuildingManagerImplTest {
 	}
 	
 	@Test
-	public void whenStringIsSize1ThenDescriptorsAreBuilt() throws DescriptorsBuilderException, CloneNotSupportedException {
+	public void whenStringIsSize1ThenDescriptorsAreBuilt() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("a", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		IDescriptorsBuildingManager descriptorsBM = new DescriptorsBuildingManagerImpl(signal, 1, signal.getGroups());
@@ -169,7 +169,7 @@ public class DescriptorsBuildingManagerImplTest {
 	
 	@Test
 	public void whenParameterIsSetOfGen2DescriptorsThenNoExceptionIsThrown() 
-			throws DescriptorsBuilderException, CloneNotSupportedException{
+			throws SynTreeGenerationException, CloneNotSupportedException{
 		List<CharString> listOfDescriptorsCoveringTheWholeString = new ArrayList<CharString>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcde", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
@@ -186,7 +186,7 @@ public class DescriptorsBuildingManagerImplTest {
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("group"))
 					previousGenOfFactorizableDescriptors.add((Group) descriptor);
-				else throw new DescriptorsBuilderException("RelationalDescriptorsBuilder : "
+				else throw new SynTreeGenerationException("RelationalDescriptorsBuilder : "
 						+ "unexpected type of descriptor was found.");
 			}
 			// System.out.println("GEN2 : ");
@@ -201,7 +201,7 @@ public class DescriptorsBuildingManagerImplTest {
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("group"))
 					previousGenOfFactorizableDescriptors.add((Group) descriptor);
-				else throw new DescriptorsBuilderException("RelationalDescriptorsBuilder : "
+				else throw new SynTreeGenerationException("RelationalDescriptorsBuilder : "
 						+ "unexpected type of descriptor was found.");
 			}
 			// System.out.println("GEN3 : ");

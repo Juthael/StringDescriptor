@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import copycatModel.impl.SynTreeIntegrableElementImpl;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 
 public class Groups extends SynTreeIntegrableElementImpl implements Cloneable {
@@ -15,7 +15,7 @@ public class Groups extends SynTreeIntegrableElementImpl implements Cloneable {
 	private HowManyGroups groupX;
 	
 	public Groups(boolean codingDescriptor, Size size, HowManyGroups groupX) 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		super(codingDescriptor);
 		this.size = size;
 		if (groupX.getDescriptorName().equals("group")) {
@@ -28,14 +28,14 @@ public class Groups extends SynTreeIntegrableElementImpl implements Cloneable {
 	}
 	
 	public Groups(boolean codingDescriptor, Size size, HowManyGroups groupX, boolean fullStringGroup) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		super(codingDescriptor);
 		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupX.getDescriptorName().equals("group")){
 			this.size = size;
 			this.groupX = groupX;
 			List<SynTreeIntegrableElementImpl> componentDescriptors = buildListOfComponents();
 			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, componentDescriptors);	
-		} else throw new DescriptorsBuilderException("Groups : illegal parameter values in constructor");
+		} else throw new SynTreeGenerationException("Groups : illegal parameter values in constructor");
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class Groups extends SynTreeIntegrableElementImpl implements Cloneable {
 		Groups cloneGroups;
 		try {
 			cloneGroups = new Groups(isCodingDescriptor, cloneSize, cloneGroupX);
-		} catch (DescriptorsBuilderException e) {
+		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Groups : error in clone() method");
 		}
 		return cloneGroups;

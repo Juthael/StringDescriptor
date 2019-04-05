@@ -7,7 +7,7 @@ import java.util.Map;
 
 import copycatModel.IProperty;
 import copycatModel.IPropertyContainer;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public class PropertyContainerImpl implements Cloneable, IPropertyContainer {
 	
@@ -30,10 +30,10 @@ public class PropertyContainerImpl implements Cloneable, IPropertyContainer {
 	}
 
 	@Override
-	public IProperty getProperty(String dimension) throws DescriptorsBuilderException {
+	public IProperty getProperty(String dimension) throws SynTreeGenerationException {
 		if (dimensionToProperty.containsKey(dimension))
 			return dimensionToProperty.get(dimension);
-		else throw new DescriptorsBuilderException("Property container : unknown dimension requested");
+		else throw new SynTreeGenerationException("Property container : unknown dimension requested");
 	}
 	
 	

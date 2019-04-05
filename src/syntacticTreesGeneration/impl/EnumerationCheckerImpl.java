@@ -2,7 +2,7 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -18,7 +18,7 @@ public class EnumerationCheckerImpl implements IEnumerationChecker {
 	private String enumerationValue="";
 
 	public EnumerationCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -55,7 +55,7 @@ public class EnumerationCheckerImpl implements IEnumerationChecker {
 			enumerationValue = this.values.get(0);
 			simpleEnumerationWasFound = true;
 		}
-		else throw new DescriptorsBuilderException("EnumerationChecker : less than two values to check");
+		else throw new SynTreeGenerationException("EnumerationChecker : less than two values to check");
 		enumerationWasFound = (simpleEnumerationWasFound == true || secondDegreeEnumerationWasFound == true);
 	}
 	
@@ -75,13 +75,13 @@ public class EnumerationCheckerImpl implements IEnumerationChecker {
 	}
 	
 	@Override
-	public IEnumerationRelationalData getEnumerationRelationalData() throws DescriptorsBuilderException {
+	public IEnumerationRelationalData getEnumerationRelationalData() throws SynTreeGenerationException {
 		if (simpleEnumerationWasFound == true || secondDegreeEnumerationWasFound == true) {
 			IEnumerationRelationalData enumerationRelationalData = 
 					new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return enumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderException("EnumerationChecker : can't get an Enumeration that wasn't found");
+		else throw new SynTreeGenerationException("EnumerationChecker : can't get an Enumeration that wasn't found");
 	}
 	
 	private boolean testIfAllValuesAreSizeOne() {

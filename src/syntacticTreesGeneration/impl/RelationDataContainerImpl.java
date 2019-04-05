@@ -3,7 +3,7 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -60,7 +60,7 @@ public class RelationDataContainerImpl implements IRelationDataContainer {
 	}
 	
 	@Override
-	public void cleanValuesRedundancies() throws DescriptorsBuilderException {
+	public void cleanValuesRedundancies() throws SynTreeGenerationException {
 		if (Settings.REDUNDANCIES_IN_RELATIONS_CAN_BE_CLEANED) {
 			List<IEnumerationRelationalData> cleanListOfEnumerationRelationalData 
 			= new ArrayList<IEnumerationRelationalData>();

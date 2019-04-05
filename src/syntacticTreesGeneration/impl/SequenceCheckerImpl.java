@@ -3,7 +3,7 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.ISequenceChecker;
@@ -80,7 +80,7 @@ public class SequenceCheckerImpl implements ISequenceChecker {
 	}
 	
 	@Override
-	public ISequenceRelationalData getSequenceRelationalData() throws DescriptorsBuilderException {
+	public ISequenceRelationalData getSequenceRelationalData() throws SynTreeGenerationException {
 		String enumerationValue = this.enumerationRelationalData.getEnumerationValue();
 		ISequenceRelationalData sequenceRelationalData = 
 				new SequenceRelationalDataImpl(this.dimension, enumerationValue, commonDifferenceValue);

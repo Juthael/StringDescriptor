@@ -10,7 +10,7 @@ import copycatModel.grammar.Groups;
 import copycatModel.grammar.Relation;
 import copycatModel.grammar.Size;
 import copycatModel.grammar.Structure;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupsBuilder;
 import syntacticTreesGeneration.ICharStringBuilder;
@@ -31,7 +31,7 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	
 	public CharStringBuilderImpl(String directionValue, List<Group> listOfGroups, 
 			IRelationDataContainer relationDataContainer) 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		direction = new Direction(false, directionValue);
 		String charStringSizeValue = getCharStringSizeValue(listOfGroups);
 		Size size = new Size(false, charStringSizeValue);
@@ -53,12 +53,12 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	}
 	
 	@Override
-	public CharString getCharString() throws DescriptorsBuilderException {
+	public CharString getCharString() throws SynTreeGenerationException {
 		CharString charString = new CharString(false, direction, structure, groups);
 		return charString;
 	}
 	
-	private Relation getStructureRelation(List<Group> listOfGroups) throws DescriptorsBuilderException {
+	private Relation getStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
 		String dimension = "charString/groups/group/size";
 		List<String> listOfSizeValues = new ArrayList<String>();
@@ -85,12 +85,12 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 			}
 			structureRelation = RelationBuilderImpl.buildRelation(listOfRelationalData);
 		}
-		else throw new DescriptorsBuilderException("CharStringBuilder.getStructureRelation() : "
+		else throw new SynTreeGenerationException("CharStringBuilder.getStructureRelation() : "
 				+ "no enumeration was found.");
 		return structureRelation;	
 	}
 	
-	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws DescriptorsBuilderException {
+	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
 		String dimension = "charString/groups/group/size";
 		List<String> listOfSizeValues = new ArrayList<String>();
@@ -118,12 +118,12 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 			}
 			structureRelation = RelationBuilderImpl.buildRelation(listOfRelationalData);
 		}
-		else throw new DescriptorsBuilderException("CharStringBuilder.getMonoStructureRelation() : "
+		else throw new SynTreeGenerationException("CharStringBuilder.getMonoStructureRelation() : "
 				+ "no enumeration was found.");
 		return structureRelation;	
 	}	
 	
-	private String getCharStringSizeValue(List<Group> listOfGroups) throws DescriptorsBuilderException {
+	private String getCharStringSizeValue(List<Group> listOfGroups) throws SynTreeGenerationException {
 		String charStringSizeValue;
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
 		for (Group group : listOfGroups) {

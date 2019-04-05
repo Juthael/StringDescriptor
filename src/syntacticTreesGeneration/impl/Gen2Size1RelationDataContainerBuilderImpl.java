@@ -8,7 +8,7 @@ import copycatModel.IProperty;
 import copycatModel.ISignal;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -27,7 +27,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 	
 	@Override
 	public List<IRelationDataContainer> getListOfRelationDataContainers() 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<IRelationDataContainer> listOfRelationDataContainers = 
 				new ArrayList<IRelationDataContainer>();
 		List<ISynTreeIntegrableElement> listOf1Descriptor = new ArrayList<ISynTreeIntegrableElement>();
@@ -117,7 +117,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 		return listOfRelationDataContainers;
 	}
 	
-	private boolean testIfGen1DescriptorContainsFirstLetter() throws DescriptorsBuilderException {
+	private boolean testIfGen1DescriptorContainsFirstLetter() throws SynTreeGenerationException {
 		boolean gen1DescriptorContainsFirstLetter;
 		String gen1LetterPositionValue = "";
 		List<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
@@ -137,12 +137,12 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 				gen1DescriptorContainsFirstLetter = true;
 			else gen1DescriptorContainsFirstLetter = false;
 		}
-		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : "
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : "
 				+ "error in testIfGen1DescriptorContainsFirstLetter() method");
 		return gen1DescriptorContainsFirstLetter;
 	}
 	
-	private boolean testIfGen1DescriptorContainsLastLetter() throws DescriptorsBuilderException {
+	private boolean testIfGen1DescriptorContainsLastLetter() throws SynTreeGenerationException {
 		int signalSize = signal.getSignalSize();
 		boolean gen1DescriptorContainsLastLetter;
 		String gen1LetterPositionValue = "";
@@ -163,11 +163,11 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 				gen1DescriptorContainsLastLetter = true;
 			else gen1DescriptorContainsLastLetter = false;
 		}
-		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Group position was not found");
 		return gen1DescriptorContainsLastLetter;
 	}
 	
-	private boolean testIfGen1DescriptorContainsCentralLetter() throws DescriptorsBuilderException {
+	private boolean testIfGen1DescriptorContainsCentralLetter() throws SynTreeGenerationException {
 		int signalSize = signal.getSignalSize();
 		boolean gen1DescriptorContainsCentralLetter;
 		String gen1LetterPositionValue = "";
@@ -193,11 +193,11 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			}
 			else gen1DescriptorContainsCentralLetter = false;
 		}
-		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Group position was not found");
 		return gen1DescriptorContainsCentralLetter;
 	}
 	
-	private EnumerationRelationalDataImpl buildLetterEnumerationRelationalData() throws DescriptorsBuilderException {
+	private EnumerationRelationalDataImpl buildLetterEnumerationRelationalData() throws SynTreeGenerationException {
 		EnumerationRelationalDataImpl letterEnumerationRelationalData;
 		String dimension = "";
 		String enumerationValue="";
@@ -218,10 +218,10 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return letterEnumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
 	}
 	
-	private EnumerationRelationalDataImpl buildSizeEnumerationRelationalData() throws DescriptorsBuilderException {
+	private EnumerationRelationalDataImpl buildSizeEnumerationRelationalData() throws SynTreeGenerationException {
 		EnumerationRelationalDataImpl sizeEnumerationRelationalData;
 		String dimension = "";
 		String enumerationValue = "1";
@@ -240,12 +240,12 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return sizeEnumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Size value was not found.");			
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Size value was not found.");			
 	}
 	
 	private ISequenceRelationalData buildLetterSequenceRelationalData(
 			IEnumerationRelationalData letterEnumerationRelationalData, 
-			int incrementValue) throws DescriptorsBuilderException {
+			int incrementValue) throws SynTreeGenerationException {
 		ISequenceRelationalData letterSequenceRelationalData;
 		String dimensionValue = letterEnumerationRelationalData.getDimensions().get(0);
 		String enumerationValue = letterEnumerationRelationalData.getEnumerationValue();
@@ -255,7 +255,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 	}
 	
 	private ISequenceRelationalData buildSizeSequenceRelationalData(
-			IEnumerationRelationalData sizeEnumerationRelationalData) throws DescriptorsBuilderException {
+			IEnumerationRelationalData sizeEnumerationRelationalData) throws SynTreeGenerationException {
 		int incrementValue = 0;
 		ISequenceRelationalData sizeSequenceRelationalData;
 		String dimensionValue = sizeEnumerationRelationalData.getDimensions().get(0);

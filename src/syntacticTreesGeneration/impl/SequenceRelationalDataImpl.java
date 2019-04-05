@@ -2,7 +2,7 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
 import syntacticTreesGeneration.ISequenceRelationalData;
@@ -12,13 +12,13 @@ public class SequenceRelationalDataImpl extends EnumerationRelationalDataImpl im
 	private final String commonDifference;
 	
 	public SequenceRelationalDataImpl(String dimensionValue, String enumerationValue, String commonDifference) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		super(dimensionValue, enumerationValue);
 		if (!commonDifference.isEmpty()) {
 			changeName();
 			this.commonDifference = commonDifference;
 		}
-		else throw new DescriptorsBuilderException("SequenceRelationalData : empty parameter.");
+		else throw new SynTreeGenerationException("SequenceRelationalData : empty parameter.");
 	}
 	
 	public SequenceRelationalDataImpl(ISequenceRelationalData sequenceRelationalData) {

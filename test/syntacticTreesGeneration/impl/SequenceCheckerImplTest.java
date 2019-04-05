@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -36,7 +36,7 @@ public class SequenceCheckerImplTest {
 	private ISequenceChecker sequenceChecker;
 
 	@Test
-	public void ifValuesArentTheSameSizeThenNoSequenceFound() throws DescriptorsBuilderException {
+	public void ifValuesArentTheSameSizeThenNoSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, listOfValuesOfDifferentSizes);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		sequenceChecker = 
@@ -46,7 +46,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifNoCommonDifferenceValueThenNoSequenceFound() throws DescriptorsBuilderException {
+	public void ifNoCommonDifferenceValueThenNoSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1ValuesWithNoCommonDiff);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		sequenceChecker = 
@@ -56,7 +56,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifNoCommonPatternBtw2ndDegreeValuesThenNoSequenceFound() throws DescriptorsBuilderException {
+	public void ifNoCommonPatternBtw2ndDegreeValuesThenNoSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, listOf2ndDegreeValuesWithNoCommonPatternButCommonDifference);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -68,7 +68,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifIncrementIsSuperiorToTheMaxValueInSettingsThenNoSequenceFound() throws DescriptorsBuilderException {
+	public void ifIncrementIsSuperiorToTheMaxValueInSettingsThenNoSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfValuesWithIncrementTooBig);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -79,7 +79,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifValuesAreIdenticalThenSequenceIsFound() throws DescriptorsBuilderException {
+	public void ifValuesAreIdenticalThenSequenceIsFound() throws SynTreeGenerationException {
 		enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfIdenticalValues);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -89,7 +89,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifCommonDifferenceBtwSize1ValuesThenSequenceFound() throws DescriptorsBuilderException {
+	public void ifCommonDifferenceBtwSize1ValuesThenSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = 
 				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1ValuesWithCommonDiff);
 		IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
@@ -100,7 +100,7 @@ public class SequenceCheckerImplTest {
 	}
 	
 	@Test
-	public void ifCommonDifferenceBtw2ndDegreeValuesWithSamePatternThenSequenceFound() throws DescriptorsBuilderException {
+	public void ifCommonDifferenceBtw2ndDegreeValuesWithSamePatternThenSequenceFound() throws SynTreeGenerationException {
 		enumerationChecker = 
 				new EnumerationCheckerImpl(
 						wholeStringIsDescribed_true, dimension, listOf2ndDegreeValuesWithCommonPatternAndDifference);

@@ -27,7 +27,7 @@ import copycatModel.grammar.RelationsOrLetter;
 import copycatModel.grammar.Sequence;
 import copycatModel.grammar.SequenceRel;
 import copycatModel.grammar.Size;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -43,7 +43,7 @@ import syntacticTreesGeneration.impl.SignalBuilderImpl;
 public class ComponentGrouperImplTest {
 
 	@Test
-	public void AllSetsCoverAdjacentLetters() throws DescriptorsBuilderException {
+	public void AllSetsCoverAdjacentLetters() throws SynTreeGenerationException {
 		boolean setsCoverAdjacentLetters = true;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -76,7 +76,7 @@ public class ComponentGrouperImplTest {
 	}	
 	
 	@Test
-	public void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws DescriptorsBuilderException {
+	public void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws SynTreeGenerationException {
 		boolean positionsCoveredAreAsExpectedBelow;
 		Set<List<Integer>> setOfPositionListsExpectedForABCD = new HashSet<List<Integer>>();
 		Set<List<Integer>> setOfPositionListsFounForABCD = new HashSet<List<Integer>>();
@@ -121,7 +121,7 @@ public class ComponentGrouperImplTest {
 	}	
 	
 	@Test
-	public void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws DescriptorsBuilderException {
+	public void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws SynTreeGenerationException {
 		boolean oneSetAtLeastIsSize1 = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -142,7 +142,7 @@ public class ComponentGrouperImplTest {
 	
 	@Test
 	public void whenComponentsArent1stGenerationThenSetsCanNotBeOfSize1() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean oneSetOfComponentsAtLeastIsSize1 = false;
 		ArrayList<Group> previousDescriptors = new ArrayList<Group>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
@@ -244,7 +244,7 @@ public class ComponentGrouperImplTest {
 	}
 	
 	@Test
-	public void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws DescriptorsBuilderException {
+	public void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws SynTreeGenerationException {
 		boolean oneSetAtLeastDoNotCoverTheWholeString = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
@@ -271,7 +271,7 @@ public class ComponentGrouperImplTest {
 	
 	@Test
 	public void whenNextGenerationWillBeTheLastThenAllSetsCoverTheWholeString() 
-			throws DescriptorsBuilderException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean oneSetAtLeastDoNotCoverTheWholeString = false;
 		ArrayList<Group> previousDescriptors = new ArrayList<Group>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");

@@ -1,11 +1,11 @@
 package syntacticTreesGeneration;
 
 import copycatModel.ISynTreeIntegrableElement;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface INewDescriptorBuilder {
 
 	ISynTreeIntegrableElement getNewDescriptor()
-			throws DescriptorsBuilderException, CloneNotSupportedException;
+			throws SynTreeGenerationException, CloneNotSupportedException;
 
 }

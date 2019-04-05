@@ -7,13 +7,13 @@ import java.util.Set;
 
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IDescriptorSpanGetter;
 
 public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 
 	public static List<Integer> getDescriptorSpan (ISynTreeIntegrableElement synTreeIntegrableElement) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		List<Integer> listOfLetterPositionsOccupied = new ArrayList<Integer>();
 		List<String> listOfPropertiesWithPath = synTreeIntegrableElement.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
@@ -27,12 +27,12 @@ public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 		if (listOfLetterPositionsOccupied.size() != 0) {
 			return listOfLetterPositionsOccupied;
 		}
-		else throw new DescriptorsBuilderException("DescriptorSpanGetter : list of positions occupied is empty");
+		else throw new SynTreeGenerationException("DescriptorSpanGetter : list of positions occupied is empty");
 	}
 	
 	public static boolean testIfWholeStringIsDescribed(ISignal signal, 
 			List<ISynTreeIntegrableElement> listOfDescriptors) 
-			throws DescriptorsBuilderException {
+			throws SynTreeGenerationException {
 		boolean wholeStringIsDescribed;
 		Set<Integer> setOfLetterPositionsOccupied = new HashSet<Integer>();
 		for (ISynTreeIntegrableElement descriptor : listOfDescriptors) {

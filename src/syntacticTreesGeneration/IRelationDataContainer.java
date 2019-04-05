@@ -2,7 +2,7 @@ package syntacticTreesGeneration;
 
 import java.util.List;
 
-import exceptions.DescriptorsBuilderException;
+import exceptions.SynTreeGenerationException;
 
 public interface IRelationDataContainer {
 
@@ -24,7 +24,7 @@ public interface IRelationDataContainer {
 
 	void addSymmetry(ISymmetryRelationalData symmetryRelationalData);
 
-	void cleanValuesRedundancies() throws DescriptorsBuilderException;
+	void cleanValuesRedundancies() throws SynTreeGenerationException;
 	
 	void clear();
 
