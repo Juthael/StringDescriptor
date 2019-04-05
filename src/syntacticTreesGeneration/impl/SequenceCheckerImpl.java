@@ -1,24 +1,25 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SequenceCheckerInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.ISequenceChecker;
+import syntacticTreesGeneration.ISequenceRelationalData;
 
-public class SequenceCheckerV1 implements SequenceCheckerInterface {
+public class SequenceCheckerImpl implements ISequenceChecker {
 
 	private final boolean wholeStringIsDescribed;
 	private final String dimension;
-	private final ArrayList<String> values;
-	private final EnumerationRelationalDataInterface enumerationRelationalData;
+	private final List<String> values;
+	private final IEnumerationRelationalData enumerationRelationalData;
 	private boolean sequenceWasFound;
 	private String commonDifferenceValue="";
 	
-	public SequenceCheckerV1(boolean wholeStringIsDescribed, String dimension, ArrayList<String> values, 
-			EnumerationRelationalDataInterface enumerationRelationalData) {
+	public SequenceCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
+			IEnumerationRelationalData enumerationRelationalData) {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -28,7 +29,7 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 		if (values.size() > 1) {
 			boolean allValuesAreSize1 = testIfAllValuesAreSizeOne();
 			if (allValuesAreSize1 == true) {
-				ArrayList<Integer> listOfIntegerValues = initializeListOfIntegerValues();
+				List<Integer> listOfIntegerValues = initializeListOfIntegerValues();
 				IntegerCommonDifferenceValue = listOfIntegerValues.get(1) - listOfIntegerValues.get(0);
 				int valuesIndex = 1;
 				while ((sequenceWasFound == true) && (valuesIndex < listOfIntegerValues.size()-1)) {
@@ -41,14 +42,14 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 			else if (this.wholeStringIsDescribed == true) {
 				boolean allValuesAreTheSameSize = testIfAllValuesAreTheSameSize();
 				if (allValuesAreTheSameSize == true) {
-					ArrayList<ArrayList<Integer>> secondDegreeListOfIntegerValues = initialize2ndDegreeListOfIntegerValues();
+					List<List<Integer>> secondDegreeListOfIntegerValues = initialize2ndDegreeListOfIntegerValues();
 					int valuesIndex = 0;
 					IntegerCommonDifferenceValue = 
 							secondDegreeListOfIntegerValues.get(1).get(0) - 
 								secondDegreeListOfIntegerValues.get(0).get(0);
 					while ((sequenceWasFound == true) && (valuesIndex < secondDegreeListOfIntegerValues.size()-1)) {
-						ArrayList<Integer> refList = secondDegreeListOfIntegerValues.get(valuesIndex);
-						ArrayList<Integer> comparedList = secondDegreeListOfIntegerValues.get(valuesIndex+1);
+						List<Integer> refList = secondDegreeListOfIntegerValues.get(valuesIndex);
+						List<Integer> comparedList = secondDegreeListOfIntegerValues.get(valuesIndex+1);
 						boolean gapIsConstantBetweenSubValues = 
 								testIfTheGapIsConstantBetween2ndDegreeSubValues(refList, comparedList);
 						if (gapIsConstantBetweenSubValues == true) {
@@ -67,7 +68,7 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 			}
 			else sequenceWasFound = false;
 		}
-		if ((sequenceWasFound == true) && (Math.abs(IntegerCommonDifferenceValue) <= DescGenSettings.MAX_INCREMENT_ABS_VALUE)) {
+		if ((sequenceWasFound == true) && (Math.abs(IntegerCommonDifferenceValue) <= Settings.MAX_INCREMENT_ABS_VALUE)) {
 			commonDifferenceValue = Integer.toString(IntegerCommonDifferenceValue);
 		}
 		else sequenceWasFound = false;
@@ -79,10 +80,10 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 	}
 	
 	@Override
-	public SequenceRelationalDataInterface getSequenceRelationalData() throws DescriptorsBuilderCriticalException {
+	public ISequenceRelationalData getSequenceRelationalData() throws DescriptorsBuilderException {
 		String enumerationValue = this.enumerationRelationalData.getEnumerationValue();
-		SequenceRelationalDataInterface sequenceRelationalData = 
-				new SequenceRelationalDataV1(this.dimension, enumerationValue, commonDifferenceValue);
+		ISequenceRelationalData sequenceRelationalData = 
+				new SequenceRelationalDataImpl(this.dimension, enumerationValue, commonDifferenceValue);
 		return sequenceRelationalData;
 	}
 	
@@ -95,19 +96,19 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 		return allValuesAreSize1;
 	}
 	
-	private ArrayList<Integer> initializeListOfIntegerValues() {
-		ArrayList<Integer> listOfIntegerValues = new ArrayList<Integer>();
+	private List<Integer> initializeListOfIntegerValues() {
+		List<Integer> listOfIntegerValues = new ArrayList<Integer>();
 		for (String value : values) {
 			listOfIntegerValues.add(Integer.parseInt(value));
 		}
 		return listOfIntegerValues;
 	}
 	
-	private ArrayList<ArrayList<Integer>> initialize2ndDegreeListOfIntegerValues(){
-		ArrayList<ArrayList<Integer>> secondDegreeListOfIntegerValues = new ArrayList<ArrayList<Integer>>();
+	private List<List<Integer>> initialize2ndDegreeListOfIntegerValues(){
+		List<List<Integer>> secondDegreeListOfIntegerValues = new ArrayList<List<Integer>>();
 		for (String value : values) {
 			String[] subValues = value.split(",");
-			ArrayList<Integer> integerSubValues = new ArrayList<Integer>();
+			List<Integer> integerSubValues = new ArrayList<Integer>();
 			for (String subValue : subValues) {
 				integerSubValues.add(Integer.parseInt(subValue));
 			}
@@ -127,8 +128,8 @@ public class SequenceCheckerV1 implements SequenceCheckerInterface {
 		return allValuesAreTheSameSize;
 	}
 	
-	private boolean testIfTheGapIsConstantBetween2ndDegreeSubValues(ArrayList<Integer> refListOfValues, 
-			ArrayList<Integer> comparedListOfValues) {
+	private boolean testIfTheGapIsConstantBetween2ndDegreeSubValues(List<Integer> refListOfValues, 
+			List<Integer> comparedListOfValues) {
 		int subValuesIndex = 1;
 		int letterValueGap = comparedListOfValues.get(0) - refListOfValues.get(0);
 		boolean gapIsConstant = true;

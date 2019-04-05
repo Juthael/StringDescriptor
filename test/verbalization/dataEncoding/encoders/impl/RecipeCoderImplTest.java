@@ -1,4 +1,4 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,12 +7,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import verbalization.interfaces.RecipeCoderInterface;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encoders.IRecipeCoder;
+import verbalization.dataEncoding.encoders.impl.RecipeCoderImpl;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 
-public class RecipeCoderV1Test {
+public class RecipeCoderImplTest {
 
 	@Test
 	public void whenParameterIsThisListOfPropertiesThenExpectedInstructionCodeGettersAreReturned() {
@@ -52,12 +53,12 @@ public class RecipeCoderV1Test {
 		listOfProperties.add("group/relations/groups/groupX5/group/letter/platonicLetter/5");
 		List<String> listOfPredicateCodes = new ArrayList<String>();
 		try {
-			RecipeCoderInterface recipeCoder = new RecipeCoderV1(listOfProperties);
-			RecipeCodeGetterInterface recipeCodeGetter = recipeCoder.getRecipeCodeGetter();
-			for (InstructionCodeGetterInterface instructionCodeGetter : recipeCodeGetter.getListOfInstructionCodeGetters()) {
-				List<TransformationCodeGetterInterface> listOfTransfoCodeGetters = 
+			IRecipeCoder recipeCoder = new RecipeCoderImpl(listOfProperties);
+			IRecipeCodeGetter recipeCodeGetter = recipeCoder.getRecipeCodeGetter();
+			for (IInstructionCodeGetter instructionCodeGetter : recipeCodeGetter.getListOfInstructionCodeGetters()) {
+				List<ITransformationCodeGetter> listOfTransfoCodeGetters = 
 						instructionCodeGetter.getListOfTransformationCodeGetters();
-				for (TransformationCodeGetterInterface transfoCodeGetter : listOfTransfoCodeGetters) {
+				for (ITransformationCodeGetter transfoCodeGetter : listOfTransfoCodeGetters) {
 					List<String> currentListOfPredicateCodes = transfoCodeGetter.getListOfPredicateCodes();
 					listOfPredicateCodes.addAll(currentListOfPredicateCodes);
 				}

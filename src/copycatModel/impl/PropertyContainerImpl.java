@@ -1,37 +1,39 @@
-package copycatModel.implementations;
+package copycatModel.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import copycatModel.interfaces.PropertyContainerInterface;
-import copycatModel.interfaces.PropertyInterface;
-import exceptions.DescriptorsBuilderCriticalException;
+import copycatModel.IProperty;
+import copycatModel.IPropertyContainer;
+import exceptions.DescriptorsBuilderException;
 
-public class PropertyContainerV1 implements Cloneable, PropertyContainerInterface {
+public class PropertyContainerImpl implements Cloneable, IPropertyContainer {
 	
-	HashMap<String, PropertyInterface> dimensionToProperty = new HashMap<String, PropertyInterface>();
+	Map<String, IProperty> dimensionToProperty = new HashMap<String, IProperty>();
 	
-	public PropertyContainerV1(HashMap<String, PropertyInterface> dimensionToProperty) {
+	public PropertyContainerImpl(Map<String, IProperty> dimensionToProperty) {
 		this.dimensionToProperty = dimensionToProperty;
 	}
 	
 	//Getters
 	@Override
-	public HashMap<String, PropertyInterface> getDimensionToProperty(){
+	public Map<String, IProperty> getDimensionToProperty(){
 		return dimensionToProperty;
 	}
 
 	@Override
-	public ArrayList<String> getListOfDimensions() {
-		ArrayList<String> listOfDimensions = new ArrayList<String>(dimensionToProperty.keySet());
+	public List<String> getListOfDimensions() {
+		List<String> listOfDimensions = new ArrayList<String>(dimensionToProperty.keySet());
 		return listOfDimensions;
 	}
 
 	@Override
-	public PropertyInterface getProperty(String dimension) throws DescriptorsBuilderCriticalException {
+	public IProperty getProperty(String dimension) throws DescriptorsBuilderException {
 		if (dimensionToProperty.containsKey(dimension))
 			return dimensionToProperty.get(dimension);
-		else throw new DescriptorsBuilderCriticalException("Property container : unknown dimension requested");
+		else throw new DescriptorsBuilderException("Property container : unknown dimension requested");
 	}
 	
 	

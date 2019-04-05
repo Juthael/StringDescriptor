@@ -1,23 +1,23 @@
-package copycatModel.implementations;
+package copycatModel.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.SignalInterface;
 
-public class SignalV1 implements Cloneable, SignalInterface {
+public class SignalImpl implements Cloneable, ISignal {
 
-	private ArrayList<Group> listOfGroups;
+	private List<Group> listOfGroups;
 	private String directionValue; // "fromLeftToRight" or "fromRightToLeft";
 	
-	public SignalV1(ArrayList<Group> listOfGroups, String directionValue) {
+	public SignalImpl(List<Group> listOfGroups, String directionValue) {
 		this.listOfGroups = listOfGroups;
 		this.directionValue = directionValue;
 	}
 
 	//Getters
 	@Override
-	public ArrayList<Group> getGroups() {
+	public List<Group> getGroups() {
 		return listOfGroups;
 	}
 

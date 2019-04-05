@@ -1,20 +1,21 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
 
-public class RelationDataContainerV1 implements RelationDataContainerInterface {
+public class RelationDataContainerImpl implements IRelationDataContainer {
 
 	private boolean newDescriptorWillCoverTheFullString = false;
-	private ArrayList<EnumerationRelationalDataInterface> listOfEnumerations = new ArrayList<EnumerationRelationalDataInterface>();
-	private ArrayList<SequenceRelationalDataInterface> listOfSequences = new ArrayList<SequenceRelationalDataInterface>();
-	private ArrayList<SymmetryRelationalDataInterface> listOfSymmetries = new ArrayList<SymmetryRelationalDataInterface>();
+	private List<IEnumerationRelationalData> listOfEnumerations = new ArrayList<IEnumerationRelationalData>();
+	private List<ISequenceRelationalData> listOfSequences = new ArrayList<ISequenceRelationalData>();
+	private List<ISymmetryRelationalData> listOfSymmetries = new ArrayList<ISymmetryRelationalData>();
 	
 	//Getters
 	@Override
@@ -23,17 +24,17 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 	}	
 	
 	@Override
-	public ArrayList<EnumerationRelationalDataInterface> getListOfEnumerations() {
+	public List<IEnumerationRelationalData> getListOfEnumerations() {
 		return listOfEnumerations;
 	}
 
 	@Override
-	public ArrayList<SequenceRelationalDataInterface> getListOfSequences() {
+	public List<ISequenceRelationalData> getListOfSequences() {
 		return listOfSequences;
 	}
 
 	@Override
-	public ArrayList<SymmetryRelationalDataInterface> getListOfSymmetries() {
+	public List<ISymmetryRelationalData> getListOfSymmetries() {
 		return listOfSymmetries;
 	}	
 	
@@ -44,29 +45,29 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 	}
 	
 	@Override
-	public void addEnumeration(EnumerationRelationalDataInterface enumerationRelationalData) {
+	public void addEnumeration(IEnumerationRelationalData enumerationRelationalData) {
 		listOfEnumerations.add(enumerationRelationalData);
 	}
 	
 	@Override
-	public void addSequence(SequenceRelationalDataInterface sequenceRelationalData) {
+	public void addSequence(ISequenceRelationalData sequenceRelationalData) {
 		listOfSequences.add(sequenceRelationalData);
 	}
 	
 	@Override
-	public void addSymmetry(SymmetryRelationalDataInterface symmetryRelationalData) {
+	public void addSymmetry(ISymmetryRelationalData symmetryRelationalData) {
 		listOfSymmetries.add(symmetryRelationalData);
 	}
 	
 	@Override
-	public void cleanValuesRedundancies() throws DescriptorsBuilderCriticalException {
-		if (DescGenSettings.REDUNDANCIES_IN_RELATIONS_CAN_BE_CLEANED) {
-			ArrayList<EnumerationRelationalDataInterface> cleanListOfEnumerationRelationalData 
-			= new ArrayList<EnumerationRelationalDataInterface>();
-			ArrayList<SequenceRelationalDataInterface> cleanListOfSequences = 
-					new ArrayList<SequenceRelationalDataInterface>();
-			ArrayList<SymmetryRelationalDataInterface> cleanListOfSymmetries = 
-					new ArrayList<SymmetryRelationalDataInterface>();
+	public void cleanValuesRedundancies() throws DescriptorsBuilderException {
+		if (Settings.REDUNDANCIES_IN_RELATIONS_CAN_BE_CLEANED) {
+			List<IEnumerationRelationalData> cleanListOfEnumerationRelationalData 
+			= new ArrayList<IEnumerationRelationalData>();
+			List<ISequenceRelationalData> cleanListOfSequences = 
+					new ArrayList<ISequenceRelationalData>();
+			List<ISymmetryRelationalData> cleanListOfSymmetries = 
+					new ArrayList<ISymmetryRelationalData>();
 			cloneEnumerationList();
 			boolean enumerationListHasBeenCleaned = false;
 			for (int i=0 ; i<listOfEnumerations.size() ; i++) {
@@ -78,7 +79,7 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 						boolean ifSequencesFoundCommonDiffAreTheSame = 
 								checkIfEnumerationsCanBeMerged(listOfEnumerations.get(i), listOfEnumerations.get(j));
 						if (ifSequencesFoundCommonDiffAreTheSame == true) {
-							ArrayList<String> dimensionsToBeAdded = listOfEnumerations.get(i).getDimensions();
+							List<String> dimensionsToBeAdded = listOfEnumerations.get(i).getDimensions();
 							listOfEnumerations.get(j).addDimensions(dimensionsToBeAdded);
 							iValueIsUnique = false;
 							enumerationListHasBeenCleaned = true;
@@ -91,15 +92,15 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 			listOfEnumerations = cleanListOfEnumerationRelationalData;
 			if (enumerationListHasBeenCleaned == true) {
 				cloneOtherLists();
-				for (EnumerationRelationalDataInterface enumerationRelationalData : listOfEnumerations) {
+				for (IEnumerationRelationalData enumerationRelationalData : listOfEnumerations) {
 					boolean dimensionWasFoundInListOfSequences = false;
 					boolean dimensionWasFoundInListOfSymmetries = false;
-					ArrayList<String> enumerationDimensions = enumerationRelationalData.getDimensions();
+					List<String> enumerationDimensions = enumerationRelationalData.getDimensions();
 					for (String enumerationDimension : enumerationDimensions) {
-						for (SequenceRelationalDataInterface sequenceRelationalData : listOfSequences) {
+						for (ISequenceRelationalData sequenceRelationalData : listOfSequences) {
 							if (sequenceRelationalData.getDimensions().contains(enumerationDimension)){
 								if (dimensionWasFoundInListOfSequences == false) {
-									cleanListOfSequences.add(new SequenceRelationalDataV1(sequenceRelationalData));
+									cleanListOfSequences.add(new SequenceRelationalDataImpl(sequenceRelationalData));
 									dimensionWasFoundInListOfSequences = true;
 								}
 								else {
@@ -108,7 +109,7 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 								}
 							}
 						}
-						for (SymmetryRelationalDataInterface symmetryRelationalData : listOfSymmetries) {
+						for (ISymmetryRelationalData symmetryRelationalData : listOfSymmetries) {
 							if (symmetryRelationalData.getDimensions().contains(enumerationDimension)){
 								if (dimensionWasFoundInListOfSymmetries == false) {
 									cleanListOfSymmetries.add(symmetryRelationalData);
@@ -135,17 +136,17 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 		listOfSymmetries.clear();
 	}	
 	
-	private boolean checkIfEnumerationsCanBeMerged(EnumerationRelationalDataInterface enum1, EnumerationRelationalDataInterface enum2) {
+	private boolean checkIfEnumerationsCanBeMerged(IEnumerationRelationalData enum1, IEnumerationRelationalData enum2) {
 		boolean enumerationsCanBeMerged = true;
 		String dimension1 = enum1.getDimensions().get(0);
 		String dimension2 = enum2.getDimensions().get(0);
 		int sequenceListIndexA = 0;
 		while (enumerationsCanBeMerged == true && sequenceListIndexA < listOfSequences.size()) {
-			SequenceRelationalDataInterface sequenceA = listOfSequences.get(sequenceListIndexA);
+			ISequenceRelationalData sequenceA = listOfSequences.get(sequenceListIndexA);
 			if (sequenceA.getDimensions().contains(dimension1)) {
 				String commonDiffA = sequenceA.getCommonDifference();
 				boolean sequenceBHasBeenFound = false;
-				for (SequenceRelationalDataInterface sequenceB : listOfSequences) {
+				for (ISequenceRelationalData sequenceB : listOfSequences) {
 					if (sequenceB.getDimensions().contains(dimension2)) {
 						sequenceBHasBeenFound = true;
 						String commonDiffB = sequenceB.getCommonDifference();
@@ -161,29 +162,26 @@ public class RelationDataContainerV1 implements RelationDataContainerInterface {
 	}
 	
 	private void cloneEnumerationList() {
-		ArrayList<EnumerationRelationalDataInterface> listOfEnumerationsClone = 
-				new ArrayList<EnumerationRelationalDataInterface>();
-		for (EnumerationRelationalDataInterface enumerationRelationalData : listOfEnumerations) {
-			EnumerationRelationalDataInterface enumerationRelationalDataClone = 
-					new EnumerationRelationalDataV1(enumerationRelationalData);
+		List<IEnumerationRelationalData> listOfEnumerationsClone = new ArrayList<IEnumerationRelationalData>();
+		for (IEnumerationRelationalData enumerationRelationalData : listOfEnumerations) {
+			IEnumerationRelationalData enumerationRelationalDataClone = 
+					new EnumerationRelationalDataImpl(enumerationRelationalData);
 			listOfEnumerationsClone.add(enumerationRelationalDataClone);
 		}
 		listOfEnumerations = listOfEnumerationsClone;
 	}
 	
 	private void cloneOtherLists() {
-		ArrayList<SequenceRelationalDataInterface> listOfSequencesClone = 
-				new ArrayList<SequenceRelationalDataInterface>();
-		for (SequenceRelationalDataInterface sequenceRelationalData : listOfSequences) {
-			SequenceRelationalDataInterface sequenceRelationalDataClone = 
-					new SequenceRelationalDataV1(sequenceRelationalData);
+		List<ISequenceRelationalData> listOfSequencesClone = new ArrayList<ISequenceRelationalData>();
+		for (ISequenceRelationalData sequenceRelationalData : listOfSequences) {
+			ISequenceRelationalData sequenceRelationalDataClone = 
+					new SequenceRelationalDataImpl(sequenceRelationalData);
 			listOfSequencesClone.add(sequenceRelationalDataClone);
 		}
-		ArrayList<SymmetryRelationalDataInterface> listOfSymmetriesClone = 
-				new ArrayList<SymmetryRelationalDataInterface>();	
-		for (SymmetryRelationalDataInterface symmetryRelationalData : listOfSymmetries) {
-			SymmetryRelationalDataInterface symmetryRelationalDataClone = 
-					new SymmetryRelationalDataV1(symmetryRelationalData);
+		List<ISymmetryRelationalData> listOfSymmetriesClone = new ArrayList<ISymmetryRelationalData>();	
+		for (ISymmetryRelationalData symmetryRelationalData : listOfSymmetries) {
+			ISymmetryRelationalData symmetryRelationalDataClone = 
+					new SymmetryRelationalDataImpl(symmetryRelationalData);
 			listOfSymmetriesClone.add(symmetryRelationalDataClone);
 		}
 		

@@ -1,48 +1,49 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import copycatModel.IProperty;
+import copycatModel.ISignal;
+import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.PropertyInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.Gen2Size1RelationDataContainerBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.ISequenceRelationalData;
 
-public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1RelationDataContainerBuilderInterface {
+public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1RelationDataContainerBuilder {
 
 	private Group gen1Descriptor;
-	private SignalInterface signal;
+	private ISignal signal;
 	
-	public Gen2Size1RelationDataContainerBuilderV1(SignalInterface signal, Group gen1Descriptor) {
+	public Gen2Size1RelationDataContainerBuilderImpl(ISignal signal, Group gen1Descriptor) {
 		this.gen1Descriptor= gen1Descriptor;
 		this.signal = signal;
 	}
 	
 	@Override
-	public ArrayList<RelationDataContainerInterface> getListOfRelationDataContainers() 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<RelationDataContainerInterface> listOfRelationDataContainers = 
-				new ArrayList<RelationDataContainerInterface>();
-		ArrayList<AbstractDescriptorInterface> listOf1Descriptor = new ArrayList<AbstractDescriptorInterface>();
+	public List<IRelationDataContainer> getListOfRelationDataContainers() 
+			throws DescriptorsBuilderException {
+		List<IRelationDataContainer> listOfRelationDataContainers = 
+				new ArrayList<IRelationDataContainer>();
+		List<ISynTreeIntegrableElement> listOf1Descriptor = new ArrayList<ISynTreeIntegrableElement>();
 		listOf1Descriptor.add(gen1Descriptor);
 		boolean newDescriptorWillCoverTheWholeString = 
-				DescriptorSpanGetterV1.testIfWholeStringIsDescribed(signal, listOf1Descriptor);
-		EnumerationRelationalDataInterface letterEnumerationRelationalData = buildLetterEnumerationRelationalData();
-		EnumerationRelationalDataInterface sizeEnumerationRelationalData = buildSizeEnumerationRelationalData();
+				DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOf1Descriptor);
+		IEnumerationRelationalData letterEnumerationRelationalData = buildLetterEnumerationRelationalData();
+		IEnumerationRelationalData sizeEnumerationRelationalData = buildSizeEnumerationRelationalData();
 		boolean enumerationAllowed = false;
 		boolean gen1DescriptorContainsFirstLetter = false;
 		boolean gen1DescriptorContainsFirstLetterWasTested = false;
 		boolean gen1DescriptorContainsLastLetter = false;
 		boolean gen1DescriptorContainsLastLetterWasTested = false;
 		boolean gen1DescriptorContainsCentralLetter = false;
-		if (!DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_ALL_LETTERS) {
-			if (DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
+		if (!Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_ALL_LETTERS) {
+			if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
 				gen1DescriptorContainsFirstLetter = testIfGen1DescriptorContainsFirstLetter();
 				gen1DescriptorContainsFirstLetterWasTested = true;
 				if (gen1DescriptorContainsFirstLetter == false) {
@@ -56,7 +57,7 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 		}
 		else enumerationAllowed = true;
 		if (enumerationAllowed == true) {
-			RelationDataContainerInterface enumerationDataContainer = new RelationDataContainerV1();
+			IRelationDataContainer enumerationDataContainer = new RelationDataContainerImpl();
 			enumerationDataContainer.addEnumeration(sizeEnumerationRelationalData);
 			enumerationDataContainer.addEnumeration(letterEnumerationRelationalData);
 			enumerationDataContainer.setNewDescriptorWillCoverTheWholeString(newDescriptorWillCoverTheWholeString);
@@ -64,18 +65,18 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 		}
 		boolean sequenceAllowed = false;
 		boolean restrictedSequenceAllowed = false;
-		if (!DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_ALL_LETTERS) {
-			if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
+		if (!Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_ALL_LETTERS) {
+			if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
 				if (gen1DescriptorContainsFirstLetterWasTested == false)
 					gen1DescriptorContainsFirstLetter = testIfGen1DescriptorContainsFirstLetter();
 				if (gen1DescriptorContainsFirstLetter == true)
 					sequenceAllowed = true;
-				else if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_LAST_LETTER) {
+				else if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_LAST_LETTER) {
 					if (gen1DescriptorContainsLastLetterWasTested == false)
 						gen1DescriptorContainsLastLetter = testIfGen1DescriptorContainsLastLetter();
 					if (gen1DescriptorContainsLastLetter == true)
 						sequenceAllowed = true;
-					else if (DescGenSettings.GEN2SIZE1_RESTRICTED_SEQUENCE_ALLOWED_FOR_CENTRAL_LETTER) {
+					else if (Settings.GEN2SIZE1_RESTRICTED_SEQUENCE_ALLOWED_FOR_CENTRAL_LETTER) {
 						gen1DescriptorContainsCentralLetter = testIfGen1DescriptorContainsCentralLetter();
 						if (gen1DescriptorContainsCentralLetter == true)
 							restrictedSequenceAllowed = true;
@@ -89,18 +90,18 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 			int minIncrement;
 			int maxIncrement;
 			if (sequenceAllowed == true) {
-				minIncrement = DescGenSettings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT;
-				maxIncrement = DescGenSettings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT;
+				minIncrement = Settings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT;
+				maxIncrement = Settings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT;
 			}
 			else {
-				minIncrement = DescGenSettings.GEN2SIZE1_RESTRICTED_SEQUENCE_MIN_INCREMENT;
-				maxIncrement = DescGenSettings.GEN2SIZE1_RESTRICTED_SEQUENCE_MAX_INCREMENT;
+				minIncrement = Settings.GEN2SIZE1_RESTRICTED_SEQUENCE_MIN_INCREMENT;
+				maxIncrement = Settings.GEN2SIZE1_RESTRICTED_SEQUENCE_MAX_INCREMENT;
 			}
 			for (int i=minIncrement ; i<=maxIncrement ; i++) {
-				RelationDataContainerInterface iSequenceDataContainer = new RelationDataContainerV1();
-				SequenceRelationalDataInterface iSequenceRelationalData = 
+				IRelationDataContainer iSequenceDataContainer = new RelationDataContainerImpl();
+				ISequenceRelationalData iSequenceRelationalData = 
 						buildLetterSequenceRelationalData(letterEnumerationRelationalData, i);
-				SequenceRelationalDataInterface sizeSequenceRelationalData = 
+				ISequenceRelationalData sizeSequenceRelationalData = 
 						buildSizeSequenceRelationalData(sizeEnumerationRelationalData);
 				iSequenceDataContainer.addEnumeration(sizeEnumerationRelationalData);
 				iSequenceDataContainer.addEnumeration(letterEnumerationRelationalData);
@@ -110,16 +111,16 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 				listOfRelationDataContainers.add(iSequenceDataContainer);
 			}			
 		}
-		for (RelationDataContainerInterface rdContainer : listOfRelationDataContainers) {
+		for (IRelationDataContainer rdContainer : listOfRelationDataContainers) {
 			rdContainer.cleanValuesRedundancies();
 		}
 		return listOfRelationDataContainers;
 	}
 	
-	private boolean testIfGen1DescriptorContainsFirstLetter() throws DescriptorsBuilderCriticalException {
+	private boolean testIfGen1DescriptorContainsFirstLetter() throws DescriptorsBuilderException {
 		boolean gen1DescriptorContainsFirstLetter;
 		String gen1LetterPositionValue = "";
-		ArrayList<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
+		List<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
 		boolean letterPositionWasFound = false;
 		int propertyIndex = 0;
 		while (letterPositionWasFound == false && propertyIndex < listOfPropertiesWithPath.size()) {
@@ -136,16 +137,16 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 				gen1DescriptorContainsFirstLetter = true;
 			else gen1DescriptorContainsFirstLetter = false;
 		}
-		else throw new DescriptorsBuilderCriticalException("Gen2Size1DescriptorBuilder : "
+		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : "
 				+ "error in testIfGen1DescriptorContainsFirstLetter() method");
 		return gen1DescriptorContainsFirstLetter;
 	}
 	
-	private boolean testIfGen1DescriptorContainsLastLetter() throws DescriptorsBuilderCriticalException {
+	private boolean testIfGen1DescriptorContainsLastLetter() throws DescriptorsBuilderException {
 		int signalSize = signal.getSignalSize();
 		boolean gen1DescriptorContainsLastLetter;
 		String gen1LetterPositionValue = "";
-		ArrayList<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
+		List<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
 		boolean letterPositionWasFound = false;
 		int propertyIndex = 0;
 		while (letterPositionWasFound == false && propertyIndex < listOfPropertiesWithPath.size()) {
@@ -162,15 +163,15 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 				gen1DescriptorContainsLastLetter = true;
 			else gen1DescriptorContainsLastLetter = false;
 		}
-		else throw new DescriptorsBuilderCriticalException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Group position was not found");
 		return gen1DescriptorContainsLastLetter;
 	}
 	
-	private boolean testIfGen1DescriptorContainsCentralLetter() throws DescriptorsBuilderCriticalException {
+	private boolean testIfGen1DescriptorContainsCentralLetter() throws DescriptorsBuilderException {
 		int signalSize = signal.getSignalSize();
 		boolean gen1DescriptorContainsCentralLetter;
 		String gen1LetterPositionValue = "";
-		ArrayList<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
+		List<String> listOfPropertiesWithPath = gen1Descriptor.getListOfPropertiesWithPath();
 		boolean letterPositionWasFound = false;
 		int propertyIndex = 0;
 		while (letterPositionWasFound == false && propertyIndex < listOfPropertiesWithPath.size()) {
@@ -192,16 +193,16 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 			}
 			else gen1DescriptorContainsCentralLetter = false;
 		}
-		else throw new DescriptorsBuilderCriticalException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Group position was not found");
 		return gen1DescriptorContainsCentralLetter;
 	}
 	
-	private EnumerationRelationalDataV1 buildLetterEnumerationRelationalData() throws DescriptorsBuilderCriticalException {
-		EnumerationRelationalDataV1 letterEnumerationRelationalData;
+	private EnumerationRelationalDataImpl buildLetterEnumerationRelationalData() throws DescriptorsBuilderException {
+		EnumerationRelationalDataImpl letterEnumerationRelationalData;
 		String dimension = "";
 		String enumerationValue="";
-		HashMap<String, PropertyInterface> dimensionToProperty = gen1Descriptor.getpropertyContainer().getDimensionToProperty();
-		ArrayList<String> listOfDimensions = new ArrayList<String>(dimensionToProperty.keySet());
+		Map<String, IProperty> dimensionToProperty = gen1Descriptor.getpropertyContainer().getDimensionToProperty();
+		List<String> listOfDimensions = new ArrayList<String>(dimensionToProperty.keySet());
 		boolean dimensionWasFound = false;
 		int keyIndex = 0;
 		while (keyIndex < listOfDimensions.size() && dimensionWasFound == false) {
@@ -214,17 +215,17 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 			else keyIndex++;
 		}
 		if (!enumerationValue.isEmpty()) {
-			letterEnumerationRelationalData = new EnumerationRelationalDataV1(dimension, enumerationValue);
+			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return letterEnumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderCriticalException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
+		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
 	}
 	
-	private EnumerationRelationalDataV1 buildSizeEnumerationRelationalData() throws DescriptorsBuilderCriticalException {
-		EnumerationRelationalDataV1 sizeEnumerationRelationalData;
+	private EnumerationRelationalDataImpl buildSizeEnumerationRelationalData() throws DescriptorsBuilderException {
+		EnumerationRelationalDataImpl sizeEnumerationRelationalData;
 		String dimension = "";
 		String enumerationValue = "1";
-		ArrayList<String> listOfDimensions = gen1Descriptor.getpropertyContainer().getListOfDimensions();
+		List<String> listOfDimensions = gen1Descriptor.getpropertyContainer().getListOfDimensions();
 		boolean dimensionWasFound = false;
 		int keyIndex = 0;
 		while (keyIndex < listOfDimensions.size() && dimensionWasFound == false) {
@@ -236,31 +237,31 @@ public class Gen2Size1RelationDataContainerBuilderV1 implements Gen2Size1Relatio
 			else keyIndex++;
 		}
 		if (dimensionWasFound == true) {
-			sizeEnumerationRelationalData = new EnumerationRelationalDataV1(dimension, enumerationValue);
+			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return sizeEnumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderCriticalException("Gen2Size1DescriptorBuilder : Size value was not found.");			
+		else throw new DescriptorsBuilderException("Gen2Size1DescriptorBuilder : Size value was not found.");			
 	}
 	
-	private SequenceRelationalDataInterface buildLetterSequenceRelationalData(
-			EnumerationRelationalDataInterface letterEnumerationRelationalData, 
-			int incrementValue) throws DescriptorsBuilderCriticalException {
-		SequenceRelationalDataInterface letterSequenceRelationalData;
+	private ISequenceRelationalData buildLetterSequenceRelationalData(
+			IEnumerationRelationalData letterEnumerationRelationalData, 
+			int incrementValue) throws DescriptorsBuilderException {
+		ISequenceRelationalData letterSequenceRelationalData;
 		String dimensionValue = letterEnumerationRelationalData.getDimensions().get(0);
 		String enumerationValue = letterEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		letterSequenceRelationalData = new SequenceRelationalDataV1(dimensionValue, enumerationValue, commonDifference);
+		letterSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);
 		return letterSequenceRelationalData;		
 	}
 	
-	private SequenceRelationalDataInterface buildSizeSequenceRelationalData(
-			EnumerationRelationalDataInterface sizeEnumerationRelationalData) throws DescriptorsBuilderCriticalException {
+	private ISequenceRelationalData buildSizeSequenceRelationalData(
+			IEnumerationRelationalData sizeEnumerationRelationalData) throws DescriptorsBuilderException {
 		int incrementValue = 0;
-		SequenceRelationalDataInterface sizeSequenceRelationalData;
+		ISequenceRelationalData sizeSequenceRelationalData;
 		String dimensionValue = sizeEnumerationRelationalData.getDimensions().get(0);
 		String enumerationValue = sizeEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		sizeSequenceRelationalData = new SequenceRelationalDataV1(dimensionValue, enumerationValue, commonDifference);
+		sizeSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);
 		return sizeSequenceRelationalData;		
 	}
 	

@@ -1,6 +1,6 @@
-package copycatModel.interfaces;
+package copycatModel;
 
-public interface PropertyInterface {
+public interface IProperty {
 
 	//Getters
 	String getValue();
@@ -8,6 +8,6 @@ public interface PropertyInterface {
 	//Updater
 	public void updatePosition(String newPosition);
 	
-	PropertyInterface clone() throws CloneNotSupportedException;
+	IProperty clone() throws CloneNotSupportedException;
 
 }

@@ -1,34 +1,34 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.ListOfDescriptorsBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationalDescriptorsBuilderInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IListOfDescriptorsBuilder;
+import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
+import syntacticTreesGeneration.ISignalBuilder;
 
-public class ListOfDescriptorsBuilderV1 implements ListOfDescriptorsBuilderInterface {
+public class ListOfDescriptorsBuilderImpl implements IListOfDescriptorsBuilder {
 
 	private final String charString;
 	private final String directionValue;
-	private final SignalInterface signal;
-	private final ArrayList<CharString> listOfStringDescriptors;
+	private final ISignal signal;
+	private final List<CharString> listOfStringDescriptors;
 	
 	
-	public ListOfDescriptorsBuilderV1(String charString, String directionValue) 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public ListOfDescriptorsBuilderImpl(String charString, String directionValue) 
+			throws DescriptorsBuilderException, CloneNotSupportedException {
 		this.charString = charString;
 		this.directionValue = directionValue;
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1(this.charString, this.directionValue);
+		ISignalBuilder signalBuilder = new SignalBuilderImpl(this.charString, this.directionValue);
 		signal = signalBuilder.getSignal();
-		RelationalDescriptorsBuilderInterface relationalDescriptorsBuilder = new RelationalDescriptorsBuilderV1(signal);
+		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = new RelationalDescriptorsBuilderImpl(signal);
 		listOfStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 	}
 	
 	@Override
-	public ArrayList<CharString> getListOfStringDescriptors(){
+	public List<CharString> getListOfStringDescriptors(){
 		return listOfStringDescriptors;
 	}
 

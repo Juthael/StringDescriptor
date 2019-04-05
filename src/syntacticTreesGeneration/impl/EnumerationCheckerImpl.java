@@ -1,24 +1,24 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationChecker;
+import syntacticTreesGeneration.IEnumerationRelationalData;
 
-public class EnumerationCheckerV1 implements EnumerationCheckerInterface {
+public class EnumerationCheckerImpl implements IEnumerationChecker {
 	
 	private final boolean wholeStringIsDescribed;
 	private final String dimension;
-	private final ArrayList<String> values;
+	private final List<String> values;
 	private boolean simpleEnumerationWasFound = false;
 	private boolean secondDegreeEnumerationWasFound = false;
 	private boolean enumerationWasFound;
 	private String enumerationValue="";
 
-	public EnumerationCheckerV1(boolean wholeStringIsDescribed, String dimension, ArrayList<String> values) 
-			throws DescriptorsBuilderCriticalException {
+	public EnumerationCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values) 
+			throws DescriptorsBuilderException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -37,12 +37,12 @@ public class EnumerationCheckerV1 implements EnumerationCheckerInterface {
 			else {
 				if (this.wholeStringIsDescribed == true) {
 					if ((this.values.size() > 1) && 
-							(this.values.size() <= DescGenSettings.MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION)) {
+							(this.values.size() <= Settings.MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION)) {
 						StringBuilder sB = new StringBuilder();
 						for (int i=0 ; i<this.values.size() ; i++) {
 							sB.append(this.values.get(i));
 							if (i < this.values.size()-1) {
-								sB.append(DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+								sB.append(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
 							}
 						}
 						secondDegreeEnumerationWasFound = true;
@@ -55,7 +55,7 @@ public class EnumerationCheckerV1 implements EnumerationCheckerInterface {
 			enumerationValue = this.values.get(0);
 			simpleEnumerationWasFound = true;
 		}
-		else throw new DescriptorsBuilderCriticalException("EnumerationChecker : less than two values to check");
+		else throw new DescriptorsBuilderException("EnumerationChecker : less than two values to check");
 		enumerationWasFound = (simpleEnumerationWasFound == true || secondDegreeEnumerationWasFound == true);
 	}
 	
@@ -75,13 +75,13 @@ public class EnumerationCheckerV1 implements EnumerationCheckerInterface {
 	}
 	
 	@Override
-	public EnumerationRelationalDataInterface getEnumerationRelationalData() throws DescriptorsBuilderCriticalException {
+	public IEnumerationRelationalData getEnumerationRelationalData() throws DescriptorsBuilderException {
 		if (simpleEnumerationWasFound == true || secondDegreeEnumerationWasFound == true) {
-			EnumerationRelationalDataInterface enumerationRelationalData = 
-					new EnumerationRelationalDataV1(dimension, enumerationValue);
+			IEnumerationRelationalData enumerationRelationalData = 
+					new EnumerationRelationalDataImpl(dimension, enumerationValue);
 			return enumerationRelationalData;
 		}
-		else throw new DescriptorsBuilderCriticalException("EnumerationChecker : can't get an Enumeration that wasn't found");
+		else throw new DescriptorsBuilderException("EnumerationChecker : can't get an Enumeration that wasn't found");
 	}
 	
 	private boolean testIfAllValuesAreSizeOne() {

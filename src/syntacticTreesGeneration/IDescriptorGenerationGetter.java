@@ -1,5 +1,5 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-public interface DescriptorGenerationGetterInterface {
+public interface IDescriptorGenerationGetter {
 
 }

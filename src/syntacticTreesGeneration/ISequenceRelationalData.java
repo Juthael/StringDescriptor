@@ -1,6 +1,6 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-public interface SequenceRelationalDataInterface extends RelationalDataInterface {
+public interface ISequenceRelationalData extends IRelationalData {
 
 	String getCommonDifference();
 

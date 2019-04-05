@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface Gen2Size1RelationDataContainerBuilderInterface {
+public interface IGen2Size1RelationDataContainerBuilder {
 
-	ArrayList<RelationDataContainerInterface> getListOfRelationDataContainers() throws DescriptorsBuilderCriticalException;
+	List<IRelationDataContainer> getListOfRelationDataContainers() throws DescriptorsBuilderException;
 
 }

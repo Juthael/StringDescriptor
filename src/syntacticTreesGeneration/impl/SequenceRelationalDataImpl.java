@@ -1,28 +1,28 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.ISequenceRelationalData;
 
-public class SequenceRelationalDataV1 extends EnumerationRelationalDataV1 implements RelationalDataInterface, SequenceRelationalDataInterface {
+public class SequenceRelationalDataImpl extends EnumerationRelationalDataImpl implements IRelationalData, ISequenceRelationalData {
 
 	private final String commonDifference;
 	
-	public SequenceRelationalDataV1(String dimensionValue, String enumerationValue, String commonDifference) 
-			throws DescriptorsBuilderCriticalException {
+	public SequenceRelationalDataImpl(String dimensionValue, String enumerationValue, String commonDifference) 
+			throws DescriptorsBuilderException {
 		super(dimensionValue, enumerationValue);
 		if (!commonDifference.isEmpty()) {
 			changeName();
 			this.commonDifference = commonDifference;
 		}
-		else throw new DescriptorsBuilderCriticalException("SequenceRelationalData : empty parameter.");
+		else throw new DescriptorsBuilderException("SequenceRelationalData : empty parameter.");
 	}
 	
-	public SequenceRelationalDataV1(SequenceRelationalDataInterface sequenceRelationalData) {
-		super((EnumerationRelationalDataInterface) sequenceRelationalData);
+	public SequenceRelationalDataImpl(ISequenceRelationalData sequenceRelationalData) {
+		super((IEnumerationRelationalData) sequenceRelationalData);
 		changeName();
 		this.commonDifference = sequenceRelationalData.getCommonDifference();
 	}
@@ -33,7 +33,7 @@ public class SequenceRelationalDataV1 extends EnumerationRelationalDataV1 implem
 	}
 	
 	@Override
-	public void addDimensions(ArrayList<String> dimensions) {
+	public void addDimensions(List<String> dimensions) {
 		listOfDimensions.addAll(dimensions);
 	}	
 	

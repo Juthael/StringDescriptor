@@ -1,4 +1,4 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,91 +7,91 @@ import java.util.List;
 
 import org.junit.Test;
 
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.EnumerationRelationalDataV1;
-import syntacticTreesGeneration.implementations.Gen2Size1RelationDataContainerBuilderV1;
-import syntacticTreesGeneration.implementations.NewDescriptorBuilderV1;
-import syntacticTreesGeneration.implementations.RelationDataContainerV1;
-import syntacticTreesGeneration.implementations.SequenceRelationalDataV1;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.implementations.SymmetryRelationalDataV1;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.Gen2Size1RelationDataContainerBuilderInterface;
-import syntacticTreesGeneration.interfaces.NewDescriptorBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
+import syntacticTreesGeneration.INewDescriptorBuilder;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.impl.EnumerationRelationalDataImpl;
+import syntacticTreesGeneration.impl.Gen2Size1RelationDataContainerBuilderImpl;
+import syntacticTreesGeneration.impl.NewDescriptorBuilderImpl;
+import syntacticTreesGeneration.impl.RelationDataContainerImpl;
+import syntacticTreesGeneration.impl.SequenceRelationalDataImpl;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.SymmetryRelationalDataImpl;
 
-public class NewDescriptorBuilderV1Test {
+public class NewDescriptorBuilderImplTest {
 
-	SignalBuilderInterface signalBuilder;
-	SignalInterface signal;
-	ArrayList<Group> listOfGroupsABC;
+	ISignalBuilder signalBuilder;
+	ISignal signal;
+	List<Group> listOfGroupsABC;
 	
 	@Test
 	public void whenComponentsDontCoverThenWholeStringThenGroupIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();	
-		ArrayList<Group> listOfGroupsAB = new ArrayList<Group>();
+		List<Group> listOfGroupsAB = new ArrayList<Group>();
 		listOfGroupsAB.add(listOfGroupsABC.get(0));
 		listOfGroupsAB.add(listOfGroupsABC.get(1));
-		RelationDataContainerInterface relationDataContainer = new RelationDataContainerV1();
+		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		String dimension1 = "group/size";
 		String dimension2 = "group/letter/platonicLetter";
-		EnumerationRelationalDataInterface enumerationRD1 = new EnumerationRelationalDataV1(dimension1, "1,1");
-		EnumerationRelationalDataInterface enumerationRD2 = new EnumerationRelationalDataV1(dimension2, "1,2");
-		SequenceRelationalDataInterface sequenceRD1 = new SequenceRelationalDataV1(dimension1, "1,1", "0");
-		SequenceRelationalDataInterface sequenceRD2 = new SequenceRelationalDataV1(dimension2, "1,2", "1");
-		SymmetryRelationalDataInterface symmetry1 = 
-				new SymmetryRelationalDataV1(dimension1, "1,1", "withoutCentralElement");
+		IEnumerationRelationalData enumerationRD1 = new EnumerationRelationalDataImpl(dimension1, "1,1");
+		IEnumerationRelationalData enumerationRD2 = new EnumerationRelationalDataImpl(dimension2, "1,2");
+		ISequenceRelationalData sequenceRD1 = new SequenceRelationalDataImpl(dimension1, "1,1", "0");
+		ISequenceRelationalData sequenceRD2 = new SequenceRelationalDataImpl(dimension2, "1,2", "1");
+		ISymmetryRelationalData symmetry1 = 
+				new SymmetryRelationalDataImpl(dimension1, "1,1", "withoutCentralElement");
 		relationDataContainer.addEnumeration(enumerationRD1);
 		relationDataContainer.addEnumeration(enumerationRD2);
 		relationDataContainer.addSequence(sequenceRD1);
 		relationDataContainer.addSequence(sequenceRD2);
 		relationDataContainer.addSymmetry(symmetry1);
 		relationDataContainer.cleanValuesRedundancies();
-		NewDescriptorBuilderInterface newDescriptorBuilder = 
-				new NewDescriptorBuilderV1(signal, relationDataContainer, listOfGroupsAB);
-		AbstractDescriptorInterface descriptor = newDescriptorBuilder.getNewDescriptor();
+		INewDescriptorBuilder newDescriptorBuilder = 
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsAB);
+		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "group");
 	}
 	
 	@Test
 	public void whenComponentsCoverTheWholeStringAndRDContainerEmptyThenCharStringIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();			
-		RelationDataContainerInterface relationDataContainer = new RelationDataContainerV1();
+		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
-		NewDescriptorBuilderInterface newDescriptorBuilder = 
-				new NewDescriptorBuilderV1(signal, relationDataContainer, listOfGroupsABC);
-		AbstractDescriptorInterface descriptor = newDescriptorBuilder.getNewDescriptor();
+		INewDescriptorBuilder newDescriptorBuilder = 
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
+		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");
 	}
 	
 	@Test
 	public void whenComponentsCoverTheWholeStringAndRDContainerIsntEmptyThenCharStringIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();			
-		RelationDataContainerInterface relationDataContainer = new RelationDataContainerV1();
+		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		String dimension1 = "group/size";
 		String dimension2 = "group/letter/platonicLetter";
-		EnumerationRelationalDataInterface enumerationRD1 = new EnumerationRelationalDataV1(dimension1, "1,1,1");
-		EnumerationRelationalDataInterface enumerationRD2 = new EnumerationRelationalDataV1(dimension2, "1,2,3");
-		SequenceRelationalDataInterface sequenceRD1 = new SequenceRelationalDataV1(dimension1, "1,1,1", "0");
-		SequenceRelationalDataInterface sequenceRD2 = new SequenceRelationalDataV1(dimension2, "1,2,3", "1");
-		SymmetryRelationalDataInterface symmetry1 = 
-				new SymmetryRelationalDataV1(dimension1, "1,1,1", "withCentralElement");
+		IEnumerationRelationalData enumerationRD1 = new EnumerationRelationalDataImpl(dimension1, "1,1,1");
+		IEnumerationRelationalData enumerationRD2 = new EnumerationRelationalDataImpl(dimension2, "1,2,3");
+		ISequenceRelationalData sequenceRD1 = new SequenceRelationalDataImpl(dimension1, "1,1,1", "0");
+		ISequenceRelationalData sequenceRD2 = new SequenceRelationalDataImpl(dimension2, "1,2,3", "1");
+		ISymmetryRelationalData symmetry1 = 
+				new SymmetryRelationalDataImpl(dimension1, "1,1,1", "withCentralElement");
 		relationDataContainer.addEnumeration(enumerationRD1);
 		relationDataContainer.addEnumeration(enumerationRD2);
 		relationDataContainer.addSequence(sequenceRD1);
@@ -99,29 +99,29 @@ public class NewDescriptorBuilderV1Test {
 		relationDataContainer.addSymmetry(symmetry1);
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		relationDataContainer.cleanValuesRedundancies();
-		NewDescriptorBuilderInterface newDescriptorBuilder = 
-				new NewDescriptorBuilderV1(signal, relationDataContainer, listOfGroupsABC);
-		AbstractDescriptorInterface descriptor = newDescriptorBuilder.getNewDescriptor();
+		INewDescriptorBuilder newDescriptorBuilder = 
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
+		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");		
 	}
 	
 	@Test
 	public void whenComponentsAreGen2Size1FromFirstLetterThenExpectedNumberOfDescriptorsIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
 		listOfGroupsABC = signal.getGroups();	
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1ContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderV1(signal, signal.getGroups().get(0));
-		List<RelationDataContainerInterface> listOfContainers = 
+		IGen2Size1RelationDataContainerBuilder gen2Size1ContainerBuilder = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signal, signal.getGroups().get(0));
+		List<IRelationDataContainer> listOfContainers = 
 				gen2Size1ContainerBuilder.getListOfRelationDataContainers();
-		ArrayList<Group> listOfGroups = new ArrayList<Group>();
+		List<Group> listOfGroups = new ArrayList<Group>();
 		listOfGroups.add(signal.getGroups().get(0));
 		List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
-		for (RelationDataContainerInterface container : listOfContainers) {
-			NewDescriptorBuilderInterface newDescBuilder = 
-					new NewDescriptorBuilderV1(signal, container, listOfGroups);
-			AbstractDescriptorInterface descriptor = newDescBuilder.getNewDescriptor();
+		for (IRelationDataContainer container : listOfContainers) {
+			INewDescriptorBuilder newDescBuilder = 
+					new NewDescriptorBuilderImpl(signal, container, listOfGroups);
+			ISynTreeIntegrableElement descriptor = newDescBuilder.getNewDescriptor();
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			listOfPropertyLists.add(listOfProperties);
 			/* for (String property : listOfProperties)
@@ -129,11 +129,11 @@ public class NewDescriptorBuilderV1Test {
 			System.out.println(""); */
 		}
 		int nbOfDescriptorsExpected = 0;
-		if (DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS)
+		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS)
 			nbOfDescriptorsExpected++;
-		if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
-			for (int i=DescGenSettings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; 
-					i<=DescGenSettings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; i++) {
+		if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
+			for (int i=Settings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; 
+					i<=Settings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; i++) {
 				nbOfDescriptorsExpected++;
 			}
 		}

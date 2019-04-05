@@ -1,16 +1,16 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.TargetInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.ITarget;
 
-public class TargetV2 implements TargetInterface {
+public class TargetImpl implements ITarget {
 
 	private String verbalTarget;
 	
-	public TargetV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public TargetImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		verbalTarget = setVerbalTarget(transformationCodeGetter);
 	}
 	
@@ -19,7 +19,7 @@ public class TargetV2 implements TargetInterface {
 		return verbalTarget;
 	}
 	
-	private String setVerbalTarget(TransformationCodeGetterInterface transformationCodeGetter) 
+	private String setVerbalTarget(ITransformationCodeGetter transformationCodeGetter) 
 			throws VerbalizationException {
 		String verbalTarget;
 		List<String> listOfPredicateCodes = transformationCodeGetter.getListOfPredicateCodes();

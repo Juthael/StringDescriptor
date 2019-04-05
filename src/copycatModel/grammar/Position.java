@@ -1,11 +1,12 @@
 package copycatModel.grammar;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
-import settings.DescGenSettings;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
+import settings.Settings;
 
-public class Position extends AbstractDescriptorV1 implements Cloneable {
+public class Position extends SynTreeIntegrableElementImpl implements Cloneable {
 	
 	private static final String descriptorName = "position";
 	private String positionValue;
@@ -26,8 +27,8 @@ public class Position extends AbstractDescriptorV1 implements Cloneable {
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>();
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>();
 		return componentDescriptors;
 	}
 
@@ -38,13 +39,13 @@ public class Position extends AbstractDescriptorV1 implements Cloneable {
 	
 	@Override
 	protected void doUpdatePosition(String newPosition) {
-		if (DescGenSettings.AWAITING_POSITION_VALUE.equals(positionValue) && !DescGenSettings.NO_POSITION_INFORMATION.equals(newPosition))
+		if (Settings.AWAITING_POSITION_VALUE.equals(positionValue) && !Settings.NO_POSITION_INFORMATION.equals(newPosition))
 			positionValue = newPosition;
 	}
 	
 	@Override
-	public ArrayList<String> getListOfPropertiesWithPath() {
-		ArrayList<String> listOfPropertiesWithPath = new ArrayList<String>();
+	public List<String> getListOfPropertiesWithPath() {
+		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
 		sB.append("/");
@@ -54,7 +55,7 @@ public class Position extends AbstractDescriptorV1 implements Cloneable {
 	}	
 	
 	@Override
-	public ArrayList<String> getListOfRelevantPropertiesWithPath() {
+	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
 	}		
 	

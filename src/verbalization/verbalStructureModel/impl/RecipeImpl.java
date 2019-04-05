@@ -1,18 +1,18 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.InstructionInterface;
-import verbalization.interfaces.verbalStructureModel.RecipeInterface;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
+import verbalization.verbalStructureModel.IInstruction;
+import verbalization.verbalStructureModel.IRecipe;
 
-public class RecipeV2 implements RecipeInterface {
+public class RecipeImpl implements IRecipe {
 
 	private final String verbalRecipe;
 	
-	public RecipeV2(RecipeCodeGetterInterface recipeCodeGetter) throws VerbalizationException {
+	public RecipeImpl(IRecipeCodeGetter recipeCodeGetter) throws VerbalizationException {
 		verbalRecipe = setVerbalRecipe(recipeCodeGetter);
 	}
 	
@@ -21,9 +21,9 @@ public class RecipeV2 implements RecipeInterface {
 		return verbalRecipe;
 	}
 	
-	private String setVerbalRecipe(RecipeCodeGetterInterface recipeCodeGetter) throws VerbalizationException {
+	private String setVerbalRecipe(IRecipeCodeGetter recipeCodeGetter) throws VerbalizationException {
 		String verbalRecipe;
-		List<InstructionCodeGetterInterface> listOfInstructionCodeGetters = recipeCodeGetter.getListOfInstructionCodeGetters();
+		List<IInstructionCodeGetter> listOfInstructionCodeGetters = recipeCodeGetter.getListOfInstructionCodeGetters();
 		StringBuilder sB = new StringBuilder();
 		String indentation = "   ";
 		String newLine = System.getProperty("line.separator");
@@ -33,7 +33,7 @@ public class RecipeV2 implements RecipeInterface {
 				sB.append(indentation);
 				sB.append("-then ");
 			}
-			InstructionInterface instruction = new InstructionV2(listOfInstructionCodeGetters.get(i));
+			IInstruction instruction = new InstructionImpl(listOfInstructionCodeGetters.get(i));
 			sB.append(instruction.getVerbalInstruction());
 		}
 		sB.append(newLine);

@@ -1,14 +1,14 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.EffectorInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.IEffector;
 
-public class EffectorV2 extends TransformationV2 implements EffectorInterface {
+public class EffectorImpl extends TransformationImpl implements IEffector {
 	
 	private static final String transformationName = "effector";
 
-	public EffectorV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public EffectorImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		super(transformationCodeGetter);
 	}
 

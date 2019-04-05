@@ -1,12 +1,12 @@
-package copycatModel.interfaces;
+package copycatModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Group;
 
-public interface SignalInterface {
+public interface ISignal {
 
-	ArrayList<Group> getGroups();
+	List<Group> getGroups();
 
 	String getDirectionValue();
 

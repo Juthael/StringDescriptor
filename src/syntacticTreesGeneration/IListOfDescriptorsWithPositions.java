@@ -1,12 +1,12 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Group;
 
-public interface ListOfDescriptorsWithPositionsInterface {
+public interface IListOfDescriptorsWithPositions {
 
-	ArrayList<Group> getListOfDescriptors();
+	List<Group> getListOfDescriptors();
 
 	int getFirstPosition();
 

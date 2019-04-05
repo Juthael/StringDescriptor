@@ -1,34 +1,34 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.implementations.dataEncodingModel.InstructionCodeGetterV1;
-import verbalization.interfaces.InstructionCoderInterface;
-import verbalization.interfaces.TransformationCoderInterface;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encoders.IInstructionCoder;
+import verbalization.dataEncoding.encoders.ITransformationCoder;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.dataEncoding.encodingModel.impl.InstructionCodeGetterImpl;
 
-public class InstructionCoderV2 implements InstructionCoderInterface {
+public class InstructionCoderImpl implements IInstructionCoder {
 
-	private InstructionCodeGetterInterface instructionCodeGetter;
+	private IInstructionCodeGetter instructionCodeGetter;
 	
-	public InstructionCoderV2(String nbOfComponents, List<String> listOfRelationXProperties) 
+	public InstructionCoderImpl(String nbOfComponents, List<String> listOfRelationXProperties) 
 			throws VerbalizationException {
 		instructionCodeGetter = setInstructionCodeGetter(nbOfComponents, listOfRelationXProperties);
 	}
 
 	@Override
-	public InstructionCodeGetterInterface getInstructionCodeGetter() {
+	public IInstructionCodeGetter getInstructionCodeGetter() {
 		return instructionCodeGetter;
 	}
 	
-	private InstructionCodeGetterInterface setInstructionCodeGetter(String nbOfComponents, 
+	private IInstructionCodeGetter setInstructionCodeGetter(String nbOfComponents, 
 			List<String> listOfRelationXProperties) throws VerbalizationException {
-		InstructionCodeGetterInterface instructionCodeGetter;
-		List<TransformationCodeGetterInterface> listOfTransformationCodeGetters = 
-				new ArrayList<TransformationCodeGetterInterface>();
+		IInstructionCodeGetter instructionCodeGetter;
+		List<ITransformationCodeGetter> listOfTransformationCodeGetters = 
+				new ArrayList<ITransformationCodeGetter>();
 		List<List<String>> listsOfRelationProperties = new ArrayList<List<String>>();
 		List<String> currentListOfRelationProperties = new ArrayList<String>();
 		for (String property : listOfRelationXProperties) {
@@ -48,11 +48,11 @@ public class InstructionCoderV2 implements InstructionCoderInterface {
 		}
 		listsOfRelationProperties.add(currentListOfRelationProperties);
 		for (List<String> listOfRelationProperties : listsOfRelationProperties) {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, listOfRelationProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, listOfRelationProperties);
 			listOfTransformationCodeGetters.add(transformationCoder.getTransformationCodeGetter());
 		}
-		instructionCodeGetter = new InstructionCodeGetterV1(nbOfComponents, listOfTransformationCodeGetters);
+		instructionCodeGetter = new InstructionCodeGetterImpl(nbOfComponents, listOfTransformationCodeGetters);
 		return instructionCodeGetter;		
 	}
 

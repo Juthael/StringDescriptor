@@ -1,9 +1,9 @@
-package verbalization.interfaces;
+package verbalization.dataEncoding.encoders;
 
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
 
-public interface InstructionCoderInterface {
+public interface IInstructionCoder {
 
-	InstructionCodeGetterInterface getInstructionCodeGetter();
+	IInstructionCodeGetter getInstructionCodeGetter();
 
 }

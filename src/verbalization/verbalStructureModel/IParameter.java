@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface ParameterInterface {
+public interface IParameter {
 
 	String getVerbalParameter();
 

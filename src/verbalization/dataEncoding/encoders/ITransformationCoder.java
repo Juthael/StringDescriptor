@@ -1,9 +1,9 @@
-package verbalization.interfaces;
+package verbalization.dataEncoding.encoders;
 
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 
-public interface TransformationCoderInterface {
+public interface ITransformationCoder {
 
-	TransformationCodeGetterInterface getTransformationCodeGetter();
+	ITransformationCodeGetter getTransformationCodeGetter();
 
 }

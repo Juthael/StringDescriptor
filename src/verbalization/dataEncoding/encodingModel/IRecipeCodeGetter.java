@@ -1,9 +1,9 @@
-package verbalization.interfaces.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel;
 
 import java.util.List;
 
-public interface RecipeCodeGetterInterface {
+public interface IRecipeCodeGetter {
 	
-	List<InstructionCodeGetterInterface> getListOfInstructionCodeGetters();
+	List<IInstructionCodeGetter> getListOfInstructionCodeGetters();
 
 }

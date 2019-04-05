@@ -1,13 +1,13 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
 import copycatModel.grammar.CharString;
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface CharStringBuilderInterface {
+public interface ICharStringBuilder {
 
 	/* (non-Javadoc)
 	 * @see descriptorsGeneration.CharStringBuilder#getCharString()
 	 */
-	CharString getCharString() throws DescriptorsBuilderCriticalException;
+	CharString getCharString() throws DescriptorsBuilderException;
 
 }

@@ -1,10 +1,10 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
 import copycatModel.grammar.Relations;
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface RelationsBuilderInterface {
+public interface IRelationsBuilder {
 
-	Relations getRelations() throws DescriptorsBuilderCriticalException, CloneNotSupportedException;
+	Relations getRelations() throws DescriptorsBuilderException, CloneNotSupportedException;
 
 }

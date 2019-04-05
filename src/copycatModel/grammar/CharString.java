@@ -2,10 +2,11 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
-public class CharString extends AbstractDescriptorV1 implements Cloneable {
+public class CharString extends SynTreeIntegrableElementImpl implements Cloneable {
 	
 	private static String descriptorName = "charString";
 	protected Direction direction;
@@ -29,8 +30,8 @@ public class CharString extends AbstractDescriptorV1 implements Cloneable {
 	}
 	
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(direction, structure, groups));
 		return componentDescriptors;
 	}

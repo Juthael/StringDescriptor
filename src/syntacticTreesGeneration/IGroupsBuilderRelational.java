@@ -1,5 +1,5 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-public interface GroupsBuilder_Relational_Interface {
+public interface IGroupsBuilderRelational {
 
 }

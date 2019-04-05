@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface TransformationInterface {
+public interface ITransformation {
 
 	String getVerbalTransformation();
 

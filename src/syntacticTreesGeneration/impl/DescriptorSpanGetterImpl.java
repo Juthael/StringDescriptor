@@ -1,19 +1,21 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.DescriptorSpanGetterInterface;
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.ISignal;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IDescriptorSpanGetter;
 
-public class DescriptorSpanGetterV1 implements DescriptorSpanGetterInterface {
+public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 
-	public static ArrayList<Integer> getDescriptorSpan (AbstractDescriptorInterface abstractDescriptor) 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<Integer> listOfLetterPositionsOccupied = new ArrayList<Integer>();
-		ArrayList<String> listOfPropertiesWithPath = abstractDescriptor.getListOfPropertiesWithPath();
+	public static List<Integer> getDescriptorSpan (ISynTreeIntegrableElement synTreeIntegrableElement) 
+			throws DescriptorsBuilderException {
+		List<Integer> listOfLetterPositionsOccupied = new ArrayList<Integer>();
+		List<String> listOfPropertiesWithPath = synTreeIntegrableElement.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			if (propertyWithPath.contains("letter/position")) {
 				int lastSlashIndex = propertyWithPath.lastIndexOf("/");
@@ -25,16 +27,16 @@ public class DescriptorSpanGetterV1 implements DescriptorSpanGetterInterface {
 		if (listOfLetterPositionsOccupied.size() != 0) {
 			return listOfLetterPositionsOccupied;
 		}
-		else throw new DescriptorsBuilderCriticalException("DescriptorSpanGetter : list of positions occupied is empty");
+		else throw new DescriptorsBuilderException("DescriptorSpanGetter : list of positions occupied is empty");
 	}
 	
-	public static boolean testIfWholeStringIsDescribed(SignalInterface signal, 
-			ArrayList<AbstractDescriptorInterface> listOfDescriptors) 
-			throws DescriptorsBuilderCriticalException {
+	public static boolean testIfWholeStringIsDescribed(ISignal signal, 
+			List<ISynTreeIntegrableElement> listOfDescriptors) 
+			throws DescriptorsBuilderException {
 		boolean wholeStringIsDescribed;
-		HashSet<Integer> setOfLetterPositionsOccupied = new HashSet<Integer>();
-		for (AbstractDescriptorInterface descriptor : listOfDescriptors) {
-			setOfLetterPositionsOccupied.addAll(DescriptorSpanGetterV1.getDescriptorSpan(descriptor));
+		Set<Integer> setOfLetterPositionsOccupied = new HashSet<Integer>();
+		for (ISynTreeIntegrableElement descriptor : listOfDescriptors) {
+			setOfLetterPositionsOccupied.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(descriptor));
 		}
 		wholeStringIsDescribed = (setOfLetterPositionsOccupied.size() == signal.getSignalSize());
 		return wholeStringIsDescribed;

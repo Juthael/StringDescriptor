@@ -2,8 +2,9 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
 public class Letter extends RelationsOrLetter implements Cloneable{
 
@@ -27,15 +28,15 @@ public class Letter extends RelationsOrLetter implements Cloneable{
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(position, platonicLetter));
 		return componentDescriptors;
 	}
 	
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfRelevantComponentsForRelationBuilding() {
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(platonicLetter));
 		return componentDescriptors;
 	}	

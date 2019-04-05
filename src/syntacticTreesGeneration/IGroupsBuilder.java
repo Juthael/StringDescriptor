@@ -1,10 +1,10 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
 import copycatModel.grammar.Groups;
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface GroupsBuilderInterface {
+public interface IGroupsBuilder {
 
-	Groups getGroups() throws DescriptorsBuilderCriticalException, CloneNotSupportedException;
+	Groups getGroups() throws DescriptorsBuilderException, CloneNotSupportedException;
 
 }

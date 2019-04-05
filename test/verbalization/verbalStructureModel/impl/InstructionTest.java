@@ -1,4 +1,4 @@
-package descriptorsVerbalization.model;
+package verbalization.verbalStructureModel.impl;
 
 import static org.junit.Assert.*;
 
@@ -8,11 +8,11 @@ import java.util.List;
 import org.junit.Test;
 
 import exceptions.VerbalizationException;
-import verbalization.implementations.InstructionCoderV2;
-import verbalization.implementations.verbalStructureModel.InstructionV2;
-import verbalization.interfaces.InstructionCoderInterface;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.InstructionInterface;
+import verbalization.dataEncoding.encoders.IInstructionCoder;
+import verbalization.dataEncoding.encoders.impl.InstructionCoderImpl;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.verbalStructureModel.IInstruction;
+import verbalization.verbalStructureModel.impl.InstructionImpl;
 
 public class InstructionTest {
 
@@ -29,9 +29,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1,2,3,4,5");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/1");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		// System.out.println(instruction.getVerbalInstruction());
 		if ((!instruction.getVerbalInstruction().contains("4")) ||
 				!instruction.getVerbalInstruction().contains("increasing"))
@@ -52,9 +52,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/-1");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if ((!instruction.getVerbalInstruction().contains("4")) ||
 				!instruction.getVerbalInstruction().contains("increasing") ||
@@ -80,9 +80,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relationX3/relation/enumeration/1");
 		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/commonDiff/-2");
 		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/absCommonDiff/2");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (instruction.getVerbalInstruction().contains("4")) {
 			int firstReductionIndex = instruction.getVerbalInstruction().indexOf("reducing");
@@ -101,9 +101,9 @@ public class InstructionTest {
 		List<String> relationXListOfProperties = new ArrayList<String>();
 		relationXListOfProperties.add("group/relations/relation/dimension/letter.platonicLetter");
 		relationXListOfProperties.add("group/relations/relation/enumeration/1,5,2");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (!instruction.getVerbalInstruction().contains("e and b")) 
 			descriptionIsUnexpected = true;
@@ -119,9 +119,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relation/enumeration/0");
 		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/0");
 		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/0");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (!instruction.getVerbalInstruction().equals("repeat 4 times ;"))
 			descriptionIsUnexpected = true;
@@ -137,9 +137,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relation/enumeration/0");
 		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/0");
 		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/0");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (!instruction.getVerbalInstruction().equals("repeat ;"))
 			descriptionIsUnexpected = true;
@@ -155,9 +155,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/relations/relation/enumeration/1");
 		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/1");
 		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/1");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (!instruction.getVerbalInstruction().contains("consider it as a group"))
 			descriptionIsUnexpected = true;
@@ -173,9 +173,9 @@ public class InstructionTest {
 		relationXListOfProperties.add("group/position/1");
 		relationXListOfProperties.add("group/letter/position/2");
 		relationXListOfProperties.add("group/letter/platonicLetter/2");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		InstructionInterface instruction = new InstructionV2(instructionCodeGetter);
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
 		if (!instruction.getVerbalInstruction().contains("write letter"))
 			descriptionIsUnexpected = true;

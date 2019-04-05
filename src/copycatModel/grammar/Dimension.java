@@ -1,8 +1,9 @@
 package copycatModel.grammar;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
 public class Dimension extends HowManyDimensions implements Cloneable {
 
@@ -21,8 +22,8 @@ public class Dimension extends HowManyDimensions implements Cloneable {
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents() {
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>();
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents() {
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>();
 		return componentDescriptors;
 	}
 	
@@ -32,8 +33,8 @@ public class Dimension extends HowManyDimensions implements Cloneable {
 	}
 	
 	@Override
-	public ArrayList<String> getListOfPropertiesWithPath() {
-		ArrayList<String> listOfPropertiesWithPath = new ArrayList<String>();
+	public List<String> getListOfPropertiesWithPath() {
+		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
 		sB.append("/");
@@ -43,7 +44,7 @@ public class Dimension extends HowManyDimensions implements Cloneable {
 	}
 	
 	@Override
-	public ArrayList<String> getListOfRelevantPropertiesWithPath() {
+	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
 	}		
 	

@@ -1,17 +1,17 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.ActionInterface;
-import verbalization.interfaces.verbalStructureModel.ParameterInterface;
-import verbalization.interfaces.verbalStructureModel.TargetInterface;
-import verbalization.interfaces.verbalStructureModel.TransformationInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.IAction;
+import verbalization.verbalStructureModel.IParameter;
+import verbalization.verbalStructureModel.ITarget;
+import verbalization.verbalStructureModel.ITransformation;
 
-public abstract class TransformationV2 implements TransformationInterface {
+public abstract class TransformationImpl implements ITransformation {
 
 	private String verbalTransformation;
 	
-	public TransformationV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public TransformationImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		verbalTransformation = setVerbalTransformation(transformationCodeGetter);
 	}
 
@@ -23,15 +23,15 @@ public abstract class TransformationV2 implements TransformationInterface {
 	@Override
 	abstract public String getTransformationName();
 	
-	private String setVerbalTransformation(TransformationCodeGetterInterface transformationCodeGetter) 
+	private String setVerbalTransformation(ITransformationCodeGetter transformationCodeGetter) 
 			throws VerbalizationException {
 		String verbalTransformation;
 		StringBuilder sB = new StringBuilder();
-		ActionInterface action = new ActionV2(transformationCodeGetter);
+		IAction action = new ActionImpl(transformationCodeGetter);
 		sB.append(action.getVerbalAction());
-		TargetInterface target = new TargetV2(transformationCodeGetter);
+		ITarget target = new TargetImpl(transformationCodeGetter);
 		sB.append(target.getVerbalTarget());
-		ParameterInterface parameter = new ParameterV2(transformationCodeGetter);
+		IParameter parameter = new ParameterImpl(transformationCodeGetter);
 		sB.append(parameter.getVerbalParameter());
 		verbalTransformation = sB.toString();
 		return verbalTransformation;

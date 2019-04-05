@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
 import copycatModel.grammar.Group;
-import syntacticTreesGeneration.interfaces.DescriptorGenerationGetterInterface;
+import syntacticTreesGeneration.IDescriptorGenerationGetter;
 
-public class DescriptorGenerationGetterV1 implements DescriptorGenerationGetterInterface {
+public class DescriptorGenerationGetterImpl implements IDescriptorGenerationGetter {
 
 	public static int getDescriptorGenerationNumber(Group descriptor) {
 		int generationNumber = 0;

@@ -1,31 +1,32 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.CharString;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.RelationalDescriptorsBuilderV1;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.interfaces.RelationalDescriptorsBuilderInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.RelationalDescriptorsBuilderImpl;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class RelationalDescriptorsBuilderV1Test {
+public class RelationalDescriptorsBuilderImplTest {
 
 	@Test
-	public void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public void whenRandomMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() throws DescriptorsBuilderException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;
 		long done;
-		ArrayList<CharString> wholeStringDescriptors;
+		List<CharString> wholeStringDescriptors;
 		int AsciiValueForA;
-		if (DescGenSettings.USE_LOWERCASE_LETTER)
+		if (Settings.USE_LOWERCASE_LETTER)
 			AsciiValueForA = 97;
 		else AsciiValueForA = 65;
 		int[] randomValues = new int[20];
@@ -38,14 +39,14 @@ public class RelationalDescriptorsBuilderV1Test {
 			sB.append((char) value);
 		}
 		String possiblyOversizedString = sB.toString();
-		String stringToBeDescribed = possiblyOversizedString.substring(0, DescGenSettings.MAX_NB_OF_CHARS_IN_STRING);
+		String stringToBeDescribed = possiblyOversizedString.substring(0, Settings.MAX_NB_OF_CHARS_IN_STRING);
 		/* System.out.println(stringToBeDescribed);
 		System.out.println(""); */
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1(stringToBeDescribed, "fromLeftToRight");
-		SignalInterface signal = signalBuilder.getSignal();
+		ISignalBuilder signalBuilder = new SignalBuilderImpl(stringToBeDescribed, "fromLeftToRight");
+		ISignal signal = signalBuilder.getSignal();
 		start = System.currentTimeMillis();
-		RelationalDescriptorsBuilderInterface relationalDescriptorsBuilder = 
-				new RelationalDescriptorsBuilderV1(signal);
+		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = 
+				new RelationalDescriptorsBuilderImpl(signal);
 		wholeStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 		done = System.currentTimeMillis();
 		if (wholeStringDescriptors.isEmpty() ||	(done - start) > 5000)
@@ -61,7 +62,7 @@ public class RelationalDescriptorsBuilderV1Test {
 	
 	@Test
 	public void whenStructuredMaxSizeStringInParameterThenDescriptionProceededInLessThan5Sec() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+			throws DescriptorsBuilderException, CloneNotSupportedException {
 		boolean descriptionIsProceededInLessThan5Sec = true;
 		long start;
 		long done;
@@ -69,17 +70,17 @@ public class RelationalDescriptorsBuilderV1Test {
 		String upperCaseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String overSizedParameter;
 		String parameter;
-		ArrayList<CharString> wholeStringDescriptors;
-		if (DescGenSettings.USE_LOWERCASE_LETTER)
+		List<CharString> wholeStringDescriptors;
+		if (Settings.USE_LOWERCASE_LETTER)
 			overSizedParameter = lowerCaseString;
 		else overSizedParameter = upperCaseString;
-		parameter = overSizedParameter.substring(0, DescGenSettings.MAX_NB_OF_CHARS_IN_STRING);
+		parameter = overSizedParameter.substring(0, Settings.MAX_NB_OF_CHARS_IN_STRING);
 		parameter = "abcd"; //
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1(parameter, "fromLeftToRight");
-		SignalInterface signal = signalBuilder.getSignal();
+		ISignalBuilder signalBuilder = new SignalBuilderImpl(parameter, "fromLeftToRight");
+		ISignal signal = signalBuilder.getSignal();
 		start = System.currentTimeMillis();
-		RelationalDescriptorsBuilderInterface relationalDescriptorsBuilder = 
-				new RelationalDescriptorsBuilderV1(signal);
+		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = 
+				new RelationalDescriptorsBuilderImpl(signal);
 		wholeStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 		done = System.currentTimeMillis();
 		if (wholeStringDescriptors.isEmpty() ||	(done - start) > 5000)

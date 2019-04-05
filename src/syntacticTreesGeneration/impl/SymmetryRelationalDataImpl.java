@@ -1,28 +1,28 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
 
-public class SymmetryRelationalDataV1 extends EnumerationRelationalDataV1 implements RelationalDataInterface, SymmetryRelationalDataInterface {
+public class SymmetryRelationalDataImpl extends EnumerationRelationalDataImpl implements IRelationalData, ISymmetryRelationalData {
 
 	private final String typeOfSymmetry;
 	
-	public SymmetryRelationalDataV1(String dimensionValue, String enumerationValue, String typeOfSymmetry) 
-			throws DescriptorsBuilderCriticalException {
+	public SymmetryRelationalDataImpl(String dimensionValue, String enumerationValue, String typeOfSymmetry) 
+			throws DescriptorsBuilderException {
 		super(dimensionValue, enumerationValue);
 		if (!typeOfSymmetry.isEmpty()) {
 			changeRelationName();
 			this.typeOfSymmetry = typeOfSymmetry;
 		}
-		else throw new DescriptorsBuilderCriticalException("SymmetryRelationnalData : empty parameter");
+		else throw new DescriptorsBuilderException("SymmetryRelationnalData : empty parameter");
 	}
 	
-	public SymmetryRelationalDataV1(SymmetryRelationalDataInterface symmetryRelationalData) {
-		super((EnumerationRelationalDataInterface) symmetryRelationalData);
+	public SymmetryRelationalDataImpl(ISymmetryRelationalData symmetryRelationalData) {
+		super((IEnumerationRelationalData) symmetryRelationalData);
 		changeRelationName();
 		this.typeOfSymmetry = symmetryRelationalData.getTypeOfSymmetry();
 	}
@@ -33,7 +33,7 @@ public class SymmetryRelationalDataV1 extends EnumerationRelationalDataV1 implem
 	}
 	
 	@Override
-	public void addDimensions(ArrayList<String> dimensions) {
+	public void addDimensions(List<String> dimensions) {
 		listOfDimensions.addAll(dimensions);
 	}	
 

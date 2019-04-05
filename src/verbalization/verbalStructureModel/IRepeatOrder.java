@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface RepeatOrderInterface {
+public interface IRepeatOrder {
 
 	String getverbalRepeatOrder();
 

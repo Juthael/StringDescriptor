@@ -2,10 +2,11 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
-public class Sequence extends AbstractDescriptorV1 implements Cloneable {
+public class Sequence extends SynTreeIntegrableElementImpl implements Cloneable {
 
 	private static final String descriptorName = "sequence";
 	private CommonDiff commonDiff;
@@ -27,14 +28,14 @@ public class Sequence extends AbstractDescriptorV1 implements Cloneable {
 	}
 	
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(commonDiff, absCommonDiff));
 		return componentDescriptors;
 	}
 	
-	protected ArrayList<AbstractDescriptorV1> buildListOfRelevantComponentsForRelationBuilding() {
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(commonDiff));
 		return componentDescriptors;
 	}	

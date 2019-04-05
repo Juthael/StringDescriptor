@@ -1,17 +1,17 @@
-package verbalization.implementations.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel.impl;
 
 import java.util.List;
 
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 
-public class InstructionCodeGetterV1 implements InstructionCodeGetterInterface {
+public class InstructionCodeGetterImpl implements IInstructionCodeGetter {
 
 	private final String nbOfRepetitionsCodeString;
-	private final List<TransformationCodeGetterInterface> listOfTransformationCodeGetters;
+	private final List<ITransformationCodeGetter> listOfTransformationCodeGetters;
 	
-	public InstructionCodeGetterV1(String nbOfRepetitionsCodeString, 
-			List<TransformationCodeGetterInterface> listOfTransformationCodeGetters) {
+	public InstructionCodeGetterImpl(String nbOfRepetitionsCodeString, 
+			List<ITransformationCodeGetter> listOfTransformationCodeGetters) {
 		this.nbOfRepetitionsCodeString = nbOfRepetitionsCodeString;
 		this.listOfTransformationCodeGetters = listOfTransformationCodeGetters;
 	}
@@ -22,7 +22,7 @@ public class InstructionCodeGetterV1 implements InstructionCodeGetterInterface {
 	}
 
 	@Override
-	public List<TransformationCodeGetterInterface> getListOfTransformationCodeGetters() {
+	public List<ITransformationCodeGetter> getListOfTransformationCodeGetters() {
 		return listOfTransformationCodeGetters;
 	}
 

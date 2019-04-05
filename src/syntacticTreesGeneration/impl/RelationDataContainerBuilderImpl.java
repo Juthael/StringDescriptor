@@ -1,48 +1,50 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.IProperty;
+import copycatModel.IPropertyContainer;
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.PropertyContainerInterface;
-import copycatModel.interfaces.PropertyInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.SequenceCheckerInterface;
-import syntacticTreesGeneration.interfaces.SymmetryCheckerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationChecker;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.IRelationDataContainerBuilder;
+import syntacticTreesGeneration.ISequenceChecker;
+import syntacticTreesGeneration.ISymmetryChecker;
 
-public class RelationDataContainerBuilderV1 implements RelationDataContainerBuilderInterface {
+public class RelationDataContainerBuilderImpl implements IRelationDataContainerBuilder {
 
-	private final SignalInterface signal;
-	private final ArrayList<Group> listOfDescriptors;
-	private final ArrayList<PropertyContainerInterface> listOfPropertyContainers = new ArrayList<PropertyContainerInterface>();
+	private final ISignal signal;
+	private final List<Group> listOfDescriptors;
+	private final List<IPropertyContainer> listOfPropertyContainers = new ArrayList<IPropertyContainer>();
 	
-	public RelationDataContainerBuilderV1(SignalInterface signal, ArrayList<Group> listOfDescriptors) {
+	public RelationDataContainerBuilderImpl(ISignal signal, List<Group> listOfDescriptors) {
 		this.signal = signal;
 		this.listOfDescriptors = listOfDescriptors;
 		for (Group group : this.listOfDescriptors) {
-			PropertyContainerInterface propertyContainer = group.getpropertyContainer();
+			IPropertyContainer propertyContainer = group.getpropertyContainer();
 			listOfPropertyContainers.add(propertyContainer);
 		}
 	}
 
 	@Override
-	public RelationDataContainerInterface getRelationDataContainer() throws DescriptorsBuilderCriticalException {
-		RelationDataContainerInterface relationDataContainer = new RelationDataContainerV1();
+	public IRelationDataContainer getRelationDataContainer() throws DescriptorsBuilderException {
+		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		if (listOfDescriptors.size() > 1) {
-			ArrayList<AbstractDescriptorInterface> listOfAbstractDescriptors = new ArrayList<AbstractDescriptorInterface>();
+			List<ISynTreeIntegrableElement> listOfAbstractDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 			listOfAbstractDescriptors.addAll(listOfDescriptors);
 			boolean wholeStringIsDescribed = 
-					DescriptorSpanGetterV1.testIfWholeStringIsDescribed(signal, listOfAbstractDescriptors);
+					DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOfAbstractDescriptors);
 			relationDataContainer.setNewDescriptorWillCoverTheWholeString(wholeStringIsDescribed);
 			boolean descriptorsShareTheSameSetOfDimensions = testIfDescriptorsShareTheSameSetOfDimensions();
 			if (descriptorsShareTheSameSetOfDimensions == true) {
-				ArrayList<String> listOfDimensions = 
+				List<String> listOfDimensions = 
 						new ArrayList<String>(listOfDescriptors.get(0).getpropertyContainer().getDimensionToProperty().keySet());
 				boolean subComponentsAnalyzeCreatesNoRedundance = true;
 				boolean componentsAreRelated = true;
@@ -50,7 +52,7 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 				while (componentsAreRelated == true && dimensionIndex < listOfDimensions.size()) {
 					String dimension = listOfDimensions.get(dimensionIndex);
 					if (subComponentsAnalyzeCreatesNoRedundance == true || !dimension.contains("groups")) {
-						ArrayList<String> listsOfValues;
+						List<String> listsOfValues;
 						int dimensionLastWordIndex = dimension.lastIndexOf("/") + 1;
 						String dimensionLastWord = dimension.substring(dimensionLastWordIndex);
 						switch (dimensionLastWord) {
@@ -69,24 +71,24 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 							case "commonDiff" :
 							case "enumeration" :
 								listsOfValues = getlistsOfValuesForThisDimension(dimension);
-								EnumerationCheckerInterface enumerationChecker = 
-										new EnumerationCheckerV1(wholeStringIsDescribed, dimension, listsOfValues);
+								IEnumerationChecker enumerationChecker = 
+										new EnumerationCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues);
 								boolean simpleEnumerationWasFound = enumerationChecker.getSimpleEnumerationWasFound();
 								boolean secondDegreeEnumerationWasFound = 
 										enumerationChecker.getSecondDegreeEnumerationWasFound();
 								if (simpleEnumerationWasFound == true) {
-									EnumerationRelationalDataInterface enumerationRelationalData = 
+									IEnumerationRelationalData enumerationRelationalData = 
 											enumerationChecker.getEnumerationRelationalData();
 									relationDataContainer.addEnumeration(enumerationRelationalData);
-									SequenceCheckerInterface sequenceChecker = 
-											new SequenceCheckerV1(wholeStringIsDescribed, dimension, listsOfValues, 
+									ISequenceChecker sequenceChecker = 
+											new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
 													enumerationRelationalData);
 									boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
 									if (sequenceWasFound == true) {
 										relationDataContainer.addSequence(sequenceChecker.getSequenceRelationalData());
 									}
-									SymmetryCheckerInterface symmetryChecker = 
-											new SymmetryCheckerV1(wholeStringIsDescribed, dimension, listsOfValues, 
+									ISymmetryChecker symmetryChecker = 
+											new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
 													enumerationRelationalData);
 									boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
 									if (symmetryWasFound == true) {
@@ -94,13 +96,13 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 									}
 								}
 								else if (secondDegreeEnumerationWasFound == true) {
-									EnumerationRelationalDataInterface enumerationRelationalData = 
+									IEnumerationRelationalData enumerationRelationalData = 
 											enumerationChecker.getEnumerationRelationalData();
-									SequenceCheckerInterface sequenceChecker = 
-											new SequenceCheckerV1(wholeStringIsDescribed, dimension, listsOfValues, 
+									ISequenceChecker sequenceChecker = 
+											new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
 													enumerationRelationalData);
-									SymmetryCheckerInterface symmetryChecker = 
-											new SymmetryCheckerV1(wholeStringIsDescribed, dimension, listsOfValues, 
+									ISymmetryChecker symmetryChecker = 
+											new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
 													enumerationRelationalData);
 									boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
 									boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
@@ -130,20 +132,21 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 				else relationDataContainer.cleanValuesRedundancies();
 			}
 		} 
-		else throw new DescriptorsBuilderCriticalException("RelationDataContainerBuilder : "
+		else throw new DescriptorsBuilderException("RelationDataContainerBuilder : "
 				+ "can't find a relation with only one component.");
 		return relationDataContainer;
 	}
 	
 	private boolean testIfDescriptorsShareTheSameSetOfDimensions() {
 		boolean descriptorsShareTheSameSetOfDimensions = true;
-		HashSet<String> firstDescriptorSetOfDimensions = 
+		Set<String> firstDescriptorSetOfDimensions = 
 				new HashSet<String>(listOfDescriptors.get(0).getpropertyContainer().getDimensionToProperty().keySet());
 		int descriptorIndex = 1;
 		while (descriptorsShareTheSameSetOfDimensions == true && descriptorIndex < listOfDescriptors.size()) {
-			HashSet<String> iDescriptorSetOfDimensions = 
+			Set<String> iDescriptorSetOfDimensions = 
 					new HashSet<String>(
-							listOfDescriptors.get(descriptorIndex).getpropertyContainer().getDimensionToProperty().keySet());
+							listOfDescriptors.get(
+									descriptorIndex).getpropertyContainer().getDimensionToProperty().keySet());
 			if (!iDescriptorSetOfDimensions.equals(firstDescriptorSetOfDimensions))
 				descriptorsShareTheSameSetOfDimensions = false;
 			descriptorIndex++;
@@ -152,19 +155,19 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 		
 	}
 	
-	private ArrayList<String> getlistsOfValuesForThisDimension(String dimension) 
-			throws DescriptorsBuilderCriticalException{
-		ArrayList<String> listsOfValuesForThisDimension = new ArrayList<String>();
-		for (PropertyContainerInterface propertyContainer : listOfPropertyContainers) {
-			PropertyInterface property = 
+	private List<String> getlistsOfValuesForThisDimension(String dimension) 
+			throws DescriptorsBuilderException{
+		List<String> listsOfValuesForThisDimension = new ArrayList<String>();
+		for (IPropertyContainer propertyContainer : listOfPropertyContainers) {
+			IProperty property = 
 					propertyContainer.getProperty(dimension);
 			listsOfValuesForThisDimension.add(property.getValue());
 		}
 		return listsOfValuesForThisDimension;
 	}
 	
-	private boolean testIfValuesAreIdentical(ArrayList<String> listOfValues) 
-			throws DescriptorsBuilderCriticalException {
+	private boolean testIfValuesAreIdentical(List<String> listOfValues) 
+			throws DescriptorsBuilderException {
 		boolean valuesAreIdentical = true;
 		if (listOfValues.size() > 1) {
 			String referenceValue = listOfValues.get(0);
@@ -175,7 +178,7 @@ public class RelationDataContainerBuilderV1 implements RelationDataContainerBuil
 				listIndex++;
 			}				
 		}
-		else throw new DescriptorsBuilderCriticalException(
+		else throw new DescriptorsBuilderException(
 				"RelationContainerBuilder.testIfListsValuesAreIdentical() : illegal parameter.");
 		return valuesAreIdentical;
 	}

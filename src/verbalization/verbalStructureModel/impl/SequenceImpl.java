@@ -1,14 +1,14 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.SequenceInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.ISequence;
 
-public class SequenceV2 extends TransformationV2 implements SequenceInterface {
+public class SequenceImpl extends TransformationImpl implements ISequence {
 
 	private static final String transformationName = "sequence";
 	
-	public SequenceV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public SequenceImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		super(transformationCodeGetter);
 	}
 	

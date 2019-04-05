@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface SymmetryWithNoCentralElementCheckerInterface {
+public interface ISymmetryWithNoCentralElementChecker {
 
 	boolean getSymmetryWithNoCenterWasFound();
 
-	SymmetryRelationalDataInterface getSymmetryRelationalData() throws DescriptorsBuilderCriticalException;
+	ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException;
 
 }

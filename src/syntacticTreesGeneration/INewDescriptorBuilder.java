@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import exceptions.DescriptorsBuilderCriticalException;
+import copycatModel.ISynTreeIntegrableElement;
+import exceptions.DescriptorsBuilderException;
 
-public interface NewDescriptorBuilderInterface {
+public interface INewDescriptorBuilder {
 
-	AbstractDescriptorInterface getNewDescriptor()
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException;
+	ISynTreeIntegrableElement getNewDescriptor()
+			throws DescriptorsBuilderException, CloneNotSupportedException;
 
 }

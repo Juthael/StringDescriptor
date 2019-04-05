@@ -1,24 +1,24 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryWithNoCentralElementCheckerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.ISymmetryWithNoCentralElementChecker;
 
-public class SymmetryWithNoCentralElementCheckerV1 implements SymmetryWithNoCentralElementCheckerInterface {
+public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoCentralElementChecker {
 	
 	
 	private final boolean wholeStringIsDescribed;
 	private final String dimension;
-	private final ArrayList<String> values;
-	private final EnumerationRelationalDataInterface enumerationRelationalData;
+	private final List<String> values;
+	private final IEnumerationRelationalData enumerationRelationalData;
 	private boolean symmetryWithNoCenterWasFound;
 	private String typeOfSymmetry = "withoutCentralElement";
 
-	public SymmetryWithNoCentralElementCheckerV1(boolean wholeStringIsDescribed, String dimension, ArrayList<String> values, 
-			EnumerationRelationalDataInterface enumerationRelationalData) throws DescriptorsBuilderCriticalException {
+	public SymmetryWithNoCentralElementCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
+			IEnumerationRelationalData enumerationRelationalData) throws DescriptorsBuilderException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -35,7 +35,7 @@ public class SymmetryWithNoCentralElementCheckerV1 implements SymmetryWithNoCent
 				else if (dimensionLastValue.equals("commonDiff")) {
 					symmetryWithNoCenterWasFound = testIfCommonDiffValuesAreOpposite();
 				}
-				else throw new DescriptorsBuilderCriticalException(
+				else throw new DescriptorsBuilderException(
 						"SymmetryWithNoCentralElementChecker : unexpected dimension");
 			}
 		}
@@ -47,14 +47,14 @@ public class SymmetryWithNoCentralElementCheckerV1 implements SymmetryWithNoCent
 	}
 	
 	@Override
-	public SymmetryRelationalDataInterface getSymmetryRelationalData() throws DescriptorsBuilderCriticalException {
+	public ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException {
 		if (symmetryWithNoCenterWasFound == true) {
 			String enumerationValue = enumerationRelationalData.getEnumerationValue();
-			SymmetryRelationalDataInterface symmetryRelationalData = 
-					new SymmetryRelationalDataV1(dimension, enumerationValue, typeOfSymmetry);
+			ISymmetryRelationalData symmetryRelationalData = 
+					new SymmetryRelationalDataImpl(dimension, enumerationValue, typeOfSymmetry);
 			return symmetryRelationalData;
 		}
-		else throw new DescriptorsBuilderCriticalException("SymmetryWithNoCentralElementChecker : "
+		else throw new DescriptorsBuilderException("SymmetryWithNoCentralElementChecker : "
 				+ "can't get a symmetry that wasn't found.");
 	}
 	

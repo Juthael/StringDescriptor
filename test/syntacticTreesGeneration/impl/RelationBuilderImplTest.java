@@ -1,54 +1,55 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 
 import copycatModel.grammar.Relation;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.implementations.EnumerationRelationalDataV1;
-import syntacticTreesGeneration.implementations.RelationBuilderV1;
-import syntacticTreesGeneration.implementations.SequenceRelationalDataV1;
-import syntacticTreesGeneration.implementations.SymmetryRelationalDataV1;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.impl.EnumerationRelationalDataImpl;
+import syntacticTreesGeneration.impl.RelationBuilderImpl;
+import syntacticTreesGeneration.impl.SequenceRelationalDataImpl;
+import syntacticTreesGeneration.impl.SymmetryRelationalDataImpl;
 
-public class RelationBuilderV1Test {
+public class RelationBuilderImplTest {
 
-	private EnumerationRelationalDataInterface enumerationRelationalData1;
-	private	EnumerationRelationalDataInterface enumerationRelationalData2;
-	private	SequenceRelationalDataInterface sequenceRelationalData1;
-	private	SequenceRelationalDataInterface sequenceRelationalData2;
-	private	SymmetryRelationalDataInterface symmetryRelationalData;
+	private IEnumerationRelationalData enumerationRelationalData1;
+	private	IEnumerationRelationalData enumerationRelationalData2;
+	private	ISequenceRelationalData sequenceRelationalData1;
+	private	ISequenceRelationalData sequenceRelationalData2;
+	private	ISymmetryRelationalData symmetryRelationalData;
 
 	@Before
-	public void buildListsOfRelationalDataInterfaces() throws DescriptorsBuilderCriticalException {
+	public void buildListsOfRelationalDataInterfaces() throws DescriptorsBuilderException {
 		String dimension1 = "group/letter/platonicLetter";
 		String dimension2 = "group/relations/relation/enumeration";
 		String enumerationValue1 = "1,2,3";
 		String enumerationValue2 = "4,5";
 		String commonDiff = "1";
 		String symmetryType = "withoutCentralElement";
-		enumerationRelationalData1 = new EnumerationRelationalDataV1(dimension1, enumerationValue1);
-		enumerationRelationalData2 = new EnumerationRelationalDataV1(dimension2, enumerationValue2);
-		sequenceRelationalData1 = new SequenceRelationalDataV1(dimension1, enumerationValue1, commonDiff);
-		sequenceRelationalData2 = new SequenceRelationalDataV1(dimension2, enumerationValue2, commonDiff);
-		symmetryRelationalData = new SymmetryRelationalDataV1(dimension2, enumerationValue2, symmetryType);
+		enumerationRelationalData1 = new EnumerationRelationalDataImpl(dimension1, enumerationValue1);
+		enumerationRelationalData2 = new EnumerationRelationalDataImpl(dimension2, enumerationValue2);
+		sequenceRelationalData1 = new SequenceRelationalDataImpl(dimension1, enumerationValue1, commonDiff);
+		sequenceRelationalData2 = new SequenceRelationalDataImpl(dimension2, enumerationValue2, commonDiff);
+		symmetryRelationalData = new SymmetryRelationalDataImpl(dimension2, enumerationValue2, symmetryType);
 	}
 	
 	@Test
 	public void WhenEmptyListAsParameterThenThrowsException() {
-		ArrayList<RelationalDataInterface> emptyList = new ArrayList<RelationalDataInterface>();
+		List<IRelationalData> emptyList = new ArrayList<IRelationalData>();
 		
 		try {
-			Relation relation = RelationBuilderV1.buildRelation(emptyList);
+			Relation relation = RelationBuilderImpl.buildRelation(emptyList);
 			fail();
 		}
 		catch (Exception expected) {
@@ -57,14 +58,14 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenListWithMoreThan3ElementsThenThrowsException() {
-		ArrayList<RelationalDataInterface> tooBigList = new ArrayList<RelationalDataInterface>();
+		List<IRelationalData> tooBigList = new ArrayList<IRelationalData>();
 		tooBigList.add(enumerationRelationalData1);
 		tooBigList.add(sequenceRelationalData1);
 		tooBigList.add(sequenceRelationalData2);
 		tooBigList.add(symmetryRelationalData);
 		
 		try {
-			Relation relation = RelationBuilderV1.buildRelation(tooBigList);
+			Relation relation = RelationBuilderImpl.buildRelation(tooBigList);
 			fail();
 		}
 		catch (Exception expected) {
@@ -73,12 +74,12 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenListWithNoEnumerationRelationalDataAsParameterThenThrowsException() {
-		ArrayList<RelationalDataInterface> listWithNoEnumeration = new ArrayList<RelationalDataInterface>();
+		List<IRelationalData> listWithNoEnumeration = new ArrayList<IRelationalData>();
 		listWithNoEnumeration.add(sequenceRelationalData1);
 		listWithNoEnumeration.add(sequenceRelationalData2);
 		
 		try {
-			Relation relation = RelationBuilderV1.buildRelation(listWithNoEnumeration);
+			Relation relation = RelationBuilderImpl.buildRelation(listWithNoEnumeration);
 			fail();
 		}
 		catch (Exception expected) {
@@ -87,12 +88,12 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenListWithManyEnumerationRelationalDataAsParameterThenThrowsException() {
-		ArrayList<RelationalDataInterface> listWithManyEnumeration = new ArrayList<RelationalDataInterface>();
+		List<IRelationalData> listWithManyEnumeration = new ArrayList<IRelationalData>();
 		listWithManyEnumeration.add(enumerationRelationalData1);
 		listWithManyEnumeration.add(enumerationRelationalData2);
 		
 		try {
-			Relation relation = RelationBuilderV1.buildRelation(listWithManyEnumeration);
+			Relation relation = RelationBuilderImpl.buildRelation(listWithManyEnumeration);
 			fail();
 		}
 		catch (Exception expected) {
@@ -101,10 +102,10 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenParameterContainsEnumerationThenRelationIsBuilt() 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
+			throws DescriptorsBuilderException {
+		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
-		Relation relation = RelationBuilderV1.buildRelation(conformList);
+		Relation relation = RelationBuilderImpl.buildRelation(conformList);
 		String className = relation.getClass().getName();
 		String simpleClassName = className.substring(className.lastIndexOf(".") + 1);
 		assertEquals(simpleClassName, "Relation");		
@@ -112,11 +113,11 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceThenSequenceRelIsBuilt() 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
+			throws DescriptorsBuilderException {
+		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);
-		Relation relation = RelationBuilderV1.buildRelation(conformList);
+		Relation relation = RelationBuilderImpl.buildRelation(conformList);
 		String className = relation.getClass().getName();
 		String simpleClassName = className.substring(className.lastIndexOf(".") + 1);
 		assertEquals(simpleClassName, "SequenceRel");		
@@ -124,12 +125,12 @@ public class RelationBuilderV1Test {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceSymmetryThenSequenceAndSymmetryRelIsBuilt() 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<RelationalDataInterface> conformList = new ArrayList<RelationalDataInterface>();
+			throws DescriptorsBuilderException {
+		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);
 		conformList.add(symmetryRelationalData);
-		Relation relation = RelationBuilderV1.buildRelation(conformList);
+		Relation relation = RelationBuilderImpl.buildRelation(conformList);
 		String className = relation.getClass().getName();
 		String simpleClassName = className.substring(className.lastIndexOf(".") + 1);
 		assertEquals(simpleClassName, "SequenceAndSymmetryRel");		

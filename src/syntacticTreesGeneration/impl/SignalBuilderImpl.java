@@ -1,44 +1,45 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
 import copycatModel.grammar.Letter;
 import copycatModel.grammar.PlatonicLetter;
 import copycatModel.grammar.Position;
 import copycatModel.grammar.Size;
-import copycatModel.implementations.SignalV1;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import copycatModel.impl.SignalImpl;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.ISignalBuilder;
 
-public class SignalBuilderV1 implements SignalBuilderInterface {
+public class SignalBuilderImpl implements ISignalBuilder {
 
-	private SignalInterface signal;
+	private ISignal signal;
 	
-	public SignalBuilderV1(String charString, String directionValue) throws DescriptorsBuilderCriticalException {
+	public SignalBuilderImpl(String charString, String directionValue) throws DescriptorsBuilderException {
 		boolean charStringIsLegal = testIfCharStringIsLegal(charString);
 		boolean directionValueIsLegal = testIfDirectionValueIsLegal(directionValue);
 		if (charStringIsLegal == true && directionValueIsLegal == true) {
 			char[] chars = charString.toCharArray();
-			ArrayList<Group> listOfGroups = new ArrayList<Group>();
+			List<Group> listOfGroups = new ArrayList<Group>();
 			for (int i=0 ; i<chars.length ; i++) {
 				char iChar = chars[i];
 				String iString = getLetterAlphabeticPositionString(iChar);
 				Letter iLetter = getLetter(iString, Integer.toString(i+1));
 				Size iSize = new Size(false, "1");
-				Position iPosition = new Position(false, DescGenSettings.AWAITING_POSITION_VALUE);
+				Position iPosition = new Position(false, Settings.AWAITING_POSITION_VALUE);
 				Group group = new Group(true, iSize, iPosition, iLetter);
 				listOfGroups.add(group);
 			}
-			signal = new SignalV1(listOfGroups, directionValue);			
+			signal = new SignalImpl(listOfGroups, directionValue);			
 		}
-		else throw new DescriptorsBuilderCriticalException("SignalBuilder : illegal parameter.");
+		else throw new DescriptorsBuilderException("SignalBuilder : illegal parameter.");
 	}
 	
 	@Override
-	public SignalInterface getSignal(){
+	public ISignal getSignal(){
 		return signal;
 	}
 	
@@ -58,12 +59,12 @@ public class SignalBuilderV1 implements SignalBuilderInterface {
     
     private boolean testIfCharStringIsLegal(String charString) {
     	boolean charStringIsLegal = true;    	
-    	if (charString.length() > DescGenSettings.MAX_NB_OF_CHARS_IN_STRING)
+    	if (charString.length() > Settings.MAX_NB_OF_CHARS_IN_STRING)
     		charStringIsLegal = false;
     	else {
         	int minAsciiValue; 
         	int maxAsciiValue;
-        	if (DescGenSettings.USE_LOWERCASE_LETTER) {
+        	if (Settings.USE_LOWERCASE_LETTER) {
         		minAsciiValue = 97;
         		maxAsciiValue = 122;
         	}

@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface TargetInterface {
+public interface ITarget {
 
 	String getVerbalTarget();
 

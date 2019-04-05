@@ -1,41 +1,41 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.implementations.dataEncodingModel.RecipeCodeGetterV1;
-import verbalization.interfaces.InstructionCoderInterface;
-import verbalization.interfaces.RecipeCoderInterface;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
+import verbalization.dataEncoding.encoders.IInstructionCoder;
+import verbalization.dataEncoding.encoders.IRecipeCoder;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
+import verbalization.dataEncoding.encodingModel.impl.RecipeCodeGetterImpl;
 
-public class RecipeCoderV1 implements RecipeCoderInterface {
+public class RecipeCoderImpl implements IRecipeCoder {
 
-	private RecipeCodeGetterInterface recipeCodeGetter;
+	private IRecipeCodeGetter recipeCodeGetter;
 	
-	public RecipeCoderV1(List<String> listOfUnfactorizedGroupProperties) throws VerbalizationException {
+	public RecipeCoderImpl(List<String> listOfUnfactorizedGroupProperties) throws VerbalizationException {
 		recipeCodeGetter = setRecipeCodeGetter(listOfUnfactorizedGroupProperties);
 	}
 
 	@Override
-	public RecipeCodeGetterInterface getRecipeCodeGetter() {
+	public IRecipeCodeGetter getRecipeCodeGetter() {
 		return recipeCodeGetter;
 	}
 	
-	private RecipeCodeGetterInterface setRecipeCodeGetter(List<String> listOfUnfactorizedGroupProperties) 
+	private IRecipeCodeGetter setRecipeCodeGetter(List<String> listOfUnfactorizedGroupProperties) 
 			throws VerbalizationException {
-		RecipeCodeGetterInterface recipeCodeGetter;
-		List<InstructionCodeGetterInterface> listOfInstructionCodeGetters = 
+		IRecipeCodeGetter recipeCodeGetter;
+		List<IInstructionCodeGetter> listOfInstructionCodeGetters = 
 				setListOfInstructionsRecursively(listOfUnfactorizedGroupProperties);
-		recipeCodeGetter = new RecipeCodeGetterV1(listOfInstructionCodeGetters);	
+		recipeCodeGetter = new RecipeCodeGetterImpl(listOfInstructionCodeGetters);	
 		return recipeCodeGetter;
 	}
 	
-	private List<InstructionCodeGetterInterface> setListOfInstructionsRecursively(List<String> groupListOfProperties) 
+	private List<IInstructionCodeGetter> setListOfInstructionsRecursively(List<String> groupListOfProperties) 
 			throws VerbalizationException {
-		List<InstructionCodeGetterInterface> listOfInstructionCodeGetters = 
-				new ArrayList<InstructionCodeGetterInterface>();
+		List<IInstructionCodeGetter> listOfInstructionCodeGetters = 
+				new ArrayList<IInstructionCodeGetter>();
 		List<String> relationXPropertyList = new ArrayList<String>();
 		List<String> firstGroupPropertyList = new ArrayList<String>();
 		int groupSubStringIndex = -1;
@@ -77,7 +77,7 @@ public class RecipeCoderV1 implements RecipeCoderInterface {
 		if (!firstGroupPropertyList.isEmpty()) {
 			listOfInstructionCodeGetters.addAll(setListOfInstructionsRecursively(firstGroupPropertyList));
 		}
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXPropertyList); 
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXPropertyList); 
 		listOfInstructionCodeGetters.add(instructionCoder.getInstructionCodeGetter());
 		return listOfInstructionCodeGetters;
 	}

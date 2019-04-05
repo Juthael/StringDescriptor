@@ -1,4 +1,4 @@
-package descriptorsVerbalization.model;
+package verbalization.verbalStructureModel.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import verbalization.implementations.dataEncodingModel.TransformationCodeGetterV1;
-import verbalization.implementations.verbalStructureModel.EffectorV2;
-import verbalization.implementations.verbalStructureModel.EnumerationV2;
-import verbalization.implementations.verbalStructureModel.SequenceV2;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.TransformationInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.dataEncoding.encodingModel.impl.TransformationCodeGetterImpl;
+import verbalization.verbalStructureModel.ITransformation;
+import verbalization.verbalStructureModel.impl.EffectorImpl;
+import verbalization.verbalStructureModel.impl.EnumerationImpl;
+import verbalization.verbalStructureModel.impl.SequenceImpl;
 
 public class TransformationTest {
 
@@ -100,14 +100,14 @@ public class TransformationTest {
 			for (String transfoCode : listOfCodes) {
 				List<String> listOfPredicates = new ArrayList<String>();
 				listOfPredicates.add(transfoCode);
-				TransformationCodeGetterInterface transformationCodeGetter = new TransformationCodeGetterV1(listOfPredicates, "1");
-				TransformationInterface transformation;
+				ITransformationCodeGetter transformationCodeGetter = new TransformationCodeGetterImpl(listOfPredicates, "1");
+				ITransformation transformation;
 				if (transfoCode.contains("Enumerate"))
-					transformation = new EnumerationV2(transformationCodeGetter);
+					transformation = new EnumerationImpl(transformationCodeGetter);
 				else if (transfoCode.contains("crease") || transfoCode.contains("Equals"))
-					transformation = new SequenceV2(transformationCodeGetter);
+					transformation = new SequenceImpl(transformationCodeGetter);
 				else if (transfoCode.contains("Effector"))
-					transformation = new EffectorV2(transformationCodeGetter);
+					transformation = new EffectorImpl(transformationCodeGetter);
 				else throw new Exception("transfoCode type wasn't recognized");
 				// System.out.println(transformation.getVerbalTransformation());
 			}

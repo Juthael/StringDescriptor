@@ -1,48 +1,49 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import copycatModel.ISignal;
+import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.CharStringBuilderInterface;
-import syntacticTreesGeneration.interfaces.GroupBuilderInterface;
-import syntacticTreesGeneration.interfaces.NewDescriptorBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.ICharStringBuilder;
+import syntacticTreesGeneration.IGroupBuilder;
+import syntacticTreesGeneration.INewDescriptorBuilder;
+import syntacticTreesGeneration.IRelationDataContainer;
 
-public class NewDescriptorBuilderV1 implements NewDescriptorBuilderInterface {
+public class NewDescriptorBuilderImpl implements INewDescriptorBuilder {
 
-	private final SignalInterface signal;
-	private final RelationDataContainerInterface relationDataContainer;
-	private final ArrayList<Group> listOfFactorizableDescriptors;
+	private final ISignal signal;
+	private final IRelationDataContainer relationDataContainer;
+	private final List<Group> listOfFactorizableDescriptors;
 	
-	public NewDescriptorBuilderV1(SignalInterface signal, RelationDataContainerInterface relationDataContainer, 
-			ArrayList<Group> listOfFactorizableDescriptors){
+	public NewDescriptorBuilderImpl(ISignal signal, IRelationDataContainer relationDataContainer, 
+			List<Group> listOfFactorizableDescriptors){
 		this.signal = signal;
 		this.relationDataContainer = relationDataContainer;
 		this.listOfFactorizableDescriptors = listOfFactorizableDescriptors;
 	}
 	
 	@Override
-	public AbstractDescriptorInterface getNewDescriptor() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		AbstractDescriptorInterface abstractDescriptor;
+	public ISynTreeIntegrableElement getNewDescriptor() throws DescriptorsBuilderException, CloneNotSupportedException {
+		ISynTreeIntegrableElement synTreeIntegrableElement;
 		boolean newDescriptorWillCoverTheFullString = relationDataContainer.getNewDescriptorWillCoverTheFullString();
 		if (newDescriptorWillCoverTheFullString == true) {
-			CharStringBuilderInterface charStringBuilder = 
-					new	CharStringBuilderV1(signal.getDirectionValue(), listOfFactorizableDescriptors, relationDataContainer);
-			abstractDescriptor = charStringBuilder.getCharString();
+			ICharStringBuilder charStringBuilder = 
+					new	CharStringBuilderImpl(signal.getDirectionValue(), listOfFactorizableDescriptors, 
+							relationDataContainer);
+			synTreeIntegrableElement = charStringBuilder.getCharString();
 		}
 		else {
 			boolean factorizableDescriptorsAreRelated = (relationDataContainer.getListOfEnumerations().size() != 0);
 			if (factorizableDescriptorsAreRelated == true) {
-				GroupBuilderInterface groupBuilder = new GroupBuilderV1(listOfFactorizableDescriptors, relationDataContainer);
-				abstractDescriptor = groupBuilder.getGroup();
+				IGroupBuilder groupBuilder = new GroupBuilderImpl(listOfFactorizableDescriptors, relationDataContainer);
+				synTreeIntegrableElement = groupBuilder.getGroup();
 			}
-			else throw new DescriptorsBuilderCriticalException("NewDescriptorBuilder : "
+			else throw new DescriptorsBuilderException("NewDescriptorBuilder : "
 					+ "factorizable descriptors don't cover the full string and aren't related." );
 		}
-		return abstractDescriptor;
+		return synTreeIntegrableElement;
 	}
 	
 }

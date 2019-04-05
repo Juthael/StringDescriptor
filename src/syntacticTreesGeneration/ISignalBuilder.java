@@ -1,9 +1,9 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import copycatModel.interfaces.SignalInterface;
+import copycatModel.ISignal;
 
-public interface SignalBuilderInterface {
+public interface ISignalBuilder {
 
-	SignalInterface getSignal();
+	ISignal getSignal();
 
 }

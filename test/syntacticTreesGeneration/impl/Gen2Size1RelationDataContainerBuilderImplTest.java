@@ -1,52 +1,52 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.Gen2Size1RelationDataContainerBuilderV1;
-import syntacticTreesGeneration.implementations.NewDescriptorBuilderV1;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.interfaces.Gen2Size1RelationDataContainerBuilderInterface;
-import syntacticTreesGeneration.interfaces.NewDescriptorBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
+import syntacticTreesGeneration.INewDescriptorBuilder;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.Gen2Size1RelationDataContainerBuilderImpl;
+import syntacticTreesGeneration.impl.NewDescriptorBuilderImpl;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class Gen2Size1RelationDataContainerBuilderV1Test {
+public class Gen2Size1RelationDataContainerBuilderImplTest {
 
-	SignalBuilderInterface signalBuilderABC;
-	SignalInterface signalABC;
-	ArrayList<Group> descriptorsSignalABC;	
+	ISignalBuilder signalBuilderABC;
+	ISignal signalABC;
+	List<Group> descriptorsSignalABC;	
 	
 	@Before
-	public void initialize() throws DescriptorsBuilderCriticalException {
-		signalBuilderABC = new SignalBuilderV1("abc", "fromLeftToRight");
+	public void initialize() throws DescriptorsBuilderException {
+		signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
 	}
 	
 	@Test
 	public void when1stGenDescriptorCover1stLetterThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		int nbOfRDContainers = 0;
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABC, signalABC.getGroups().get(0));
-		ArrayList<RelationDataContainerInterface> listOfRDContainer = 
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
+		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
-		if (DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
+		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
 			nbOfRDContainers++;
 		}
-		if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
-			for (int inc = DescGenSettings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= DescGenSettings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
+		if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_FIRST_LETTER) {
+			for (int inc = Settings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= Settings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
 				nbOfRDContainers++;
 		}
 		assertEquals(listOfRDContainer.size(), nbOfRDContainers);
@@ -54,17 +54,17 @@ public class Gen2Size1RelationDataContainerBuilderV1Test {
 	
 	@Test
 	public void when1stGenDescriptorCoverLastLetterThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		int nbOfRDContainers = 0;
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABC, signalABC.getGroups().get(2));
-		ArrayList<RelationDataContainerInterface> listOfRDContainer = 
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(2));
+		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
-		if (DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
+		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
 			nbOfRDContainers++;
 		}
-		if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_LAST_LETTER) {
-			for (int inc = DescGenSettings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= DescGenSettings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
+		if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_LAST_LETTER) {
+			for (int inc = Settings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= Settings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
 				nbOfRDContainers++;
 		}
 		assertEquals(listOfRDContainer.size(), nbOfRDContainers);		
@@ -72,19 +72,19 @@ public class Gen2Size1RelationDataContainerBuilderV1Test {
 	
 	@Test
 	public void when1stGenDescriptorDoesntCoverSpecialPositionThenRDContainerSizeIsAccordedToSettings() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		int nbOfRDContainers = 0;
-		SignalBuilderInterface signalBuilderABCD = new SignalBuilderV1("abcd", "fromLeftToRight");
-		SignalInterface signalABCD = signalBuilderABCD.getSignal();
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABCD, signalABCD.getGroups().get(2));
-		ArrayList<RelationDataContainerInterface> listOfRDContainer = 
+		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
+		ISignal signalABCD = signalBuilderABCD.getSignal();
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABCD, signalABCD.getGroups().get(2));
+		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
-		if (DescGenSettings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_ALL_LETTERS) {
+		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_ALL_LETTERS) {
 			nbOfRDContainers++;
 		}
-		if (DescGenSettings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_ALL_LETTERS) {
-			for (int inc = DescGenSettings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= DescGenSettings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
+		if (Settings.GEN2SIZE1_SEQUENCE_ALLOWED_FOR_ALL_LETTERS) {
+			for (int inc = Settings.GEN2SIZE1_SEQUENCE_MIN_INCREMENT ; inc <= Settings.GEN2SIZE1_SEQUENCE_MAX_INCREMENT ; inc++)
 				nbOfRDContainers++;
 		}
 		assertEquals(listOfRDContainer.size(), nbOfRDContainers);			
@@ -92,37 +92,37 @@ public class Gen2Size1RelationDataContainerBuilderV1Test {
 	
 	@Test
 	public void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		ArrayList<AbstractDescriptorInterface> newGroups = new ArrayList<AbstractDescriptorInterface>();
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilderA = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABC, signalABC.getGroups().get(0));
-		ArrayList<RelationDataContainerInterface> listOfRDContainerA = 
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		List<ISynTreeIntegrableElement> newGroups = new ArrayList<ISynTreeIntegrableElement>();
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderA = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
+		List<IRelationDataContainer> listOfRDContainerA = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilderB = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABC, signalABC.getGroups().get(1));
-		ArrayList<RelationDataContainerInterface> listOfRDContainerB = 
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderB = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(1));
+		List<IRelationDataContainer> listOfRDContainerB = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
-		Gen2Size1RelationDataContainerBuilderInterface gen2Size1RDContainerBuilderC = 
-				new Gen2Size1RelationDataContainerBuilderV1(signalABC, signalABC.getGroups().get(2));
-		ArrayList<RelationDataContainerInterface> listOfRDContainerC = 
+		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderC = 
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(2));
+		List<IRelationDataContainer> listOfRDContainerC = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();		
-		ArrayList<Group> listWithGroupA = new ArrayList<Group>();
-		ArrayList<Group> listWithGroupB = new ArrayList<Group>();
-		ArrayList<Group> listWithGroupC = new ArrayList<Group>();
+		List<Group> listWithGroupA = new ArrayList<Group>();
+		List<Group> listWithGroupB = new ArrayList<Group>();
+		List<Group> listWithGroupC = new ArrayList<Group>();
 		listWithGroupA.add(signalABC.getGroups().get(0));
 		listWithGroupB.add(signalABC.getGroups().get(1));
 		listWithGroupC.add(signalABC.getGroups().get(2));
 		try {
-			for (RelationDataContainerInterface RDContainerA : listOfRDContainerA) {
-				NewDescriptorBuilderInterface newDescriptorBuilder = new NewDescriptorBuilderV1(signalABC, RDContainerA, listWithGroupA);
+			for (IRelationDataContainer RDContainerA : listOfRDContainerA) {
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerA, listWithGroupA);
 				newGroups.add(newDescriptorBuilder.getNewDescriptor());
 			}
-			for (RelationDataContainerInterface RDContainerB : listOfRDContainerB) {
-				NewDescriptorBuilderInterface newDescriptorBuilder = new NewDescriptorBuilderV1(signalABC, RDContainerB, listWithGroupB);
+			for (IRelationDataContainer RDContainerB : listOfRDContainerB) {
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerB, listWithGroupB);
 				newGroups.add(newDescriptorBuilder.getNewDescriptor());
 			}
-			for (RelationDataContainerInterface RDContainerC : listOfRDContainerC) {
-				NewDescriptorBuilderInterface newDescriptorBuilder = new NewDescriptorBuilderV1(signalABC, RDContainerC, listWithGroupC);
+			for (IRelationDataContainer RDContainerC : listOfRDContainerC) {
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerC, listWithGroupC);
 				newGroups.add(newDescriptorBuilder.getNewDescriptor());
 			}			
 		}

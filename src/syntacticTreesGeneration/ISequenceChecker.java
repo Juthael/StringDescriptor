@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface SequenceCheckerInterface {
+public interface ISequenceChecker {
 
 	boolean getSequenceWasFound();
 
-	SequenceRelationalDataInterface getSequenceRelationalData() throws DescriptorsBuilderCriticalException;
+	ISequenceRelationalData getSequenceRelationalData() throws DescriptorsBuilderException;
 
 }

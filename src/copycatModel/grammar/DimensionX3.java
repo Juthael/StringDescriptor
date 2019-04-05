@@ -2,8 +2,9 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
 public class DimensionX3 extends HowManyDimensions implements Cloneable {
 
@@ -29,8 +30,8 @@ public class DimensionX3 extends HowManyDimensions implements Cloneable {
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(dimension1, dimension2, dimension3));
 		return componentDescriptors;
 	}

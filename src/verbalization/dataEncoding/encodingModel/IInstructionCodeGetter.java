@@ -1,10 +1,10 @@
-package verbalization.interfaces.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel;
 
 import java.util.List;
 
-public interface InstructionCodeGetterInterface {
+public interface IInstructionCodeGetter {
 	
 	String getNbOfRepetitionsCodeString();
-	List<TransformationCodeGetterInterface> getListOfTransformationCodeGetters();
+	List<ITransformationCodeGetter> getListOfTransformationCodeGetters();
 
 }

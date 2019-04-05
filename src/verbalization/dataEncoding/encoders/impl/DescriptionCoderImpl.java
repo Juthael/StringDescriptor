@@ -1,34 +1,34 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.grammar.CharString;
 import exceptions.VerbalizationException;
-import verbalization.implementations.dataEncodingModel.DescriptionCodeGetterV1;
-import verbalization.interfaces.DescriptionCoderInterface;
-import verbalization.interfaces.RecipeCoderInterface;
-import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
+import verbalization.dataEncoding.encoders.IDescriptionCoder;
+import verbalization.dataEncoding.encoders.IRecipeCoder;
+import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
+import verbalization.dataEncoding.encodingModel.impl.DescriptionCodeGetterImpl;
 
-public class DescriptionCoderV1 implements DescriptionCoderInterface {
+public class DescriptionCoderImpl implements IDescriptionCoder {
 
-	private DescriptionCodeGetterInterface descriptionCodeGetter;
+	private IDescriptionCodeGetter descriptionCodeGetter;
 	
-	public DescriptionCoderV1(CharString descriptorToBeTranslated) throws VerbalizationException {
+	public DescriptionCoderImpl(CharString descriptorToBeTranslated) throws VerbalizationException {
 		descriptionCodeGetter = setDescriptorCodeGetter(descriptorToBeTranslated.getListOfPropertiesWithPath());
 	}
 
 	@Override
-	public DescriptionCodeGetterInterface getDescriptionCodeGetter() {
+	public IDescriptionCodeGetter getDescriptionCodeGetter() {
 		return descriptionCodeGetter;
 	}
 	
-	private DescriptionCodeGetterInterface setDescriptorCodeGetter(List<String> listOfDescriptorProperties) 
+	private IDescriptionCodeGetter setDescriptorCodeGetter(List<String> listOfDescriptorProperties) 
 			throws VerbalizationException {
-		DescriptionCodeGetterInterface descriptionCodeGetter;
+		IDescriptionCodeGetter descriptionCodeGetter;
 		String readingDirection = "";
-		List<RecipeCodeGetterInterface> listOfRecipeCodeGetters = new ArrayList<RecipeCodeGetterInterface>();
+		List<IRecipeCodeGetter> listOfRecipeCodeGetters = new ArrayList<IRecipeCodeGetter>();
 		List<List<String>> listOfUnfactorizedGroupsPropertyLists = new ArrayList<List<String>>();
 		List<String> currentUnfactorizedGroupListOfProperties = new ArrayList<String>();
 		int unfactorizedGroupIndex = 0;
@@ -55,11 +55,11 @@ public class DescriptionCoderV1 implements DescriptionCoderInterface {
 		}
 		listOfUnfactorizedGroupsPropertyLists.add(currentUnfactorizedGroupListOfProperties);
 		for (List<String> listOfUnfactorizedGroupProperties : listOfUnfactorizedGroupsPropertyLists) {
-			RecipeCoderInterface recipeCoder = new RecipeCoderV1(listOfUnfactorizedGroupProperties);
-			RecipeCodeGetterInterface recipeCodeGetterInterface = recipeCoder.getRecipeCodeGetter();
-			listOfRecipeCodeGetters.add(recipeCodeGetterInterface);
+			IRecipeCoder recipeCoder = new RecipeCoderImpl(listOfUnfactorizedGroupProperties);
+			IRecipeCodeGetter iRecipeCodeGetter = recipeCoder.getRecipeCodeGetter();
+			listOfRecipeCodeGetters.add(iRecipeCodeGetter);
 		}
-		descriptionCodeGetter = new DescriptionCodeGetterV1(readingDirection, listOfRecipeCodeGetters);
+		descriptionCodeGetter = new DescriptionCodeGetterImpl(readingDirection, listOfRecipeCodeGetters);
 		return descriptionCodeGetter;
 	}
 

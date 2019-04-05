@@ -1,13 +1,13 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.verbalStructureModel.RepeatOrderInterface;
+import verbalization.verbalStructureModel.IRepeatOrder;
 
-public class RepeatOrderV2 implements RepeatOrderInterface {
+public class RepeatOrderImpl implements IRepeatOrder {
 	
 	private String verbalRepeatOrder;
 	
-	public RepeatOrderV2(String numberOfRepetitions) throws VerbalizationException {
+	public RepeatOrderImpl(String numberOfRepetitions) throws VerbalizationException {
 		verbalRepeatOrder = setVerbalRepeatOrder(numberOfRepetitions);
 	}
 	

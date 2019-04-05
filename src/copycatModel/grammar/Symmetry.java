@@ -1,10 +1,11 @@
 package copycatModel.grammar;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
-public class Symmetry extends AbstractDescriptorV1 implements Cloneable {
+public class Symmetry extends SynTreeIntegrableElementImpl implements Cloneable {
 
 	private static final String descriptorName="symmetry";
 	private final String symmetryValue; // "withCentralElement" or "withoutCentralElement"
@@ -21,8 +22,8 @@ public class Symmetry extends AbstractDescriptorV1 implements Cloneable {
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>();
+	protected ArrayList<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		ArrayList<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>();
 		return componentDescriptors;
 	}
 
@@ -32,8 +33,8 @@ public class Symmetry extends AbstractDescriptorV1 implements Cloneable {
 	}
 	
 	@Override
-	public ArrayList<String> getListOfPropertiesWithPath() {
-		ArrayList<String> listOfPropertiesWithPath = new ArrayList<String>();
+	public List<String> getListOfPropertiesWithPath() {
+		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
 		sB.append("/");
@@ -43,7 +44,7 @@ public class Symmetry extends AbstractDescriptorV1 implements Cloneable {
 	}	
 	
 	@Override
-	public ArrayList<String> getListOfRelevantPropertiesWithPath() {
+	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
 	}	
 

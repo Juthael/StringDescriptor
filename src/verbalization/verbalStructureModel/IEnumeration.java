@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface EnumerationInterface extends TransformationInterface {
+public interface IEnumeration extends ITransformation {
 
 	String getTransformationName();
 

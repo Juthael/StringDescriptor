@@ -2,10 +2,11 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
-public class Structure extends AbstractDescriptorV1 implements Cloneable {
+public class Structure extends SynTreeIntegrableElementImpl implements Cloneable {
 
 	private static String descriptorName = "structure";
 	private Size size;
@@ -27,8 +28,8 @@ public class Structure extends AbstractDescriptorV1 implements Cloneable {
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents() {
-		ArrayList<AbstractDescriptorV1> listOfComponents = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents() {
+		List<SynTreeIntegrableElementImpl> listOfComponents = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(size, relation));
 		return listOfComponents;
 	}

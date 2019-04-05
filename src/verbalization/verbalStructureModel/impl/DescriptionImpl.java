@@ -1,18 +1,18 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.DescriptionInterface;
-import verbalization.interfaces.verbalStructureModel.RecipeInterface;
+import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
+import verbalization.verbalStructureModel.IDescription;
+import verbalization.verbalStructureModel.IRecipe;
 
-public class DescriptionV2 implements DescriptionInterface {
+public class DescriptionImpl implements IDescription {
 
 	private final String verbalDescription;
 	
-	public DescriptionV2(DescriptionCodeGetterInterface descriptionCodeGetter) throws VerbalizationException {
+	public DescriptionImpl(IDescriptionCodeGetter descriptionCodeGetter) throws VerbalizationException {
 		verbalDescription = setVerbalDescription(descriptionCodeGetter);
 	}
 	
@@ -21,13 +21,13 @@ public class DescriptionV2 implements DescriptionInterface {
 		return verbalDescription;
 	}
 	
-	private String setVerbalDescription(DescriptionCodeGetterInterface descriptionCodeGetter) throws VerbalizationException {
+	private String setVerbalDescription(IDescriptionCodeGetter descriptionCodeGetter) throws VerbalizationException {
 		String verbalDescription;
-		List<RecipeCodeGetterInterface> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
+		List<IRecipeCodeGetter> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
 		StringBuilder sB = new StringBuilder();
 		for (int i=0 ; i<listOfRecipeCodeGetters.size() ; i++) {
 			sB.append(getRecipeIntroducer(i+1));
-			RecipeInterface recipe = new RecipeV2(listOfRecipeCodeGetters.get(i));
+			IRecipe recipe = new RecipeImpl(listOfRecipeCodeGetters.get(i));
 			sB.append(recipe.getVerbalRecipe());
 		}
 		verbalDescription = sB.toString();

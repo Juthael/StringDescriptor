@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface ActionInterface {
+public interface IAction {
 
 	String getVerbalAction();
 

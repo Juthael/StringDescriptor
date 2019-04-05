@@ -1,49 +1,49 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import copycatModel.ISignal;
+import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.ComponentGrouperInterface;
-import syntacticTreesGeneration.interfaces.DescriptorsBuildingManagerInterface;
-import syntacticTreesGeneration.interfaces.NewGenOfDescriptorsBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IComponentGrouper;
+import syntacticTreesGeneration.IDescriptorsBuildingManager;
+import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 
-public class NewGenOfDescriptorsBuilderV1 implements NewGenOfDescriptorsBuilderInterface {
+public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuilder {
 
 	private final int componentsMaxGenerationNumber;
 	private final boolean thisWillBeTheLastGeneration;
-	private final SignalInterface signal;
-	private final ArrayList<Group> previousGenOfDescriptors;
-	private final ComponentGrouperInterface componentGrouper;
+	private final ISignal signal;
+	private final List<Group> previousGenOfDescriptors;
+	private final IComponentGrouper componentGrouper;
 	private static final int[] minSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	
-	public NewGenOfDescriptorsBuilderV1(int componentsMaxGenerationNumber, SignalInterface signal, 
-			ArrayList<Group> previousGenOfDescriptors) throws DescriptorsBuilderCriticalException {
+	public NewGenOfDescriptorsBuilderImpl(int componentsMaxGenerationNumber, ISignal signal, 
+			List<Group> previousGenOfDescriptors) throws DescriptorsBuilderException {
 		this.componentsMaxGenerationNumber = componentsMaxGenerationNumber;
 		this.signal = signal;
 		thisWillBeTheLastGeneration = testIfThisWillBeTheLastGeneration();
 		this.previousGenOfDescriptors = previousGenOfDescriptors;
 		componentGrouper = 
-				new ComponentGrouperV2(this.componentsMaxGenerationNumber, thisWillBeTheLastGeneration, 
+				new ComponentGrouperImpl(this.componentsMaxGenerationNumber, thisWillBeTheLastGeneration, 
 						this.signal, this.previousGenOfDescriptors);
 	}
 	
 	@Override
-	public ArrayList<AbstractDescriptorInterface> getNewGenOfDescriptors() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		ArrayList<AbstractDescriptorInterface> newGenOfDescriptors = new ArrayList<AbstractDescriptorInterface>();
-		HashSet<ArrayList<Group>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
-		for (ArrayList<Group> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
+	public List<ISynTreeIntegrableElement> getNewGenOfDescriptors() 
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		List<ISynTreeIntegrableElement> newGenOfDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+		Set<List<Group>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
+		for (List<Group> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
 			boolean atLeastOneComponentIsFromTheLastGeneration = 
 					testIfAtLeastOneComponentIsFromTheLastGeneration(setOfFactorizableDescriptors);
 			if (atLeastOneComponentIsFromTheLastGeneration == true) {
-				DescriptorsBuildingManagerInterface descriptorsBuildingManager = 
-						new DescriptorsBuildingManagerV1(
+				IDescriptorsBuildingManager descriptorsBuildingManager = 
+						new DescriptorsBuildingManagerImpl(
 								signal, componentsMaxGenerationNumber, setOfFactorizableDescriptors);
 				newGenOfDescriptors.addAll(descriptorsBuildingManager.getListOfNewDescriptors());
 			}	
@@ -79,7 +79,7 @@ public class NewGenOfDescriptorsBuilderV1 implements NewGenOfDescriptorsBuilderI
 	private boolean testIfThisWillBeTheLastGeneration() {
 		boolean thisWillBeTheLastGeneration = false;
 		int nextNextGen = componentsMaxGenerationNumber + 2;
-		if (nextNextGen > DescGenSettings.MAX_NB_OF_DESCRIPTOR_GENERATIONS)
+		if (nextNextGen > Settings.MAX_NB_OF_DESCRIPTOR_GENERATIONS)
 			thisWillBeTheLastGeneration = true;
 		else if (signal.getSignalSize() < minSizeForIndexGeneration[nextNextGen])
 			thisWillBeTheLastGeneration = true;

@@ -1,36 +1,37 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.GroupBuilderInterface;
-import syntacticTreesGeneration.interfaces.GroupsBuilder_Relational_Interface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IGroupBuilder;
+import syntacticTreesGeneration.IGroupsBuilderRelational;
+import syntacticTreesGeneration.IRelationDataContainer;
 
-public class GroupsBuilder_RelationalV1 extends GroupsBuilderV1 implements GroupsBuilder_Relational_Interface {
+public class GroupsBuilderRelationalImpl extends GroupsBuilderImpl implements IGroupsBuilderRelational {
 
-	private RelationDataContainerInterface relationDataContainer;
-	private GroupBuilderInterface groupBuilder;
+	private IRelationDataContainer relationDataContainer;
+	private IGroupBuilder groupBuilder;
 	
-	public GroupsBuilder_RelationalV1(ArrayList<Group> listOfGroups, RelationDataContainerInterface relationDataContainer) 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public GroupsBuilderRelationalImpl(List<Group> listOfGroups, IRelationDataContainer relationDataContainer) 
+			throws DescriptorsBuilderException, CloneNotSupportedException {
 		super(listOfGroups);
 		this.relationDataContainer = relationDataContainer;
-		groupBuilder = new GroupBuilderV1(super.listOfGroups, this.relationDataContainer);
+		groupBuilder = new GroupBuilderImpl(super.listOfGroups, this.relationDataContainer);
 		Group group = groupBuilder.getGroup();
-		ArrayList<Group> newListOfGroups = new ArrayList<Group>();
+		List<Group> newListOfGroups = new ArrayList<Group>();
 		newListOfGroups.add(group);
 		super.listOfGroups = newListOfGroups;
 	}
 	
-	public GroupsBuilder_RelationalV1(ArrayList<Group> listOfGroups, RelationDataContainerInterface relationDataContainer, 
-			boolean listOfGroupsCoverTheFullString) throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public GroupsBuilderRelationalImpl(List<Group> listOfGroups, IRelationDataContainer relationDataContainer, 
+			boolean listOfGroupsCoverTheFullString) throws DescriptorsBuilderException, CloneNotSupportedException {
 		super(listOfGroups, listOfGroupsCoverTheFullString);
 		this.relationDataContainer = relationDataContainer;
-		groupBuilder = new GroupBuilderV1(super.listOfGroups, this.relationDataContainer);
+		groupBuilder = new GroupBuilderImpl(super.listOfGroups, this.relationDataContainer);
 		Group group = groupBuilder.getGroup();
-		ArrayList<Group> newListOfGroups = new ArrayList<Group>();
+		List<Group> newListOfGroups = new ArrayList<Group>();
 		newListOfGroups.add(group);
 		super.listOfGroups = newListOfGroups;
 	}	

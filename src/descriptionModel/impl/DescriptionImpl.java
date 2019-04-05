@@ -1,12 +1,12 @@
-package model.impl;
+package descriptionModel.impl;
 
 import java.util.List;
 
 import copycatModel.grammar.CharString;
+import descriptionModel.IDescription;
 import exceptions.VerbalizationException;
-import model.IDescription;
-import verbalization.implementations.VerbalizerV2;
-import verbalization.interfaces.VerbalizerInterface;
+import verbalization.dataEncoding.encoders.IVerbalizer;
+import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
 
 public class DescriptionImpl implements IDescription {
 
@@ -29,7 +29,7 @@ public class DescriptionImpl implements IDescription {
 	@Override
 	public String getDescriptionInNaturalLanguage() throws VerbalizationException{
 		String descriptionInNaturalLanguage;
-		VerbalizerInterface verbalizer = new VerbalizerV2(wholeStringDescriptor);
+		IVerbalizer verbalizer = new VerbalizerImpl(wholeStringDescriptor);
 		descriptionInNaturalLanguage = verbalizer.getTranslationInNaturalLanguage();
 		return descriptionInNaturalLanguage;
 	}	

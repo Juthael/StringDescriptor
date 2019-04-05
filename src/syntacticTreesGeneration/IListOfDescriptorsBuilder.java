@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.CharString;
 
-public interface ListOfDescriptorsBuilderInterface {
+public interface IListOfDescriptorsBuilder {
 
-	ArrayList<CharString> getListOfStringDescriptors();
+	List<CharString> getListOfStringDescriptors();
 
 }

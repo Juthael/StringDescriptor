@@ -1,4 +1,4 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 
 
@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
+import copycatModel.ISignal;
 import copycatModel.grammar.AbsCommonDiff;
 import copycatModel.grammar.CharString;
 import copycatModel.grammar.CommonDiff;
@@ -26,42 +26,41 @@ import copycatModel.grammar.Sequence;
 import copycatModel.grammar.SequenceRel;
 import copycatModel.grammar.Size;
 import copycatModel.grammar.Structure;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.DescriptorSpanGetterV1;
-import syntacticTreesGeneration.implementations.EnumerationCheckerV1;
-import syntacticTreesGeneration.implementations.RelationBuilderV1;
-import syntacticTreesGeneration.implementations.RelationDataContainerBuilderV1;
-import syntacticTreesGeneration.implementations.SequenceCheckerV1;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.implementations.SymmetryCheckerV1;
-import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SequenceCheckerInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
-import syntacticTreesGeneration.interfaces.SymmetryCheckerInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IEnumerationChecker;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.IRelationDataContainerBuilder;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.ISequenceChecker;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.ISymmetryChecker;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.impl.DescriptorSpanGetterImpl;
+import syntacticTreesGeneration.impl.EnumerationCheckerImpl;
+import syntacticTreesGeneration.impl.RelationBuilderImpl;
+import syntacticTreesGeneration.impl.RelationDataContainerBuilderImpl;
+import syntacticTreesGeneration.impl.SequenceCheckerImpl;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.SymmetryCheckerImpl;
 
-public class RelationDataContainerBuilderV1Test {
+public class RelationDataContainerBuilderImplTest {
 	
-	SignalInterface signalABC;
-	SignalInterface signalABCD;
-	ArrayList<Group> descriptorsSignalABC;
-	ArrayList<Group> descriptorsSignalABCD;
+	ISignal signalABC;
+	ISignal signalABCD;
+	List<Group> descriptorsSignalABC;
+	List<Group> descriptorsSignalABCD;
 	Group abcGroup;
 	CharString charStringABC;
 	
 	@Before
-	public void initialize() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		SignalBuilderInterface signalBuilderABC = new SignalBuilderV1("abc", "fromLeftToRight");
+	public void initialize() throws DescriptorsBuilderException, CloneNotSupportedException {
+		ISignalBuilder signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
 		descriptorsSignalABC = signalABC.getGroups();
-		SignalBuilderInterface signalBuilderABCD = new SignalBuilderV1("abcd", "fromLeftToRight");
+		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		signalABCD = signalBuilderABCD.getSignal();
 		descriptorsSignalABCD = signalABCD.getGroups();
 		CommonDiff abcCommonDiff = new CommonDiff(false, "1");
@@ -75,7 +74,7 @@ public class RelationDataContainerBuilderV1Test {
 				descriptorsSignalABC.get(2));
 		Groups abcGroups = new Groups(false, abcSize, abcGroupX3);
 		Relations abcRelations = new Relations(false, abcGroups, abcDimension, abcRelation);
-		Position abcPosition = new Position(false, DescGenSettings.AWAITING_POSITION_VALUE);
+		Position abcPosition = new Position(false, Settings.AWAITING_POSITION_VALUE);
 		Size abcGroupSize = new Size(false, "3");
 		abcGroup = new Group(false, abcGroupSize, abcPosition, abcRelations);
 		Size abcGroupsSize = new Size(false, "1");
@@ -89,101 +88,101 @@ public class RelationDataContainerBuilderV1Test {
 
 	@Test
 	public void whenListOfDescriptorsInParameterIsEmptyThenThrowsException() {
-		ArrayList<Group> emptyList = new ArrayList<Group>();
+		List<Group> emptyList = new ArrayList<Group>();
 		try {
-			RelationDataContainerBuilderInterface relationDataContainerBuilder = 
-					new RelationDataContainerBuilderV1(signalABC, emptyList);
-			RelationDataContainerInterface relationDataContainer  = relationDataContainerBuilder.getRelationDataContainer();
+			IRelationDataContainerBuilder relationDataContainerBuilder = 
+					new RelationDataContainerBuilderImpl(signalABC, emptyList);
+			IRelationDataContainer relationDataContainer  = relationDataContainerBuilder.getRelationDataContainer();
 			fail();
 		} 
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 		}
 	}
 	
 	@Test
-	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws DescriptorsBuilderCriticalException {
-		ArrayList<Group> listOfGroupWithDifferentSetsOfDimensions = new ArrayList<Group>();
+	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws DescriptorsBuilderException {
+		List<Group> listOfGroupWithDifferentSetsOfDimensions = new ArrayList<Group>();
 		listOfGroupWithDifferentSetsOfDimensions.add(abcGroup);
 		listOfGroupWithDifferentSetsOfDimensions.add(descriptorsSignalABCD.get(3));
-		RelationDataContainerBuilderInterface relationDataContainerBuilder = 
-				new RelationDataContainerBuilderV1(signalABCD, listOfGroupWithDifferentSetsOfDimensions);
-		RelationDataContainerInterface relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
-		ArrayList<EnumerationRelationalDataInterface> listOfEnumerationRelationalData = 
+		IRelationDataContainerBuilder relationDataContainerBuilder = 
+				new RelationDataContainerBuilderImpl(signalABCD, listOfGroupWithDifferentSetsOfDimensions);
+		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
+		List<IEnumerationRelationalData> listOfEnumerationRelationalData = 
 				relationDataContainer.getListOfEnumerations();
 		assertTrue(listOfEnumerationRelationalData.isEmpty());
 	}
 	
 	@Test
-	public void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws DescriptorsBuilderCriticalException {
-		RelationDataContainerBuilderInterface relationDataContainerBuilder = 
-				new RelationDataContainerBuilderV1(signalABC, descriptorsSignalABC);
-		RelationDataContainerInterface relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
+	public void whenDescriptorsCoverTheWholeStringThenRDContainerBooleanSetToTrue() throws DescriptorsBuilderException {
+		IRelationDataContainerBuilder relationDataContainerBuilder = 
+				new RelationDataContainerBuilderImpl(signalABC, descriptorsSignalABC);
+		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
 		assertTrue(relationDataContainer.getNewDescriptorWillCoverTheFullString());
 	}
 	
 	@Test
-	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws DescriptorsBuilderCriticalException {
-		ArrayList<Group> listOfRelatedGroups = new ArrayList<Group>();
+	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws DescriptorsBuilderException {
+		List<Group> listOfRelatedGroups = new ArrayList<Group>();
 		listOfRelatedGroups.add(descriptorsSignalABC.get(0));
 		listOfRelatedGroups.add(descriptorsSignalABC.get(1));
-		RelationDataContainerBuilderInterface relationDataContainerBuilder = 
-				new RelationDataContainerBuilderV1(signalABC, listOfRelatedGroups);
-		RelationDataContainerInterface relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
+		IRelationDataContainerBuilder relationDataContainerBuilder = 
+				new RelationDataContainerBuilderImpl(signalABC, listOfRelatedGroups);
+		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
 		assertFalse(relationDataContainer.getListOfEnumerations().isEmpty());
 	}
 	
 	@Test
-	public void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws DescriptorsBuilderCriticalException {
+	public void whenDescriptorsFormSequenceThenRDContainerContainsEnumAndSequence() throws DescriptorsBuilderException {
 		boolean enumerationFound;
 		boolean sequenceFound;
 		boolean containerContainsEnumAndSequence;
-		RelationDataContainerBuilderInterface relationDataContainerBuilder = 
-				new RelationDataContainerBuilderV1(signalABC, descriptorsSignalABC);
-		RelationDataContainerInterface relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
+		IRelationDataContainerBuilder relationDataContainerBuilder = 
+				new RelationDataContainerBuilderImpl(signalABC, descriptorsSignalABC);
+		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
 		enumerationFound = (!relationDataContainer.getListOfEnumerations().isEmpty());
 		sequenceFound = (!relationDataContainer.getListOfSequences().isEmpty());
 		containerContainsEnumAndSequence = (enumerationFound == true && sequenceFound == true);
 		assertTrue(containerContainsEnumAndSequence);
 	}
 	
-	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws DescriptorsBuilderCriticalException {
+	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws DescriptorsBuilderException {
 		Relation structureRelation;
 		String dimension = "charString/groups/group/size";
-		ArrayList<String> listOfSizeValues = new ArrayList<String>();
-		ArrayList<Integer> listOfLetterPositions = new ArrayList<Integer>();
+		List<String> listOfSizeValues = new ArrayList<String>();
+		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
 		for(Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterV1.getDescriptorSpan(group));
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
 		}
 		listOfSizeValues.add(Integer.toString(listOfLetterPositions.size()));
-		ArrayList<RelationalDataInterface> listOfRelationalData = new ArrayList<RelationalDataInterface>();
-		EnumerationCheckerInterface enumerationChecker = new EnumerationCheckerV1(true, dimension, listOfSizeValues);
+		List<IRelationalData> listOfRelationalData = new ArrayList<IRelationalData>();
+		IEnumerationChecker enumerationChecker = new EnumerationCheckerImpl(true, dimension, listOfSizeValues);
 		if (enumerationChecker.getEnumerationWasFound() == true) {
-			EnumerationRelationalDataInterface enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
+			IEnumerationRelationalData enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 			listOfRelationalData.add(enumerationRelationalData);
-			SequenceCheckerInterface sequenceChecker = 
-					new SequenceCheckerV1(true, dimension, listOfSizeValues, enumerationRelationalData);
+			ISequenceChecker sequenceChecker = 
+					new SequenceCheckerImpl(true, dimension, listOfSizeValues, enumerationRelationalData);
 			if (sequenceChecker.getSequenceWasFound() == true) {
-				SequenceRelationalDataInterface sequenceRelationalData = sequenceChecker.getSequenceRelationalData();
+				ISequenceRelationalData sequenceRelationalData = sequenceChecker.getSequenceRelationalData();
 				listOfRelationalData.add(sequenceRelationalData);
 			}
-			SymmetryCheckerInterface symmetryChecker = 
-					new SymmetryCheckerV1(true, dimension, listOfSizeValues, enumerationRelationalData);
+			ISymmetryChecker symmetryChecker = 
+					new SymmetryCheckerImpl(true, dimension, listOfSizeValues, enumerationRelationalData);
 			if (symmetryChecker.getSymmetryWasFound() == true) {
-				SymmetryRelationalDataInterface symmetryRelationalData = symmetryChecker.getSymmetryRelationalData();
+				ISymmetryRelationalData symmetryRelationalData = symmetryChecker.getSymmetryRelationalData();
 				listOfRelationalData.add(symmetryRelationalData);
 			}
-			structureRelation = RelationBuilderV1.buildRelation(listOfRelationalData);
+			structureRelation = RelationBuilderImpl.buildRelation(listOfRelationalData);
 		}
-		else throw new DescriptorsBuilderCriticalException("CharStringBuilder.getStructureRelation() : "
+		else throw new DescriptorsBuilderException("CharStringBuilder.getStructureRelation() : "
 				+ "no enumeration was found.");
 		return structureRelation;	
 	}	
 	
-	private String getCharStringSizeValue(List<Group> listOfGroups) throws DescriptorsBuilderCriticalException {
+	private String getCharStringSizeValue(List<Group> listOfGroups) throws DescriptorsBuilderException {
 		String charStringSizeValue;
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
 		for (Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterV1.getDescriptorSpan(group));
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
 		}
 		charStringSizeValue = Integer.toString(listOfLetterPositions.size());
 		return charStringSizeValue;

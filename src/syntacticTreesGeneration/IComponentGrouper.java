@@ -1,17 +1,14 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import copycatModel.grammar.Group;
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface ComponentGrouperInterface {
+public interface IComponentGrouper {
 
-	/* (non-Javadoc)
-	 * @see descriptorsGeneration.ComponentGrouper#getSetOfFactorizableDescriptors()
-	 */
-	HashSet<ArrayList<Group>> getSetsOfFactorizableDescriptors()
-			throws DescriptorsBuilderCriticalException;
+	Set<List<Group>> getSetsOfFactorizableDescriptors()
+			throws DescriptorsBuilderException;
 
 }

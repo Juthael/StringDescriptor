@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface DescriptionInterface {
+public interface IDescription {
 
 	String getVerbalDescription();
 

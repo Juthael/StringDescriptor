@@ -1,16 +1,16 @@
-package verbalization.implementations.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel.impl;
 
 import java.util.List;
 
-import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
 
-public class DescriptionCodeGetterV1 implements DescriptionCodeGetterInterface {
+public class DescriptionCodeGetterImpl implements IDescriptionCodeGetter {
 
 	private final String readingDirection;
-	private final List<RecipeCodeGetterInterface> listOfRecipeCodeGetters;
+	private final List<IRecipeCodeGetter> listOfRecipeCodeGetters;
 	
-	public DescriptionCodeGetterV1(String readingDirection, List<RecipeCodeGetterInterface> listOfRecipeCodeGetters) {
+	public DescriptionCodeGetterImpl(String readingDirection, List<IRecipeCodeGetter> listOfRecipeCodeGetters) {
 		this.readingDirection = readingDirection;
 		this.listOfRecipeCodeGetters = listOfRecipeCodeGetters;
 	}
@@ -22,7 +22,7 @@ public class DescriptionCodeGetterV1 implements DescriptionCodeGetterInterface {
 
 
 	@Override
-	public List<RecipeCodeGetterInterface> getListOfRecipeCodeGetters() {
+	public List<IRecipeCodeGetter> getListOfRecipeCodeGetters() {
 		return listOfRecipeCodeGetters;
 	}
 	

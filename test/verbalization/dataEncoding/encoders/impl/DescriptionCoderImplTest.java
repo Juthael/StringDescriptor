@@ -1,4 +1,4 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import static org.junit.Assert.*;
 
@@ -8,28 +8,29 @@ import java.util.List;
 import org.junit.Test;
 
 import copycatModel.grammar.CharString;
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 import exceptions.VerbalizationException;
-import syntacticTreesGeneration.implementations.ListOfDescriptorsBuilderV1;
-import syntacticTreesGeneration.interfaces.ListOfDescriptorsBuilderInterface;
-import verbalization.interfaces.DescriptionCoderInterface;
-import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
+import syntacticTreesGeneration.IListOfDescriptorsBuilder;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
+import verbalization.dataEncoding.encoders.IDescriptionCoder;
+import verbalization.dataEncoding.encoders.impl.DescriptionCoderImpl;
+import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
 
-public class DescriptionCoderV1Test {
+public class DescriptionCoderImplTest {
 
 	@Test
 	public void whenParameterIsThisListOfPropertiesThenExpectedNumberOfRecipesIsReturned() 
-			throws VerbalizationException, DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		ListOfDescriptorsBuilderInterface listOfDescriptorsBuilder = new ListOfDescriptorsBuilderV1("abcd", "fromLeftToRight");
+			throws VerbalizationException, DescriptorsBuilderException, CloneNotSupportedException {
+		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
 		boolean numberOfRecipesIsUnexpected = false;
 		for (CharString descriptor : listOfDescriptors) {
-			ArrayList<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
+			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			int numberOfUnfactorizedGroups = getNbOfUnfactorizedGroups(listOfProperties);
-			DescriptionCoderInterface descriptionCoder = new DescriptionCoderV1(descriptor);
-			DescriptionCodeGetterInterface descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
-			List<RecipeCodeGetterInterface> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
+			IDescriptionCoder descriptionCoder = new DescriptionCoderImpl(descriptor);
+			IDescriptionCodeGetter descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
+			List<IRecipeCodeGetter> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
 			if (listOfRecipeCodeGetters.size() != numberOfUnfactorizedGroups)
 				numberOfRecipesIsUnexpected = true;
 		}

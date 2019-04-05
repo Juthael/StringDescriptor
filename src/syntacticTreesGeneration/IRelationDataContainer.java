@@ -1,30 +1,30 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface RelationDataContainerInterface {
+public interface IRelationDataContainer {
 
 	//Getters
 	boolean getNewDescriptorWillCoverTheFullString();
 	
-	ArrayList<EnumerationRelationalDataInterface> getListOfEnumerations();
+	List<IEnumerationRelationalData> getListOfEnumerations();
 
-	ArrayList<SequenceRelationalDataInterface> getListOfSequences();
+	List<ISequenceRelationalData> getListOfSequences();
 
-	ArrayList<SymmetryRelationalDataInterface> getListOfSymmetries();
+	List<ISymmetryRelationalData> getListOfSymmetries();
 
 	//Setters
 	void setNewDescriptorWillCoverTheWholeString(boolean newDescriptorWillCoverTheFullString);	
 	
-	void addEnumeration(EnumerationRelationalDataInterface enumerationRelationalData);
+	void addEnumeration(IEnumerationRelationalData enumerationRelationalData);
 
-	void addSequence(SequenceRelationalDataInterface sequenceRelationalData);
+	void addSequence(ISequenceRelationalData sequenceRelationalData);
 
-	void addSymmetry(SymmetryRelationalDataInterface symmetryRelationalData);
+	void addSymmetry(ISymmetryRelationalData symmetryRelationalData);
 
-	void cleanValuesRedundancies() throws DescriptorsBuilderCriticalException;
+	void cleanValuesRedundancies() throws DescriptorsBuilderException;
 	
 	void clear();
 

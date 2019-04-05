@@ -1,9 +1,9 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface RelationDataContainerBuilderInterface {
+public interface IRelationDataContainerBuilder {
 
-	RelationDataContainerInterface getRelationDataContainer() throws DescriptorsBuilderCriticalException;
+	IRelationDataContainer getRelationDataContainer() throws DescriptorsBuilderException;
 
 }

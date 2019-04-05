@@ -1,6 +1,6 @@
-package verbalization.interfaces.verbalStructureModel;
+package verbalization.verbalStructureModel;
 
-public interface RecipeInterface {
+public interface IRecipe {
 
 	String getVerbalRecipe();
 

@@ -1,9 +1,9 @@
-package verbalization.interfaces;
+package verbalization.dataEncoding.encoders;
 
-import verbalization.interfaces.dataEncodingModel.RecipeCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
 
-public interface RecipeCoderInterface {
+public interface IRecipeCoder {
 	
-	RecipeCodeGetterInterface getRecipeCodeGetter();
+	IRecipeCodeGetter getRecipeCodeGetter();
 
 }

@@ -1,6 +1,6 @@
 package settings;
 
-public class DescGenSettings {
+public class Settings {
 
 	//1.Conventions
 	public static final boolean USE_LOWERCASE_LETTER = true;

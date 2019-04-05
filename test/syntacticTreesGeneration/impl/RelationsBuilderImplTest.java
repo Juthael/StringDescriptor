@@ -1,30 +1,31 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
 import copycatModel.grammar.Relations;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.implementations.EnumerationRelationalDataV1;
-import syntacticTreesGeneration.implementations.RelationDataContainerV1;
-import syntacticTreesGeneration.implementations.RelationsBuilderV1;
-import syntacticTreesGeneration.implementations.SequenceRelationalDataV1;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.implementations.SymmetryRelationalDataV1;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.RelationsBuilderInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.IRelationsBuilder;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.impl.EnumerationRelationalDataImpl;
+import syntacticTreesGeneration.impl.RelationDataContainerImpl;
+import syntacticTreesGeneration.impl.RelationsBuilderImpl;
+import syntacticTreesGeneration.impl.SequenceRelationalDataImpl;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.SymmetryRelationalDataImpl;
 
-public class RelationsBuilderV1Test {
+public class RelationsBuilderImplTest {
 
 
 	private static String dimension1 = "dimension1";
@@ -38,46 +39,46 @@ public class RelationsBuilderV1Test {
 	private static String enumerationValue3 = "3";
 	private static String enumerationValue4 = "4";
 	private static String enumerationValue5 = "5";
-	private static EnumerationRelationalDataInterface enumerationRelationalData1;
-	private static	EnumerationRelationalDataInterface enumerationRelationalData2;
-	private static EnumerationRelationalDataInterface enumerationRelationalData3;
-	private static	EnumerationRelationalDataInterface enumerationRelationalData4;
-	private static	EnumerationRelationalDataInterface enumerationRelationalData5;	
-	private static	SequenceRelationalDataInterface sequenceRelationalData1;
+	private static IEnumerationRelationalData enumerationRelationalData1;
+	private static	IEnumerationRelationalData enumerationRelationalData2;
+	private static IEnumerationRelationalData enumerationRelationalData3;
+	private static	IEnumerationRelationalData enumerationRelationalData4;
+	private static	IEnumerationRelationalData enumerationRelationalData5;	
+	private static	ISequenceRelationalData sequenceRelationalData1;
 	private static String commonDiff1 = "1";
-	private static	SymmetryRelationalDataInterface symmetryRelationalData1;
-	private static RelationDataContainerInterface emptyContainer = new RelationDataContainerV1();
-	private static RelationDataContainerInterface otherContainer;
-	private static ArrayList<Group> listOfGroups;
+	private static	ISymmetryRelationalData symmetryRelationalData1;
+	private static IRelationDataContainer emptyContainer = new RelationDataContainerImpl();
+	private static IRelationDataContainer otherContainer;
+	private static List<Group> listOfGroups;
 	
 	@Before
-	public void initialize() throws DescriptorsBuilderCriticalException {
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
-		SignalInterface signal = signalBuilder.getSignal();
+	public void initialize() throws DescriptorsBuilderException {
+		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+		ISignal signal = signalBuilder.getSignal();
 		listOfGroups = signal.getGroups();
-		enumerationRelationalData1 = new EnumerationRelationalDataV1(dimension1, enumerationValue1);
-		enumerationRelationalData2 = new EnumerationRelationalDataV1(dimension2, enumerationValue2);
-		enumerationRelationalData3 = new EnumerationRelationalDataV1(dimension3, enumerationValue3);
-		enumerationRelationalData4 = new EnumerationRelationalDataV1(dimension4, enumerationValue4);
-		enumerationRelationalData5 = new EnumerationRelationalDataV1(dimension5, enumerationValue5);
-		sequenceRelationalData1 = new SequenceRelationalDataV1(dimension1, enumerationValue1, commonDiff1);
-		symmetryRelationalData1 = new SymmetryRelationalDataV1(dimension1, enumerationValue1, "withoutCentralElement");
+		enumerationRelationalData1 = new EnumerationRelationalDataImpl(dimension1, enumerationValue1);
+		enumerationRelationalData2 = new EnumerationRelationalDataImpl(dimension2, enumerationValue2);
+		enumerationRelationalData3 = new EnumerationRelationalDataImpl(dimension3, enumerationValue3);
+		enumerationRelationalData4 = new EnumerationRelationalDataImpl(dimension4, enumerationValue4);
+		enumerationRelationalData5 = new EnumerationRelationalDataImpl(dimension5, enumerationValue5);
+		sequenceRelationalData1 = new SequenceRelationalDataImpl(dimension1, enumerationValue1, commonDiff1);
+		symmetryRelationalData1 = new SymmetryRelationalDataImpl(dimension1, enumerationValue1, "withoutCentralElement");
 	}
 	
 	@Test
 	public void whenRDContainerIsEmptyThenThrowsException() throws CloneNotSupportedException {
 		try {
-			RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(emptyContainer, listOfGroups);
+			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(emptyContainer, listOfGroups);
 			Relations relations = relationsBuilder.getRelations();
 			fail();
 		}
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 		}
 	}
 	
 	@Test
 	public void whenRDContainerIsOverfilledThenThrowsException() throws CloneNotSupportedException {
-		otherContainer = new RelationDataContainerV1();
+		otherContainer = new RelationDataContainerImpl();
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addEnumeration(enumerationRelationalData2);
 		otherContainer.addEnumeration(enumerationRelationalData3);
@@ -93,22 +94,22 @@ public class RelationsBuilderV1Test {
 		otherContainer.addEnumeration(enumerationRelationalData5);
 		otherContainer.addEnumeration(enumerationRelationalData5);		
 		try {
-			RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(otherContainer, listOfGroups);
+			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
 			Relations relations = relationsBuilder.getRelations();
 			fail();
 		}
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 		}
 	}
 	
 	@Test
 	public void whenRDContainerContainsOnly1DimensionThenSimpleRelationIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		otherContainer = new RelationDataContainerV1();
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		otherContainer = new RelationDataContainerImpl();
 		otherContainer.addEnumeration(enumerationRelationalData1);
-		RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
 		Relations relations = relationsBuilder.getRelations();
-		ArrayList<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
+		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean simpleRelationIsBuilt = false;
 		int propertyIndex = 0;
 		while (simpleRelationIsBuilt == false && propertyIndex < relationsListOfPropertiesWithPath.size()) {
@@ -121,14 +122,14 @@ public class RelationsBuilderV1Test {
 	
 	@Test
 	public void whenRDCOntainerContainsEnumSequSymmForSameDimensionThenSequenceAndSymmetryRelIsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		otherContainer = new RelationDataContainerV1();
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		otherContainer = new RelationDataContainerImpl();
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addSequence(sequenceRelationalData1);
 		otherContainer.addSymmetry(symmetryRelationalData1);
-		RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
 		Relations relations = relationsBuilder.getRelations();
-		ArrayList<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
+		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean enumerationIsBuilt = false;
 		boolean sequenceIsBuilt = false;
 		boolean symmetryIsBuilt = false;
@@ -148,14 +149,14 @@ public class RelationsBuilderV1Test {
 	
 	@Test
 	public void whenRDContainsRelationDataWith3DimensionsThen3RelationX3IsBuilt() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		otherContainer = new RelationDataContainerV1();
+			throws DescriptorsBuilderException, CloneNotSupportedException {
+		otherContainer = new RelationDataContainerImpl();
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addEnumeration(enumerationRelationalData2);
 		otherContainer.addEnumeration(enumerationRelationalData3);
-		RelationsBuilderInterface relationsBuilder = new RelationsBuilderV1(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
 		Relations relations = relationsBuilder.getRelations();
-		ArrayList<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
+		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean relationX3IsBuilt = false;
 		int propertyIndex = 0;
 		while (relationX3IsBuilt == false && propertyIndex < relationsListOfPropertiesWithPath.size()) {

@@ -1,8 +1,8 @@
-package verbalization.interfaces.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel;
 
 import java.util.List;
 
-public interface TransformationCodeGetterInterface {
+public interface ITransformationCodeGetter {
 	
 	List<String> getListOfPredicateCodes();
 	

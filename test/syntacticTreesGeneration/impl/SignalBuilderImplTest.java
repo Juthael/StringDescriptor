@@ -1,18 +1,19 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.SignalInterface;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import settings.Settings;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class SignalBuilderV1Test {
+public class SignalBuilderImplTest {
 
 	private String legalParameterIfLowerCase = "abc";
 	private String legalParameterIfUpperCase = "ABC";
@@ -25,8 +26,8 @@ public class SignalBuilderV1Test {
 	@Test
 	public void throwsExceptionIfTheStringParameterLengthExceedValueSpecifiedInSettings() {		
 		try {
-			SignalBuilderInterface signalBuilder = new SignalBuilderV1(stringIsTooLong, legalDirection);
-			SignalInterface signal = signalBuilder.getSignal();
+			ISignalBuilder signalBuilder = new SignalBuilderImpl(stringIsTooLong, legalDirection);
+			ISignal signal = signalBuilder.getSignal();
 			fail();
 		}
 		catch (Exception expected) {
@@ -36,8 +37,8 @@ public class SignalBuilderV1Test {
 	@Test
 	public void throwsExceptionIfTheStringParameterContainsIllegalCharacter() {
 		try {
-			SignalBuilderInterface signalBuilder = new SignalBuilderV1(nonAuthorizedCharacters, legalDirection);
-			SignalInterface signal = signalBuilder.getSignal();
+			ISignalBuilder signalBuilder = new SignalBuilderImpl(nonAuthorizedCharacters, legalDirection);
+			ISignal signal = signalBuilder.getSignal();
 			fail();
 		}
 		catch (Exception expected) {
@@ -47,12 +48,12 @@ public class SignalBuilderV1Test {
 	@Test
 	public void throwsExceptionIfDirectionStringValueIsIllegal() {
 		String legalString;
-		if (DescGenSettings.USE_LOWERCASE_LETTER)
+		if (Settings.USE_LOWERCASE_LETTER)
 		 legalString = legalParameterIfLowerCase;
 		else legalString = legalParameterIfUpperCase;
 		try {
-			SignalBuilderInterface signalBuilder = new SignalBuilderV1(legalString, illegalDirection);
-			SignalInterface signal = signalBuilder.getSignal();
+			ISignalBuilder signalBuilder = new SignalBuilderImpl(legalString, illegalDirection);
+			ISignal signal = signalBuilder.getSignal();
 			fail();
 		}
 		catch (Exception expected) {
@@ -62,13 +63,13 @@ public class SignalBuilderV1Test {
 	@Test
 	public void buildsSignalIfParametersAreLegal() {
 		String legalString;
-		if (DescGenSettings.USE_LOWERCASE_LETTER)
+		if (Settings.USE_LOWERCASE_LETTER)
 		 legalString = legalParameterIfLowerCase;
 		else legalString = legalParameterIfUpperCase;
 		try {
-			SignalBuilderInterface signalBuilder = new SignalBuilderV1(legalString, legalDirection);
-			SignalInterface signal = signalBuilder.getSignal();
-			ArrayList<Group> listOfGroups = signal.getGroups();
+			ISignalBuilder signalBuilder = new SignalBuilderImpl(legalString, legalDirection);
+			ISignal signal = signalBuilder.getSignal();
+			List<Group> listOfGroups = signal.getGroups();
 		}
 		catch (Exception expected) {
 			fail();

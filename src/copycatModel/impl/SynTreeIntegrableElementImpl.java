@@ -1,29 +1,32 @@
-package copycatModel.implementations;
+package copycatModel.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import copycatModel.interfaces.PropertyContainerInterface;
-import copycatModel.interfaces.PropertyInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
+import java.util.List;
+import java.util.Map;
 
-public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescriptorInterface {
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.IProperty;
+import copycatModel.IPropertyContainer;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+
+public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTreeIntegrableElement {
 
 	public boolean isCodingDescriptor;
 	
-	public AbstractDescriptorV1(boolean codingDescriptor) {
+	public SynTreeIntegrableElementImpl(boolean codingDescriptor) {
 		this.isCodingDescriptor = codingDescriptor;
 	}
 	
 	//Getters
 	@Override
-	public PropertyContainerInterface getpropertyContainer() {
-		PropertyContainerInterface propertyContainer;
-		ArrayList<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		ArrayList<AbstractDescriptorV1> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (AbstractDescriptorV1 relevantComponentDescriptor : listOfRelevantComponents) {
-			ArrayList<String> listOfRelevantComponentPropertiesWithPath = 
+	public IPropertyContainer getpropertyContainer() {
+		IPropertyContainer propertyContainer;
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeIntegrableElementImpl relevantComponentDescriptor : listOfRelevantComponents) {
+			List<String> listOfRelevantComponentPropertiesWithPath = 
 					relevantComponentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfRelevantComponentPropertiesWithPath){
 				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
@@ -31,10 +34,10 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 			}
 		}
 		int dimensionToPropertyIndex = 0;
-		HashMap<String, PropertyInterface> dimensionToProperty = new HashMap<String, PropertyInterface>();
+		Map<String, IProperty> dimensionToProperty = new HashMap<String, IProperty>();
 		String indexedDimension;
 		String propertyValue;
-		PropertyInterface property;
+		IProperty property;
 		StringBuilder stringBuilder;
 		for (String propertyWithPath : listOfRelevantPropertiesWithPath) {
 			stringBuilder = new StringBuilder();
@@ -46,11 +49,11 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 			stringBuilder.append(dimension);
 			indexedDimension = stringBuilder.toString();
 			propertyValue = propertyWithPath.substring(lastSlashIndex + 1);
-			property = new PropertyV1(propertyValue);
+			property = new PropertyImpl(propertyValue);
 			dimensionToProperty.put(indexedDimension, property);
 			dimensionToPropertyIndex++;
 		}
-		propertyContainer = new PropertyContainerV1(dimensionToProperty);
+		propertyContainer = new PropertyContainerImpl(dimensionToProperty);
 		return propertyContainer;
 	}
 	
@@ -60,11 +63,11 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 	}
 	
 	@Override
-	public ArrayList<String> getListOfPropertiesWithPath(){
-		ArrayList<String> listOfPropertiesWithPath = new ArrayList<String>();
-		ArrayList<AbstractDescriptorV1> listOfComponents = buildListOfComponents();
-		for (AbstractDescriptorV1 componentDescriptor : listOfComponents) {
-			ArrayList<String> listOfComponentPropertiesWithPath = componentDescriptor.getListOfPropertiesWithPath();
+	public List<String> getListOfPropertiesWithPath(){
+		List<String> listOfPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfComponents = buildListOfComponents();
+		for (SynTreeIntegrableElementImpl componentDescriptor : listOfComponents) {
+			List<String> listOfComponentPropertiesWithPath = componentDescriptor.getListOfPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentPropertiesWithPath){
 				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
 				listOfPropertiesWithPath.add(propertyWithUpdatedPath);
@@ -73,11 +76,11 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 		return listOfPropertiesWithPath;
 	}
 	
-	public ArrayList<String> getListOfRelevantPropertiesWithPath(){
-		ArrayList<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		ArrayList<AbstractDescriptorV1> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (AbstractDescriptorV1 componentDescriptor : listOfRelevantComponents) {
-			ArrayList<String> listOfComponentRelevantPropertiesWithPath = 
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeIntegrableElementImpl componentDescriptor : listOfRelevantComponents) {
+			List<String> listOfComponentRelevantPropertiesWithPath = 
 					componentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
 				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
@@ -88,31 +91,31 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 	}
 	
 	//Updater
-	public void updatePosition(String newPosition, ArrayList<AbstractDescriptorV1>componentDescriptors) {
+	public void updatePosition(String newPosition, List<SynTreeIntegrableElementImpl>componentDescriptors) {
 		doUpdatePosition(newPosition);
 		updateComponentsPosition(newPosition, componentDescriptors);
 	}
 	
-	protected void updateComponentsPosition(String newPosition,	ArrayList<AbstractDescriptorV1> componentDescriptors) {
-		for (AbstractDescriptorV1 componentDescriptor : componentDescriptors) {
+	protected void updateComponentsPosition(String newPosition,	List<SynTreeIntegrableElementImpl> componentDescriptors) {
+		for (SynTreeIntegrableElementImpl componentDescriptor : componentDescriptors) {
 			componentDescriptor.updatePosition(newPosition, componentDescriptor.buildListOfComponents());
 		}
 	}
 	
-	protected void updateComponentsPosition(int autoPosition, ArrayList<AbstractDescriptorV1> componentDescriptors) 
-			throws DescriptorsBuilderCriticalException {
-		if (autoPosition == DescGenSettings.COMPONENT_AUTO_POSITIONING) {
+	protected void updateComponentsPosition(int autoPosition, List<SynTreeIntegrableElementImpl> componentDescriptors) 
+			throws DescriptorsBuilderException {
+		if (autoPosition == Settings.COMPONENT_AUTO_POSITIONING) {
 			int positionIndex = 1;
-			for (AbstractDescriptorV1 componentDescriptor : componentDescriptors) {
+			for (SynTreeIntegrableElementImpl componentDescriptor : componentDescriptors) {
 				componentDescriptor.updatePosition(
 						Integer.toString(positionIndex), componentDescriptor.buildListOfComponents());
 				positionIndex++;			
 			}
-		} else throw new DescriptorsBuilderCriticalException(
+		} else throw new DescriptorsBuilderException(
 				"AbstractDescriptor.updateComponents() : illegal constant value.");
 	}
 	
-	protected ArrayList<AbstractDescriptorV1> buildListOfRelevantComponentsForRelationBuilding() {
+	protected List<SynTreeIntegrableElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		return buildListOfComponents();
 	}
 	
@@ -120,10 +123,10 @@ public abstract class AbstractDescriptorV1 implements Cloneable, AbstractDescrip
 	}	
 	
 	//Abstract
-	abstract protected ArrayList<AbstractDescriptorV1> buildListOfComponents();	
+	abstract protected List<SynTreeIntegrableElementImpl> buildListOfComponents();	
 	
 	@Override
-	abstract protected AbstractDescriptorV1 clone() throws CloneNotSupportedException;
+	abstract protected SynTreeIntegrableElementImpl clone() throws CloneNotSupportedException;
 	
 	@Override
 	abstract public String getDescriptorName();

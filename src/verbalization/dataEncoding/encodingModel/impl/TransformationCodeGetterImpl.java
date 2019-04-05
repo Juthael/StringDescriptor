@@ -1,15 +1,15 @@
-package verbalization.implementations.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel.impl;
 
 import java.util.List;
 
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 
-public class TransformationCodeGetterV1 implements TransformationCodeGetterInterface {
+public class TransformationCodeGetterImpl implements ITransformationCodeGetter {
 
 	private final List<String> listOfPredicateCodes;
 	private final String parameter;	
 	
-	public TransformationCodeGetterV1(List<String> listOfPredicateCodes, String parameter) {
+	public TransformationCodeGetterImpl(List<String> listOfPredicateCodes, String parameter) {
 		this.listOfPredicateCodes = listOfPredicateCodes;
 		this.parameter = parameter;
 	}

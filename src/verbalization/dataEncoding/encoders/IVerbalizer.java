@@ -1,6 +1,6 @@
-package verbalization.interfaces;
+package verbalization.dataEncoding.encoders;
 
-public interface VerbalizerInterface {
+public interface IVerbalizer {
 
 	String getTranslationInNaturalLanguage();
 

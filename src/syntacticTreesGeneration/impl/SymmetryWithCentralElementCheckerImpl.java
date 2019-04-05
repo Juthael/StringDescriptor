@@ -1,24 +1,25 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryWithCentralElementCheckerInterface;
-import syntacticTreesGeneration.interfaces.SymmetryWithNoCentralElementCheckerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
+import syntacticTreesGeneration.ISymmetryWithCentralElementChecker;
+import syntacticTreesGeneration.ISymmetryWithNoCentralElementChecker;
 
-public class SymmetryWithCentralElementCheckerV1 implements SymmetryWithCentralElementCheckerInterface {
+public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentralElementChecker {
 	
 	private final boolean wholeStringIsDescribed;
 	private final String dimension;
-	private final ArrayList<String> values;
-	private final EnumerationRelationalDataInterface enumerationRelationalData;
+	private final List<String> values;
+	private final IEnumerationRelationalData enumerationRelationalData;
 	private boolean symmetryWithCentralElementWasFound;
 	private String typeOfSymmetry = "withCentralElement";	
 
-	public SymmetryWithCentralElementCheckerV1(boolean wholeStringIsDescribed, String dimension, ArrayList<String> values, 
-			EnumerationRelationalDataInterface enumerationRelationalData) throws DescriptorsBuilderCriticalException {
+	public SymmetryWithCentralElementCheckerImpl(boolean wholeStringIsDescribed, String dimension, List<String> values, 
+			IEnumerationRelationalData enumerationRelationalData) throws DescriptorsBuilderException {
 		this.wholeStringIsDescribed = wholeStringIsDescribed;
 		this.dimension = dimension;
 		this.values = values;
@@ -34,11 +35,11 @@ public class SymmetryWithCentralElementCheckerV1 implements SymmetryWithCentralE
 						symmetryWithCentralElementWasFound = false;
 				}
 				if (symmetryWithCentralElementWasFound == true) {
-					ArrayList<String> extremityValues = new ArrayList<String>();
+					List<String> extremityValues = new ArrayList<String>();
 					extremityValues.add(this.values.get(0));
 					extremityValues.add(this.values.get(2));
-					SymmetryWithNoCentralElementCheckerInterface symmetryWithNoCentralElementChecker = 
-							new SymmetryWithNoCentralElementCheckerV1(this.wholeStringIsDescribed, this.dimension, 
+					ISymmetryWithNoCentralElementChecker symmetryWithNoCentralElementChecker = 
+							new SymmetryWithNoCentralElementCheckerImpl(this.wholeStringIsDescribed, this.dimension, 
 									extremityValues, this.enumerationRelationalData);
 					if (symmetryWithNoCentralElementChecker.getSymmetryWithNoCenterWasFound() != true)
 						symmetryWithCentralElementWasFound = false;					
@@ -49,11 +50,11 @@ public class SymmetryWithCentralElementCheckerV1 implements SymmetryWithCentralE
 				boolean centralElementIsMadeOfIdenticalValues = 
 						testIfCentralElementIsMadeOfIdenticalValues(this.values.get(1));
 				if (centralElementIsMadeOfIdenticalValues == true) {
-					ArrayList<String> extremityValues = new ArrayList<String>();
+					List<String> extremityValues = new ArrayList<String>();
 					extremityValues.add(this.values.get(0));
 					extremityValues.add(this.values.get(2));
-					SymmetryWithNoCentralElementCheckerInterface symmetryWithNoCentralElementChecker = 
-							new SymmetryWithNoCentralElementCheckerV1(this.wholeStringIsDescribed, this.dimension, 
+					ISymmetryWithNoCentralElementChecker symmetryWithNoCentralElementChecker = 
+							new SymmetryWithNoCentralElementCheckerImpl(this.wholeStringIsDescribed, this.dimension, 
 									extremityValues, this.enumerationRelationalData);
 					if (symmetryWithNoCentralElementChecker.getSymmetryWithNoCenterWasFound() != true)
 						symmetryWithCentralElementWasFound = false;						
@@ -71,14 +72,14 @@ public class SymmetryWithCentralElementCheckerV1 implements SymmetryWithCentralE
 	}
 	
 	@Override
-	public SymmetryRelationalDataInterface getSymmetryRelationalData() throws DescriptorsBuilderCriticalException {
+	public ISymmetryRelationalData getSymmetryRelationalData() throws DescriptorsBuilderException {
 		if (symmetryWithCentralElementWasFound == true) {
 			String enumerationValue = enumerationRelationalData.getEnumerationValue();
-			SymmetryRelationalDataInterface symmetryRelationalData = 
-					new SymmetryRelationalDataV1(dimension, enumerationValue, typeOfSymmetry);
+			ISymmetryRelationalData symmetryRelationalData = 
+					new SymmetryRelationalDataImpl(dimension, enumerationValue, typeOfSymmetry);
 			return symmetryRelationalData;
 		}
-		else throw new DescriptorsBuilderCriticalException("SymmetryWithCentralElementChecker : "
+		else throw new DescriptorsBuilderException("SymmetryWithCentralElementChecker : "
 				+ "can't get a symmetry that wasn't found.");
 	}
 	

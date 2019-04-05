@@ -1,23 +1,23 @@
-package model.impl;
+package descriptionModel.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import copycatModel.grammar.CharString;
+import descriptionModel.IDescription;
+import descriptionModel.IDescriptionBuilder;
 import exceptions.DescriptionFormatException;
-import exceptions.DescriptorsBuilderCriticalException;
-import model.IDescription;
-import model.IDescriptionBuilder;
-import syntacticTreesGeneration.implementations.ListOfDescriptorsBuilderV1;
-import syntacticTreesGeneration.interfaces.ListOfDescriptorsBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IListOfDescriptorsBuilder;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
-public class DescriptionBuilder implements IDescriptionBuilder {
+public class DescriptionBuilderImpl implements IDescriptionBuilder {
 	
 	private boolean stringCanBeReadInBothDirections = false;
 	private Predicate<String> validator;
 
-	public DescriptionBuilder() {
+	public DescriptionBuilderImpl() {
 		
 	}
 	@Override
@@ -29,7 +29,6 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 	@Override
 	public IDescriptionBuilder stringCanBeReadInBothDirections(boolean stringCanBeReadInBothDirections) {
 		this.stringCanBeReadInBothDirections = stringCanBeReadInBothDirections;
-
 		return this;
 	}
 
@@ -40,12 +39,12 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 		try {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
-				ListOfDescriptorsBuilderInterface descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderV1(
+				IListOfDescriptorsBuilder descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderImpl(
 						stringToBeDescribed, "fromLeftToRight");
 				listOfWholeStringDescriptors.addAll(descriptorsBuilderLeftToRight.getListOfStringDescriptors());
 				if (stringCanBeReadInBothDirections == true) {
 					StringBuilder sB = new StringBuilder(stringToBeDescribed);
-					ListOfDescriptorsBuilderInterface descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilderV1(
+					IListOfDescriptorsBuilder descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilderImpl(
 							sB.reverse().toString(), "fromRightToLeft");
 					listOfWholeStringDescriptors.addAll(descriptorsBuilderRightToLeft.getListOfStringDescriptors());
 				}
@@ -56,7 +55,7 @@ public class DescriptionBuilder implements IDescriptionBuilder {
 					descs.add(description);
 				}
 			}
-		} catch (DescriptorsBuilderCriticalException descException) {
+		} catch (DescriptorsBuilderException descException) {
 			throw new DescriptionFormatException("Unexpected error. " + descException.getMessage());
 		} catch (CloneNotSupportedException cloneException) {
 			throw new DescriptionFormatException("Unexpected error. Clone not supported exception");

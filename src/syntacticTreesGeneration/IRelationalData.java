@@ -1,15 +1,15 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface RelationalDataInterface {
+public interface IRelationalData {
 	
 	public String getName();
 	
-	public ArrayList<String> getDimensions();
+	public List<String> getDimensions();
 	
 	public String getEnumerationValue();
 	
-	public void addDimensions(ArrayList<String> dimension);
+	public void addDimensions(List<String> dimension);
 
 }

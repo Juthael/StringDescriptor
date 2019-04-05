@@ -1,11 +1,11 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.CharString;
 
-public interface RelationalDescriptorsBuilderInterface {
+public interface IRelationalDescriptorsBuilder {
 
-	ArrayList<CharString> getListOfDescriptorsCoveringTheWholeString();
+	List<CharString> getListOfDescriptorsCoveringTheWholeString();
 
 }

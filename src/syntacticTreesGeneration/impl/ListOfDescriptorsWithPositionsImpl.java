@@ -1,24 +1,24 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Group;
-import syntacticTreesGeneration.interfaces.ListOfDescriptorsWithPositionsInterface;
+import syntacticTreesGeneration.IListOfDescriptorsWithPositions;
 
-public class ListOfDescriptorsWithPositionsV1 implements ListOfDescriptorsWithPositionsInterface {
+public class ListOfDescriptorsWithPositionsImpl implements IListOfDescriptorsWithPositions {
 
-	private ArrayList<Group> listOfDescriptors;
+	private List<Group> listOfDescriptors;
 	private int firstPosition;
 	private int lastPosition;
 	
-	public ListOfDescriptorsWithPositionsV1(ArrayList<Group> listOfDescriptors, int firstPosition, int lastPosition) {
+	public ListOfDescriptorsWithPositionsImpl(List<Group> listOfDescriptors, int firstPosition, int lastPosition) {
 		this.listOfDescriptors = listOfDescriptors;
 		this.firstPosition = firstPosition;
 		this.lastPosition = lastPosition;
 	}
 
 	@Override
-	public ArrayList<Group> getListOfDescriptors() {
+	public List<Group> getListOfDescriptors() {
 		return listOfDescriptors;
 	}
 

@@ -1,4 +1,4 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import static org.junit.Assert.*;
 
@@ -8,11 +8,12 @@ import java.util.List;
 import org.junit.Test;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.InstructionCoderInterface;
-import verbalization.interfaces.dataEncodingModel.InstructionCodeGetterInterface;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encoders.IInstructionCoder;
+import verbalization.dataEncoding.encoders.impl.InstructionCoderImpl;
+import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 
-public class InstructionCoderV2Test {
+public class InstructionCoderImplTest {
 
 	@Test
 	public void whenRelationXContainsSingleRelationThenExpectedCodeIsReturned() throws VerbalizationException {
@@ -23,9 +24,9 @@ public class InstructionCoderV2Test {
 		relationXListOfProperties.add("group/relations/relation/enumeration/1,1,1,1,1");
 		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/0");
 		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/0");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		for (TransformationCodeGetterInterface transformationCodeGetter : 
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		for (ITransformationCodeGetter transformationCodeGetter : 
 			instructionCodeGetter.getListOfTransformationCodeGetters()) {
 			listOfReturnedCodes.addAll(transformationCodeGetter.getListOfPredicateCodes());
 		}
@@ -46,9 +47,9 @@ public class InstructionCoderV2Test {
 		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1,2,3,4,5");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/1");
 		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
-		InstructionCoderInterface instructionCoder = new InstructionCoderV2(nbOfComponents, relationXListOfProperties);
-		InstructionCodeGetterInterface instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
-		for (TransformationCodeGetterInterface transformationCodeGetter : 
+		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
+		for (ITransformationCodeGetter transformationCodeGetter : 
 			instructionCodeGetter.getListOfTransformationCodeGetters()) {
 			listOfReturnedCodes.addAll(transformationCodeGetter.getListOfPredicateCodes());
 		}

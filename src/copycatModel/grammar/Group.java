@@ -2,12 +2,13 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import exceptions.DescriptorsBuilderCriticalException;
+import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
+import exceptions.DescriptorsBuilderException;
 
-public class Group extends HowManyGroups implements Cloneable, AbstractDescriptorInterface {
+public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrableElement {
 
 	private static final String descriptorName = "group";
 	private Size size;
@@ -15,7 +16,7 @@ public class Group extends HowManyGroups implements Cloneable, AbstractDescripto
 	private RelationsOrLetter relationsOrLetter;
 	
 	public Group(boolean codingDescriptor, Size size, Position position, RelationsOrLetter relationsOrLetter) 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		super(codingDescriptor);
 		this.size = size;
 		this.position = position;
@@ -42,15 +43,15 @@ public class Group extends HowManyGroups implements Cloneable, AbstractDescripto
 		Group cloneGroup;
 		try {
 			cloneGroup = new Group(isCodingDescriptor, cloneSize, clonePosition, cloneRelationsOrLetter);
-		} catch (DescriptorsBuilderCriticalException e) {
+		} catch (DescriptorsBuilderException e) {
 			throw new CloneNotSupportedException("Group : error in clone() method.");
 		}
 		return cloneGroup;
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(size, position, relationsOrLetter));
 		return componentDescriptors;
 	}

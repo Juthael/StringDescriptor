@@ -1,14 +1,14 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.EnumerationInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.IEnumeration;
 
-public class EnumerationV2 extends TransformationV2 implements EnumerationInterface {
+public class EnumerationImpl extends TransformationImpl implements IEnumeration {
 
 	private static final String transformationName = "enumeration";
 	
-	public EnumerationV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public EnumerationImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		super(transformationCodeGetter);
 	}
 

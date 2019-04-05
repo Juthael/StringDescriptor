@@ -2,39 +2,40 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
 
-public class Groups extends AbstractDescriptorV1 implements Cloneable {
+public class Groups extends SynTreeIntegrableElementImpl implements Cloneable {
 
 	private static final String descriptorName = "groups";
 	private Size size;
 	private HowManyGroups groupX;
 	
 	public Groups(boolean codingDescriptor, Size size, HowManyGroups groupX) 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+			throws DescriptorsBuilderException, CloneNotSupportedException {
 		super(codingDescriptor);
 		this.size = size;
 		if (groupX.getDescriptorName().equals("group")) {
 			Group groupXCasted = (Group) groupX;
 			this.groupX = groupXCasted;
-			ArrayList<AbstractDescriptorV1> listWithSingleGroup = buildListOfRelevantComponentsForPositionUpdate();
+			List<SynTreeIntegrableElementImpl> listWithSingleGroup = buildListOfRelevantComponentsForPositionUpdate();
 			updateComponentsPosition("1", listWithSingleGroup);
 		}
 		else this.groupX = groupX;
 	}
 	
 	public Groups(boolean codingDescriptor, Size size, HowManyGroups groupX, boolean fullStringGroup) 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		super(codingDescriptor);
-		if (fullStringGroup == DescGenSettings.FULL_STRING_GROUP && groupX.getDescriptorName().equals("group")){
+		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupX.getDescriptorName().equals("group")){
 			this.size = size;
 			this.groupX = groupX;
-			ArrayList<AbstractDescriptorV1> componentDescriptors = buildListOfComponents();
-			updateComponentsPosition(DescGenSettings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, componentDescriptors);	
-		} else throw new DescriptorsBuilderCriticalException("Groups : illegal parameter values in constructor");
+			List<SynTreeIntegrableElementImpl> componentDescriptors = buildListOfComponents();
+			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, componentDescriptors);	
+		} else throw new DescriptorsBuilderException("Groups : illegal parameter values in constructor");
 	}
 	
 	@Override
@@ -95,15 +96,15 @@ public class Groups extends AbstractDescriptorV1 implements Cloneable {
 		Groups cloneGroups;
 		try {
 			cloneGroups = new Groups(isCodingDescriptor, cloneSize, cloneGroupX);
-		} catch (DescriptorsBuilderCriticalException e) {
+		} catch (DescriptorsBuilderException e) {
 			throw new CloneNotSupportedException("Groups : error in clone() method");
 		}
 		return cloneGroups;
 	}
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(size, groupX));
 		return componentDescriptors;
 	}
@@ -113,8 +114,9 @@ public class Groups extends AbstractDescriptorV1 implements Cloneable {
 		return descriptorName;
 	}
 	
-	private ArrayList<AbstractDescriptorV1> buildListOfRelevantComponentsForPositionUpdate() {
-		ArrayList<AbstractDescriptorV1> listOfRelevantComponentsForPositionUpdate = new ArrayList<AbstractDescriptorV1>();
+	private List<SynTreeIntegrableElementImpl> buildListOfRelevantComponentsForPositionUpdate() {
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponentsForPositionUpdate = 
+				new ArrayList<SynTreeIntegrableElementImpl>();
 		Group singleGroup = (Group) groupX;
 		listOfRelevantComponentsForPositionUpdate.add(singleGroup);
 		return listOfRelevantComponentsForPositionUpdate;

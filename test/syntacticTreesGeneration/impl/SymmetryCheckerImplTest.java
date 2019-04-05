@@ -1,20 +1,21 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.implementations.EnumerationCheckerV1;
-import syntacticTreesGeneration.implementations.SymmetryCheckerV1;
-import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryCheckerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationChecker;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.ISymmetryChecker;
+import syntacticTreesGeneration.impl.EnumerationCheckerImpl;
+import syntacticTreesGeneration.impl.SymmetryCheckerImpl;
 
-public class SymmetryCheckerV1Test {
+public class SymmetryCheckerImplTest {
 	
 	private boolean wholeStringIsCovered_true = true;
 	private boolean wholeStringIsCovered_false = false;
@@ -22,37 +23,37 @@ public class SymmetryCheckerV1Test {
 	private String dimensionPlatonicLetter = "dontCare/platonicLetter";
 	private String dimensionCommonDiff = "dontCare/commonDiff";
 	private String illegalDimension = "dontCare";
-	private ArrayList<String> listOfReversedValues = new ArrayList<String>(
+	private List<String> listOfReversedValues = new ArrayList<String>(
 			Arrays.asList("1,2,3","3,2,1"));
-	private ArrayList<String> listWithNoSymmetry = new ArrayList<String>(
+	private List<String> listWithNoSymmetry = new ArrayList<String>(
 			Arrays.asList("1,2,3","3,2,2"));	
-	private ArrayList<String> listOfReversedValuesWithLegalCentralElement = new ArrayList<String>(
+	private List<String> listOfReversedValuesWithLegalCentralElement = new ArrayList<String>(
 			Arrays.asList("1,2,3","6,6","3,2,1"));	
-	private ArrayList<String> listOfReversedValuesWithIllegalCentralElement = new ArrayList<String>(
+	private List<String> listOfReversedValuesWithIllegalCentralElement = new ArrayList<String>(
 			Arrays.asList("1,2,3","6,7","3,2,1"));	
-	private ArrayList<String> listOfOppositeValues = new ArrayList<String>(
+	private List<String> listOfOppositeValues = new ArrayList<String>(
 			Arrays.asList("-2","2"));
-	private ArrayList<String> listOfOppositeValuesWith0AsCentralElement = new ArrayList<String>(
+	private List<String> listOfOppositeValuesWith0AsCentralElement = new ArrayList<String>(
 			Arrays.asList("-2", "0", "2"));
-	private ArrayList<String> listOfOppositeValuesWithIllegalCentralElement = new ArrayList<String>(
+	private List<String> listOfOppositeValuesWithIllegalCentralElement = new ArrayList<String>(
 			Arrays.asList("-2", "1", "2"));
-	EnumerationCheckerInterface enumerationChecker;
-	EnumerationRelationalDataInterface enumerationRelationalData;
-	SymmetryCheckerInterface symmetryChecker;
+	IEnumerationChecker enumerationChecker;
+	IEnumerationRelationalData enumerationRelationalData;
+	ISymmetryChecker symmetryChecker;
 	
 
 	@Test
-	public void whenTheWholeStringIsntCoveredThenException() throws DescriptorsBuilderCriticalException {
+	public void whenTheWholeStringIsntCoveredThenException() throws DescriptorsBuilderException {
 		try {
 			enumerationChecker = 
-					new EnumerationCheckerV1(wholeStringIsCovered_false, dimensionEnumeration, listOfReversedValues);	
+					new EnumerationCheckerImpl(wholeStringIsCovered_false, dimensionEnumeration, listOfReversedValues);	
 			enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 			symmetryChecker = 
-					new SymmetryCheckerV1(
+					new SymmetryCheckerImpl(
 							wholeStringIsCovered_false, dimensionEnumeration, listOfReversedValues, enumerationRelationalData);
 			fail();
 		}
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 		}
 	}
 	
@@ -60,60 +61,60 @@ public class SymmetryCheckerV1Test {
 	public void whenDimensionIsIllegalThenThrowsException() {
 		try {
 			enumerationChecker = 
-					new EnumerationCheckerV1(wholeStringIsCovered_true, illegalDimension, listOfReversedValues);
+					new EnumerationCheckerImpl(wholeStringIsCovered_true, illegalDimension, listOfReversedValues);
 			enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 			symmetryChecker = 
-					new SymmetryCheckerV1(
+					new SymmetryCheckerImpl(
 							wholeStringIsCovered_true, illegalDimension, listOfReversedValues, enumerationRelationalData);
 			fail();
 		}
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 		}
 	}
 	
 	@Test
-	public void whenNoSymmetryThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
+	public void whenNoSymmetryThenNoSymmetryFound() throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionEnumeration, listWithNoSymmetry);
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionEnumeration, listWithNoSymmetry);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionEnumeration, listWithNoSymmetry, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), false);		
 	}
 	
 	@Test
-	public void whenOrderIsReversedAndDimensionIsCommonDiffThenNoSymmetryFound() throws DescriptorsBuilderCriticalException {
+	public void whenOrderIsReversedAndDimensionIsCommonDiffThenNoSymmetryFound() throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, listOfReversedValues);
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionCommonDiff, listOfReversedValues);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionCommonDiff, listOfReversedValues, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), false);			
 	}
 	
 	@Test
 	public void whenOrderIsReversedAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionPlatonicLetter, listOfReversedValues);
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionPlatonicLetter, listOfReversedValues);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionPlatonicLetter, listOfReversedValues, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), true);	
 	}
 	
 	@Test
 	public void whenOrderIsReversedWithLegalCentralElementAndDimensionNotCommonDiffButLegalThenSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionEnumeration, 
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionEnumeration, 
 						listOfReversedValuesWithLegalCentralElement);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionEnumeration, 
 						listOfReversedValuesWithLegalCentralElement, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), true);	
@@ -121,13 +122,13 @@ public class SymmetryCheckerV1Test {
 	
 	@Test
 	public void whenOrderIsReversedWithLegalCentralElementAndDimensionIsCommonDiffThenNoSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionCommonDiff, 
 						listOfReversedValuesWithLegalCentralElement);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionCommonDiff, 
 						listOfReversedValuesWithLegalCentralElement, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), false);	
@@ -136,25 +137,25 @@ public class SymmetryCheckerV1Test {
 	
 	@Test
 	public void whenValuesAreOppositeAndDimensionIsCommonDiffThenSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValues);
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValues);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValues, enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), true);	
 	}	
 	
 	@Test
 	public void whenValuesAreOppositeWith0AsCentralElementAndDimensionIsCommonDiffThenSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionCommonDiff, 
 						listOfOppositeValuesWith0AsCentralElement);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValuesWith0AsCentralElement, 
 						enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), true);	
@@ -162,13 +163,13 @@ public class SymmetryCheckerV1Test {
 	
 	@Test
 	public void whenValuesAreOppositeWithCentralElementNot0AndDimensionIsCommonDiffThenNoSymmetryFound() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsCovered_true, dimensionCommonDiff, 
+				new EnumerationCheckerImpl(wholeStringIsCovered_true, dimensionCommonDiff, 
 						listOfOppositeValuesWithIllegalCentralElement);
 		enumerationRelationalData = enumerationChecker.getEnumerationRelationalData();
 		symmetryChecker = 
-				new SymmetryCheckerV1(
+				new SymmetryCheckerImpl(
 						wholeStringIsCovered_true, dimensionCommonDiff, listOfOppositeValuesWithIllegalCentralElement, 
 						enumerationRelationalData);
 		assertEquals(symmetryChecker.getSymmetryWasFound(), false);	

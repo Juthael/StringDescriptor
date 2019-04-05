@@ -1,4 +1,4 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,9 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import verbalization.interfaces.TransformationCoderInterface;
+import verbalization.dataEncoding.encoders.ITransformationCoder;
+import verbalization.dataEncoding.encoders.impl.TransformationCoderImpl;
 
-public class TransformationCoderV2Test {
+public class TransformationCoderImplTest {
 
 	@Test
 	public void whenParameterIsASequenceRelationThenExpectedPredicateCodeIsReturned() {
@@ -20,7 +21,7 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/1");
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
 		try {
-			TransformationCoderInterface transformationCoder = new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);
@@ -45,8 +46,8 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/1");
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
 		try {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);
@@ -71,8 +72,8 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/0");
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/0");
 		try {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);
@@ -97,8 +98,8 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/0");
 		relationListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/0");
 		try {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);
@@ -123,8 +124,8 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/letter/position/1");
 		relationListOfProperties.add("group/letter/platonicLetter/1");
 		try {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);
@@ -148,8 +149,8 @@ public class TransformationCoderV2Test {
 		relationListOfProperties.add("group/relations/relationX2/relation/dimension/:letter.platonicLetter");
 		relationListOfProperties.add("group/relations/relationX2/relation/enumeration/1,4,3");
 		try {
-			TransformationCoderInterface transformationCoder = 
-					new TransformationCoderV2(nbOfComponents, relationListOfProperties);
+			ITransformationCoder transformationCoder = 
+					new TransformationCoderImpl(nbOfComponents, relationListOfProperties);
 			List<String> listOfPredicateCodes = transformationCoder.getTransformationCodeGetter().getListOfPredicateCodes();
 			/* for (String code : listOfPredicateCodes) {
 				System.out.println(code);

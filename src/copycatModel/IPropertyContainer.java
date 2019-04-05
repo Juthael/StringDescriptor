@@ -1,17 +1,17 @@
-package copycatModel.interfaces;
+package copycatModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface PropertyContainerInterface {
+public interface IPropertyContainer {
 
 	//Getter
-	HashMap<String, PropertyInterface> getDimensionToProperty();
+	Map<String, IProperty> getDimensionToProperty();
 	
-	ArrayList<String> getListOfDimensions();	
+	List<String> getListOfDimensions();	
 	
-	PropertyInterface getProperty(String dimension) throws DescriptorsBuilderCriticalException;	
+	IProperty getProperty(String dimension) throws DescriptorsBuilderException;	
 	
 }

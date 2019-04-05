@@ -1,26 +1,27 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationalData;
 
-public class EnumerationRelationalDataV1 implements RelationalDataInterface, EnumerationRelationalDataInterface {
+public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerationRelationalData {
 
 	protected String relationName = "enumeration";
-	protected ArrayList<String> listOfDimensions = new ArrayList<String>();
+	protected List<String> listOfDimensions = new ArrayList<String>();
 	protected String enumerationValue;
 	
-	public EnumerationRelationalDataV1(String dimensionValue, String enumerationValue) throws DescriptorsBuilderCriticalException {
+	public EnumerationRelationalDataImpl(String dimensionValue, String enumerationValue) throws DescriptorsBuilderException {
 		if (!dimensionValue.isEmpty() && !enumerationValue.isEmpty()) {
 			listOfDimensions.add(dimensionValue);
 			this.enumerationValue = enumerationValue;
 		}
-		else throw new DescriptorsBuilderCriticalException("EnumerationRelationalData : empty parameter.");
+		else throw new DescriptorsBuilderException("EnumerationRelationalData : empty parameter.");
 	}
 	
-	public EnumerationRelationalDataV1(EnumerationRelationalDataInterface enumerationRelationalData) {
+	public EnumerationRelationalDataImpl(IEnumerationRelationalData enumerationRelationalData) {
 		listOfDimensions.addAll(enumerationRelationalData.getDimensions());
 		enumerationValue = enumerationRelationalData.getEnumerationValue();
 	}	
@@ -31,7 +32,7 @@ public class EnumerationRelationalDataV1 implements RelationalDataInterface, Enu
 	}
 
 	@Override
-	public ArrayList<String> getDimensions() {
+	public List<String> getDimensions() {
 		return listOfDimensions;
 	}
 
@@ -41,7 +42,7 @@ public class EnumerationRelationalDataV1 implements RelationalDataInterface, Enu
 	}
 	
 	@Override
-	public void addDimensions(ArrayList<String> dimensions) {
+	public void addDimensions(List<String> dimensions) {
 		listOfDimensions.addAll(0, dimensions);
 	}
 

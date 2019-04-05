@@ -1,6 +1,7 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Dimension;
 import copycatModel.grammar.DimensionX10;
@@ -27,29 +28,29 @@ import copycatModel.grammar.RelationX7;
 import copycatModel.grammar.RelationX8;
 import copycatModel.grammar.RelationX9;
 import copycatModel.grammar.Relations;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.EnumerationRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.GroupsBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationDataContainerInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.RelationsBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IGroupsBuilder;
+import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.IRelationDataContainer;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.IRelationsBuilder;
 
-public class RelationsBuilderV1 implements RelationsBuilderInterface {
+public class RelationsBuilderImpl implements IRelationsBuilder {
 
-	private final RelationDataContainerInterface relationDataContainer;
-	private final ArrayList<Group> listOfGroups;
+	private final IRelationDataContainer relationDataContainer;
+	private final List<Group> listOfGroups;
 	
-	public RelationsBuilderV1(RelationDataContainerInterface relationDataContainer, ArrayList<Group> listOfGroups) {
+	public RelationsBuilderImpl(IRelationDataContainer relationDataContainer, List<Group> listOfGroups) {
 		this.relationDataContainer = relationDataContainer;
 		this.listOfGroups = listOfGroups;
 	}
 	
 	@Override
-	public Relations getRelations() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
-		ArrayList<Dimension> listOfDimensions = buildListOfDimensions(relationDataContainer);
-		ArrayList<Relation> listOfRelations = buildListOfRelations(relationDataContainer);
-		GroupsBuilderInterface groupsBuilder = new GroupsBuilderV1(listOfGroups);
+	public Relations getRelations() throws DescriptorsBuilderException, CloneNotSupportedException {
+		List<Dimension> listOfDimensions = buildListOfDimensions(relationDataContainer);
+		List<Relation> listOfRelations = buildListOfRelations(relationDataContainer);
+		IGroupsBuilder groupsBuilder = new GroupsBuilderImpl(listOfGroups);
 		Groups groups = groupsBuilder.getGroups();
 		HowManyDimensions howManyDimensions = buildHowManyDimensions(listOfDimensions);
 		HowManyRelations howManyRelations = buildHowManyRelations(listOfRelations);
@@ -57,9 +58,9 @@ public class RelationsBuilderV1 implements RelationsBuilderInterface {
 		return relations;
 	}
 	
-	private ArrayList<Dimension> buildListOfDimensions(RelationDataContainerInterface relationDataContainer){
-		ArrayList<Dimension> listOfDimensions = new ArrayList<Dimension>();
-		for (EnumerationRelationalDataInterface enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
+	private List<Dimension> buildListOfDimensions(IRelationDataContainer relationDataContainer){
+		List<Dimension> listOfDimensions = new ArrayList<Dimension>();
+		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
 			for (String dimensionString : enumerationRelationalData.getDimensions()) {
 				Dimension dimension = new Dimension(false, dimensionString);
 				listOfDimensions.add(dimension);
@@ -68,10 +69,10 @@ public class RelationsBuilderV1 implements RelationsBuilderInterface {
 		return listOfDimensions;
 	}
 	
-	private HowManyDimensions buildHowManyDimensions(ArrayList<Dimension> listOfDimensions) 
-			throws DescriptorsBuilderCriticalException {
+	private HowManyDimensions buildHowManyDimensions(List<Dimension> listOfDimensions) 
+			throws DescriptorsBuilderException {
 		HowManyDimensions howManyDimensions;
-		if (listOfDimensions.size() <= DescGenSettings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
+		if (listOfDimensions.size() <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
 			switch (listOfDimensions.size()) {
 				case 1 : 
 					howManyDimensions = listOfDimensions.get(0);
@@ -115,19 +116,19 @@ public class RelationsBuilderV1 implements RelationsBuilderInterface {
 							listOfDimensions.get(2), listOfDimensions.get(3), listOfDimensions.get(4), listOfDimensions.get(5), 
 							listOfDimensions.get(6), listOfDimensions.get(7), listOfDimensions.get(8), listOfDimensions.get(9));
 					break;					
-				default : throw new DescriptorsBuilderCriticalException(
+				default : throw new DescriptorsBuilderException(
 						"RelationsBuilder : listOfDimensions size is illegal.");
 			}
-		} else throw new DescriptorsBuilderCriticalException("RelationsBuilder : listOfDimensions size is empty.");
+		} else throw new DescriptorsBuilderException("RelationsBuilder : listOfDimensions size is empty.");
 		return howManyDimensions;		
 	}	
 	
-	private ArrayList<Relation> buildListOfRelations(RelationDataContainerInterface relationDataContainer) 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<Relation> listOfRelations = new ArrayList<Relation>();
-		for (EnumerationRelationalDataInterface enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
+	private List<Relation> buildListOfRelations(IRelationDataContainer relationDataContainer) 
+			throws DescriptorsBuilderException {
+		List<Relation> listOfRelations = new ArrayList<Relation>();
+		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
 			Relation relation;
-			ArrayList<RelationalDataInterface> listOfRelationalData = new ArrayList<RelationalDataInterface>();
+			List<IRelationalData> listOfRelationalData = new ArrayList<IRelationalData>();
 			int sequenceIndex = -1;
 			int symmetryIndex = -1;
 			int i = 0;
@@ -149,15 +150,15 @@ public class RelationsBuilderV1 implements RelationsBuilderInterface {
 				listOfRelationalData.add(relationDataContainer.getListOfSequences().get(sequenceIndex));
 			if (symmetryIndex != -1)
 				listOfRelationalData.add(relationDataContainer.getListOfSymmetries().get(symmetryIndex));
-			relation = RelationBuilderV1.buildRelation(listOfRelationalData);
+			relation = RelationBuilderImpl.buildRelation(listOfRelationalData);
 			listOfRelations.add(relation);
 		}
 		return listOfRelations;		
 	}
 	
-	private HowManyRelations buildHowManyRelations(ArrayList<Relation> listOfRelations) throws DescriptorsBuilderCriticalException {
+	private HowManyRelations buildHowManyRelations(List<Relation> listOfRelations) throws DescriptorsBuilderException {
 		HowManyRelations howManyRelations;
-		if (listOfRelations.size() <= DescGenSettings.MAX_NB_OF_RELATION) {
+		if (listOfRelations.size() <= Settings.MAX_NB_OF_RELATION) {
 			switch (listOfRelations.size()) {
 				case 1 : 
 					howManyRelations = listOfRelations.get(0);
@@ -204,10 +205,10 @@ public class RelationsBuilderV1 implements RelationsBuilderInterface {
 							listOfRelations.get(5), listOfRelations.get(6), listOfRelations.get(7), 
 							listOfRelations.get(8), listOfRelations.get(9));
 					break;						
-				default : throw new DescriptorsBuilderCriticalException(
+				default : throw new DescriptorsBuilderException(
 						"RelationsBuilder : listOfRelations size is illegal.");
 			}
-		} else throw new DescriptorsBuilderCriticalException("RelationsBuilder : list Of relations size is illegal.");
+		} else throw new DescriptorsBuilderException("RelationsBuilder : list Of relations size is illegal.");
 		return howManyRelations;
 	}	
 	

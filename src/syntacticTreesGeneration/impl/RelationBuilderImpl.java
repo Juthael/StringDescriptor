@@ -1,19 +1,7 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.grammar.Relation;
-import copycatModel.grammar.Sequence;
-import copycatModel.grammar.SequenceAndSymmetryRel;
-import copycatModel.grammar.SequenceRel;
-import copycatModel.grammar.Symmetry;
-import copycatModel.grammar.SymmetryRel;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.RelationBuilderInterface;
-import syntacticTreesGeneration.interfaces.RelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SequenceRelationalDataInterface;
-import syntacticTreesGeneration.interfaces.SymmetryRelationalDataInterface;
 import copycatModel.grammar.AbsCommonDiff;
 import copycatModel.grammar.CommonDiff;
 import copycatModel.grammar.Dimension;
@@ -28,8 +16,20 @@ import copycatModel.grammar.DimensionX8;
 import copycatModel.grammar.DimensionX9;
 import copycatModel.grammar.Enumeration;
 import copycatModel.grammar.HowManyDimensions;
+import copycatModel.grammar.Relation;
+import copycatModel.grammar.Sequence;
+import copycatModel.grammar.SequenceAndSymmetryRel;
+import copycatModel.grammar.SequenceRel;
+import copycatModel.grammar.Symmetry;
+import copycatModel.grammar.SymmetryRel;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IRelationBuilder;
+import syntacticTreesGeneration.IRelationalData;
+import syntacticTreesGeneration.ISequenceRelationalData;
+import syntacticTreesGeneration.ISymmetryRelationalData;
 
-public class RelationBuilderV1 implements RelationBuilderInterface {
+public class RelationBuilderImpl implements IRelationBuilder {
 
 	/*Parameter must be a list of RelationData verifying the following constraints : 
 	 * -the size of the list is : see Settings
@@ -38,22 +38,22 @@ public class RelationBuilderV1 implements RelationBuilderInterface {
 	 * -if the list contains 2 elements, the 2nd element is a SequenceRelationData or a SymmetryRelationData
 	 * -if the list contains 3 elements, the 2nd is a SequenceRelationData and the 3rd is a SymmetryRelationData 
 	 */
-	public static Relation buildRelation(ArrayList<RelationalDataInterface> relationData) 
-			throws DescriptorsBuilderCriticalException {
+	public static Relation buildRelation(List<IRelationalData> relationData) 
+			throws DescriptorsBuilderException {
 		HowManyDimensions howManyDimensions = buildDimensions(relationData);
 		Relation relation = buildRelation(howManyDimensions, relationData);
 		return relation;
 	}
 	
-	private static HowManyDimensions buildDimensions(ArrayList<RelationalDataInterface> relationData) 
-			throws DescriptorsBuilderCriticalException {
-		ArrayList<String> dimensions;
+	private static HowManyDimensions buildDimensions(List<IRelationalData> relationData) 
+			throws DescriptorsBuilderException {
+		List<String> dimensions;
 		try {
 			 dimensions = relationData.get(0).getDimensions();
-		} catch (Exception e) {throw new DescriptorsBuilderCriticalException("RelationBuilder : parameter is empty");}		
+		} catch (Exception e) {throw new DescriptorsBuilderException("RelationBuilder : parameter is empty");}		
 		HowManyDimensions howManyDimensions ; 
 		int numberOfDimensions= dimensions.size();
-		if (numberOfDimensions <= DescGenSettings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
+		if (numberOfDimensions <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
 			switch (numberOfDimensions) {
 				case 1 : 
 					howManyDimensions = new Dimension(false, dimensions.get(0));
@@ -146,14 +146,14 @@ public class RelationBuilderV1 implements RelationBuilderInterface {
 							dimension104, dimension105, dimension106, dimension107, dimension108, dimension109, 
 							dimension110);
 					break;					
-				default : throw new DescriptorsBuilderCriticalException("Relation Builder : too many dimensions");
+				default : throw new DescriptorsBuilderException("Relation Builder : too many dimensions");
 			}	
-		} else throw new DescriptorsBuilderCriticalException("Relation Builder : too many dimensions");
+		} else throw new DescriptorsBuilderException("Relation Builder : too many dimensions");
 		return howManyDimensions;		
 	}
 	
-	private static Relation buildRelation(HowManyDimensions howManyDimensions, ArrayList<RelationalDataInterface> relationalDataList) 
-			throws DescriptorsBuilderCriticalException {
+	private static Relation buildRelation(HowManyDimensions howManyDimensions, List<IRelationalData> relationalDataList) 
+			throws DescriptorsBuilderException {
 		Relation relation;
 		switch (relationalDataList.size()) {
 			case 1:
@@ -161,14 +161,14 @@ public class RelationBuilderV1 implements RelationBuilderInterface {
 					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
 					relation = new Relation(false, howManyDimensions, enumeration);
 				}
-				else throw new DescriptorsBuilderCriticalException("Relation Builder : unique relation in RelationalDataList "
+				else throw new DescriptorsBuilderException("Relation Builder : unique relation in RelationalDataList "
 						+ "isn't an enumeration.");
 				break;
 			case 2:
 				if (relationalDataList.get(0).getName().equals("enumeration") 
 						&& relationalDataList.get(1).getName().equals("sequence")) {
 					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
-					SequenceRelationalDataInterface sequenceRelationalData = (SequenceRelationalDataInterface) relationalDataList.get(1);
+					ISequenceRelationalData sequenceRelationalData = (ISequenceRelationalData) relationalDataList.get(1);
 					CommonDiff commonDiff = new CommonDiff(false, sequenceRelationalData.getCommonDifference());
 					String absCommonDiffString = sequenceRelationalData.getCommonDifference().replace("-", "");
 					AbsCommonDiff absCommonDiff = new AbsCommonDiff(false, absCommonDiffString);
@@ -178,11 +178,11 @@ public class RelationBuilderV1 implements RelationBuilderInterface {
 				else if (relationalDataList.get(0).getName().equals("enumeration") 
 						&& relationalDataList.get(1).getName().equals("symmetry")) {
 					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
-					SymmetryRelationalDataInterface symmetryRelationalData = (SymmetryRelationalDataInterface) relationalDataList.get(1);
+					ISymmetryRelationalData symmetryRelationalData = (ISymmetryRelationalData) relationalDataList.get(1);
 					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());
 					relation = new SymmetryRel(false, howManyDimensions, enumeration, symmetry);
 				}
-				else throw new DescriptorsBuilderCriticalException("Relation Builder : list of 2 relations in the "
+				else throw new DescriptorsBuilderException("Relation Builder : list of 2 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence] or [enumeration,symmetry].");
 				break;
 			case 3:
@@ -190,19 +190,19 @@ public class RelationBuilderV1 implements RelationBuilderInterface {
 						&& relationalDataList.get(1).getName().equals("sequence") 
 						&& relationalDataList.get(2).getName().equals("symmetry")) {
 					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
-					SequenceRelationalDataInterface sequenceRelationalData = (SequenceRelationalDataInterface) relationalDataList.get(1);
+					ISequenceRelationalData sequenceRelationalData = (ISequenceRelationalData) relationalDataList.get(1);
 					CommonDiff commonDiff = new CommonDiff(false, sequenceRelationalData.getCommonDifference());
 					String absCommonDiffString = sequenceRelationalData.getCommonDifference().replace("-", "");
 					AbsCommonDiff absCommonDiff = new AbsCommonDiff(false, absCommonDiffString);
 					Sequence sequence = new Sequence(false, commonDiff, absCommonDiff);		
-					SymmetryRelationalDataInterface symmetryRelationalData = (SymmetryRelationalDataInterface) relationalDataList.get(2);
+					ISymmetryRelationalData symmetryRelationalData = (ISymmetryRelationalData) relationalDataList.get(2);
 					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());			
 					relation = new SequenceAndSymmetryRel(false, howManyDimensions, enumeration, sequence, symmetry);
 				}
-				else throw new DescriptorsBuilderCriticalException("Relation Builder : list of 3 relations in the "
+				else throw new DescriptorsBuilderException("Relation Builder : list of 3 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence,symmetry].");
 				break;
-			default : throw new DescriptorsBuilderCriticalException("Relation Builder : the size of the RelationalDataList "
+			default : throw new DescriptorsBuilderException("Relation Builder : the size of the RelationalDataList "
 					+ "is illegal");
 		}
 		return relation;

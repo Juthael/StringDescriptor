@@ -1,8 +1,8 @@
-package copycatModel.interfaces;
+package copycatModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface AbstractDescriptorInterface {
+public interface ISynTreeIntegrableElement {
 
 	//Getters
 	
@@ -10,8 +10,8 @@ public interface AbstractDescriptorInterface {
 	
 	String getDescriptorName();
 	
-	PropertyContainerInterface getpropertyContainer();
+	IPropertyContainer getpropertyContainer();
 	
-	ArrayList<String> getListOfPropertiesWithPath();
+	List<String> getListOfPropertiesWithPath();
 
 }

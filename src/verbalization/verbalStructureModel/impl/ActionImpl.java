@@ -1,14 +1,14 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import exceptions.VerbalizationException;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.ActionInterface;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.IAction;
 
-public class ActionV2 implements ActionInterface {
+public class ActionImpl implements IAction {
 
 	private String verbalAction;
 	
-	public ActionV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public ActionImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		verbalAction = setVerbalAction(transformationCodeGetter.getListOfPredicateCodes().get(0));
 	}
 

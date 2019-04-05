@@ -1,6 +1,6 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import copycatModel.grammar.Group;
 import copycatModel.grammar.GroupX10;
@@ -17,34 +17,34 @@ import copycatModel.grammar.GroupX9;
 import copycatModel.grammar.Groups;
 import copycatModel.grammar.HowManyGroups;
 import copycatModel.grammar.Size;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.GroupsBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IGroupsBuilder;
 
-public class GroupsBuilderV1 implements GroupsBuilderInterface {
+public class GroupsBuilderImpl implements IGroupsBuilder {
 
-	protected ArrayList<Group> listOfGroups;
+	protected List<Group> listOfGroups;
 	protected boolean listOfGroupsCoverTheFullString = false;
 	
-	public GroupsBuilderV1(ArrayList<Group> listOfGroups) {
+	public GroupsBuilderImpl(List<Group> listOfGroups) {
 		this.listOfGroups = listOfGroups;
 	}
 	
-	public GroupsBuilderV1(ArrayList<Group> listOfGroups, boolean listOfGroupsCoverTheFullString) 
-			throws DescriptorsBuilderCriticalException {
-		if (listOfGroupsCoverTheFullString == DescGenSettings.LIST_OF_GROUPS_COVER_THE_FULL_STRING) {
+	public GroupsBuilderImpl(List<Group> listOfGroups, boolean listOfGroupsCoverTheFullString) 
+			throws DescriptorsBuilderException {
+		if (listOfGroupsCoverTheFullString == Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING) {
 			this.listOfGroups = listOfGroups;
-			this.listOfGroupsCoverTheFullString = DescGenSettings.LIST_OF_GROUPS_COVER_THE_FULL_STRING;
-		} else throw new DescriptorsBuilderCriticalException("GroupsBuilder : constructor illegal parameter value");
+			this.listOfGroupsCoverTheFullString = Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING;
+		} else throw new DescriptorsBuilderException("GroupsBuilder : constructor illegal parameter value");
 	}
 	
 	@Override
-	public Groups getGroups() throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+	public Groups getGroups() throws DescriptorsBuilderException, CloneNotSupportedException {
 		Groups groups;
 		HowManyGroups howManyGroups;
 		Size size;
 		int listOfGroupsSize = listOfGroups.size();
-		if (listOfGroupsSize <= DescGenSettings.MAX_NB_OF_GROUPS_IN_RELATIONS) {
+		if (listOfGroupsSize <= Settings.MAX_NB_OF_GROUPS_IN_RELATIONS) {
 			switch (listOfGroupsSize) {
 				case 1 : 
 					size = new Size(false, "1");
@@ -52,7 +52,7 @@ public class GroupsBuilderV1 implements GroupsBuilderInterface {
 					if (listOfGroupsCoverTheFullString == false) {
 						groups = new Groups(false, size, howManyGroups);
 					}
-					else groups = new Groups(false, size, howManyGroups, DescGenSettings.FULL_STRING_GROUP);
+					else groups = new Groups(false, size, howManyGroups, Settings.FULL_STRING_GROUP);
 					break;
 				case 2 :
 					size = new Size(false, "2");
@@ -131,9 +131,9 @@ public class GroupsBuilderV1 implements GroupsBuilderInterface {
 							listOfGroups.get(11).clone());
 					groups = new Groups(false, size, howManyGroups);					
 					break;						
-				default : throw new DescriptorsBuilderCriticalException("GroupsBuilder : listOfGroups size is illegal.");
+				default : throw new DescriptorsBuilderException("GroupsBuilder : listOfGroups size is illegal.");
 			}
-		} else throw new DescriptorsBuilderCriticalException("GroupsBuilder : listOfGroups size is illegal.");
+		} else throw new DescriptorsBuilderException("GroupsBuilder : listOfGroups size is illegal.");
 		return groups;	
 	}	
 

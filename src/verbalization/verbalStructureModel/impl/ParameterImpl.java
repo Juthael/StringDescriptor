@@ -1,17 +1,17 @@
-package verbalization.implementations.verbalStructureModel;
+package verbalization.verbalStructureModel.impl;
 
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import settings.DescGenSettings;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.ParameterInterface;
+import settings.Settings;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.verbalStructureModel.IParameter;
 
-public class ParameterV2 implements ParameterInterface {
+public class ParameterImpl implements IParameter {
 	
 	private String verbalParameter;
 
-	public ParameterV2(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	public ParameterImpl(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		verbalParameter = setVerbalParameter(transformationCodeGetter);
 	}
 
@@ -20,7 +20,7 @@ public class ParameterV2 implements ParameterInterface {
 		return verbalParameter;
 	}
 	
-	private String setVerbalParameter(TransformationCodeGetterInterface transformationCodeGetter) 
+	private String setVerbalParameter(ITransformationCodeGetter transformationCodeGetter) 
 			throws VerbalizationException {
 		String verbalParameter;
 		String introducerString = setIntroducerString(transformationCodeGetter);
@@ -29,7 +29,7 @@ public class ParameterV2 implements ParameterInterface {
 		return verbalParameter;
 	}
 	
-	private boolean checkIfThereIsALetterDimension(TransformationCodeGetterInterface transformationCodeGetter) {
+	private boolean checkIfThereIsALetterDimension(ITransformationCodeGetter transformationCodeGetter) {
 		boolean thereIsALetterDimension = false;
 		List<String> listOfPredicateCodes = transformationCodeGetter.getListOfPredicateCodes();
 		for (String predicateCode : listOfPredicateCodes) {
@@ -39,7 +39,7 @@ public class ParameterV2 implements ParameterInterface {
 		return thereIsALetterDimension;
 	}
 	
-	private String setValueString(TransformationCodeGetterInterface transformationCodeGetter) throws VerbalizationException {
+	private String setValueString(ITransformationCodeGetter transformationCodeGetter) throws VerbalizationException {
 		String valueString;
 		boolean thereIsALetterDimension = checkIfThereIsALetterDimension(transformationCodeGetter);
 		String firstPredicateCode = transformationCodeGetter.getListOfPredicateCodes().get(0);
@@ -77,11 +77,11 @@ public class ParameterV2 implements ParameterInterface {
 	private String getLetterFormatValue(String valueString) {
 		String letterValue;
 		int aMinusOne;
-		if (DescGenSettings.USE_LOWERCASE_LETTER)
+		if (Settings.USE_LOWERCASE_LETTER)
 			aMinusOne = 96;
 		else aMinusOne = 64;
 		StringBuilder sB = new StringBuilder();
-		String[] setOfValuesStringArray = valueString.split(DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+		String[] setOfValuesStringArray = valueString.split(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
 		for (int j=0 ; j<setOfValuesStringArray.length ; j++) {
 			String setOfValues = setOfValuesStringArray[j];
 			String[] valueStringArray = setOfValues.split(",");
@@ -93,13 +93,13 @@ public class ParameterV2 implements ParameterInterface {
 					sB.append(",");
 			}
 			if (j < setOfValuesStringArray.length - 1)
-				sB.append(DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+				sB.append(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
 		}
 		letterValue = sB.toString();
 		return letterValue;
 	}
 	
-	private String setIntroducerString(TransformationCodeGetterInterface transformationCodeGetter) 
+	private String setIntroducerString(ITransformationCodeGetter transformationCodeGetter) 
 			throws VerbalizationException {
 		String introducerString;
 		String firstPredicateCode = transformationCodeGetter.getListOfPredicateCodes().get(0);
@@ -205,7 +205,7 @@ public class ParameterV2 implements ParameterInterface {
 		return introducerString;
 	}
 	
-	private String removeFirstValueIfIrrelevant(TransformationCodeGetterInterface transformationCodeGetter, 
+	private String removeFirstValueIfIrrelevant(ITransformationCodeGetter transformationCodeGetter, 
 			String valueStringParameter) throws VerbalizationException {
 		String valueString;
 		String firstPredicateCode = transformationCodeGetter.getListOfPredicateCodes().get(0);
@@ -231,8 +231,8 @@ public class ParameterV2 implements ParameterInterface {
 			case "twoEnumerationEnumerate" :
 			case "manyEnumerationEnumerate" :
 				String separator = "";
-				if (valueStringParameter.contains(DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR))
-					separator = DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR;
+				if (valueStringParameter.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR))
+					separator = Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR;
 				else if (valueStringParameter.contains(","))
 					separator = ",";
 				if (!separator.isEmpty()) {
@@ -250,7 +250,7 @@ public class ParameterV2 implements ParameterInterface {
 	
 	private String putAnAndToItIfRelevant(String valueStringParameter) {
 		String valueString;
-		if (!valueStringParameter.contains(DescGenSettings.SECOND_DEGREE_ENUMERATION_SEPARATOR) && 
+		if (!valueStringParameter.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR) && 
 				valueStringParameter.contains(",")) {
 			int lastCommaIndex = valueStringParameter.lastIndexOf(",");
 			String valueStringFirstPart = valueStringParameter.substring(0, lastCommaIndex);

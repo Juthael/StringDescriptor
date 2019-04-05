@@ -1,27 +1,30 @@
-package syntacticTreesGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import copycatModel.ISignal;
 import copycatModel.grammar.Group;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
-import syntacticTreesGeneration.interfaces.ComponentGrouperInterface;
-import syntacticTreesGeneration.interfaces.ListOfDescriptorsWithPositionsInterface;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
+import syntacticTreesGeneration.IComponentGrouper;
+import syntacticTreesGeneration.IListOfDescriptorsWithPositions;
 
-public class ComponentGrouperV2 implements ComponentGrouperInterface {
+public class ComponentGrouperImpl implements IComponentGrouper {
 
 	private final int componentsGenerationNumber;
-	private final SignalInterface signal;
-	private final ArrayList<Group> previousGenOfDescriptors;
+	private final ISignal signal;
+	private final List<Group> previousGenOfDescriptors;
 	boolean nextGenerationWillBeTheLast;	
 	private Group[][][] combinatoryArrayOfDescriptors;
 	
-	public ComponentGrouperV2(int componentsGenerationNumber, boolean nextGenerationWillBeTheLast, SignalInterface signal, 
-			ArrayList<Group> previousGenOfDescriptors) throws DescriptorsBuilderCriticalException {
+	public ComponentGrouperImpl(int componentsGenerationNumber, boolean nextGenerationWillBeTheLast, ISignal signal, 
+			List<Group> previousGenOfDescriptors) throws DescriptorsBuilderException {
 		this.componentsGenerationNumber = componentsGenerationNumber;
 		this.signal = signal;
 		this.previousGenOfDescriptors = previousGenOfDescriptors;
@@ -30,8 +33,8 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 	}
 
 	@Override
-	public HashSet<ArrayList<Group>> getSetsOfFactorizableDescriptors(){
-		HashSet<ArrayList<Group>> setsOfFactorizableDescriptors;
+	public Set<List<Group>> getSetsOfFactorizableDescriptors(){
+		Set<List<Group>> setsOfFactorizableDescriptors;
 		if (nextGenerationWillBeTheLast == false)
 			setsOfFactorizableDescriptors = getAllSetsOfFactorizableDescriptors();
 		else {
@@ -40,10 +43,10 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		return setsOfFactorizableDescriptors;
 	}
 	
-	private HashSet<ArrayList<Group>> getSetsOfFactorizableDescriptorsCoveringTheWholeString(){
-		HashSet<ArrayList<Group>> setsOfFactorizableDescriptors = new HashSet<ArrayList<Group>>();
+	private Set<List<Group>> getSetsOfFactorizableDescriptorsCoveringTheWholeString(){
+		Set<List<Group>> setsOfFactorizableDescriptors = new HashSet<List<Group>>();
 		int x = 0, y = 0, bufferIndex = 0;
-		ListOfDescriptorsWithPositionsInterface[] buffer = new ListOfDescriptorsWithPositionsV1[signal.getSignalSize()]; 
+		IListOfDescriptorsWithPositions[] buffer = new ListOfDescriptorsWithPositionsImpl[signal.getSignalSize()]; 
 		while (bufferIndex >= 0) {
 			if (combinatoryArrayOfDescriptors[x][y].length == 0) {
 				if (y < signal.getSignalSize() - 1) {
@@ -60,10 +63,10 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 				}
 			}
 			else {
-				ArrayList<Group> currentList = 
+				List<Group> currentList = 
 						new ArrayList<Group>(Arrays.asList(combinatoryArrayOfDescriptors[x][y]));
-				ListOfDescriptorsWithPositionsInterface currentListWithCoordinates = 
-						new ListOfDescriptorsWithPositionsV1(currentList, x, y);
+				IListOfDescriptorsWithPositions currentListWithCoordinates = 
+						new ListOfDescriptorsWithPositionsImpl(currentList, x, y);
 				buffer[bufferIndex] = currentListWithCoordinates;
 				if (y < signal.getSignalSize() - 1) {
 					x = y + 1; 
@@ -74,8 +77,8 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 					if ((bufferIndex > 0) || (componentsGenerationNumber <= 1)) {
 						boolean bufferPositionsAreLegal = testIfBufferPositionsAreLegal(buffer, bufferIndex);
 						if (bufferPositionsAreLegal == true) {
-							HashSet<ArrayList<Group>> newSetsOfFactorizableDescriptors = 
-									new HashSet<ArrayList<Group>>(); 
+							Set<List<Group>> newSetsOfFactorizableDescriptors = 
+									new HashSet<List<Group>>(); 
 							newSetsOfFactorizableDescriptors = saveNewSubSets(buffer, 0, bufferIndex, newSetsOfFactorizableDescriptors);
 							setsOfFactorizableDescriptors.addAll(newSetsOfFactorizableDescriptors);
 						}
@@ -91,10 +94,10 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		return setsOfFactorizableDescriptors;
 	}
 	
-	private HashSet<ArrayList<Group>> getAllSetsOfFactorizableDescriptors() {
-		HashSet<ArrayList<Group>> setsOfFactorizableDescriptors = new HashSet<ArrayList<Group>>();
+	private Set<List<Group>> getAllSetsOfFactorizableDescriptors() {
+		Set<List<Group>> setsOfFactorizableDescriptors = new HashSet<List<Group>>();
 		int x = 0, y = 0, bufferIndex = 0;
-		ListOfDescriptorsWithPositionsInterface[] buffer = new ListOfDescriptorsWithPositionsV1[signal.getSignalSize()]; 
+		IListOfDescriptorsWithPositions[] buffer = new ListOfDescriptorsWithPositionsImpl[signal.getSignalSize()]; 
 		while (x < signal.getSignalSize()) {
 			if (combinatoryArrayOfDescriptors[x][y].length == 0) {
 				if (y < signal.getSignalSize() - 1) {
@@ -121,16 +124,16 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 				}
 			}
 			else {
-				ArrayList<Group> currentList = 
+				List<Group> currentList = 
 						new ArrayList<Group>(Arrays.asList(combinatoryArrayOfDescriptors[x][y]));
-				ListOfDescriptorsWithPositionsInterface currentListWithCoordinates = 
-						new ListOfDescriptorsWithPositionsV1(currentList, x, y);
+				IListOfDescriptorsWithPositions currentListWithCoordinates = 
+						new ListOfDescriptorsWithPositionsImpl(currentList, x, y);
 				buffer[bufferIndex] = currentListWithCoordinates;
 				if ((bufferIndex > 0) || (componentsGenerationNumber <= 1)) {
 					boolean bufferPositionsAreLegal = testIfBufferPositionsAreLegal(buffer, bufferIndex);
 					if (bufferPositionsAreLegal == true) {
-						HashSet<ArrayList<Group>> newSetsOfFactorizableDescriptors = 
-								new HashSet<ArrayList<Group>>(); 
+						Set<List<Group>> newSetsOfFactorizableDescriptors = 
+								new HashSet<List<Group>>(); 
 						newSetsOfFactorizableDescriptors = saveNewSubSets(buffer, 0, bufferIndex, newSetsOfFactorizableDescriptors);
 						setsOfFactorizableDescriptors.addAll(newSetsOfFactorizableDescriptors);
 					}
@@ -158,16 +161,16 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		return setsOfFactorizableDescriptors;
 	}
 	
-	private boolean testIfBufferPositionsAreLegal(ListOfDescriptorsWithPositionsInterface[] buffer, int maxBufferIndex) {
+	private boolean testIfBufferPositionsAreLegal(IListOfDescriptorsWithPositions[] buffer, int maxBufferIndex) {
 		boolean bufferPositionsAreLegal = true;
-		if (maxBufferIndex + 1 <= DescGenSettings.MAX_NB_OF_GROUPS_IN_RELATIONS) {
+		if (maxBufferIndex + 1 <= Settings.MAX_NB_OF_GROUPS_IN_RELATIONS) {
 			if (componentsGenerationNumber > 1) {
 				int nbOfSize1SetsOfDescriptors = 0;
 				int bufferIndex = 0;
 				int nbOfAdjacentSize1Components = 0;
 				while (bufferIndex <= maxBufferIndex && 
-						nbOfSize1SetsOfDescriptors < (DescGenSettings.MAX_NB_OF_SIZE1_COMPONENTS + 1) &&
-						nbOfAdjacentSize1Components < (DescGenSettings.MAX_NB_OF_ADJACENT_SIZE1_COMPONENTS + 1)) {
+						nbOfSize1SetsOfDescriptors < (Settings.MAX_NB_OF_SIZE1_COMPONENTS + 1) &&
+						nbOfAdjacentSize1Components < (Settings.MAX_NB_OF_ADJACENT_SIZE1_COMPONENTS + 1)) {
 					if ((buffer[bufferIndex].getLastPosition() - buffer[bufferIndex].getFirstPosition() == 0)) {
 						nbOfSize1SetsOfDescriptors++;
 						nbOfAdjacentSize1Components++;
@@ -175,8 +178,8 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 					else nbOfAdjacentSize1Components = 0;
 					bufferIndex++;
 				}
-				if (nbOfSize1SetsOfDescriptors > DescGenSettings.MAX_NB_OF_SIZE1_COMPONENTS ||
-						nbOfAdjacentSize1Components > DescGenSettings.MAX_NB_OF_ADJACENT_SIZE1_COMPONENTS)
+				if (nbOfSize1SetsOfDescriptors > Settings.MAX_NB_OF_SIZE1_COMPONENTS ||
+						nbOfAdjacentSize1Components > Settings.MAX_NB_OF_ADJACENT_SIZE1_COMPONENTS)
 					bufferPositionsAreLegal = false;
 			}			
 		}
@@ -184,21 +187,21 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		return bufferPositionsAreLegal;
 	}
 	
-	private HashSet<ArrayList<Group>> saveNewSubSets(ListOfDescriptorsWithPositionsInterface[] buffer, int currentBufferIndex, 
-			int maxBufferIndex,	HashSet<ArrayList<Group>> previousSubSets){
-		HashSet<ArrayList<Group>> currentSubSets = new HashSet<ArrayList<Group>>();
+	private Set<List<Group>> saveNewSubSets(IListOfDescriptorsWithPositions[] buffer, int currentBufferIndex, 
+			int maxBufferIndex,	Set<List<Group>> previousSubSets){
+		Set<List<Group>> currentSubSets = new HashSet<List<Group>>();
 		if (currentBufferIndex <= maxBufferIndex) {
 			for (Group currentDescriptor : buffer[currentBufferIndex].getListOfDescriptors()) {
 				if (!previousSubSets.isEmpty()) {
-					for (ArrayList<Group> currentSubSet : previousSubSets) {
-						ArrayList<Group> currentSubSetForked = new ArrayList<Group>();
+					for (List<Group> currentSubSet : previousSubSets) {
+						List<Group> currentSubSetForked = new ArrayList<Group>();
 						currentSubSetForked.addAll(currentSubSet);
 						currentSubSetForked.add(currentDescriptor);
 						currentSubSets.add(currentSubSetForked);	
 					}
 				}
 				else {
-					ArrayList<Group> newSubSet = new ArrayList<Group>();
+					List<Group> newSubSet = new ArrayList<Group>();
 					newSubSet.add(currentDescriptor);
 					currentSubSets.add(newSubSet);
 				}
@@ -209,15 +212,15 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		else return currentSubSets = previousSubSets;
 	}
 	
-	private void setCombinatoryArrayOfDescriptors() throws DescriptorsBuilderCriticalException {
+	private void setCombinatoryArrayOfDescriptors() throws DescriptorsBuilderException {
 		initializeCombinatoryArrayOfDescriptors();
-		HashMap<String, ArrayList<Group>> positionToListOfDescriptors = mapPositionToListOfDescriptors();
-		ArrayList<String> listOfPositions = new ArrayList<String>(positionToListOfDescriptors.keySet());
+		Map<String, List<Group>> positionToListOfDescriptors = mapPositionToListOfDescriptors();
+		List<String> listOfPositions = new ArrayList<String>(positionToListOfDescriptors.keySet());
 		for (String positionString : listOfPositions) {
 			String[] subPositionsArray = positionString.split(",");
 			int firstLetterPosition = Integer.parseInt(subPositionsArray[0]);
 			int lastLetterPosition = Integer.parseInt(subPositionsArray[subPositionsArray.length -1]);
-			ArrayList<Group> listOfDescriptors = positionToListOfDescriptors.get(positionString);
+			List<Group> listOfDescriptors = positionToListOfDescriptors.get(positionString);
 			Group[] arrayOfDescriptors = listOfDescriptors.toArray(new Group[listOfDescriptors.size()]);
 			combinatoryArrayOfDescriptors[firstLetterPosition-1][lastLetterPosition-1] = arrayOfDescriptors;
 		}		
@@ -232,15 +235,15 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		}
 	}
 	
-	private HashMap<String, ArrayList<Group>> mapPositionToListOfDescriptors() 
-			throws DescriptorsBuilderCriticalException {
-		HashMap<String, ArrayList<Group>> positionToListOfDescriptors = new HashMap<String, ArrayList<Group>>();
+	private Map<String, List<Group>> mapPositionToListOfDescriptors() 
+			throws DescriptorsBuilderException {
+		Map<String, List<Group>> positionToListOfDescriptors = new HashMap<String, List<Group>>();
 		for (Group currentDescriptor : previousGenOfDescriptors) {
 			String positionsString = getStringOfLetterPositions(currentDescriptor);
 			if (positionToListOfDescriptors.containsKey(positionsString))
 				positionToListOfDescriptors.get(positionsString).add(currentDescriptor);
 			else {
-				ArrayList<Group> newListOfDescriptors = new ArrayList<Group>();
+				List<Group> newListOfDescriptors = new ArrayList<Group>();
 				newListOfDescriptors.add(currentDescriptor);
 				positionToListOfDescriptors.put(positionsString, newListOfDescriptors);
 			}
@@ -248,10 +251,10 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 		return positionToListOfDescriptors;
 	}
 	
-	private String getStringOfLetterPositions(Group group) throws DescriptorsBuilderCriticalException{
+	private String getStringOfLetterPositions(Group group) throws DescriptorsBuilderException{
 		String positions;
-		ArrayList<String> listOfPositions = new ArrayList<String>();
-		ArrayList<String> listOfPropertiesWithPath = group.getListOfPropertiesWithPath();
+		List<String> listOfPositions = new ArrayList<String>();
+		List<String> listOfPropertiesWithPath = group.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			if (propertyWithPath.contains("letter/position")){
 				int lastSlashIndex = propertyWithPath.lastIndexOf("/");
@@ -269,7 +272,7 @@ public class ComponentGrouperV2 implements ComponentGrouperInterface {
 			positions = sB.toString();
 			return positions;			
 		}
-		else throw new DescriptorsBuilderCriticalException("ComponentGrouper : no letter position was found in current descriptor");
+		else throw new DescriptorsBuilderException("ComponentGrouper : no letter position was found in current descriptor");
 	}
 
 }

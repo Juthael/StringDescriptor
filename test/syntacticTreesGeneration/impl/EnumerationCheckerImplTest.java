@@ -1,4 +1,4 @@
-package descriptorsGeneration.implementations;
+package syntacticTreesGeneration.impl;
 
 import static org.junit.Assert.*;
 
@@ -7,11 +7,11 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.implementations.EnumerationCheckerV1;
-import syntacticTreesGeneration.interfaces.EnumerationCheckerInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.IEnumerationChecker;
+import syntacticTreesGeneration.impl.EnumerationCheckerImpl;
 
-public class EnumerationCheckerV1Test {
+public class EnumerationCheckerImplTest {
 
 	private boolean wholeStringIsDescribed_true = true;
 	private boolean wholeStringIsDescribed_false = false;
@@ -25,31 +25,31 @@ public class EnumerationCheckerV1Test {
 	
 	@Test
 	public void whenValuesArentSize1AndComponentsDoesntCoverWholeStringThenNoEnumerationFound() 
-			throws DescriptorsBuilderCriticalException {
-		EnumerationCheckerInterface enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSizeMoreThan1Values);
+			throws DescriptorsBuilderException {
+		IEnumerationChecker enumerationChecker = 
+				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSizeMoreThan1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), false);
 	}
 	
 	@Test 
-	public void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws DescriptorsBuilderCriticalException {
-		EnumerationCheckerInterface enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, tooBigListOfSizeMoreThan1Values);
+	public void whenValuesArentSize1AndTooManyComponentsThenNoEnumeration() throws DescriptorsBuilderException {
+		IEnumerationChecker enumerationChecker = 
+				new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, tooBigListOfSizeMoreThan1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), false);
 	}
 	
 	@Test
-	public void whenValuesAreSize1ThenEnumerationIsFound() throws DescriptorsBuilderCriticalException {
-		EnumerationCheckerInterface enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1Values);
+	public void whenValuesAreSize1ThenEnumerationIsFound() throws DescriptorsBuilderException {
+		IEnumerationChecker enumerationChecker = 
+				new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1Values);
 		assertEquals(enumerationChecker.getSimpleEnumerationWasFound(), true);		
 	}
 	
 	@Test 
 	public void whenValuesArentSize1ButWholeStringCoveredAndNotTooManyComponentsAndSymmetryThenEnumIsFound() 
-			throws DescriptorsBuilderCriticalException{
-		EnumerationCheckerInterface enumerationChecker = 
-				new EnumerationCheckerV1(wholeStringIsDescribed_true, dimension, 
+			throws DescriptorsBuilderException{
+		IEnumerationChecker enumerationChecker = 
+				new EnumerationCheckerImpl(wholeStringIsDescribed_true, dimension, 
 						listOfSizeMoreThan1ValuesWithSymmetry);
 		assertEquals(enumerationChecker.getSecondDegreeEnumerationWasFound(), true);			
 	}
@@ -57,10 +57,10 @@ public class EnumerationCheckerV1Test {
 	@Test
 	public void whenLessThan2ValuesToCheckThenThrowNoException() {
 		try {
-			EnumerationCheckerInterface enumerationChecker = 
-					new EnumerationCheckerV1(wholeStringIsDescribed_false, dimension, listOfSize1);
+			IEnumerationChecker enumerationChecker = 
+					new EnumerationCheckerImpl(wholeStringIsDescribed_false, dimension, listOfSize1);
 		}
-		catch (DescriptorsBuilderCriticalException expected) {
+		catch (DescriptorsBuilderException expected) {
 			fail();
 		}
 	}	

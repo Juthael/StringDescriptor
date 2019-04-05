@@ -1,11 +1,11 @@
-package verbalization.interfaces.dataEncodingModel;
+package verbalization.dataEncoding.encodingModel;
 
 import java.util.List;
 
-public interface DescriptionCodeGetterInterface {
+public interface IDescriptionCodeGetter {
 	
 	String getReadingDirection();
 	
-	List<RecipeCodeGetterInterface> getListOfRecipeCodeGetters();
+	List<IRecipeCodeGetter> getListOfRecipeCodeGetters();
 
 }

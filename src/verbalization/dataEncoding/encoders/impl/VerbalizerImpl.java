@@ -1,21 +1,21 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import copycatModel.grammar.CharString;
 import exceptions.VerbalizationException;
-import verbalization.implementations.verbalStructureModel.DescriptionV2;
-import verbalization.interfaces.DescriptionCoderInterface;
-import verbalization.interfaces.VerbalizerInterface;
-import verbalization.interfaces.dataEncodingModel.DescriptionCodeGetterInterface;
-import verbalization.interfaces.verbalStructureModel.DescriptionInterface;
+import verbalization.dataEncoding.encoders.IDescriptionCoder;
+import verbalization.dataEncoding.encoders.IVerbalizer;
+import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
+import verbalization.verbalStructureModel.IDescription;
+import verbalization.verbalStructureModel.impl.DescriptionImpl;
 
-public class VerbalizerV2 implements VerbalizerInterface {
+public class VerbalizerImpl implements IVerbalizer {
 
 	private String descriptionInNaturalLanguage;
 	
-	public VerbalizerV2(CharString descriptorToBeTranslated) throws VerbalizationException {
-		DescriptionCoderInterface descriptionCoder = new DescriptionCoderV1(descriptorToBeTranslated);
-		DescriptionCodeGetterInterface descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
-		DescriptionInterface description = new DescriptionV2(descriptionCodeGetter);
+	public VerbalizerImpl(CharString descriptorToBeTranslated) throws VerbalizationException {
+		IDescriptionCoder descriptionCoder = new DescriptionCoderImpl(descriptorToBeTranslated);
+		IDescriptionCodeGetter descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
+		IDescription description = new DescriptionImpl(descriptionCodeGetter);
 		descriptionInNaturalLanguage = description.getVerbalDescription();
 	}
 

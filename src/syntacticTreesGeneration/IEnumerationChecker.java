@@ -1,8 +1,8 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import exceptions.DescriptorsBuilderCriticalException;
+import exceptions.DescriptorsBuilderException;
 
-public interface EnumerationCheckerInterface {
+public interface IEnumerationChecker {
 
 	boolean getSimpleEnumerationWasFound();
 	
@@ -10,7 +10,7 @@ public interface EnumerationCheckerInterface {
 	
 	boolean getEnumerationWasFound();
 
-	EnumerationRelationalDataInterface getEnumerationRelationalData() throws DescriptorsBuilderCriticalException;
+	IEnumerationRelationalData getEnumerationRelationalData() throws DescriptorsBuilderException;
 
 	
 

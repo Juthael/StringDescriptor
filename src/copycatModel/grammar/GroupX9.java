@@ -2,10 +2,11 @@ package copycatModel.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
-import exceptions.DescriptorsBuilderCriticalException;
-import settings.DescGenSettings;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
+import exceptions.DescriptorsBuilderException;
+import settings.Settings;
 
 public class GroupX9 extends HowManyGroups implements Cloneable {
 
@@ -22,7 +23,7 @@ public class GroupX9 extends HowManyGroups implements Cloneable {
 	
 	public GroupX9(boolean codingDescriptor, Group group1, Group group2, Group group3, Group group4, Group group5,
 			Group group6, Group group7, Group group8, Group group9) 
-					throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+					throws DescriptorsBuilderException, CloneNotSupportedException {
 		super(codingDescriptor);
 		this.group1 = group1.clone();
 		this.group2 = group2.clone();
@@ -33,8 +34,8 @@ public class GroupX9 extends HowManyGroups implements Cloneable {
 		this.group7 = group7.clone();
 		this.group8 = group8.clone();
 		this.group9 = group9.clone();
-		ArrayList<AbstractDescriptorV1> componentDescriptors = buildListOfComponents();
-		updateComponentsPosition(DescGenSettings.COMPONENT_AUTO_POSITIONING, componentDescriptors);	
+		List<SynTreeIntegrableElementImpl> componentDescriptors = buildListOfComponents();
+		updateComponentsPosition(Settings.COMPONENT_AUTO_POSITIONING, componentDescriptors);	
 	}
 	
 	@Override
@@ -53,32 +54,32 @@ public class GroupX9 extends HowManyGroups implements Cloneable {
 			cloneGroupX9 = new GroupX9(isCodingDescriptor, cloneableGroup1, cloneableGroup2, 
 					cloneableGroup3, cloneableGroup4, cloneableGroup5, cloneableGroup6, cloneableGroup7, 
 					cloneableGroup8, cloneableGroup9);
-		} catch (DescriptorsBuilderCriticalException e) {
+		} catch (DescriptorsBuilderException e) {
 			throw new CloneNotSupportedException("GroupX9 : error error in clone() method.");
 		}
 		return cloneGroupX9;
 	}	
 
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfComponents(){
-		ArrayList<AbstractDescriptorV1> componentDescriptors = new ArrayList<AbstractDescriptorV1>(
+	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
+		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
 				Arrays.asList(group1, group2, group3, group4, group5, group6, group7, group8, group9));
 		return componentDescriptors;
 	}
 	
 	@Override
-	protected ArrayList<AbstractDescriptorV1> buildListOfRelevantComponentsForRelationBuilding() {
-		ArrayList<AbstractDescriptorV1> listOfRelevantComponents = new ArrayList<AbstractDescriptorV1>();
+	protected List<SynTreeIntegrableElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = new ArrayList<SynTreeIntegrableElementImpl>();
 		listOfRelevantComponents.add(group1);
 		return listOfRelevantComponents;
 	}	
 	
 	@Override
-	public ArrayList<String> getListOfRelevantPropertiesWithPath(){
-		ArrayList<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		ArrayList<AbstractDescriptorV1> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (AbstractDescriptorV1 componentDescriptor : listOfRelevantComponents) {
-			ArrayList<String> listOfComponentRelevantPropertiesWithPath = 
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeIntegrableElementImpl componentDescriptor : listOfRelevantComponents) {
+			List<String> listOfComponentRelevantPropertiesWithPath = 
 					componentDescriptor.getListOfRelevantPropertiesWithPath();
 			listOfRelevantPropertiesWithPath.addAll(listOfComponentRelevantPropertiesWithPath);
 		}

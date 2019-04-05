@@ -1,32 +1,32 @@
-package verbalization.implementations;
+package verbalization.dataEncoding.encoders.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.VerbalizationException;
-import verbalization.implementations.dataEncodingModel.TransformationCodeGetterV1;
-import verbalization.interfaces.TransformationCoderInterface;
-import verbalization.interfaces.dataEncodingModel.TransformationCodeGetterInterface;
+import verbalization.dataEncoding.encoders.ITransformationCoder;
+import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
+import verbalization.dataEncoding.encodingModel.impl.TransformationCodeGetterImpl;
 
-public class TransformationCoderV2 implements TransformationCoderInterface{
+public class TransformationCoderImpl implements ITransformationCoder{
 
-	private TransformationCodeGetterInterface transformationCodeGetter;
+	private ITransformationCodeGetter transformationCodeGetter;
 	private final int nbOfComponents;
 	private final List<String> relationProperties;
 	
-	public TransformationCoderV2(String nbOfComponents, List<String> relationProperties) throws VerbalizationException {
+	public TransformationCoderImpl(String nbOfComponents, List<String> relationProperties) throws VerbalizationException {
 		this.nbOfComponents = Integer.parseInt(nbOfComponents);
 		this.relationProperties = relationProperties;
 		transformationCodeGetter = setTransformationCodeGetter();
 	}
 
 	@Override
-	public TransformationCodeGetterInterface getTransformationCodeGetter() {
+	public ITransformationCodeGetter getTransformationCodeGetter() {
 		return transformationCodeGetter;
 	}
 	
-	private TransformationCodeGetterInterface setTransformationCodeGetter() throws VerbalizationException {
-		TransformationCodeGetterInterface transformationCodeGetter;
+	private ITransformationCodeGetter setTransformationCodeGetter() throws VerbalizationException {
+		ITransformationCodeGetter transformationCodeGetter;
 		String parameterCode = "";
 		List<String> listOfDimensions = new ArrayList<String>();
 		String transfoTypeCode = "";		
@@ -63,7 +63,7 @@ public class TransformationCoderV2 implements TransformationCoderInterface{
 			propertyIndex++;
 		}
 		List<String> listOfPredicateCodes = setListOfPredicateCodes(listOfDimensions, transfoTypeCode);
-		transformationCodeGetter =	new TransformationCodeGetterV1(listOfPredicateCodes, parameterCode);
+		transformationCodeGetter =	new TransformationCodeGetterImpl(listOfPredicateCodes, parameterCode);
 		return transformationCodeGetter;	
 	}
 	

@@ -1,6 +1,6 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-public interface SymmetryRelationalDataInterface extends RelationalDataInterface {
+public interface ISymmetryRelationalData extends IRelationalData {
 
 	String getTypeOfSymmetry();
 

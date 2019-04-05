@@ -1,39 +1,40 @@
-package copycatModel.implementations;
+package copycatModel.impl;
 
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
+import copycatModel.IProperty;
+import copycatModel.IPropertyContainer;
+import copycatModel.ISignal;
 import copycatModel.grammar.Dimension;
 import copycatModel.grammar.Enumeration;
 import copycatModel.grammar.Group;
 import copycatModel.grammar.GroupX3;
 import copycatModel.grammar.HowManyGroups;
 import copycatModel.grammar.Relation;
-import copycatModel.interfaces.PropertyContainerInterface;
-import copycatModel.interfaces.PropertyInterface;
-import copycatModel.interfaces.SignalInterface;
-import exceptions.DescriptorsBuilderCriticalException;
-import syntacticTreesGeneration.implementations.SignalBuilderV1;
-import syntacticTreesGeneration.interfaces.SignalBuilderInterface;
+import exceptions.DescriptorsBuilderException;
+import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class AbstractDescriptorV1Test {
+public class SynTreeIntegrableElementImplTest {
 
 	@Test
 	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
-			throws DescriptorsBuilderCriticalException {
+			throws DescriptorsBuilderException {
 		boolean containerContainsAllProperties = true;
 		Dimension dimension = new Dimension(false, "dimension1");
 		Enumeration enumeration = new Enumeration(false, "1");
 		Relation relation  = new Relation(false, dimension, enumeration);
-		ArrayList<String> listOfPropertiesWithPath = relation.getListOfPropertiesWithPath();
-		PropertyContainerInterface propertyContainer = relation.getpropertyContainer();
+		List<String> listOfPropertiesWithPath = relation.getListOfPropertiesWithPath();
+		IPropertyContainer propertyContainer = relation.getpropertyContainer();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			int lastSlashIndex = propertyWithPath.lastIndexOf("/");
 			String currentListDimension = propertyWithPath.substring(0, lastSlashIndex);
@@ -59,26 +60,26 @@ public class AbstractDescriptorV1Test {
 	public void whenAllComponentsArentRelevantThenContainerContainsOnlyRelevantProperties() 
 			throws Exception {
 		boolean groupX3ContainerDoesntContainPlatonicLetter2 = true;
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
-		SignalInterface signal = signalBuilder.getSignal();
-		ArrayList<Group> listOfGroups = signal.getGroups();
+		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+		ISignal signal = signalBuilder.getSignal();
+		List<Group> listOfGroups = signal.getGroups();
 		Group group1 = listOfGroups.get(0);
 		Group group2 = listOfGroups.get(1);
 		Group group3 = listOfGroups.get(2);
 		HowManyGroups groupX3 = new GroupX3(false, group1, group2, group3);
-		ArrayList<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
+		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
 		boolean groupX3containsPlatonicLetter2 = false;
 		for (String propertyWithPath : listOfGroupX3PropertiesWithPath) {
 			if (propertyWithPath.contains("platonicLetter/2"))
 				groupX3containsPlatonicLetter2 = true;
 		}
 		if (groupX3containsPlatonicLetter2 == true) {
-			PropertyContainerInterface groupX3PropertyContainer = groupX3.getpropertyContainer();
-			HashMap<String, PropertyInterface> dimensionToProperty = 
+			IPropertyContainer groupX3PropertyContainer = groupX3.getpropertyContainer();
+			Map<String, IProperty> dimensionToProperty = 
 					groupX3PropertyContainer.getDimensionToProperty();
 			for (String dimension : dimensionToProperty.keySet()) {
 				if (dimension.contains("platonicLetter")) {
-					PropertyInterface property = dimensionToProperty.get(dimension);
+					IProperty property = dimensionToProperty.get(dimension);
 					if (property.getValue().equals("2"))
 						groupX3ContainerDoesntContainPlatonicLetter2 = false;
 				}
@@ -90,17 +91,17 @@ public class AbstractDescriptorV1Test {
 	
 	@Test
 	public void onlyClonedGroupsAreRelatedInNewDescriptor() 
-			throws DescriptorsBuilderCriticalException, CloneNotSupportedException {
+			throws DescriptorsBuilderException, CloneNotSupportedException {
 		boolean onlyClonedGroupsAreRelatedInNewDescriptor;
-		SignalBuilderInterface signalBuilder = new SignalBuilderV1("abc", "fromLeftToRight");
-		SignalInterface signal = signalBuilder.getSignal();
-		ArrayList<Group> listOfGroups = signal.getGroups();
+		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+		ISignal signal = signalBuilder.getSignal();
+		List<Group> listOfGroups = signal.getGroups();
 		Group group1 = listOfGroups.get(0);
 		Group group2 = listOfGroups.get(1);
 		Group group3 = listOfGroups.get(2);
-		ArrayList<String> listOfGroup2PropertiesWithpath = group2.getListOfPropertiesWithPath();
+		List<String> listOfGroup2PropertiesWithpath = group2.getListOfPropertiesWithPath();
 		HowManyGroups groupX3 = new GroupX3(false, group1, group2, group3);
-		ArrayList<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
+		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
 		boolean groupX3ContainsGroupPosition2 = false;
 		boolean group2ContainsGroupPosition2 = false;
 		for (String group2PropertyWithPath : listOfGroup2PropertiesWithpath) {

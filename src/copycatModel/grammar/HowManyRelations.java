@@ -1,17 +1,17 @@
 package copycatModel.grammar;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.implementations.AbstractDescriptorV1;
+import copycatModel.impl.SynTreeIntegrableElementImpl;
 
-public abstract class HowManyRelations extends AbstractDescriptorV1 implements Cloneable {
+public abstract class HowManyRelations extends SynTreeIntegrableElementImpl implements Cloneable {
 
 	public HowManyRelations(boolean codingDescriptor) {
 		super(codingDescriptor);
 	}
 
 	@Override
-	abstract protected ArrayList<AbstractDescriptorV1> buildListOfComponents();
+	abstract protected List<SynTreeIntegrableElementImpl> buildListOfComponents();
 
 	@Override
 	abstract public String getDescriptorName();

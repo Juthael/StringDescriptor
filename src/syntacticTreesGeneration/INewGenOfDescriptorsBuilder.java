@@ -1,13 +1,13 @@
-package syntacticTreesGeneration.interfaces;
+package syntacticTreesGeneration;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import copycatModel.interfaces.AbstractDescriptorInterface;
-import exceptions.DescriptorsBuilderCriticalException;
+import copycatModel.ISynTreeIntegrableElement;
+import exceptions.DescriptorsBuilderException;
 
-public interface NewGenOfDescriptorsBuilderInterface {
+public interface INewGenOfDescriptorsBuilder {
 
-	ArrayList<AbstractDescriptorInterface> getNewGenOfDescriptors() throws DescriptorsBuilderCriticalException,
+	List<ISynTreeIntegrableElement> getNewGenOfDescriptors() throws DescriptorsBuilderException,
 			CloneNotSupportedException;
 
 }
