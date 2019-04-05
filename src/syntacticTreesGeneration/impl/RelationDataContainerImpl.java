@@ -130,11 +130,48 @@ public class RelationDataContainerImpl implements IRelationDataContainer {
 	}
 	
 	@Override
+	public void cleanRelationsFromSubDimensions() throws SynTreeGenerationException {
+		List<IEnumerationRelationalData> cleanListOfEnumerations = new ArrayList<IEnumerationRelationalData>();
+		List<ISequenceRelationalData> cleanListOfSequences = new ArrayList<ISequenceRelationalData>();
+		List<ISymmetryRelationalData> cleanListOfSymmetries = new ArrayList<ISymmetryRelationalData>();
+		for (IEnumerationRelationalData enumerationData : listOfEnumerations) {
+			List<String> listOfDimensions = enumerationData.getDimensions();
+			if (listOfDimensions.size() == 1) {
+				if (!listOfDimensions.get(0).contains("groups"))
+					cleanListOfEnumerations.add(enumerationData);
+			}
+			else throw new SynTreeGenerationException("RelationDataContainerImpl.cleanValuesFromSubDimensions() : "
+						+ "this method shouldn't be used after redundancy cleaning.");
+		}
+		for (ISequenceRelationalData sequenceData : listOfSequences) {
+			List<String> listOfDimensions = sequenceData.getDimensions();
+			if (listOfDimensions.size() == 1) {
+				if (!listOfDimensions.get(0).contains("groups"))
+					cleanListOfSequences.add(sequenceData);
+			}
+			else throw new SynTreeGenerationException("RelationDataContainerImpl.cleanValuesFromSubDimensions() : "
+						+ "this method shouldn't be used after redundancy cleaning.");
+		}	
+		for (ISymmetryRelationalData symmetryData : listOfSymmetries) {
+			List<String> listOfDimensions = symmetryData.getDimensions();
+			if (listOfDimensions.size() == 1) {
+				if (!listOfDimensions.get(0).contains("groups"))
+					cleanListOfSymmetries.add(symmetryData);
+			}
+			else throw new SynTreeGenerationException("RelationDataContainerImpl.cleanValuesFromSubDimensions() : "
+						+ "this method shouldn't be used after redundancy cleaning.");
+		}
+		listOfEnumerations = cleanListOfEnumerations;
+		listOfSequences = cleanListOfSequences;
+		listOfSymmetries = cleanListOfSymmetries;
+	}
+	
+	@Override
 	public void clear() {
 		listOfEnumerations.clear();
 		listOfSequences.clear();
 		listOfSymmetries.clear();
-	}	
+	}
 	
 	private boolean checkIfEnumerationsCanBeMerged(IEnumerationRelationalData enum1, IEnumerationRelationalData enum2) {
 		boolean enumerationsCanBeMerged = true;

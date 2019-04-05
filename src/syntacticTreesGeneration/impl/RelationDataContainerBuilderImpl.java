@@ -48,6 +48,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 						new ArrayList<String>(listOfDescriptors.get(0).getpropertyContainer().getDimensionToProperty().keySet());
 				boolean subComponentsAnalyzeCreatesNoRedundance = true;
 				boolean componentsAreRelated = true;
+				boolean containerHasToBeCleanedOfSubDimensionRelations = false;
 				int dimensionIndex = 0;
 				while (componentsAreRelated == true && dimensionIndex < listOfDimensions.size()) {
 					String dimension = listOfDimensions.get(dimensionIndex);
@@ -110,6 +111,8 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 										componentsAreRelated = false;
 									else {
 										if (symmetryWasFound == true) {
+											if (sequenceWasFound == false)
+												containerHasToBeCleanedOfSubDimensionRelations = true;
 											relationDataContainer.addEnumeration(enumerationRelationalData);
 											relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
 										}
@@ -129,7 +132,11 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 				}
 				if (componentsAreRelated == false)
 					relationDataContainer.clear();
-				else relationDataContainer.cleanValuesRedundancies();
+				else { 
+					if (containerHasToBeCleanedOfSubDimensionRelations == true)
+						relationDataContainer.cleanRelationsFromSubDimensions();
+					relationDataContainer.cleanValuesRedundancies();
+				}
 			}
 		} 
 		else throw new SynTreeGenerationException("RelationDataContainerBuilder : "

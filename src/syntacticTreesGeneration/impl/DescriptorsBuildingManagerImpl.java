@@ -164,7 +164,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 							symmetryWasFound = true;
 					symmetryIndex++;
 				}
-				if (sequenceWasFound == false)
+				if (symmetryWasFound == false)
 					numberOfSimpleEnumerations++;
 			}
 		}

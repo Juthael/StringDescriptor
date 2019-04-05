@@ -2,7 +2,6 @@ package launcher.utils;
 
 import java.util.function.Predicate;
 
-import exceptions.StringFormatException;
 import settings.Settings;
 
 public class DescriptionValidityChecker implements Predicate<String> {

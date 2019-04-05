@@ -26,7 +26,11 @@ public interface IRelationDataContainer {
 
 	void cleanValuesRedundancies() throws SynTreeGenerationException;
 	
+	void cleanRelationsFromSubDimensions() throws SynTreeGenerationException;
+	
 	void clear();
+
+	
 
 	
 
