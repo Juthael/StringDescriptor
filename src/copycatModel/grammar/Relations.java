@@ -50,6 +50,22 @@ public class Relations extends RelationsOrLetter implements Cloneable {
 			case "dimensionX6" :
 				DimensionX6 dimensionX6Casted = (DimensionX6) dimensionX;
 				cloneDimensionX = dimensionX6Casted.clone();
+				break;		
+			case "dimensionX7" :
+				DimensionX7 dimensionX7Casted = (DimensionX7) dimensionX;
+				cloneDimensionX = dimensionX7Casted.clone();
+				break;
+			case "dimensionX8" :
+				DimensionX8 dimensionX8Casted = (DimensionX8) dimensionX;
+				cloneDimensionX = dimensionX8Casted.clone();
+				break;
+			case "dimensionX9" :
+				DimensionX9 dimensionX9Casted = (DimensionX9) dimensionX;
+				cloneDimensionX = dimensionX9Casted.clone();
+				break;
+			case "dimensionX10" :
+				DimensionX10 dimensionX10Casted = (DimensionX10) dimensionX;
+				cloneDimensionX = dimensionX10Casted.clone();
 				break;				
 			default : throw new CloneNotSupportedException("Relation : error in clone() method.");
 		}		
@@ -83,6 +99,18 @@ public class Relations extends RelationsOrLetter implements Cloneable {
 				RelationX7 castedRelationX7 = (RelationX7) relationX;
 				cloneRelationX = castedRelationX7.clone();
 				break;				
+			case "relationX8" :
+				RelationX8 castedRelationX8 = (RelationX8) relationX;
+				cloneRelationX = castedRelationX8.clone();
+				break;	
+			case "relationX9" :
+				RelationX9 castedRelationX9 = (RelationX9) relationX;
+				cloneRelationX = castedRelationX9.clone();
+				break;	
+			case "relationX10" :
+				RelationX10 castedRelationX10 = (RelationX10) relationX;
+				cloneRelationX = castedRelationX10.clone();
+				break;					
 			default : throw new CloneNotSupportedException("Relation : error in clone() method.");
 		}
 		cloneRelations = new Relations(isCodingDescriptor, cloneGroups, cloneDimensionX, 

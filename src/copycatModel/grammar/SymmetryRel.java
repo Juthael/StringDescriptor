@@ -10,40 +10,25 @@ public class SymmetryRel extends Relation implements Cloneable {
 
 	private Symmetry symmetry;
 	
-	public SymmetryRel(boolean codingDescriptor, HowManyDimensions dimensionX, Enumeration enumeration, Symmetry symmetry) {
-		super(codingDescriptor, dimensionX, enumeration);
+	public SymmetryRel(boolean codingDescriptor, Dimension dimension, Enumeration enumeration, Symmetry symmetry) {
+		super(codingDescriptor, dimension, enumeration);
 		this.symmetry = symmetry;			
 	}
 	
 	@Override
 	protected SymmetryRel clone() throws CloneNotSupportedException {
 		SymmetryRel cloneSymmetryRel;
-		HowManyDimensions cloneDimensionX;
-		switch (dimensionX.getDescriptorName()) {
-			case "dimension" :
-				Dimension dimensionCasted = (Dimension) dimensionX;
-				cloneDimensionX = dimensionCasted.clone();
-				break;
-			case "dimensionX2" :
-				DimensionX2 dimensionX2Casted = (DimensionX2) dimensionX;
-				cloneDimensionX = dimensionX2Casted.clone();
-				break;
-			case "dimensionX3" :
-				DimensionX3 dimensionX3Casted = (DimensionX3) dimensionX;
-				cloneDimensionX = dimensionX3Casted.clone();
-				break;
-			default : throw new CloneNotSupportedException("Relation : error in clone() method.");
-		}			
+		Dimension cloneDimension = dimension.clone();
 		Enumeration cloneEnumeration = this.enumeration.clone();
 		Symmetry cloneSymmetry = symmetry.clone();
-		cloneSymmetryRel = new SymmetryRel(isCodingDescriptor, cloneDimensionX, cloneEnumeration, cloneSymmetry);
+		cloneSymmetryRel = new SymmetryRel(isCodingDescriptor, cloneDimension, cloneEnumeration, cloneSymmetry);
 		return cloneSymmetryRel;
 	}	
 	
 	@Override
 	protected List<SynTreeIntegrableElementImpl> buildListOfComponents(){
 		List<SynTreeIntegrableElementImpl> componentDescriptors = new ArrayList<SynTreeIntegrableElementImpl>(
-				Arrays.asList(dimensionX, enumeration, symmetry));
+				Arrays.asList(dimension, enumeration, symmetry));
 		return componentDescriptors;
 	}	
 }

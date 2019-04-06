@@ -1,15 +1,11 @@
 package syntacticTreesGeneration;
 
-import java.util.List;
-
 public interface IEnumerationRelationalData extends IRelationalData {
 
 	String getName();
 
-	List<String> getDimensions();
+	String getDimension();
 
 	String getEnumerationValue();
-
-	void addDimensions(List<String> dimensions);
 
 }

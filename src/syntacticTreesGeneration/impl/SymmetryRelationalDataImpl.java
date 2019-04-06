@@ -1,7 +1,5 @@
 package syntacticTreesGeneration.impl;
 
-import java.util.List;
-
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
@@ -31,11 +29,6 @@ public class SymmetryRelationalDataImpl extends EnumerationRelationalDataImpl im
 	public String getTypeOfSymmetry() {
 		return typeOfSymmetry;
 	}
-	
-	@Override
-	public void addDimensions(List<String> dimensions) {
-		listOfDimensions.addAll(dimensions);
-	}	
 
 	private void changeRelationName() {
 		super.relationName = "symmetry"; 

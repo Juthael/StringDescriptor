@@ -1,8 +1,5 @@
 package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
@@ -10,19 +7,19 @@ import syntacticTreesGeneration.IRelationalData;
 public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerationRelationalData {
 
 	protected String relationName = "enumeration";
-	protected List<String> listOfDimensions = new ArrayList<String>();
+	protected String dimension;
 	protected String enumerationValue;
 	
-	public EnumerationRelationalDataImpl(String dimensionValue, String enumerationValue) throws SynTreeGenerationException {
-		if (!dimensionValue.isEmpty() && !enumerationValue.isEmpty()) {
-			listOfDimensions.add(dimensionValue);
+	public EnumerationRelationalDataImpl(String dimension, String enumerationValue) throws SynTreeGenerationException {
+		if (!dimension.isEmpty() && !enumerationValue.isEmpty()) {
+			this.dimension = dimension;
 			this.enumerationValue = enumerationValue;
 		}
 		else throw new SynTreeGenerationException("EnumerationRelationalData : empty parameter.");
 	}
 	
 	public EnumerationRelationalDataImpl(IEnumerationRelationalData enumerationRelationalData) {
-		listOfDimensions.addAll(enumerationRelationalData.getDimensions());
+		dimension = enumerationRelationalData.getDimension();
 		enumerationValue = enumerationRelationalData.getEnumerationValue();
 	}	
 
@@ -32,18 +29,13 @@ public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerat
 	}
 
 	@Override
-	public List<String> getDimensions() {
-		return listOfDimensions;
+	public String getDimension() {
+		return dimension;
 	}
 
 	@Override
 	public String getEnumerationValue() {
 		return enumerationValue;
-	}
-	
-	@Override
-	public void addDimensions(List<String> dimensions) {
-		listOfDimensions.addAll(0, dimensions);
 	}
 
 }

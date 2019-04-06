@@ -23,8 +23,6 @@ public interface IRelationDataContainer {
 	void addSequence(ISequenceRelationalData sequenceRelationalData);
 
 	void addSymmetry(ISymmetryRelationalData symmetryRelationalData);
-
-	void cleanValuesRedundancies() throws SynTreeGenerationException;
 	
 	void cleanRelationsFromSubDimensions() throws SynTreeGenerationException;
 	

@@ -12,7 +12,6 @@ public class Settings {
 	public static final String IRRELEVANT_VALUE = "irrelevant";
 	public static final String SECOND_DEGREE_ENUMERATION_SEPARATOR = ":";
 	public static final boolean LIST_OF_GROUPS_COVER_THE_FULL_STRING = true;	
-	public static final boolean REDUNDANCIES_IN_RELATIONS_CAN_BE_CLEANED = false;
 	public static final boolean TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE = true;
 	
 	//2.Parameters preventing combinatorial explosion

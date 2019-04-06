@@ -61,10 +61,8 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 	private List<Dimension> buildListOfDimensions(IRelationDataContainer relationDataContainer){
 		List<Dimension> listOfDimensions = new ArrayList<Dimension>();
 		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
-			for (String dimensionString : enumerationRelationalData.getDimensions()) {
-				Dimension dimension = new Dimension(false, dimensionString);
-				listOfDimensions.add(dimension);
-			}
+			Dimension dimension = new Dimension(false, enumerationRelationalData.getDimension());
+			listOfDimensions.add(dimension);
 		}
 		return listOfDimensions;
 	}
@@ -133,15 +131,15 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 			int symmetryIndex = -1;
 			int i = 0;
 			while (i < relationDataContainer.getListOfSequences().size()  && sequenceIndex == -1) {
-				if (relationDataContainer.getListOfSequences().get(i).getDimensions().equals(
-						enumerationRelationalData.getDimensions()))
+				if (relationDataContainer.getListOfSequences().get(i).getDimension().equals(
+						enumerationRelationalData.getDimension()))
 					sequenceIndex = i;
 				i++;
 			}
 			int j = 0;
 			while (j < relationDataContainer.getListOfSymmetries().size() && symmetryIndex == -1) {
-				if (relationDataContainer.getListOfSymmetries().get(j).getDimensions().equals(
-						enumerationRelationalData.getDimensions()))
+				if (relationDataContainer.getListOfSymmetries().get(j).getDimension().equals(
+						enumerationRelationalData.getDimension()))
 					symmetryIndex = j;
 				j++;
 			}

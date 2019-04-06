@@ -1,6 +1,5 @@
 package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
@@ -32,17 +31,16 @@ public class SymmetryCheckerImpl implements ISymmetryChecker {
 		symmetryWithNoCentralElementChecker = 
 				new SymmetryWithNoCentralElementCheckerImpl(
 						this.wholeStringIsDescribed, this.dimension, this.values, this.enumerationRelationalData);
-		if (symmetryWithCentralElementChecker.getSymmetryWithCentralElementWasFound() == true) 
-			symmetryWasFound = true;
-		else if (symmetryWithNoCentralElementChecker.getSymmetryWithNoCenterWasFound() == true) 
-			symmetryWasFound = true;
-		else symmetryWasFound = false;
+		symmetryWasFound = (symmetryWithCentralElementChecker.getSymmetryWithCentralElementWasFound() == true ||
+				symmetryWithNoCentralElementChecker.getSymmetryWithNoCenterWasFound() == true);
 	}
 	
+	@Override
 	public boolean getSymmetryWasFound() {
 		return symmetryWasFound;
 	}
 	
+	@Override
 	public ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException {
 		ISymmetryRelationalData symmetryRelationalData;
 		if (symmetryWasFound == true) {

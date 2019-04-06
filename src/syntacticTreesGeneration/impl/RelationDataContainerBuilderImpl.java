@@ -111,8 +111,6 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 										componentsAreRelated = false;
 									else {
 										if (symmetryWasFound == true) {
-											if (sequenceWasFound == false)
-												containerHasToBeCleanedOfSubDimensionRelations = true;
 											relationDataContainer.addEnumeration(enumerationRelationalData);
 											relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
 										}
@@ -135,7 +133,6 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 				else { 
 					if (containerHasToBeCleanedOfSubDimensionRelations == true)
 						relationDataContainer.cleanRelationsFromSubDimensions();
-					relationDataContainer.cleanValuesRedundancies();
 				}
 			}
 		} 

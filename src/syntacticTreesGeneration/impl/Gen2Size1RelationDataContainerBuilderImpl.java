@@ -111,9 +111,6 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 				listOfRelationDataContainers.add(iSequenceDataContainer);
 			}			
 		}
-		for (IRelationDataContainer rdContainer : listOfRelationDataContainers) {
-			rdContainer.cleanValuesRedundancies();
-		}
 		return listOfRelationDataContainers;
 	}
 	
@@ -247,7 +244,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			IEnumerationRelationalData letterEnumerationRelationalData, 
 			int incrementValue) throws SynTreeGenerationException {
 		ISequenceRelationalData letterSequenceRelationalData;
-		String dimensionValue = letterEnumerationRelationalData.getDimensions().get(0);
+		String dimensionValue = letterEnumerationRelationalData.getDimension();
 		String enumerationValue = letterEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
 		letterSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);
@@ -258,7 +255,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			IEnumerationRelationalData sizeEnumerationRelationalData) throws SynTreeGenerationException {
 		int incrementValue = 0;
 		ISequenceRelationalData sizeSequenceRelationalData;
-		String dimensionValue = sizeEnumerationRelationalData.getDimensions().get(0);
+		String dimensionValue = sizeEnumerationRelationalData.getDimension();
 		String enumerationValue = sizeEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
 		sizeSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);

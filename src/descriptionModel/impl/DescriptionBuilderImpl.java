@@ -59,8 +59,10 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 			else throw new StringFormatException("String entered is invalid.");
 		}
 		catch (CloneNotSupportedException cloneException) {
+			cloneException.printStackTrace();
 			throw new SynTreeGenerationException("DescriptionBuilderImpl.buildList() : "
-					+ "CloneNotSupporterException catched");
+					+ "CloneNotSupporterException catched.");
+			
 		}
 		return listOfDescriptions;
 	}

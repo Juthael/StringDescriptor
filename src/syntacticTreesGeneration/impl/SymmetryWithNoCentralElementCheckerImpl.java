@@ -87,24 +87,6 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 				valuesOrderIsReversed = false;
 			subValueIndex++;
 		}
-		if (valuesOrderIsReversed == true){ //effacer de là
-			System.out.println("Values Order Is reversed (dimension " + dimension + ") :");
-			for (String value : values.get(0).split(",")) {
-				System.out.print(value);
-				System.out.print(",");
-			}
-			System.out.println("");
-			for (String value : values.get(1).split(",")) {
-				System.out.print(value);
-				System.out.print(",");
-			}
-			System.out.println("");
-			if (values.get(0).equals("24,9,4")) {
-				System.out.println("watch from here");
-			}
-			
-			// à là
-		}
 		return valuesOrderIsReversed;
 	}
 	

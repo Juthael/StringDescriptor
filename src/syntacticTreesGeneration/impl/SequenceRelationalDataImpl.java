@@ -1,7 +1,5 @@
 package syntacticTreesGeneration.impl;
 
-import java.util.List;
-
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationalData;
@@ -30,11 +28,6 @@ public class SequenceRelationalDataImpl extends EnumerationRelationalDataImpl im
 	@Override
 	public String getCommonDifference() {
 		return commonDifference;
-	}
-	
-	@Override
-	public void addDimensions(List<String> dimensions) {
-		listOfDimensions.addAll(dimensions);
 	}	
 	
 	private void changeName() {

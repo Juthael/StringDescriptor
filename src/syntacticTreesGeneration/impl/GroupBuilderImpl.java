@@ -1,6 +1,5 @@
 package syntacticTreesGeneration.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.grammar.Group;

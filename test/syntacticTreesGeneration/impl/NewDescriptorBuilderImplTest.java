@@ -56,7 +56,6 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSequence(sequenceRD1);
 		relationDataContainer.addSequence(sequenceRD2);
 		relationDataContainer.addSymmetry(symmetry1);
-		relationDataContainer.cleanValuesRedundancies();
 		INewDescriptorBuilder newDescriptorBuilder = 
 				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsAB);
 		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
@@ -98,7 +97,6 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSequence(sequenceRD2);
 		relationDataContainer.addSymmetry(symmetry1);
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
-		relationDataContainer.cleanValuesRedundancies();
 		INewDescriptorBuilder newDescriptorBuilder = 
 				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
 		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();

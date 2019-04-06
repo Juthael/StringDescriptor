@@ -107,7 +107,10 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 						numberOfRelations <= Settings.MAX_NB_OF_RELATION && 
 						numberOfSimpleEnumerations <= Settings.MAX_NB_OF_SIMPLE_ENUMERATIONS_IN_RELATION) {
 					for (IEnumerationRelationalData enumerationRD : relationDataContainer.getListOfEnumerations()) {
-						numberOfDimensions += enumerationRD.getDimensions().size();
+						numberOfDimensions++;
+						String value = enumerationRD.getEnumerationValue();
+						if (value.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR))
+							numberOfTransformationRelations--;
 					}
 					for (ISequenceRelationalData sequenceRD : relationDataContainer.getListOfSequences()) {
 						numberOfNonConstantSequences++;
@@ -152,7 +155,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 			while (sequenceWasFound == false && sequenceIndex < relationDataContainer.getListOfSequences().size()) {
 				ISequenceRelationalData sequenceRD = 
 						relationDataContainer.getListOfSequences().get(sequenceIndex);
-				if (sequenceRD.getDimensions().equals(enumerationRD.getDimensions()))
+				if (sequenceRD.getDimension().equals(enumerationRD.getDimension()))
 					sequenceWasFound = true;
 				sequenceIndex++;
 			}
@@ -160,7 +163,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 				while (symmetryWasFound == false && symmetryIndex < relationDataContainer.getListOfSymmetries().size()) {
 					ISymmetryRelationalData symmetryRD = 
 							relationDataContainer.getListOfSymmetries().get(symmetryIndex);
-					if (symmetryRD.getDimensions().equals(enumerationRD.getDimensions()))
+					if (symmetryRD.getDimension().equals(enumerationRD.getDimension()))
 							symmetryWasFound = true;
 					symmetryIndex++;
 				}
