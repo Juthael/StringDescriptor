@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.impl.SynTreeIntegrableElementImpl;
+import settings.Settings;
 
 public class AbsCommonDiff extends SynTreeIntegrableElementImpl implements Cloneable {
 
@@ -37,7 +38,7 @@ public class AbsCommonDiff extends SynTreeIntegrableElementImpl implements Clone
 		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
-		sB.append("/");
+		sB.append(Settings.PATH_SEPARATOR);
 		sB.append(absCommonDiffValue);
 		listOfPropertiesWithPath.add(sB.toString());
 		return listOfPropertiesWithPath;

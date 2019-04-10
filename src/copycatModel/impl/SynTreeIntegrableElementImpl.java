@@ -29,7 +29,8 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 			List<String> listOfRelevantComponentPropertiesWithPath = 
 					relevantComponentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfRelevantComponentPropertiesWithPath){
-				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
+				String propertyWithUpdatedPath = 
+						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
 				listOfRelevantPropertiesWithPath.add(propertyWithUpdatedPath);
 			}
 		}
@@ -42,10 +43,10 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 		for (String propertyWithPath : listOfRelevantPropertiesWithPath) {
 			stringBuilder = new StringBuilder();
 			String dimensionToPropertyStringIndex = Integer.toString(dimensionToPropertyIndex);
-			int lastSlashIndex = propertyWithPath.lastIndexOf("/");
+			int lastSlashIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 			String dimension = propertyWithPath.substring(0, lastSlashIndex);
 			stringBuilder.append(dimensionToPropertyStringIndex);
-			stringBuilder.append("_");
+			stringBuilder.append(Settings.PROPERTY_INDEX_SEPARATOR);
 			stringBuilder.append(dimension);
 			indexedDimension = stringBuilder.toString();
 			propertyValue = propertyWithPath.substring(lastSlashIndex + 1);
@@ -69,13 +70,27 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 		for (SynTreeIntegrableElementImpl componentDescriptor : listOfComponents) {
 			List<String> listOfComponentPropertiesWithPath = componentDescriptor.getListOfPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentPropertiesWithPath){
-				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
+				String propertyWithUpdatedPath = 
+						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
 				listOfPropertiesWithPath.add(propertyWithUpdatedPath);
 			}
 		}
 		return listOfPropertiesWithPath;
 	}
 	
+	@Override
+	public List<String> getListOfPropertiesWithPathWithoutQuantifiers() {
+		List<String> listOfPropertiesWithPathWithoutQuantifiers = new ArrayList<String>();
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		for (String property : listOfPropertiesWithPath) {
+			String propertyWithoutQuantifiers = getPropertyWithoutQuantifiers(property);
+			listOfPropertiesWithPathWithoutQuantifiers.add(propertyWithoutQuantifiers);
+		}
+		return listOfPropertiesWithPathWithoutQuantifiers;
+		
+	}
+	
+	@Override
 	public List<String> getListOfRelevantPropertiesWithPath(){
 		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
 		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
@@ -83,7 +98,8 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 			List<String> listOfComponentRelevantPropertiesWithPath = 
 					componentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
-				String propertyWithUpdatedPath = this.getDescriptorName().concat("/" + propertyWithPath);
+				String propertyWithUpdatedPath = 
+						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
 				listOfRelevantPropertiesWithPath.add(propertyWithUpdatedPath);
 			}
 		}
@@ -121,6 +137,21 @@ public abstract class SynTreeIntegrableElementImpl implements Cloneable, ISynTre
 	
 	protected void doUpdatePosition(String newPosition) {
 	}	
+	
+	private String getPropertyWithoutQuantifiers(String property) {
+		String propertyWithoutQuantifiers;
+		String[] propertyArray = property.split(Settings.PATH_SEPARATOR);
+		StringBuilder sB = new StringBuilder();
+		for (int i=0 ; i<propertyArray.length ; i++) {
+			if (!propertyArray[i].contains("X")) {
+				sB.append(propertyArray[i]);
+				if (i < propertyArray.length - 1)
+					sB.append(Settings.PATH_SEPARATOR);
+			}
+		}
+		propertyWithoutQuantifiers = sB.toString();
+		return propertyWithoutQuantifiers;
+	}
 	
 	//Abstract
 	abstract protected List<SynTreeIntegrableElementImpl> buildListOfComponents();	

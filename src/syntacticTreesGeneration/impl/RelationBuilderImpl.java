@@ -41,10 +41,10 @@ public class RelationBuilderImpl implements IRelationBuilder {
 	private static Dimension buildDimension(List<IRelationalData> relationData) 
 			throws SynTreeGenerationException {
 		Dimension dimension;
-		String dimensionValue;
+		String indexedPath;
 		try {
-			dimensionValue = relationData.get(0).getDimension();
-			dimension = new Dimension(false, dimensionValue);
+			indexedPath = relationData.get(0).getIndexedPath();
+			dimension = new Dimension(false, indexedPath);
 		} 
 		catch (Exception e) {
 			throw new SynTreeGenerationException("RelationBuilder : parameter is empty");

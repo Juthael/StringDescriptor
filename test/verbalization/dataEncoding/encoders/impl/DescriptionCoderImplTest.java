@@ -10,6 +10,7 @@ import org.junit.Test;
 import copycatModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
+import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 import verbalization.dataEncoding.encoders.IDescriptionCoder;
@@ -44,7 +45,7 @@ public class DescriptionCoderImplTest {
 		while(propertyIndex < listOfProperties.size() && nbFound == false) {
 			String currentProperty = listOfProperties.get(propertyIndex);
 			if (currentProperty.contains("group/size")){
-				int lastSlashIndex = currentProperty.lastIndexOf("/");
+				int lastSlashIndex = currentProperty.lastIndexOf(Settings.PATH_SEPARATOR);
 				nbOfUnfactorizedGroups = Integer.parseInt(currentProperty.substring(lastSlashIndex + 1));
 				nbFound = true;
 			}

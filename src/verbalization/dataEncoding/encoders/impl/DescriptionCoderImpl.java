@@ -5,11 +5,12 @@ import java.util.List;
 
 import copycatModel.grammar.CharString;
 import exceptions.VerbalizationException;
+import settings.Settings;
 import verbalization.dataEncoding.encoders.IDescriptionCoder;
 import verbalization.dataEncoding.encoders.IRecipeCoder;
 import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
 import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
-import verbalization.dataEncoding.encodingModel.impl.DescriptionCodeGetterImpl;
+import verbalization.dataEncoding.encodingModel.impl.DescriptionCodeGetter;
 
 public class DescriptionCoderImpl implements IDescriptionCoder {
 
@@ -36,7 +37,7 @@ public class DescriptionCoderImpl implements IDescriptionCoder {
 			String groupProperty = property.substring(unfactorizedGroupIndex);
 			if (unfactorizedGroupIndex == 0) {
 				if (groupProperty.contains("direction")) {
-					int lastSlashIndex = groupProperty.lastIndexOf("/");
+					int lastSlashIndex = groupProperty.lastIndexOf(Settings.PATH_SEPARATOR);
 					readingDirection = groupProperty.substring(lastSlashIndex + 1);
 				}
 				else if (groupProperty.contains("group/size")) {
@@ -59,7 +60,7 @@ public class DescriptionCoderImpl implements IDescriptionCoder {
 			IRecipeCodeGetter iRecipeCodeGetter = recipeCoder.getRecipeCodeGetter();
 			listOfRecipeCodeGetters.add(iRecipeCodeGetter);
 		}
-		descriptionCodeGetter = new DescriptionCodeGetterImpl(readingDirection, listOfRecipeCodeGetters);
+		descriptionCodeGetter = new DescriptionCodeGetter(readingDirection, listOfRecipeCodeGetters);
 		return descriptionCodeGetter;
 	}
 

@@ -68,7 +68,7 @@ public class ParameterImpl implements IParameter {
 		String doubleFormatValue;
 		StringBuilder sB = new StringBuilder();
 		sB.append(valueString);
-		sB.append("/");
+		sB.append(Settings.PATH_SEPARATOR);
 		sB.append(getLetterFormatValue(valueString));
 		doubleFormatValue = sB.toString();
 		return doubleFormatValue;
@@ -81,7 +81,7 @@ public class ParameterImpl implements IParameter {
 			aMinusOne = 96;
 		else aMinusOne = 64;
 		StringBuilder sB = new StringBuilder();
-		String[] setOfValuesStringArray = valueString.split(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+		String[] setOfValuesStringArray = valueString.split(Settings.SECOND_DEG_VALUE_SEPARATOR);
 		for (int j=0 ; j<setOfValuesStringArray.length ; j++) {
 			String setOfValues = setOfValuesStringArray[j];
 			String[] valueStringArray = setOfValues.split(",");
@@ -93,7 +93,7 @@ public class ParameterImpl implements IParameter {
 					sB.append(",");
 			}
 			if (j < setOfValuesStringArray.length - 1)
-				sB.append(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+				sB.append(Settings.SECOND_DEG_VALUE_SEPARATOR);
 		}
 		letterValue = sB.toString();
 		return letterValue;
@@ -231,8 +231,8 @@ public class ParameterImpl implements IParameter {
 			case "twoEnumerationEnumerate" :
 			case "manyEnumerationEnumerate" :
 				String separator = "";
-				if (valueStringParameter.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR))
-					separator = Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR;
+				if (valueStringParameter.contains(Settings.SECOND_DEG_VALUE_SEPARATOR))
+					separator = Settings.SECOND_DEG_VALUE_SEPARATOR;
 				else if (valueStringParameter.contains(","))
 					separator = ",";
 				if (!separator.isEmpty()) {
@@ -250,7 +250,7 @@ public class ParameterImpl implements IParameter {
 	
 	private String putAnAndToItIfRelevant(String valueStringParameter) {
 		String valueString;
-		if (!valueStringParameter.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR) && 
+		if (!valueStringParameter.contains(Settings.SECOND_DEG_VALUE_SEPARATOR) && 
 				valueStringParameter.contains(",")) {
 			int lastCommaIndex = valueStringParameter.lastIndexOf(",");
 			String valueStringFirstPart = valueStringParameter.substring(0, lastCommaIndex);

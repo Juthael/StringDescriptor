@@ -48,7 +48,7 @@ public class Position extends SynTreeIntegrableElementImpl implements Cloneable 
 		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
-		sB.append("/");
+		sB.append(Settings.PATH_SEPARATOR);
 		sB.append(positionValue);
 		listOfPropertiesWithPath.add(sB.toString());
 		return listOfPropertiesWithPath;

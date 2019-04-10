@@ -21,6 +21,7 @@ import copycatModel.grammar.GroupX3;
 import copycatModel.grammar.HowManyGroups;
 import copycatModel.grammar.Relation;
 import exceptions.SynTreeGenerationException;
+import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
@@ -36,13 +37,13 @@ public class SynTreeIntegrableElementImplTest {
 		List<String> listOfPropertiesWithPath = relation.getListOfPropertiesWithPath();
 		IPropertyContainer propertyContainer = relation.getpropertyContainer();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
-			int lastSlashIndex = propertyWithPath.lastIndexOf("/");
+			int lastSlashIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 			String currentListDimension = propertyWithPath.substring(0, lastSlashIndex);
 			String currentListValue = propertyWithPath.substring(lastSlashIndex + 1);
 			boolean dimensionFound = false;
 			int containerDimensionIndex = 0;
-			while (dimensionFound == false && containerDimensionIndex < propertyContainer.getListOfDimensions().size()) {
-				String currentContainerDimension = propertyContainer.getListOfDimensions().get(containerDimensionIndex);
+			while (dimensionFound == false && containerDimensionIndex < propertyContainer.getListOfIndexedPaths().size()) {
+				String currentContainerDimension = propertyContainer.getListOfIndexedPaths().get(containerDimensionIndex);
 				if (currentContainerDimension.contains(currentListDimension)) {
 					dimensionFound = true;
 					if (!currentListValue.equals(propertyContainer.getProperty(currentContainerDimension).getValue()))
@@ -76,7 +77,7 @@ public class SynTreeIntegrableElementImplTest {
 		if (groupX3containsPlatonicLetter2 == true) {
 			IPropertyContainer groupX3PropertyContainer = groupX3.getpropertyContainer();
 			Map<String, IProperty> dimensionToProperty = 
-					groupX3PropertyContainer.getDimensionToProperty();
+					groupX3PropertyContainer.getIndexedPathToProperty();
 			for (String dimension : dimensionToProperty.keySet()) {
 				if (dimension.contains("platonicLetter")) {
 					IProperty property = dimensionToProperty.get(dimension);

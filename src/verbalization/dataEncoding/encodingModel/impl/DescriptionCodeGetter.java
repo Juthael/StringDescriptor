@@ -5,12 +5,12 @@ import java.util.List;
 import verbalization.dataEncoding.encodingModel.IDescriptionCodeGetter;
 import verbalization.dataEncoding.encodingModel.IRecipeCodeGetter;
 
-public class DescriptionCodeGetterImpl implements IDescriptionCodeGetter {
+public class DescriptionCodeGetter implements IDescriptionCodeGetter {
 
 	private final String readingDirection;
 	private final List<IRecipeCodeGetter> listOfRecipeCodeGetters;
 	
-	public DescriptionCodeGetterImpl(String readingDirection, List<IRecipeCodeGetter> listOfRecipeCodeGetters) {
+	public DescriptionCodeGetter(String readingDirection, List<IRecipeCodeGetter> listOfRecipeCodeGetters) {
 		this.readingDirection = readingDirection;
 		this.listOfRecipeCodeGetters = listOfRecipeCodeGetters;
 	}

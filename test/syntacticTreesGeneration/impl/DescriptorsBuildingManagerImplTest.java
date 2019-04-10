@@ -120,12 +120,12 @@ public class DescriptorsBuildingManagerImplTest {
 			List<ISynTreeIntegrableElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newDescriptors.addAll(newDescriptorsForThisSet);
 		}
-		// System.out.println("*********GEN2********");
+		/*System.out.println("*********GEN2********"); */
 		for (ISynTreeIntegrableElement newDescriptor : newDescriptors) {
-			/*for (String property : newDescriptor.getListOfPropertiesWithPath()) {
+			/* for (String property : newDescriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
 			}
-			System.out.println("");*/				
+			System.out.println(""); */		
 			boolean thisDescriptorDoesntCoverTheWholeString = 
 					(DescriptorSpanGetterImpl.getDescriptorSpan(newDescriptor).size() != signalABCD.getSignalSize());
 			if (thisDescriptorDoesntCoverTheWholeString == true) {
@@ -134,20 +134,20 @@ public class DescriptorsBuildingManagerImplTest {
 		}
 		componentGrouper = new ComponentGrouperImpl(2, true, signalABCD, factorizableNewDescriptors);
 		Set<List<Group>> newSetsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
-		// System.out.println("*********GEN3********");
+		/* System.out.println("*********GEN3********"); */
 		for (List<Group> setToBeFactorized : newSetsToBeFactorized) {
 			IDescriptorsBuildingManager buildingManager = 
 					new DescriptorsBuildingManagerImpl(signalABCD, 2, setToBeFactorized);
 			List<ISynTreeIntegrableElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newGen3Descriptors.addAll(newDescriptorsForThisSet);
 		}	
-		/* for (AbstractDescriptorInterface descriptor : newGen3Descriptors) {
-			ArrayList<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
-			for (String property : listOfProperties) {
+		for (ISynTreeIntegrableElement descriptor : newGen3Descriptors) {
+			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
+			/* for (String property : listOfProperties) {
 				System.out.println(property);
 			}
-			System.out.println("");
-		} */	
+			System.out.println(""); */
+		} 	
 		newDescriptorsAreBuilt = (!newGen3Descriptors.isEmpty());
 		assertTrue(newDescriptorsAreBuilt);
 	}

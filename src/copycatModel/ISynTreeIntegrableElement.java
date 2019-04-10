@@ -14,4 +14,8 @@ public interface ISynTreeIntegrableElement {
 	
 	List<String> getListOfPropertiesWithPath();
 
+	List<String> getListOfRelevantPropertiesWithPath();
+
+	List<String> getListOfPropertiesWithPathWithoutQuantifiers();
+
 }

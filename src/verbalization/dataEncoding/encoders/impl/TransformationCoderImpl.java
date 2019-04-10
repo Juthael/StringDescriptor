@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.VerbalizationException;
+import settings.Settings;
+import syntacticTreesGeneration.impl.DimensionEncodingManager;
 import verbalization.dataEncoding.encoders.ITransformationCoder;
 import verbalization.dataEncoding.encodingModel.ITransformationCodeGetter;
 import verbalization.dataEncoding.encodingModel.impl.TransformationCodeGetterImpl;
@@ -36,21 +38,21 @@ public class TransformationCoderImpl implements ITransformationCoder{
 			if (relationProperties.get(propertyIndex).contains("/platonicLetter")) {
 				listOfDimensions.add("do");
 				transfoTypeCode = "Effector";
-				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf("/");
+				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
 				parameterCode = relationProperties.get(propertyIndex).substring(lastSlashIndex + 1);
 				continueAnalysis = false;
 			}
 			else if (relationProperties.get(propertyIndex).contains("relation/dimension")) {
-				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf("/");
+				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
 				listOfDimensions.add(relationProperties.get(propertyIndex).substring(lastSlashIndex + 1));
 			}
 			else if (relationProperties.get(propertyIndex).contains("relation/enumeration")) {
-				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf("/");
+				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
 				transfoTypeCode = "Enumerate";
 				parameterCode = relationProperties.get(propertyIndex).substring(lastSlashIndex + 1);
 			}
 			else if (relationProperties.get(propertyIndex).contains("sequence/commonDiff")) {
-				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf("/");
+				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
 				parameterCode = relationProperties.get(propertyIndex).substring(lastSlashIndex + 1);
 				int commonDiffValue = Integer.parseInt(parameterCode);
 				if (commonDiffValue < 0)
@@ -72,15 +74,9 @@ public class TransformationCoderImpl implements ITransformationCoder{
 		String zeroOneTwoMany = getNbOfComponentsString();
 		List<String> listOfDimensionCodes = new ArrayList<String>();
 		for (String dimension : listOfDimensions) {
+			String dimensionType = DimensionEncodingManager.getDimensionTypeFromCode(dimension);
 			String subCode = getSubString(dimension);
 			String dimensionTypeCode;
-			int lastDotIndex = dimension.lastIndexOf(".");
-			int lastColonIndex = dimension.lastIndexOf(":");
-			int firstDimensionTypeIndex;
-			if (lastDotIndex < lastColonIndex)
-				firstDimensionTypeIndex = lastColonIndex + 1;
-			else firstDimensionTypeIndex = lastDotIndex + 1;
-			String dimensionType = dimension.substring(firstDimensionTypeIndex);
 			switch (dimensionType) {
 				case ("size") :
 					dimensionTypeCode = "Size";
@@ -115,15 +111,14 @@ public class TransformationCoderImpl implements ITransformationCoder{
 	}
 	
 	private String getSubString(String dimension) {
-		String sub = "";
-		int numberOfSubs;
-		if (dimension.indexOf(":") == -1)
-			numberOfSubs = 0;
-		else numberOfSubs = dimension.indexOf(":") - dimension.lastIndexOf(":") + 1;
-		for (int i=0 ; i<numberOfSubs ; i++) {
-			sub = sub.concat("Sub");
-		}
-		return sub;
+		String subString = "";
+		StringBuilder sB = new StringBuilder();
+		int dimensionDegree = DimensionEncodingManager.getDimensionDegree(dimension);
+		for (int i=0 ; i<dimensionDegree ; i++)
+			sB.append("Sub");
+		if (sB.length() > 0)
+			subString = sB.toString();
+		return subString;
 	}
 	
 	private String getNbOfComponentsString() throws VerbalizationException {

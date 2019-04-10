@@ -109,7 +109,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 					for (IEnumerationRelationalData enumerationRD : relationDataContainer.getListOfEnumerations()) {
 						numberOfDimensions++;
 						String value = enumerationRD.getEnumerationValue();
-						if (value.contains(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR))
+						if (value.contains(Settings.SECOND_DEG_VALUE_SEPARATOR))
 							numberOfTransformationRelations--;
 					}
 					for (ISequenceRelationalData sequenceRD : relationDataContainer.getListOfSequences()) {
@@ -155,7 +155,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 			while (sequenceWasFound == false && sequenceIndex < relationDataContainer.getListOfSequences().size()) {
 				ISequenceRelationalData sequenceRD = 
 						relationDataContainer.getListOfSequences().get(sequenceIndex);
-				if (sequenceRD.getDimension().equals(enumerationRD.getDimension()))
+				if (sequenceRD.getIndexedPath().equals(enumerationRD.getIndexedPath()))
 					sequenceWasFound = true;
 				sequenceIndex++;
 			}
@@ -163,7 +163,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 				while (symmetryWasFound == false && symmetryIndex < relationDataContainer.getListOfSymmetries().size()) {
 					ISymmetryRelationalData symmetryRD = 
 							relationDataContainer.getListOfSymmetries().get(symmetryIndex);
-					if (symmetryRD.getDimension().equals(enumerationRD.getDimension()))
+					if (symmetryRD.getIndexedPath().equals(enumerationRD.getIndexedPath()))
 							symmetryWasFound = true;
 					symmetryIndex++;
 				}

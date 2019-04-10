@@ -27,16 +27,18 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 		if (this.wholeStringIsDescribed == true) {
 			boolean thereAreTwoValuesOfIdenticalSize = testIfThereAreTwoValuesOfIdenticalSize();
 			if (thereAreTwoValuesOfIdenticalSize == true) {
-				String dimensionLastValue = getDimensionLastValue();
-				if (dimensionLastValue.equals("enumeration") || dimensionLastValue.equals("size") || 
-						dimensionLastValue.equals("platonicLetter")) {
+				String dimensionType = DimensionEncodingManager.getDimensionTypeFromCode(dimension);
+				if (dimensionType.equals("enumeration") || dimensionType.equals("size") || 
+						dimensionType.equals("platonicLetter")) {
 					symmetryWithNoCenterWasFound = testIfEnumerationValuesOrderIsReversed();
 				}
-				else if (dimensionLastValue.equals("commonDiff")) {
+				else if (dimensionType.equals("commonDiff")) {
 					symmetryWithNoCenterWasFound = testIfCommonDiffValuesAreOpposite();
 				}
-				else throw new SynTreeGenerationException(
+				else {
+					throw new SynTreeGenerationException(
 						"SymmetryWithNoCentralElementChecker : unexpected dimension");
+				}
 			}
 		}
 	}
@@ -67,13 +69,6 @@ public class SymmetryWithNoCentralElementCheckerImpl implements ISymmetryWithNoC
 				thereAreTwoValuesOfIdenticalSize = true;
 		}
 		return thereAreTwoValuesOfIdenticalSize;
-	}
-	
-	private String getDimensionLastValue() {
-		String dimensionLastValue;
-		String[] dimensionArray = dimension.split("/");
-		dimensionLastValue = dimensionArray[dimensionArray.length-1];
-		return dimensionLastValue;
 	}
 	
 	private boolean testIfEnumerationValuesOrderIsReversed() {

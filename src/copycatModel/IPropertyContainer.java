@@ -8,10 +8,12 @@ import exceptions.SynTreeGenerationException;
 public interface IPropertyContainer {
 
 	//Getter
-	Map<String, IProperty> getDimensionToProperty();
+	Map<String, IProperty> getIndexedPathToProperty();
 	
-	List<String> getListOfDimensions();	
+	List<String> getListOfIndexedPaths();	
 	
-	IProperty getProperty(String dimension) throws SynTreeGenerationException;	
+	List<String> getOrderedListOfIndexedPaths();	
+	
+	IProperty getProperty(String dimension) throws SynTreeGenerationException;
 	
 }

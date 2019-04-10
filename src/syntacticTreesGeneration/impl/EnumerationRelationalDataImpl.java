@@ -19,7 +19,7 @@ public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerat
 	}
 	
 	public EnumerationRelationalDataImpl(IEnumerationRelationalData enumerationRelationalData) {
-		dimension = enumerationRelationalData.getDimension();
+		dimension = enumerationRelationalData.getIndexedPath();
 		enumerationValue = enumerationRelationalData.getEnumerationValue();
 	}	
 
@@ -29,7 +29,7 @@ public class EnumerationRelationalDataImpl implements IRelationalData, IEnumerat
 	}
 
 	@Override
-	public String getDimension() {
+	public String getIndexedPath() {
 		return dimension;
 	}
 

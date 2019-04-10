@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.VerbalizationException;
+import settings.Settings;
 import verbalization.dataEncoding.encoders.IInstructionCoder;
 import verbalization.dataEncoding.encoders.IRecipeCoder;
 import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
@@ -50,7 +51,7 @@ public class RecipeCoderImpl implements IRecipeCoder {
 			}
 			else if (currentProperty.contains("group/size")) {
 				if (propertyIndex == 0) {
-					int lastSlashIndex = currentProperty.lastIndexOf("/");
+					int lastSlashIndex = currentProperty.lastIndexOf(Settings.PATH_SEPARATOR);
 					nbOfComponents = currentProperty.substring(lastSlashIndex + 1);
 				}
 				else {

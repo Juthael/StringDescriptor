@@ -257,7 +257,7 @@ public class ComponentGrouperImpl implements IComponentGrouper {
 		List<String> listOfPropertiesWithPath = group.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			if (propertyWithPath.contains("letter/position")){
-				int lastSlashIndex = propertyWithPath.lastIndexOf("/");
+				int lastSlashIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 				String positionValue = propertyWithPath.substring(lastSlashIndex + 1);
 				listOfPositions.add(positionValue);
 			}

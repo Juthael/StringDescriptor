@@ -1,5 +1,6 @@
 package copycatModel.grammar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.impl.SynTreeIntegrableElementImpl;
@@ -18,5 +19,15 @@ public abstract class HowManyDimensions extends SynTreeIntegrableElementImpl imp
 	
 	@Override
 	abstract protected HowManyDimensions clone()  throws CloneNotSupportedException;
+	
+	@Override
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeIntegrableElementImpl componentDescriptor : listOfRelevantComponents) {
+			listOfRelevantPropertiesWithPath.addAll(componentDescriptor.getListOfRelevantPropertiesWithPath());
+		}
+		return listOfRelevantPropertiesWithPath;
+	}	
 
 }

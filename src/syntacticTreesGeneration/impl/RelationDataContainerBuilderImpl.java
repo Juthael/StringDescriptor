@@ -11,6 +11,7 @@ import copycatModel.IPropertyContainer;
 import copycatModel.ISignal;
 import copycatModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -42,91 +43,98 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 			boolean wholeStringIsDescribed = 
 					DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOfAbstractDescriptors);
 			relationDataContainer.setNewDescriptorWillCoverTheWholeString(wholeStringIsDescribed);
-			boolean descriptorsShareTheSameSetOfDimensions = testIfDescriptorsShareTheSameSetOfDimensions();
-			if (descriptorsShareTheSameSetOfDimensions == true) {
-				List<String> listOfDimensions = 
-						new ArrayList<String>(listOfDescriptors.get(0).getpropertyContainer().getDimensionToProperty().keySet());
-				boolean subComponentsAnalyzeCreatesNoRedundance = true;
+			boolean descriptorsShareTheSameSetOfPaths = testIfDescriptorsShareTheSameSetOfPaths();
+			if (descriptorsShareTheSameSetOfPaths == true) {
+				List<String> orderedListOfIndexedPaths = listOfPropertyContainers.get(0).getOrderedListOfIndexedPaths();
 				boolean componentsAreRelated = true;
 				boolean containerHasToBeCleanedOfSubDimensionRelations = false;
-				int dimensionIndex = 0;
-				while (componentsAreRelated == true && dimensionIndex < listOfDimensions.size()) {
-					String dimension = listOfDimensions.get(dimensionIndex);
-					if (subComponentsAnalyzeCreatesNoRedundance == true || !dimension.contains("groups")) {
-						List<String> listsOfValues;
-						int dimensionLastWordIndex = dimension.lastIndexOf("/") + 1;
-						String dimensionLastWord = dimension.substring(dimensionLastWordIndex);
-						switch (dimensionLastWord) {
-							case "direction" :
-								listsOfValues = getlistsOfValuesForThisDimension(dimension);
-								boolean valuesAreIdentical = testIfValuesAreIdentical(listsOfValues);
-								if (valuesAreIdentical == false)
-									componentsAreRelated = false;
+				int pathIndex = 0;
+				Set<Integer> setOfCheckedIndexes = new HashSet<Integer>();
+				while (componentsAreRelated == true && pathIndex < orderedListOfIndexedPaths.size()) {
+					String indexedPath = orderedListOfIndexedPaths.get(pathIndex);
+					List<String> listsOfValues;
+					int pathLastWordIndex = indexedPath.lastIndexOf(Settings.PATH_SEPARATOR) + 1;
+					String pathLastWord = indexedPath.substring(pathLastWordIndex);
+					switch (pathLastWord) {
+						case "direction" :
+							listsOfValues = getListsOfValuesForThisPath(indexedPath);
+							boolean valuesAreIdentical = testIfValuesAreIdentical(listsOfValues);
+							if (valuesAreIdentical == false)
+								componentsAreRelated = false;
+							break;
+						case "size" :
+							if (testIfThisIsAGroupsSizeCreatingRedundance(indexedPath) == true){
 								break;
-							case "size" :
-								if (testIfThisIsAGroupsSizeCreatingRedundance(dimension) == true){
-									break;
+							}
+							else {};
+						case "platonicLetter" :
+						case "commonDiff" :
+						case "enumeration" :
+							List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
+							for (Group group : listOfDescriptors) {
+								listOfPropertyLists.add(group.getListOfPropertiesWithPathWithoutQuantifiers());
+							}
+							listsOfValues = getListsOfValuesForThisPath(indexedPath);
+							DimensionEncodingManager dimensionEncodingManager = 
+									new DimensionEncodingManager(setOfCheckedIndexes);
+							String dimension = 
+									dimensionEncodingManager.getDimension(listOfPropertyLists, 
+											indexedPath, listsOfValues);
+							setOfCheckedIndexes.addAll(dimensionEncodingManager.getSetOfCheckedIndexes());
+							IEnumerationChecker enumerationChecker = 
+									new EnumerationCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues);
+							boolean simpleEnumerationWasFound = enumerationChecker.getSimpleEnumerationWasFound();
+							boolean secondDegreeEnumerationWasFound = 
+									enumerationChecker.getSecondDegreeEnumerationWasFound();
+							if (simpleEnumerationWasFound == true) {
+								IEnumerationRelationalData enumerationRelationalData = 
+										enumerationChecker.getEnumerationRelationalData();
+								relationDataContainer.addEnumeration(enumerationRelationalData);
+								ISequenceChecker sequenceChecker = 
+										new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+												enumerationRelationalData);
+								boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
+								if (sequenceWasFound == true) {
+									relationDataContainer.addSequence(sequenceChecker.getSequenceRelationalData());
 								}
-								else {};
-							case "platonicLetter" :
-							case "commonDiff" :
-							case "enumeration" :
-								listsOfValues = getlistsOfValuesForThisDimension(dimension);
-								IEnumerationChecker enumerationChecker = 
-										new EnumerationCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues);
-								boolean simpleEnumerationWasFound = enumerationChecker.getSimpleEnumerationWasFound();
-								boolean secondDegreeEnumerationWasFound = 
-										enumerationChecker.getSecondDegreeEnumerationWasFound();
-								if (simpleEnumerationWasFound == true) {
-									IEnumerationRelationalData enumerationRelationalData = 
-											enumerationChecker.getEnumerationRelationalData();
-									relationDataContainer.addEnumeration(enumerationRelationalData);
-									ISequenceChecker sequenceChecker = 
-											new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-													enumerationRelationalData);
-									boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
-									if (sequenceWasFound == true) {
-										relationDataContainer.addSequence(sequenceChecker.getSequenceRelationalData());
-									}
-									ISymmetryChecker symmetryChecker = 
-											new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-													enumerationRelationalData);
-									boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
+								ISymmetryChecker symmetryChecker = 
+										new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+												enumerationRelationalData);
+								boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
+								if (symmetryWasFound == true) {
+									relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
+								}
+							}
+							else if (secondDegreeEnumerationWasFound == true) {
+								IEnumerationRelationalData enumerationRelationalData = 
+										enumerationChecker.getEnumerationRelationalData();
+								ISequenceChecker sequenceChecker = 
+										new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+												enumerationRelationalData);
+								ISymmetryChecker symmetryChecker = 
+										new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+												enumerationRelationalData);
+								boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
+								boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
+								if (sequenceWasFound == false && symmetryWasFound == false)
+									componentsAreRelated = false;
+								else {
 									if (symmetryWasFound == true) {
+										relationDataContainer.addEnumeration(enumerationRelationalData);
 										relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
 									}
 								}
-								else if (secondDegreeEnumerationWasFound == true) {
-									IEnumerationRelationalData enumerationRelationalData = 
-											enumerationChecker.getEnumerationRelationalData();
-									ISequenceChecker sequenceChecker = 
-											new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-													enumerationRelationalData);
-									ISymmetryChecker symmetryChecker = 
-											new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-													enumerationRelationalData);
-									boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
-									boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
-									if (sequenceWasFound == false && symmetryWasFound == false)
-										componentsAreRelated = false;
-									else {
-										if (symmetryWasFound == true) {
-											relationDataContainer.addEnumeration(enumerationRelationalData);
-											relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
-										}
-									}
-								}
-								else componentsAreRelated = false;
-								break;
-							case "symmetry" :
-							case "position" :
-							case "absCommonDiff" :
-							case "dimension" :
-							default : 
-								break;
-						}
+							}
+							else componentsAreRelated = false;
+							break;
+						case "symmetry" :
+						case "position" :
+						case "absCommonDiff" :
+						case "dimension" :
+						default : 
+							break;
 					}
-					dimensionIndex++;
+					pathIndex++;
 				}
 				if (componentsAreRelated == false)
 					relationDataContainer.clear();
@@ -141,33 +149,33 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 		return relationDataContainer;
 	}
 	
-	private boolean testIfDescriptorsShareTheSameSetOfDimensions() {
-		boolean descriptorsShareTheSameSetOfDimensions = true;
-		Set<String> firstDescriptorSetOfDimensions = 
-				new HashSet<String>(listOfDescriptors.get(0).getpropertyContainer().getDimensionToProperty().keySet());
+	private boolean testIfDescriptorsShareTheSameSetOfPaths() {
+		boolean descriptorsShareTheSameSetOfPaths = true;
+		Set<String> firstDescriptorSetOfPaths = 
+				new HashSet<String>(listOfDescriptors.get(0).getpropertyContainer().getIndexedPathToProperty().keySet());
 		int descriptorIndex = 1;
-		while (descriptorsShareTheSameSetOfDimensions == true && descriptorIndex < listOfDescriptors.size()) {
-			Set<String> iDescriptorSetOfDimensions = 
+		while (descriptorsShareTheSameSetOfPaths == true && descriptorIndex < listOfDescriptors.size()) {
+			Set<String> iDescriptorSetOfPaths = 
 					new HashSet<String>(
 							listOfDescriptors.get(
-									descriptorIndex).getpropertyContainer().getDimensionToProperty().keySet());
-			if (!iDescriptorSetOfDimensions.equals(firstDescriptorSetOfDimensions))
-				descriptorsShareTheSameSetOfDimensions = false;
+									descriptorIndex).getpropertyContainer().getIndexedPathToProperty().keySet());
+			if (!iDescriptorSetOfPaths.equals(firstDescriptorSetOfPaths))
+				descriptorsShareTheSameSetOfPaths = false;
 			descriptorIndex++;
 		}
-		return descriptorsShareTheSameSetOfDimensions;
+		return descriptorsShareTheSameSetOfPaths;
 		
 	}
 	
-	private List<String> getlistsOfValuesForThisDimension(String dimension) 
+	private List<String> getListsOfValuesForThisPath(String dimension) 
 			throws SynTreeGenerationException{
-		List<String> listsOfValuesForThisDimension = new ArrayList<String>();
+		List<String> listsOfValuesForThisPath = new ArrayList<String>();
 		for (IPropertyContainer propertyContainer : listOfPropertyContainers) {
 			IProperty property = 
 					propertyContainer.getProperty(dimension);
-			listsOfValuesForThisDimension.add(property.getValue());
+			listsOfValuesForThisPath.add(property.getValue());
 		}
-		return listsOfValuesForThisDimension;
+		return listsOfValuesForThisPath;
 	}
 	
 	private boolean testIfValuesAreIdentical(List<String> listOfValues) 

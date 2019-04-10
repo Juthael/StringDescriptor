@@ -124,7 +124,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			String currentPropertyWithPath = listOfPropertiesWithPath.get(propertyIndex);
 			if (currentPropertyWithPath.contains("letter/position")) {
 				letterPositionWasFound = true;
-				int lastSlashIndex = currentPropertyWithPath.lastIndexOf("/");
+				int lastSlashIndex = currentPropertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 				gen1LetterPositionValue = currentPropertyWithPath.substring(lastSlashIndex + 1);
 			}
 			else propertyIndex++;
@@ -150,7 +150,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			String currentPropertyWithPath = listOfPropertiesWithPath.get(propertyIndex);
 			if (currentPropertyWithPath.contains("letter/position")) {
 				letterPositionWasFound = true;
-				int lastSlashIndex = currentPropertyWithPath.lastIndexOf("/");
+				int lastSlashIndex = currentPropertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 				gen1LetterPositionValue = currentPropertyWithPath.substring(lastSlashIndex + 1);
 			}
 			else propertyIndex++;
@@ -175,7 +175,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			String currentPropertyWithPath = listOfPropertiesWithPath.get(propertyIndex);
 			if (currentPropertyWithPath.contains("letter/position")) {
 				letterPositionWasFound = true;
-				int lastSlashIndex = currentPropertyWithPath.lastIndexOf("/");
+				int lastSlashIndex = currentPropertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 				gen1LetterPositionValue = currentPropertyWithPath.substring(lastSlashIndex + 1);
 			}
 			else propertyIndex++;
@@ -196,23 +196,23 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 	
 	private EnumerationRelationalDataImpl buildLetterEnumerationRelationalData() throws SynTreeGenerationException {
 		EnumerationRelationalDataImpl letterEnumerationRelationalData;
-		String dimension = "";
-		String enumerationValue="";
-		Map<String, IProperty> dimensionToProperty = gen1Descriptor.getpropertyContainer().getDimensionToProperty();
-		List<String> listOfDimensions = new ArrayList<String>(dimensionToProperty.keySet());
-		boolean dimensionWasFound = false;
+		String indexedPath = "";
+		String enumerationValue= "";
+		Map<String, IProperty> indexedPathToProperty = gen1Descriptor.getpropertyContainer().getIndexedPathToProperty();
+		List<String> listOfIndexedPaths = new ArrayList<String>(indexedPathToProperty.keySet());
+		boolean indexedPathWasFound = false;
 		int keyIndex = 0;
-		while (keyIndex < listOfDimensions.size() && dimensionWasFound == false) {
-			String currentDimension = listOfDimensions.get(keyIndex);
-			if (currentDimension.contains("platonicLetter")){
-				dimension = currentDimension;
-				enumerationValue = dimensionToProperty.get(currentDimension).getValue();
-				dimensionWasFound = true;
+		while (keyIndex < listOfIndexedPaths.size() && indexedPathWasFound == false) {
+			String currentIndexedPath = listOfIndexedPaths.get(keyIndex);
+			if (currentIndexedPath.contains("platonicLetter")){
+				indexedPath = currentIndexedPath;
+				enumerationValue = indexedPathToProperty.get(currentIndexedPath).getValue();
+				indexedPathWasFound = true;
 			}
 			else keyIndex++;
 		}
 		if (!enumerationValue.isEmpty()) {
-			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
+			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(indexedPath, enumerationValue);
 			return letterEnumerationRelationalData;
 		}
 		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
@@ -220,21 +220,21 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 	
 	private EnumerationRelationalDataImpl buildSizeEnumerationRelationalData() throws SynTreeGenerationException {
 		EnumerationRelationalDataImpl sizeEnumerationRelationalData;
-		String dimension = "";
+		String indexedPath = "";
 		String enumerationValue = "1";
-		List<String> listOfDimensions = gen1Descriptor.getpropertyContainer().getListOfDimensions();
-		boolean dimensionWasFound = false;
+		List<String> listOfIndexedPaths = gen1Descriptor.getpropertyContainer().getListOfIndexedPaths();
+		boolean indexedPathWasFound = false;
 		int keyIndex = 0;
-		while (keyIndex < listOfDimensions.size() && dimensionWasFound == false) {
-			String currentDimension = listOfDimensions.get(keyIndex);
-			if (currentDimension.contains("size")){
-				dimension = currentDimension;
-				dimensionWasFound = true;
+		while (keyIndex < listOfIndexedPaths.size() && indexedPathWasFound == false) {
+			String currentIndexedPath = listOfIndexedPaths.get(keyIndex);
+			if (currentIndexedPath.contains("size")){
+				indexedPath = currentIndexedPath;
+				indexedPathWasFound = true;
 			}
 			else keyIndex++;
 		}
-		if (dimensionWasFound == true) {
-			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(dimension, enumerationValue);
+		if (indexedPathWasFound == true) {
+			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(indexedPath, enumerationValue);
 			return sizeEnumerationRelationalData;
 		}
 		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Size value was not found.");			
@@ -244,10 +244,10 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			IEnumerationRelationalData letterEnumerationRelationalData, 
 			int incrementValue) throws SynTreeGenerationException {
 		ISequenceRelationalData letterSequenceRelationalData;
-		String dimensionValue = letterEnumerationRelationalData.getDimension();
+		String indexedPath = letterEnumerationRelationalData.getIndexedPath();
 		String enumerationValue = letterEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		letterSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);
+		letterSequenceRelationalData = new SequenceRelationalDataImpl(indexedPath, enumerationValue, commonDifference);
 		return letterSequenceRelationalData;		
 	}
 	
@@ -255,10 +255,10 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			IEnumerationRelationalData sizeEnumerationRelationalData) throws SynTreeGenerationException {
 		int incrementValue = 0;
 		ISequenceRelationalData sizeSequenceRelationalData;
-		String dimensionValue = sizeEnumerationRelationalData.getDimension();
+		String indexedPath = sizeEnumerationRelationalData.getIndexedPath();
 		String enumerationValue = sizeEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		sizeSequenceRelationalData = new SequenceRelationalDataImpl(dimensionValue, enumerationValue, commonDifference);
+		sizeSequenceRelationalData = new SequenceRelationalDataImpl(indexedPath, enumerationValue, commonDifference);
 		return sizeSequenceRelationalData;		
 	}
 	

@@ -74,8 +74,7 @@ public class RelationalDescriptorsBuilderImplTest {
 		if (Settings.USE_LOWERCASE_LETTER)
 			overSizedParameter = lowerCaseString;
 		else overSizedParameter = upperCaseString;
-		parameter = overSizedParameter.substring(0, Settings.MAX_NB_OF_CHARS_IN_STRING);
-		parameter = "abcd"; //
+		parameter = overSizedParameter.substring(0, Settings.MAX_NB_OF_CHARS_IN_STRING - 1);
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(parameter, "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		start = System.currentTimeMillis();

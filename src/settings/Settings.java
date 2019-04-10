@@ -10,7 +10,10 @@ public class Settings {
 	public static final boolean FULL_STRING_GROUP = true;
 	public static final String CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP = "1";
 	public static final String IRRELEVANT_VALUE = "irrelevant";
-	public static final String SECOND_DEGREE_ENUMERATION_SEPARATOR = ":";
+	public static final String PATH_SEPARATOR = "/";
+	public static final String SECOND_DEG_VALUE_SEPARATOR = ":";
+	public static final String SECOND_DEG_DIMENSION_SEPARATOR = ">";
+	public static final String PROPERTY_INDEX_SEPARATOR = "_";
 	public static final boolean LIST_OF_GROUPS_COVER_THE_FULL_STRING = true;	
 	public static final boolean TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE = true;
 	

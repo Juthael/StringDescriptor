@@ -19,9 +19,9 @@ public class SymmetryCheckerImplTest {
 	
 	private boolean wholeStringIsCovered_true = true;
 	private boolean wholeStringIsCovered_false = false;
-	private String dimensionEnumeration = "dontCare/enumeration";
-	private String dimensionPlatonicLetter = "dontCare/platonicLetter";
-	private String dimensionCommonDiff = "dontCare/commonDiff";
+	private String dimensionEnumeration = "dontCare.enumeration";
+	private String dimensionPlatonicLetter = "dontCare.platonicLetter";
+	private String dimensionCommonDiff = "dontCare.commonDiff";
 	private String illegalDimension = "dontCare";
 	private List<String> listOfReversedValues = new ArrayList<String>(
 			Arrays.asList("1,2,3","3,2,1"));

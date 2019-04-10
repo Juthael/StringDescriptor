@@ -26,8 +26,8 @@ public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentr
 		this.enumerationRelationalData = enumerationRelationalData;
 		symmetryWithCentralElementWasFound = true;
 		if (this.wholeStringIsDescribed == true && this.values.size() == 3) {
-			String dimensionLastValue = getDimensionLastValue();
-			if (dimensionLastValue.equals("commonDiff")) {
+			String dimensionType = DimensionEncodingManager.getDimensionTypeFromCode(dimension);
+			if (dimensionType.equals("commonDiff")) {
 				String centerValue = this.values.get(1);
 				String[] centerSubValues = centerValue.split(",");
 				for (String subValue : centerSubValues) {
@@ -45,8 +45,8 @@ public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentr
 						symmetryWithCentralElementWasFound = false;					
 				}
 			}
-			else if (dimensionLastValue.equals("enumeration") || dimensionLastValue.equals("size") || 
-					dimensionLastValue.equals("platonicLetter")) {
+			else if (dimensionType.equals("enumeration") || dimensionType.equals("size") || 
+					dimensionType.equals("platonicLetter")) {
 				boolean centralElementIsMadeOfIdenticalValues = 
 						testIfCentralElementIsMadeOfIdenticalValues(this.values.get(1));
 				if (centralElementIsMadeOfIdenticalValues == true) {
@@ -81,13 +81,6 @@ public class SymmetryWithCentralElementCheckerImpl implements ISymmetryWithCentr
 		}
 		else throw new SynTreeGenerationException("SymmetryWithCentralElementChecker : "
 				+ "can't get a symmetry that wasn't found.");
-	}
-	
-	private String getDimensionLastValue() {
-		String dimensionLastValue;
-		String[] dimensionArray = dimension.split("/");
-		dimensionLastValue = dimensionArray[dimensionArray.length-1];
-		return dimensionLastValue;
 	}	
 	
 	private boolean testIfCentralElementIsMadeOfIdenticalValues(String centralValue) {

@@ -7,6 +7,7 @@ import java.util.List;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.impl.SynTreeIntegrableElementImpl;
 import exceptions.SynTreeGenerationException;
+import settings.Settings;
 
 public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrableElement {
 
@@ -60,5 +61,21 @@ public class Group extends HowManyGroups implements Cloneable, ISynTreeIntegrabl
 	public String getDescriptorName() {
 		return descriptorName;
 	}
+	
+	@Override
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeIntegrableElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeIntegrableElementImpl componentDescriptor : listOfRelevantComponents) {
+			List<String> listOfComponentRelevantPropertiesWithPath = 
+					componentDescriptor.getListOfRelevantPropertiesWithPath();
+			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
+				String propertyWithUpdatedPath = 
+						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
+				listOfRelevantPropertiesWithPath.add(propertyWithUpdatedPath);
+			}
+		}
+		return listOfRelevantPropertiesWithPath;
+	}	
 
 }

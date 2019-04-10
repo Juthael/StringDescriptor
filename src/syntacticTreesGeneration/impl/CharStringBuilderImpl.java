@@ -60,7 +60,7 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	
 	private Relation getStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
-		String dimension = "charString/groups/group/size";
+		String dimension = "charString.groups.group.size";
 		List<String> listOfSizeValues = new ArrayList<String>();
 		for(Group group : listOfGroups) {
 			List<Integer> currentGroupLetterPositions = DescriptorSpanGetterImpl.getDescriptorSpan(group);

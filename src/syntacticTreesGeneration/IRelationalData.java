@@ -4,7 +4,7 @@ public interface IRelationalData {
 	
 	public String getName();
 	
-	public String getDimension();
+	public String getIndexedPath();
 	
 	public String getEnumerationValue();
 

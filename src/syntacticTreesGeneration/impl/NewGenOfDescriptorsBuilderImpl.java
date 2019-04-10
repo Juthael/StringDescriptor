@@ -61,7 +61,7 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 			while (atLeastOneComponentIsFromTheLastGeneration == false && 
 					propertyIndex < currentComponentListOfProperties.size()) {
 				String currentProperty = currentComponentListOfProperties.get(propertyIndex);
-				String[] currentPropertyArray = currentProperty.split("/");
+				String[] currentPropertyArray = currentProperty.split(Settings.PATH_SEPARATOR);
 				int currentComponentGenerationNumber = 0;
 				for (String pathElement : currentPropertyArray) {
 					if (pathElement.equals("group"))

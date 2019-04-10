@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import copycatModel.impl.SynTreeIntegrableElementImpl;
+import settings.Settings;
+import syntacticTreesGeneration.impl.DimensionEncodingManager;
 
 public class Dimension extends HowManyDimensions implements Cloneable {
 
 	private static final String descriptorName = "dimension";
-	private String dimensionValue;
+	private String indexedPath;
 	
-	public Dimension(boolean codingDescriptor, String dimensionValue) {
+	public Dimension(boolean codingDescriptor, String indexedPath) {
 		super(codingDescriptor);
-		this.dimensionValue = codeDimensionValue(dimensionValue);
+		this.indexedPath = getDimensionCode(indexedPath);
 	}
 	
 	@Override
 	protected Dimension clone() throws CloneNotSupportedException {
-		Dimension cloneDimension = new Dimension(isCodingDescriptor, dimensionValue);
+		Dimension cloneDimension = new Dimension(isCodingDescriptor, indexedPath);
 		return cloneDimension;
 	}
 
@@ -37,8 +39,8 @@ public class Dimension extends HowManyDimensions implements Cloneable {
 		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		StringBuilder sB = new StringBuilder();
 		sB.append(descriptorName);
-		sB.append("/");
-		sB.append(dimensionValue);
+		sB.append(Settings.PATH_SEPARATOR);
+		sB.append(indexedPath);
 		listOfPropertiesWithPath.add(sB.toString());
 		return listOfPropertiesWithPath;
 	}
@@ -48,28 +50,8 @@ public class Dimension extends HowManyDimensions implements Cloneable {
 		return getListOfPropertiesWithPath();
 	}		
 	
-	private String codeDimensionValue(String fullDimensionValue) {
-		String codedDimension;
-		String[] dimensionArray = fullDimensionValue.split("/");
-		StringBuilder codedDimensionValueBuilder = new StringBuilder();
-		int lastGroupsIndex = 0;
-		for (int i=0 ; i<(dimensionArray.length-1) ; i++) {
-			if (dimensionArray[i].equals("groups"))
-				lastGroupsIndex = i;
-		}
-		for (int i=0 ; i<(dimensionArray.length-1) ; i++) {
-			if (dimensionArray[i].equals("groups")) {
-				codedDimensionValueBuilder.append(":");
-			}
-			if (i > lastGroupsIndex) {
-				if (!dimensionArray[i].contains("X")) {
-					codedDimensionValueBuilder.append(dimensionArray[i]);
-					codedDimensionValueBuilder.append(".");
-				}
-			}
-		}		
-		codedDimensionValueBuilder.append(dimensionArray[dimensionArray.length-1]);
-		codedDimension = codedDimensionValueBuilder.toString();		
+	private String getDimensionCode(String fullDimensionValue) {
+		String codedDimension = DimensionEncodingManager.getDimensionCodeFromIndexedPath(fullDimensionValue);
 		return codedDimension;
 	}
 

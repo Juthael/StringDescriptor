@@ -8,6 +8,7 @@ import java.util.Set;
 import copycatModel.ISynTreeIntegrableElement;
 import copycatModel.ISignal;
 import exceptions.SynTreeGenerationException;
+import settings.Settings;
 import syntacticTreesGeneration.IDescriptorSpanGetter;
 
 public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
@@ -18,7 +19,7 @@ public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 		List<String> listOfPropertiesWithPath = synTreeIntegrableElement.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			if (propertyWithPath.contains("letter/position")) {
-				int lastSlashIndex = propertyWithPath.lastIndexOf("/");
+				int lastSlashIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 				String letterPositionString = propertyWithPath.substring(lastSlashIndex + 1);
 				Integer letterPosition = Integer.parseInt(letterPositionString);
 				listOfLetterPositionsOccupied.add(letterPosition);

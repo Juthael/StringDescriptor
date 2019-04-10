@@ -6,7 +6,7 @@ public interface IProperty {
 	String getValue();
 
 	//Updater
-	public void updatePosition(String newPosition);
+	void updatePosition(String newPosition);
 	
 	IProperty clone() throws CloneNotSupportedException;
 

@@ -42,7 +42,7 @@ public class EnumerationCheckerImpl implements IEnumerationChecker {
 						for (int i=0 ; i<this.values.size() ; i++) {
 							sB.append(this.values.get(i));
 							if (i < this.values.size()-1) {
-								sB.append(Settings.SECOND_DEGREE_ENUMERATION_SEPARATOR);
+								sB.append(Settings.SECOND_DEG_VALUE_SEPARATOR);
 							}
 						}
 						secondDegreeEnumerationWasFound = true;
