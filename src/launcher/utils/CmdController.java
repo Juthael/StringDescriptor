@@ -40,8 +40,7 @@ public class CmdController {
 			letterCase = "lowercase";
 		else letterCase = "capitalized";
 		System.out.println("");
-		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than ");
-		System.out.println(maxSize + " characters.");
+		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than " + maxSize + " characters.");
 		System.out.println("Please enter a String : ");
 		System.out.println("");
 		stringToBeDescribed = DescriptionKeyboardInputManager.readString();
@@ -61,7 +60,7 @@ public class CmdController {
 	
 	}
 	
-	private static void displayResults(List<IDescription> setOfDescriptions) {
+	private static void displayResults(List<IDescription> listOfDescriptions) {
 		System.out.println("");
 		System.out.println("How would you like the results to be displayed ?");
 		System.out.println("1 - as verbal descriptions.");
@@ -70,17 +69,24 @@ public class CmdController {
 		System.out.println("4 - skip results presentation.");
 		System.out.println("Please make your selection : ");
 		int displayMode = -1;
-		List<IDescription> listOfDescriptions = setOfDescriptions;
 		try {
 			displayMode = DescriptionKeyboardInputManager.readInt();
 		}
 		catch(StringFormatException err) {
 			System.out.println(err.getMessage());
 			System.out.println("");
-			displayResults(setOfDescriptions);
+			displayResults(listOfDescriptions);
 		}
-		int descriptionIndex = 1;
-		for (IDescription description : listOfDescriptions) {
+		displayNextBatch(1, displayMode, listOfDescriptions);
+		chooseWhatToDoNext();
+	}
+	
+	private static void displayNextBatch(int descriptionIndex, int displayMode, List<IDescription> listOfDescriptions) {
+		int lastBatchIndexIndex = descriptionIndex + 10;
+		if (lastBatchIndexIndex > listOfDescriptions.size())
+			lastBatchIndexIndex = listOfDescriptions.size();
+		while (descriptionIndex <= lastBatchIndexIndex) {
+			IDescription description = listOfDescriptions.get(descriptionIndex - 1);
 			try {
 				System.out.println("");
 				System.out.println("***** Description n°" + descriptionIndex + " *****");
@@ -108,18 +114,26 @@ public class CmdController {
 						chooseWhatToDoNext();
 						break;
 					default : System.out.println("Selection is invalid. Please try again.");
-						displayResults(setOfDescriptions);
+						displayResults(listOfDescriptions);
 				}
 			}
 			catch (VerbalizationException unexpected) {
 				System.out.println("An error has occured.");
 				System.out.println(unexpected.getMessage());
 				System.out.println(unexpected.getStackTrace());
-				displayResults(setOfDescriptions);
+				displayResults(listOfDescriptions);
 			}
 			descriptionIndex++;
 		}
-		chooseWhatToDoNext();
+		if (descriptionIndex < listOfDescriptions.size()) {
+			System.out.println("");
+			System.out.println("Press enter to continue.");
+			DescriptionKeyboardInputManager.readString();
+			System.out.println("");
+			displayNextBatch(descriptionIndex, displayMode, listOfDescriptions);
+		}
+
+		
 	}
 	
 	private static void chooseWhatToDoNext() {

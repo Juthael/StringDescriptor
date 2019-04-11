@@ -12,6 +12,6 @@ public interface IEnumerationChecker {
 
 	IEnumerationRelationalData getEnumerationRelationalData() throws SynTreeGenerationException;
 
-	
+	boolean getAllSecondDegreeValuesAreSequences() throws SynTreeGenerationException;
 
 }

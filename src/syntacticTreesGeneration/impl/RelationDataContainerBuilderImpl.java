@@ -37,6 +37,13 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	@Override
 	public IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException {
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
+		//From HERE
+		if (listOfDescriptors.size() == 2) {
+			if (DescriptorSpanGetterImpl.getDescriptorSpan(listOfDescriptors.get(0)).size() == 4 &&
+					DescriptorSpanGetterImpl.getDescriptorSpan(listOfDescriptors.get(1)).size() == 2)
+				System.out.println("STOP HERE");
+		}
+		//To HERE
 		if (listOfDescriptors.size() > 1) {
 			List<ISynTreeIntegrableElement> listOfAbstractDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 			listOfAbstractDescriptors.addAll(listOfDescriptors);
@@ -108,19 +115,21 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 							else if (secondDegreeEnumerationWasFound == true) {
 								IEnumerationRelationalData enumerationRelationalData = 
 										enumerationChecker.getEnumerationRelationalData();
-								ISequenceChecker sequenceChecker = 
-										new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-												enumerationRelationalData);
-								ISymmetryChecker symmetryChecker = 
-										new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
-												enumerationRelationalData);
-								boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
-								boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
-								if (sequenceWasFound == false && symmetryWasFound == false)
-									componentsAreRelated = false;
-								else {
-									if (symmetryWasFound == true) {
-										if (symmetryChecker.getValuesAreIdentical() == false) {
+								boolean thisEnumerationContainsNoAdditionalInformation = 
+										enumerationChecker.getAllSecondDegreeValuesAreSequences();
+								if (thisEnumerationContainsNoAdditionalInformation == false) {
+									ISequenceChecker sequenceChecker = 
+											new SequenceCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+													enumerationRelationalData);
+									ISymmetryChecker symmetryChecker = 
+											new SymmetryCheckerImpl(wholeStringIsDescribed, dimension, listsOfValues, 
+													enumerationRelationalData);
+									boolean sequenceWasFound = sequenceChecker.getSequenceWasFound();
+									boolean symmetryWasFound = symmetryChecker.getSymmetryWasFound();
+									if (sequenceWasFound == false && symmetryWasFound == false)
+										componentsAreRelated = false;
+									else {
+										if (symmetryWasFound == true) {
 											relationDataContainer.addEnumeration(enumerationRelationalData);
 											relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
 										}

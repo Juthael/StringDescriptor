@@ -1,11 +1,14 @@
 package syntacticTreesGeneration.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
+import syntacticTreesGeneration.ISequenceChecker;
 
 public class EnumerationCheckerImpl implements IEnumerationChecker {
 	
@@ -83,6 +86,38 @@ public class EnumerationCheckerImpl implements IEnumerationChecker {
 		}
 		else throw new SynTreeGenerationException("EnumerationChecker : can't get an Enumeration that wasn't found");
 	}
+	
+	@Override 
+	public boolean getAllSecondDegreeValuesAreSequences() throws SynTreeGenerationException {
+		boolean allValuesAreSequences = true;
+		boolean oneValueAtLeastIsNotOfSize1 = false;
+		if (values.size() > 1) {
+			int valueIndex = 0;
+			while (valueIndex < values.size() && allValuesAreSequences == true) {
+				String value = values.get(valueIndex);
+				List<String> listOfSubValues = new ArrayList<String>(Arrays.asList(value.split(",")));
+				if (listOfSubValues.size() != 1) {
+					if (oneValueAtLeastIsNotOfSize1 == false) {
+						oneValueAtLeastIsNotOfSize1 = true;
+					}
+					IEnumerationChecker enumerationChecker = new EnumerationCheckerImpl(false, "temporaryDimension", listOfSubValues);
+					ISequenceChecker sequenceChecker = 
+							new SequenceCheckerImpl(
+									false, "temporaryDimension", listOfSubValues, enumerationChecker.getEnumerationRelationalData());
+					if (sequenceChecker.getSequenceWasFound() == false) {
+						allValuesAreSequences = false;
+					}
+				}
+				valueIndex++;
+			}
+			if (oneValueAtLeastIsNotOfSize1 == false)
+				throw new SynTreeGenerationException("SymmetryCheckerImpl.getValuesAreIdentical : this method should only"
+						+ " be used on second degree enumerations.");
+			else return allValuesAreSequences;
+		}
+		else throw new SynTreeGenerationException("SymmetryCheckerImpl.getValuesAreIdentical() : this method shouldn't "
+				+ "be invoked with a list of values of size " + values.size() + ".");
+	}	
 	
 	private boolean testIfAllValuesAreSizeOne() {
 		boolean allValuesAreSize1 = true;
