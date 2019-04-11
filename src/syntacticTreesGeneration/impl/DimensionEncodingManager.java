@@ -97,21 +97,6 @@ public class DimensionEncodingManager {
 		return codedDimension;
 	}
 	
-	/*private String getDimensionFromDimensionCode(String dimensionCode) {
-		String dimension;
-		StringBuilder dimensionCodeBuilder = new StringBuilder();
-		char[] dimensionCodeArray = dimensionCode.toCharArray();
-		for (char thisChar : dimensionCodeArray) {
-			if (thisChar == ':')
-				dimensionCodeBuilder.append("relations/groups/");
-			else if (thisChar == '.')
-				dimensionCodeBuilder.append("/");
-			else dimensionCodeBuilder.append(thisChar);
-		}
-		dimension = dimensionCodeBuilder.toString();
-		return dimension;
-	}*/
-	
 	public static String getDimensionTypeFromPath(String paths) {
 		String pathType;
 		String[] dimensionArray = paths.split(Settings.SECOND_DEG_DIMENSION_SEPARATOR);
@@ -155,48 +140,10 @@ public class DimensionEncodingManager {
 		return deIndexedPath;
 	}	
 	
-	/* private List<List<String>> getNextListOfPropertyLists(List<String> listOfProperties){
-		List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
-		List<String> currentListOfProperties = new ArrayList<String>();
-		int groupLabelShift = 6;
-		int secondGroupIndex = 0;
-		boolean secondGroupIndexFound = false;
-		for (String propertyWithPath : listOfProperties) {
-			String propertyWithRelevantPath = propertyWithPath.substring(groupLabelShift + secondGroupIndex);
-			if (secondGroupIndexFound == false && propertyWithRelevantPath.contains("/group/")) {
-				secondGroupIndexFound = true;
-				secondGroupIndex = propertyWithRelevantPath.indexOf("/group/");
-			}
-			else if (secondGroupIndexFound == true) {
-				if (propertyWithRelevantPath.startsWith("group/size")) {
-					if (!currentListOfProperties.isEmpty()) {
-						listOfPropertyLists.add(currentListOfProperties);
-					}
-					currentListOfProperties = new ArrayList<String>();
-					currentListOfProperties.add(propertyWithRelevantPath);
-				}
-				else currentListOfProperties.add(propertyWithRelevantPath);
-			}
-		}
-		listOfPropertyLists.add(currentListOfProperties);
-		return listOfPropertyLists;
-	} */
-	
 	private String getValue(String propertyWithPath) {
 		int lastSeparatorIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
 		String value = propertyWithPath.substring(lastSeparatorIndex + 1);
 		return value;
 	}
-	
-	/* private List<String> getListOfValues(String propertyWithPath) {
-		List<String> listOfValues;
-		String valueString = getValue(propertyWithPath);
-		String[] valueArray;
-		if (valueString.contains(Settings.SECOND_DEG_VALUES_SEPARATOR))
-			valueArray = valueString.split(Settings.SECOND_DEG_VALUES_SEPARATOR);
-		else valueArray = valueString.split(",");
-		listOfValues = new ArrayList<String>(Arrays.asList(valueArray));
-		return listOfValues;
-	}	*/
 
 }

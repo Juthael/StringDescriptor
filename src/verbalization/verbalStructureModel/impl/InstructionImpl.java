@@ -42,7 +42,7 @@ public class InstructionImpl implements IInstruction {
 				listOfVaryingSequencesCodeGetters.add(transformationCodeGetter);
 			else if (firstPredicateCode.contains("Equals"))
 				listOfConstantSequencesCodeGetters.add(transformationCodeGetter);
-			else if (firstPredicateCode.contains("Enumerate"))
+			else if (firstPredicateCode.contains("Enumerate")) 
 				listOfEnumerationCodeGetters.add(transformationCodeGetter);
 			else if (firstPredicateCode.contains("Effector")) {
 				listOfEffectorsCodeGetters.add(transformationCodeGetter);
@@ -54,7 +54,8 @@ public class InstructionImpl implements IInstruction {
 		IRepeatOrder repeatOrder = new RepeatOrderImpl(numberOfComponentsString);
 		sB.append(repeatOrder.getverbalRepeatOrder());
 		if ((numberOfComponents == 2 && listOfEnumerationCodeGetters.isEmpty() && !listOfVaryingSequencesCodeGetters.isEmpty())
-				|| (numberOfComponents > 2 &&	(!listOfEnumerationCodeGetters.isEmpty() || !listOfVaryingSequencesCodeGetters.isEmpty()))) {
+				|| (numberOfComponents > 2 &&	
+						(!listOfEnumerationCodeGetters.isEmpty() || !listOfVaryingSequencesCodeGetters.isEmpty()))) {
 			sB.append(", ");
 		}
 		if (!listOfEnumerationCodeGetters.isEmpty() || !listOfConstantSequencesCodeGetters.isEmpty() || 

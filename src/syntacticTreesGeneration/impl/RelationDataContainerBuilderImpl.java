@@ -120,8 +120,10 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 									componentsAreRelated = false;
 								else {
 									if (symmetryWasFound == true) {
-										relationDataContainer.addEnumeration(enumerationRelationalData);
-										relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
+										if (symmetryChecker.getValuesAreIdentical() == false) {
+											relationDataContainer.addEnumeration(enumerationRelationalData);
+											relationDataContainer.addSymmetry(symmetryChecker.getSymmetryRelationalData());
+										}
 									}
 								}
 							}

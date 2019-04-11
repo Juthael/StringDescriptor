@@ -40,6 +40,21 @@ public class SymmetryCheckerImpl implements ISymmetryChecker {
 		return symmetryWasFound;
 	}
 	
+	@Override public boolean getValuesAreIdentical() throws SynTreeGenerationException {
+		boolean valuesAreIdentical = true;
+		if (values.size() > 1) {
+			int valueIndex = 1;
+			while (valuesAreIdentical == true && valueIndex < values.size()) {
+				if (!values.get(valueIndex).equals(values.get(0)))
+					valuesAreIdentical = false;
+				valueIndex++;
+			}
+			return valuesAreIdentical;
+		}
+		else throw new SynTreeGenerationException("SymmetryCheckerImpl.getValuesAreIdentical() : this method shouldn't "
+				+ "be invoked with a list of values of size " + values.size() + ".");
+	}
+	
 	@Override
 	public ISymmetryRelationalData getSymmetryRelationalData() throws SynTreeGenerationException {
 		ISymmetryRelationalData symmetryRelationalData;
