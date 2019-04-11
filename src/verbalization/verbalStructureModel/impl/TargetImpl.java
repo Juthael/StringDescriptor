@@ -69,6 +69,7 @@ public class TargetImpl implements ITarget {
 			case "twoEnumerationEquals" :
 			case "manyEnumerationEquals" :
 			case "WriteLetterEffector" :
+			case "twoSymmetryReverse" :
 				targetElement = "";
 				break;
 			case "twoLetterDecrease" :
@@ -126,8 +127,7 @@ public class TargetImpl implements ITarget {
 			case "twoLetterEnumerate" : 
 				targetElement = "letter ";
 				break;
-			case "twoEnumerationEnumerate" :
-			case "manyEnumerationEnumerate" :
+			case "manySymmetryReverse":
 				targetElement = "the group of values ";
 				break;
 			case "twoSizeEnumerate" :

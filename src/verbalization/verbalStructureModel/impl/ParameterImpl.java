@@ -44,7 +44,7 @@ public class ParameterImpl implements IParameter {
 		boolean thereIsALetterDimension = checkIfThereIsALetterDimension(transformationCodeGetter);
 		String firstPredicateCode = transformationCodeGetter.getListOfPredicateCodes().get(0);
 		if (firstPredicateCode.contains("Equals") || firstPredicateCode.equals("oneLetterEnumerate") || 
-				firstPredicateCode.equals("oneSizeEnumerate"))
+				firstPredicateCode.equals("oneSizeEnumerate") || firstPredicateCode.equals("twoSymmetryReverse"))
 			valueString = "";
 		else if (thereIsALetterDimension == true) {
 			if (transformationCodeGetter.getListOfPredicateCodes().size() == 1)
@@ -142,8 +142,8 @@ public class ParameterImpl implements IParameter {
 			case "manyEnumerationEquals" :	
 			case "manyLetterEnumerate" :
 			case "WriteLetterEffector" :
-			case "twoEnumerationEnumerate" :
-			case "manyEnumerationEnumerate" :
+			case "twoSymmetryReverse" :
+			case "manySymmetryReverse" :
 				introducerString = "";
 				break;
 			case "twoLetterDecrease" :
@@ -228,8 +228,7 @@ public class ParameterImpl implements IParameter {
 			case "manySubSubLetterEnumerate" :
 			case "manySubSubSizeEnumerate" :
 			case "manySubSubIncrementEnumerate" :
-			case "twoEnumerationEnumerate" :
-			case "manyEnumerationEnumerate" :
+			case "manySymmetryReverse" :
 				String separator = "";
 				if (valueStringParameter.contains(Settings.SECOND_DEG_VALUE_SEPARATOR))
 					separator = Settings.SECOND_DEG_VALUE_SEPARATOR;

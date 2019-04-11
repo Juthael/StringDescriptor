@@ -25,7 +25,6 @@ public class ActionImpl implements IAction {
 			case "twoLetterEnumerate" :
 			case "twoSizeEnumerate" :
 			case "twoIncrementEnumerate" :
-			case "twoEnumerationEnumerate" :
 			case "twoSubLetterEnumerate" :
 			case "twoSubSizeEnumerate" :
 			case "twoSubIncrementEnumerate" :
@@ -35,7 +34,7 @@ public class ActionImpl implements IAction {
 				action = " with ";
 				break;
 			case "manyLetterEnumerate" :
-			case "manyEnumerationEnumerate" :
+			case "manySymmetryReverse" :
 				action = "with ";
 				break;
 			case "oneLetterEquals" :
@@ -117,6 +116,9 @@ public class ActionImpl implements IAction {
 				break;
 			case "WriteLetterEffector" :
 				action = "write letter ";
+				break;
+			case "twoSymmetryReverse" : 
+				action = " symmetrically";
 				break;
 			default :
 				throw new VerbalizationException("Action.getActionString() : the parameter "

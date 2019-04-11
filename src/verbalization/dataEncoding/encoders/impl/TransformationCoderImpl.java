@@ -48,8 +48,11 @@ public class TransformationCoderImpl implements ITransformationCoder{
 			}
 			else if (relationProperties.get(propertyIndex).contains("relation/enumeration")) {
 				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
-				transfoTypeCode = "Enumerate";
 				parameterCode = relationProperties.get(propertyIndex).substring(lastSlashIndex + 1);
+				if (!parameterCode.contains(Settings.SECOND_DEG_VALUE_SEPARATOR)) {
+					transfoTypeCode = "Enumerate";
+				}
+				else transfoTypeCode = "Reverse";				
 			}
 			else if (relationProperties.get(propertyIndex).contains("sequence/commonDiff")) {
 				int lastSlashIndex = relationProperties.get(propertyIndex).lastIndexOf(Settings.PATH_SEPARATOR);
@@ -88,7 +91,7 @@ public class TransformationCoderImpl implements ITransformationCoder{
 					dimensionTypeCode = "Increment";
 					break;
 				case("enumeration") :
-					dimensionTypeCode = "Enumeration";
+					dimensionTypeCode = "Symmetry";
 					break;
 				case("do") :
 					dimensionTypeCode = "WriteLetter";
