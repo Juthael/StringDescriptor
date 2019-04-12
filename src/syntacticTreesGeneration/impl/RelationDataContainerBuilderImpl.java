@@ -37,13 +37,6 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	@Override
 	public IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException {
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
-		//From HERE
-		if (listOfDescriptors.size() == 2) {
-			if (DescriptorSpanGetterImpl.getDescriptorSpan(listOfDescriptors.get(0)).size() == 4 &&
-					DescriptorSpanGetterImpl.getDescriptorSpan(listOfDescriptors.get(1)).size() == 2)
-				System.out.println("STOP HERE");
-		}
-		//To HERE
 		if (listOfDescriptors.size() > 1) {
 			List<ISynTreeIntegrableElement> listOfAbstractDescriptors = new ArrayList<ISynTreeIntegrableElement>();
 			listOfAbstractDescriptors.addAll(listOfDescriptors);

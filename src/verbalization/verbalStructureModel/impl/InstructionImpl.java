@@ -57,7 +57,9 @@ public class InstructionImpl implements IInstruction {
 		StringBuilder sB = new StringBuilder();
 		IRepeatOrder repeatOrder = new RepeatOrderImpl(numberOfComponentsString);
 		sB.append(repeatOrder.getverbalRepeatOrder());
-		if ((numberOfComponents == 2 && listOfEnumerationCodeGetters.isEmpty() && !listOfVaryingSequencesCodeGetters.isEmpty())
+		if ((numberOfComponents == 2 && listOfEnumerationCodeGetters.isEmpty() && 
+				listOfSecondDegreeSymmetryCodeGetters.isEmpty() && 
+				!listOfVaryingSequencesCodeGetters.isEmpty())
 				|| (numberOfComponents > 2 &&	
 						(!listOfEnumerationCodeGetters.isEmpty() || !listOfVaryingSequencesCodeGetters.isEmpty()))) {
 			sB.append(", ");
@@ -94,8 +96,11 @@ public class InstructionImpl implements IInstruction {
 					}
 				}
 				if (!listOfVaryingSequencesCodeGetters.isEmpty()) {
-					if (!listOfEnumerationCodeGetters.isEmpty())
+					if (listOfSecondDegreeSymmetryCodeGetters.isEmpty() && !listOfEnumerationCodeGetters.isEmpty())
 						sB.append(", and ");
+					else if (!listOfSecondDegreeSymmetryCodeGetters.isEmpty()) {
+						sB.append(", i.e. ");
+					}
 					for (int i=0 ; i<listOfVaryingSequencesCodeGetters.size() ; i++) {
 						ITransformationCodeGetter sequenceCodeGetter = listOfVaryingSequencesCodeGetters.get(i);
 						ISequence sequence = new SequenceImpl(sequenceCodeGetter);
