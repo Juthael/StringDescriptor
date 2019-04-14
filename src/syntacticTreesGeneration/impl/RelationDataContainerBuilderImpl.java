@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import copycatModel.ISynTreeIntegrableElement;
-import copycatModel.IProperty;
-import copycatModel.IPropertyContainer;
-import copycatModel.ISignal;
-import copycatModel.grammar.Group;
+import copycatModel.synTreeModel.IProperty;
+import copycatModel.synTreeModel.IPropertyContainer;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
+import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;

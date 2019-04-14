@@ -1,6 +1,6 @@
 package verbalization.dataEncoding.encoders.impl;
 
-import copycatModel.grammar.CharString;
+import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.VerbalizationException;
 import verbalization.dataEncoding.encoders.IDescriptionCoder;
 import verbalization.dataEncoding.encoders.IVerbalizer;

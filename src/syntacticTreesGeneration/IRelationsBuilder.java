@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import copycatModel.grammar.Relations;
+import copycatModel.synTreeModel.grammar.Relations;
 import exceptions.SynTreeGenerationException;
 
 public interface IRelationsBuilder {

@@ -2,8 +2,8 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.ISignal;
-import copycatModel.grammar.CharString;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;

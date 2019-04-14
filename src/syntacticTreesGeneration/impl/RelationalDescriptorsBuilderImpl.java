@@ -3,10 +3,10 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.ISynTreeIntegrableElement;
-import copycatModel.ISignal;
-import copycatModel.grammar.CharString;
-import copycatModel.grammar.Group;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
+import copycatModel.synTreeModel.grammar.CharString;
+import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;

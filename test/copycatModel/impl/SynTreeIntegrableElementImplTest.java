@@ -11,15 +11,15 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import copycatModel.IProperty;
-import copycatModel.IPropertyContainer;
-import copycatModel.ISignal;
-import copycatModel.grammar.Dimension;
-import copycatModel.grammar.Enumeration;
-import copycatModel.grammar.Group;
-import copycatModel.grammar.GroupX3;
-import copycatModel.grammar.HowManyGroups;
-import copycatModel.grammar.Relation;
+import copycatModel.synTreeModel.IProperty;
+import copycatModel.synTreeModel.IPropertyContainer;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.grammar.Dimension;
+import copycatModel.synTreeModel.grammar.Enumeration;
+import copycatModel.synTreeModel.grammar.Group;
+import copycatModel.synTreeModel.grammar.GroupX3;
+import copycatModel.synTreeModel.grammar.HowManyGroups;
+import copycatModel.synTreeModel.grammar.Relation;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;

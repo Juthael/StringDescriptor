@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import copycatModel.ISignal;
+import copycatModel.synTreeModel.ISignal;
 
 public interface ISignalBuilder {
 

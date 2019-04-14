@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import copycatModel.ISignal;
-import copycatModel.grammar.Group;
-import copycatModel.grammar.Relations;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.grammar.Group;
+import copycatModel.synTreeModel.grammar.Relations;
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;

@@ -2,7 +2,7 @@ package syntacticTreesGeneration;
 
 import java.util.List;
 
-import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
 import exceptions.SynTreeGenerationException;
 
 public interface IDescriptorsBuildingManager {

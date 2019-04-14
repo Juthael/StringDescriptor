@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import copycatModel.ISynTreeIntegrableElement;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
 import exceptions.SynTreeGenerationException;
 
 public interface INewDescriptorBuilder {

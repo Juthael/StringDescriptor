@@ -2,9 +2,9 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.ISignal;
-import copycatModel.ISynTreeIntegrableElement;
-import copycatModel.grammar.Group;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
+import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.ICharStringBuilder;
 import syntacticTreesGeneration.IGroupBuilder;

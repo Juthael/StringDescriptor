@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import copycatModel.grammar.CharString;
+import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
 
 public interface ICharStringBuilder {

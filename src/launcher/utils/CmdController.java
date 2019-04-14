@@ -2,9 +2,9 @@ package launcher.utils;
 
 import java.util.List;
 
-import descriptionModel.IDescription;
-import descriptionModel.IDescriptionBuilder;
-import descriptionModel.impl.DescriptionBuilderImpl;
+import descriptionModel.charStringDescription.IDescription;
+import descriptionModel.charStringDescription.IDescriptionBuilder;
+import descriptionModel.charStringDescription.impl.DescriptionBuilderImpl;
 import exceptions.StringFormatException;
 import exceptions.VerbalizationException;
 import settings.Settings;

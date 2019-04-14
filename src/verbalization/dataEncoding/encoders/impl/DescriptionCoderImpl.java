@@ -3,7 +3,7 @@ package verbalization.dataEncoding.encoders.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.grammar.CharString;
+import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.VerbalizationException;
 import settings.Settings;
 import verbalization.dataEncoding.encoders.IDescriptionCoder;

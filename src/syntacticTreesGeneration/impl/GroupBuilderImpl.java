@@ -2,10 +2,10 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.grammar.Group;
-import copycatModel.grammar.Position;
-import copycatModel.grammar.Relations;
-import copycatModel.grammar.Size;
+import copycatModel.synTreeModel.grammar.Group;
+import copycatModel.synTreeModel.grammar.Position;
+import copycatModel.synTreeModel.grammar.Relations;
+import copycatModel.synTreeModel.grammar.Size;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupBuilder;

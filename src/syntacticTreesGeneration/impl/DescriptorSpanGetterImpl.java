@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import copycatModel.ISynTreeIntegrableElement;
-import copycatModel.ISignal;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.ISynTreeIntegrableElement;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IDescriptorSpanGetter;

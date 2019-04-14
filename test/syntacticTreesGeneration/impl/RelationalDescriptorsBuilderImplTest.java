@@ -8,8 +8,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import copycatModel.ISignal;
-import copycatModel.grammar.CharString;
+import copycatModel.synTreeModel.ISignal;
+import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
 import settings.Settings;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;

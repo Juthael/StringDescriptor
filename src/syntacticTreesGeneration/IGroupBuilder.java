@@ -1,6 +1,6 @@
 package syntacticTreesGeneration;
 
-import copycatModel.grammar.Group;
+import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
 
 public interface IGroupBuilder {

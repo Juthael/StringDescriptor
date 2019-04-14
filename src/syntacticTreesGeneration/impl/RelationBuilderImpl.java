@@ -2,16 +2,16 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.grammar.AbsCommonDiff;
-import copycatModel.grammar.CommonDiff;
-import copycatModel.grammar.Dimension;
-import copycatModel.grammar.Enumeration;
-import copycatModel.grammar.Relation;
-import copycatModel.grammar.Sequence;
-import copycatModel.grammar.SequenceAndSymmetryRel;
-import copycatModel.grammar.SequenceRel;
-import copycatModel.grammar.Symmetry;
-import copycatModel.grammar.SymmetryRel;
+import copycatModel.synTreeModel.grammar.AbsCommonDiff;
+import copycatModel.synTreeModel.grammar.CommonDiff;
+import copycatModel.synTreeModel.grammar.Dimension;
+import copycatModel.synTreeModel.grammar.Enumeration;
+import copycatModel.synTreeModel.grammar.Relation;
+import copycatModel.synTreeModel.grammar.Sequence;
+import copycatModel.synTreeModel.grammar.SequenceAndSymmetryRel;
+import copycatModel.synTreeModel.grammar.SequenceRel;
+import copycatModel.synTreeModel.grammar.Symmetry;
+import copycatModel.synTreeModel.grammar.SymmetryRel;
 import exceptions.SynTreeGenerationException;
 import syntacticTreesGeneration.IRelationBuilder;
 import syntacticTreesGeneration.IRelationalData;
