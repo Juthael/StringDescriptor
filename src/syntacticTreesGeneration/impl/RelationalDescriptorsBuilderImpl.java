@@ -3,11 +3,11 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.CharString;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.CharString;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
@@ -30,10 +30,10 @@ public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsB
 					new NewGenOfDescriptorsBuilderImpl(previousGenerationNumber, this.signal, 
 							previousGenOfFactorizableDescriptors);
 			previousGenerationNumber++;
-			List<ISynTreeIntegrableElement> newGenOfDescriptors = 
+			List<ISynTreeElement> newGenOfDescriptors = 
 					newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
 			if (!newGenOfDescriptors.isEmpty()) {
-				for (ISynTreeIntegrableElement descriptor : newGenOfDescriptors) {
+				for (ISynTreeElement descriptor : newGenOfDescriptors) {
 					if (descriptor.getDescriptorName().equals("charString"))
 						listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 					else if (descriptor.getDescriptorName().equals("group"))

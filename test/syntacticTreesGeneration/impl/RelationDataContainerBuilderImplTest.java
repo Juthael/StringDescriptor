@@ -2,31 +2,34 @@ package syntacticTreesGeneration.impl;
 
 
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.AbsCommonDiff;
-import copycatModel.synTreeModel.grammar.CharString;
-import copycatModel.synTreeModel.grammar.CommonDiff;
-import copycatModel.synTreeModel.grammar.Dimension;
-import copycatModel.synTreeModel.grammar.Direction;
-import copycatModel.synTreeModel.grammar.Enumeration;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.GroupX3;
-import copycatModel.synTreeModel.grammar.Groups;
-import copycatModel.synTreeModel.grammar.Position;
-import copycatModel.synTreeModel.grammar.Relation;
-import copycatModel.synTreeModel.grammar.Relations;
-import copycatModel.synTreeModel.grammar.Sequence;
-import copycatModel.synTreeModel.grammar.SequenceRel;
-import copycatModel.synTreeModel.grammar.Size;
-import copycatModel.synTreeModel.grammar.Structure;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.AbsCommonDiff;
+import model.copycatModel.synTreeGrammar.CharString;
+import model.copycatModel.synTreeGrammar.CommonDiff;
+import model.copycatModel.synTreeGrammar.Dimension;
+import model.copycatModel.synTreeGrammar.Direction;
+import model.copycatModel.synTreeGrammar.Enumeration;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.GroupX;
+import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.Position;
+import model.copycatModel.synTreeGrammar.Relation;
+import model.copycatModel.synTreeGrammar.Relations;
+import model.copycatModel.synTreeGrammar.Sequence;
+import model.copycatModel.synTreeGrammar.SequenceRel;
+import model.copycatModel.synTreeGrammar.Size;
+import model.copycatModel.synTreeGrammar.Structure;
+import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -38,13 +41,6 @@ import syntacticTreesGeneration.ISequenceRelationalData;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.ISymmetryChecker;
 import syntacticTreesGeneration.ISymmetryRelationalData;
-import syntacticTreesGeneration.impl.DescriptorSpanGetterImpl;
-import syntacticTreesGeneration.impl.EnumerationCheckerImpl;
-import syntacticTreesGeneration.impl.RelationBuilderImpl;
-import syntacticTreesGeneration.impl.RelationDataContainerBuilderImpl;
-import syntacticTreesGeneration.impl.SequenceCheckerImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
-import syntacticTreesGeneration.impl.SymmetryCheckerImpl;
 
 public class RelationDataContainerBuilderImplTest {
 	
@@ -63,27 +59,26 @@ public class RelationDataContainerBuilderImplTest {
 		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		signalABCD = signalBuilderABCD.getSignal();
 		descriptorsSignalABCD = signalABCD.getGroups();
-		CommonDiff abcCommonDiff = new CommonDiff(false, "1");
-		AbsCommonDiff abcAbsCommonDiff = new AbsCommonDiff(false, "1");
-		Sequence abcSequence = new Sequence(false, abcCommonDiff, abcAbsCommonDiff);
-		Enumeration abcEnumeration = new Enumeration(false, "1,2,3");
-		Dimension abcDimension = new Dimension(false, "platonicLetter");
-		SequenceRel abcRelation = new SequenceRel(false, abcDimension, abcEnumeration, abcSequence);
-		Size abcSize = new Size(false, "3");
-		GroupX3 abcGroupX3 = new GroupX3(false, descriptorsSignalABC.get(0), descriptorsSignalABC.get(1), 
-				descriptorsSignalABC.get(2));
-		Groups abcGroups = new Groups(false, abcSize, abcGroupX3);
-		Relations abcRelations = new Relations(false, abcGroups, abcDimension, abcRelation);
-		Position abcPosition = new Position(false, Settings.AWAITING_POSITION_VALUE);
-		Size abcGroupSize = new Size(false, "3");
+		CommonDiff abcCommonDiff = new CommonDiff("1");
+		AbsCommonDiff abcAbsCommonDiff = new AbsCommonDiff("1");
+		Sequence abcSequence = new Sequence(abcCommonDiff, abcAbsCommonDiff);
+		Enumeration abcEnumeration = new Enumeration("1,2,3");
+		Dimension abcDimension = new Dimension("platonicLetter");
+		SequenceRel abcRelation = new SequenceRel(abcDimension, abcEnumeration, abcSequence);
+		Size abcSize = new Size("3");
+		GroupX abcGroupX3 = new GroupX(descriptorsSignalABC);
+		Groups abcGroups = new Groups(abcSize, abcGroupX3);
+		Relations abcRelations = new Relations(abcGroups, abcDimension, abcRelation);
+		Position abcPosition = new Position(Settings.AWAITING_POSITION_VALUE);
+		Size abcGroupSize = new Size("3");
 		abcGroup = new Group(false, abcGroupSize, abcPosition, abcRelations);
-		Size abcGroupsSize = new Size(false, "1");
-		Groups abcGroupsGroups = new Groups(false, abcGroupsSize, abcGroup);
-		Size charStringSize = new Size(false, "3");
-		Direction charStringDirection = new Direction(false, "fromLeftToRight");
+		Size abcGroupsSize = new Size("1");
+		Groups abcGroupsGroups = new Groups(abcGroupsSize, abcGroup);
+		Size charStringSize = new Size("3");
+		Direction charStringDirection = new Direction("fromLeftToRight");
 		Relation structureRelation = getMonoStructureRelation(descriptorsSignalABC);
-		Structure structure = new Structure(false, charStringSize, structureRelation);
-		charStringABC = new CharString(false, charStringDirection, structure, abcGroupsGroups); 
+		Structure structure = new Structure(charStringSize, structureRelation);
+		charStringABC = new CharString(charStringDirection, structure, abcGroupsGroups); 
 	}
 
 	@Test

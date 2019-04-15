@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import copycatModel.synTreeModel.IProperty;
-import copycatModel.synTreeModel.IPropertyContainer;
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.IProperty;
+import model.synTreeModel.IPropertyContainer;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -38,7 +38,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	public IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException {
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		if (listOfDescriptors.size() > 1) {
-			List<ISynTreeIntegrableElement> listOfAbstractDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+			List<ISynTreeElement> listOfAbstractDescriptors = new ArrayList<ISynTreeElement>();
 			listOfAbstractDescriptors.addAll(listOfDescriptors);
 			boolean wholeStringIsDescribed = 
 					DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOfAbstractDescriptors);

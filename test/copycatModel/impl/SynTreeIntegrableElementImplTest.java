@@ -5,22 +5,21 @@ package copycatModel.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.IProperty;
-import copycatModel.synTreeModel.IPropertyContainer;
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.Dimension;
-import copycatModel.synTreeModel.grammar.Enumeration;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.GroupX3;
-import copycatModel.synTreeModel.grammar.HowManyGroups;
-import copycatModel.synTreeModel.grammar.Relation;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Dimension;
+import model.copycatModel.synTreeGrammar.Enumeration;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.GroupX;
+import model.copycatModel.synTreeGrammar.HowManyGroups;
+import model.copycatModel.synTreeGrammar.Relation;
+import model.synTreeModel.IProperty;
+import model.synTreeModel.IPropertyContainer;
+import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
@@ -31,9 +30,9 @@ public class SynTreeIntegrableElementImplTest {
 	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
 			throws SynTreeGenerationException {
 		boolean containerContainsAllProperties = true;
-		Dimension dimension = new Dimension(false, "dimension1");
-		Enumeration enumeration = new Enumeration(false, "1");
-		Relation relation  = new Relation(false, dimension, enumeration);
+		Dimension dimension = new Dimension("dimension1");
+		Enumeration enumeration = new Enumeration("1");
+		Relation relation  = new Relation(dimension, enumeration);
 		List<String> listOfPropertiesWithPath = relation.getListOfPropertiesWithPath();
 		IPropertyContainer propertyContainer = relation.getpropertyContainer();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
@@ -64,10 +63,7 @@ public class SynTreeIntegrableElementImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<Group> listOfGroups = signal.getGroups();
-		Group group1 = listOfGroups.get(0);
-		Group group2 = listOfGroups.get(1);
-		Group group3 = listOfGroups.get(2);
-		HowManyGroups groupX3 = new GroupX3(false, group1, group2, group3);
+		HowManyGroups groupX3 = new GroupX(listOfGroups);
 		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
 		boolean groupX3containsPlatonicLetter2 = false;
 		for (String propertyWithPath : listOfGroupX3PropertiesWithPath) {
@@ -97,11 +93,9 @@ public class SynTreeIntegrableElementImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<Group> listOfGroups = signal.getGroups();
-		Group group1 = listOfGroups.get(0);
 		Group group2 = listOfGroups.get(1);
-		Group group3 = listOfGroups.get(2);
 		List<String> listOfGroup2PropertiesWithpath = group2.getListOfPropertiesWithPath();
-		HowManyGroups groupX3 = new GroupX3(false, group1, group2, group3);
+		HowManyGroups groupX3 = new GroupX(listOfGroups);
 		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
 		boolean groupX3ContainsGroupPosition2 = false;
 		boolean group2ContainsGroupPosition2 = false;

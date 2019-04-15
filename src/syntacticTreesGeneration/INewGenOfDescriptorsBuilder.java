@@ -2,12 +2,12 @@ package syntacticTreesGeneration;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
 import exceptions.SynTreeGenerationException;
+import model.synTreeModel.ISynTreeElement;
 
 public interface INewGenOfDescriptorsBuilder {
 
-	List<ISynTreeIntegrableElement> getNewGenOfDescriptors() throws SynTreeGenerationException,
+	List<ISynTreeElement> getNewGenOfDescriptors() throws SynTreeGenerationException,
 			CloneNotSupportedException;
 
 }

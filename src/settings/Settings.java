@@ -16,13 +16,19 @@ public class Settings {
 	public static final String PROPERTY_INDEX_SEPARATOR = "_";
 	public static final boolean LIST_OF_GROUPS_COVER_THE_FULL_STRING = true;	
 	public static final boolean TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE = true;
+	public static final String FIRST_POSITION = "firstPosition";
+	public static final String CENTRAL_POSITION = "centralPosition";
+	public static final String LAST_POSITION = "lastPosition";
+	public static final String SYMMETRY_WITH_CENTRAL_ELEMENT = "withCentralElement";
+	public static final String SYMMETRY_WITHOUT_CENTRAL_ELEMENT = "withoutCentralElement";
+	public static final String POSITION_VALUES_SEPARATOR = ":";
 	
 	//2.Parameters preventing combinatorial explosion
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
 	public static final int MAX_NB_OF_UNRELATED_GROUPS = 4;
 	public static final int MAX_NB_OF_GROUPS_IN_RELATIONS = 10; //error if >12
 	public static final int MAX_NB_OF_DIMENSIONS_IN_RELATIONS = 10; //error if >10
-	public static final int MAX_NB_OF_RELATION = 10; //error if >10
+	public static final int MAX_NB_OF_RELATIONS = 10; //error if >10
 	public static final int MAX_NB_OF_TRANSFORMATION_RELATIONS = 2; //error if >5
 	public static final int MAX_NB_OF_NON_CONSTANT_SEQUENCES = 2;
 	public static final int MAX_NB_OF_SIMPLE_ENUMERATIONS_IN_RELATION = 1;

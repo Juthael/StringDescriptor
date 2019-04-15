@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -58,7 +58,7 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSymmetry(symmetry1);
 		INewDescriptorBuilder newDescriptorBuilder = 
 				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsAB);
-		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
+		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "group");
 	}
 	
@@ -72,7 +72,7 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		INewDescriptorBuilder newDescriptorBuilder = 
 				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
-		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
+		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");
 	}
 	
@@ -99,7 +99,7 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		INewDescriptorBuilder newDescriptorBuilder = 
 				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
-		ISynTreeIntegrableElement descriptor = newDescriptorBuilder.getNewDescriptor();
+		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");		
 	}
 	
@@ -119,7 +119,7 @@ public class NewDescriptorBuilderImplTest {
 		for (IRelationDataContainer container : listOfContainers) {
 			INewDescriptorBuilder newDescBuilder = 
 					new NewDescriptorBuilderImpl(signal, container, listOfGroups);
-			ISynTreeIntegrableElement descriptor = newDescBuilder.getNewDescriptor();
+			ISynTreeElement descriptor = newDescBuilder.getNewDescriptor();
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			listOfPropertyLists.add(listOfProperties);
 			/* for (String property : listOfProperties)

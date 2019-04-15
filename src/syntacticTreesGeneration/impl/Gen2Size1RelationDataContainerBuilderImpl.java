@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import copycatModel.synTreeModel.IProperty;
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.IProperty;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -30,7 +30,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			throws SynTreeGenerationException {
 		List<IRelationDataContainer> listOfRelationDataContainers = 
 				new ArrayList<IRelationDataContainer>();
-		List<ISynTreeIntegrableElement> listOf1Descriptor = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> listOf1Descriptor = new ArrayList<ISynTreeElement>();
 		listOf1Descriptor.add(gen1Descriptor);
 		boolean newDescriptorWillCoverTheWholeString = 
 				DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOf1Descriptor);

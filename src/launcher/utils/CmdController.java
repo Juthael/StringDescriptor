@@ -2,11 +2,11 @@ package launcher.utils;
 
 import java.util.List;
 
-import descriptionModel.charStringDescription.IDescription;
-import descriptionModel.charStringDescription.IDescriptionBuilder;
-import descriptionModel.charStringDescription.impl.DescriptionBuilderImpl;
 import exceptions.StringFormatException;
 import exceptions.VerbalizationException;
+import model.outputModel.charStringDescription.IDescription;
+import model.outputModel.charStringDescription.IDescriptionBuilder;
+import model.outputModel.charStringDescription.impl.DescriptionBuilderImpl;
 import settings.Settings;
 
 public class CmdController {

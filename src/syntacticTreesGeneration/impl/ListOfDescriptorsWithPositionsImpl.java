@@ -2,7 +2,7 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.Group;
+import model.copycatModel.synTreeGrammar.Group;
 import syntacticTreesGeneration.IListOfDescriptorsWithPositions;
 
 public class ListOfDescriptorsWithPositionsImpl implements IListOfDescriptorsWithPositions {

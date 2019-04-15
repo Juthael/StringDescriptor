@@ -9,11 +9,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.CharString;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.CharString;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
@@ -38,7 +38,7 @@ public class DescriptorsBuildingManagerImplTest {
 		listOfComponents.add(gen1DescriptorA);
 		IDescriptorsBuildingManager descriptorsBuildingManager = 
 				new DescriptorsBuildingManagerImpl(signal, 1, listOfComponents);
-		List<ISynTreeIntegrableElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
+		List<ISynTreeElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface newDescriptor : listOfNewDescriptors) {
 			ArrayList<String> propertiesWithPath = newDescriptor.getListOfPropertiesWithPath();
 			for (String property : propertiesWithPath)
@@ -68,7 +68,7 @@ public class DescriptorsBuildingManagerImplTest {
 		descriptorsAB.add(signalABC.getGroups().get(0));
 		descriptorsAB.add(signalABC.getGroups().get(1));
 		IDescriptorsBuildingManager descriptorsBuildingManager = new DescriptorsBuildingManagerImpl(signalABC, 1, descriptorsAB);
-		List<ISynTreeIntegrableElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
+		List<ISynTreeElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface newDescriptor : listOfNewDescriptors) {
 			ArrayList<String> propertiesWithPath = newDescriptor.getListOfPropertiesWithPath();
 			for (String property : propertiesWithPath)
@@ -83,14 +83,14 @@ public class DescriptorsBuildingManagerImplTest {
 	public void whenSetsOfGen1ComponentsThenNewDescriptorsAreBuiltForEachSet() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean descriptorsAreBuiltForEachSet = true;
-		List<ISynTreeIntegrableElement> newDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> newDescriptors = new ArrayList<ISynTreeElement>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABC = signalBuilder.getSignal();
 		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABC, signalABC.getGroups());
 		Set<List<Group>> setsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Group> setToBeFactorized : setsToBeFactorized) {
 			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl(signalABC, 1, setToBeFactorized);
-			List<ISynTreeIntegrableElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			if (newDescriptorsForThisSet.isEmpty())
 				descriptorsAreBuiltForEachSet = false;
 			newDescriptors.addAll(newDescriptorsForThisSet);
@@ -108,20 +108,20 @@ public class DescriptorsBuildingManagerImplTest {
 	@Test
 	public void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = true;
-		List<ISynTreeIntegrableElement> newDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> newDescriptors = new ArrayList<ISynTreeElement>();
 		List<Group> factorizableNewDescriptors = new ArrayList<Group>();
-		List<ISynTreeIntegrableElement> newGen3Descriptors = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> newGen3Descriptors = new ArrayList<ISynTreeElement>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABCD = signalBuilder.getSignal();
 		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABCD, signalABCD.getGroups());
 		Set<List<Group>> setsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Group> setToBeFactorized : setsToBeFactorized) {
 			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl(signalABCD, 1, setToBeFactorized);
-			List<ISynTreeIntegrableElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newDescriptors.addAll(newDescriptorsForThisSet);
 		}
 		/*System.out.println("*********GEN2********"); */
-		for (ISynTreeIntegrableElement newDescriptor : newDescriptors) {
+		for (ISynTreeElement newDescriptor : newDescriptors) {
 			/* for (String property : newDescriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
 			}
@@ -138,10 +138,10 @@ public class DescriptorsBuildingManagerImplTest {
 		for (List<Group> setToBeFactorized : newSetsToBeFactorized) {
 			IDescriptorsBuildingManager buildingManager = 
 					new DescriptorsBuildingManagerImpl(signalABCD, 2, setToBeFactorized);
-			List<ISynTreeIntegrableElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newGen3Descriptors.addAll(newDescriptorsForThisSet);
 		}	
-		for (ISynTreeIntegrableElement descriptor : newGen3Descriptors) {
+		for (ISynTreeElement descriptor : newGen3Descriptors) {
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			/* for (String property : listOfProperties) {
 				System.out.println(property);
@@ -157,7 +157,7 @@ public class DescriptorsBuildingManagerImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("a", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		IDescriptorsBuildingManager descriptorsBM = new DescriptorsBuildingManagerImpl(signal, 1, signal.getGroups());
-		List<ISynTreeIntegrableElement> descriptors = descriptorsBM.getListOfNewDescriptors();
+		List<ISynTreeElement> descriptors = descriptorsBM.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface descriptor : descriptors) {
 			for (String property : descriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
@@ -180,8 +180,8 @@ public class DescriptorsBuildingManagerImplTest {
 			INewGenOfDescriptorsBuilder newGenOfDescriptorsBuilder = 
 						new NewGenOfDescriptorsBuilderImpl(1, signal, previousGenOfFactorizableDescriptors);
 			previousGenOfFactorizableDescriptors = new ArrayList<Group>();
-			List<ISynTreeIntegrableElement> newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
-			for (ISynTreeIntegrableElement descriptor : newGenOfDescriptors) {
+			List<ISynTreeElement> newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
+			for (ISynTreeElement descriptor : newGenOfDescriptors) {
 				if (descriptor.getDescriptorName().equals("charString"))
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("group"))
@@ -196,7 +196,7 @@ public class DescriptorsBuildingManagerImplTest {
 					new NewGenOfDescriptorsBuilderImpl(2, signal, previousGenOfFactorizableDescriptors);
 			previousGenOfFactorizableDescriptors = new ArrayList<Group>();
 			newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
-			for (ISynTreeIntegrableElement descriptor : newGenOfDescriptors) {
+			for (ISynTreeElement descriptor : newGenOfDescriptors) {
 				if (descriptor.getDescriptorName().equals("charString"))
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("group"))

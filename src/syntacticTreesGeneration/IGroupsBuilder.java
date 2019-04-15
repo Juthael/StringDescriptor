@@ -1,7 +1,7 @@
 package syntacticTreesGeneration;
 
-import copycatModel.synTreeModel.grammar.Groups;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Groups;
 
 public interface IGroupsBuilder {
 

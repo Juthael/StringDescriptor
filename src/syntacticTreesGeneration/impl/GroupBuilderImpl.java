@@ -2,11 +2,11 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.Position;
-import copycatModel.synTreeModel.grammar.Relations;
-import copycatModel.synTreeModel.grammar.Size;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Position;
+import model.copycatModel.synTreeGrammar.Relations;
+import model.copycatModel.synTreeGrammar.Size;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -25,8 +25,8 @@ public class GroupBuilderImpl implements IGroupBuilder {
 	@Override
 	public Group getGroup() throws SynTreeGenerationException, CloneNotSupportedException {
 		Group group;
-		Size size = new Size(false, Integer.toString(listOfGroups.size()));
-		Position position = new Position(false, Settings.AWAITING_POSITION_VALUE);
+		Size size = new Size(Integer.toString(listOfGroups.size()));
+		Position position = new Position(Settings.AWAITING_POSITION_VALUE);
 		Relations relations;
 		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(relationDataContainer, listOfGroups);
 		relations = relationsBuilder.getRelations();

@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -18,7 +18,7 @@ import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
 public class NewGenOfDescriptorsBuilderImplTest {
 
-	private List<ISynTreeIntegrableElement> fullStringDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+	private List<ISynTreeElement> fullStringDescriptors = new ArrayList<ISynTreeElement>();
 	
 	@Test
 	public void whenStringLengthAndSettingsAllowItThenReturnsNextGenOfDescriptors() 
@@ -28,7 +28,7 @@ public class NewGenOfDescriptorsBuilderImplTest {
 		ISignal signal = signalBuilder.getSignal();
 		INewGenOfDescriptorsBuilder newGenOfDescriptorsBuilder = 
 				new NewGenOfDescriptorsBuilderImpl(1, signal, signal.getGroups());
-		List<ISynTreeIntegrableElement> gen2Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
+		List<ISynTreeElement> gen2Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
 		if (gen2Descriptors.isEmpty() && Settings.MAX_NB_OF_DESCRIPTOR_GENERATIONS >= 2)
 			returnsNextGenOfDescriptors = false;
 		List<Group> factorizableGen2Descriptors = new ArrayList<Group>();
@@ -41,7 +41,7 @@ public class NewGenOfDescriptorsBuilderImplTest {
 		printListOfGroupDescriptors(factorizableGen2Descriptors); 
 		System.out.println(""); */
 		newGenOfDescriptorsBuilder = new NewGenOfDescriptorsBuilderImpl(2, signal, factorizableGen2Descriptors);
-		List<ISynTreeIntegrableElement> gen3Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
+		List<ISynTreeElement> gen3Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
 		if (gen3Descriptors.isEmpty() && Settings.MAX_NB_OF_DESCRIPTOR_GENERATIONS >= 3)
 			returnsNextGenOfDescriptors = false;		
 		List<Group> factorizableGen3Descriptors = new ArrayList<Group>();
@@ -54,7 +54,7 @@ public class NewGenOfDescriptorsBuilderImplTest {
 		printListOfGroupDescriptors(factorizableGen3Descriptors); 
 		System.out.println("");	*/
 		newGenOfDescriptorsBuilder = new NewGenOfDescriptorsBuilderImpl(3, signal, factorizableGen3Descriptors);
-		List<ISynTreeIntegrableElement> gen4Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
+		List<ISynTreeElement> gen4Descriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
 		if (gen4Descriptors.isEmpty() && Settings.MAX_NB_OF_DESCRIPTOR_GENERATIONS >= 4)
 			returnsNextGenOfDescriptors = false;		
 		List<Group> factorizableGen4Descriptors = new ArrayList<Group>();
@@ -69,9 +69,9 @@ public class NewGenOfDescriptorsBuilderImplTest {
 		assertTrue(returnsNextGenOfDescriptors);
 	}
 	
-	private void sortNewDescriptors(List<ISynTreeIntegrableElement> listOfNewDescriptors, 
+	private void sortNewDescriptors(List<ISynTreeElement> listOfNewDescriptors, 
 			List<Group> nextListOfFactorizableDescriptors) throws Exception {
-		for (ISynTreeIntegrableElement descriptor : listOfNewDescriptors) {
+		for (ISynTreeElement descriptor : listOfNewDescriptors) {
 			if (descriptor.getDescriptorName().equals("group"))
 				nextListOfFactorizableDescriptors.add((Group) descriptor);
 			else if (descriptor.getDescriptorName().equals("charString"))
@@ -80,8 +80,8 @@ public class NewGenOfDescriptorsBuilderImplTest {
 		}
 	}
 	
-	private void printListOfDescriptors(List<ISynTreeIntegrableElement> listOfDescriptors) {
-		for (ISynTreeIntegrableElement descriptor : listOfDescriptors) {
+	private void printListOfDescriptors(List<ISynTreeElement> listOfDescriptors) {
+		for (ISynTreeElement descriptor : listOfDescriptors) {
 			List<String> propertiesWithPath = descriptor.getListOfPropertiesWithPath();
 			for (String propertyWithPath : propertiesWithPath) {
 				System.out.println(propertyWithPath);
@@ -91,7 +91,7 @@ public class NewGenOfDescriptorsBuilderImplTest {
 	}
 	
 	private void printListOfGroupDescriptors(List<Group> listOfDescriptors) {
-		for (ISynTreeIntegrableElement descriptor : listOfDescriptors) {
+		for (ISynTreeElement descriptor : listOfDescriptors) {
 			List<String> propertiesWithPath = descriptor.getListOfPropertiesWithPath();
 			for (String propertyWithPath : propertiesWithPath) {
 				System.out.println(propertyWithPath);

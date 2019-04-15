@@ -2,10 +2,10 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import syntacticTreesGeneration.ICharStringBuilder;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.INewDescriptorBuilder;
@@ -25,25 +25,25 @@ public class NewDescriptorBuilderImpl implements INewDescriptorBuilder {
 	}
 	
 	@Override
-	public ISynTreeIntegrableElement getNewDescriptor() throws SynTreeGenerationException, CloneNotSupportedException {
-		ISynTreeIntegrableElement synTreeIntegrableElement;
+	public ISynTreeElement getNewDescriptor() throws SynTreeGenerationException, CloneNotSupportedException {
+		ISynTreeElement synTreeElement;
 		boolean newDescriptorWillCoverTheFullString = relationDataContainer.getNewDescriptorWillCoverTheFullString();
 		if (newDescriptorWillCoverTheFullString == true) {
 			ICharStringBuilder charStringBuilder = 
 					new	CharStringBuilderImpl(signal.getDirectionValue(), listOfFactorizableDescriptors, 
 							relationDataContainer);
-			synTreeIntegrableElement = charStringBuilder.getCharString();
+			synTreeElement = charStringBuilder.getCharString();
 		}
 		else {
 			boolean factorizableDescriptorsAreRelated = (relationDataContainer.getListOfEnumerations().size() != 0);
 			if (factorizableDescriptorsAreRelated == true) {
 				IGroupBuilder groupBuilder = new GroupBuilderImpl(listOfFactorizableDescriptors, relationDataContainer);
-				synTreeIntegrableElement = groupBuilder.getGroup();
+				synTreeElement = groupBuilder.getGroup();
 			}
 			else throw new SynTreeGenerationException("NewDescriptorBuilder : "
 					+ "factorizable descriptors don't cover the full string and aren't related." );
 		}
-		return synTreeIntegrableElement;
+		return synTreeElement;
 	}
 	
 }

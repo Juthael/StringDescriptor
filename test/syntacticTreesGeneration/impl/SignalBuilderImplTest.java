@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.Group;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;

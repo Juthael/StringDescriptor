@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
@@ -34,9 +34,9 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	}
 	
 	@Override
-	public List<ISynTreeIntegrableElement> getNewGenOfDescriptors() 
+	public List<ISynTreeElement> getNewGenOfDescriptors() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		List<ISynTreeIntegrableElement> newGenOfDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> newGenOfDescriptors = new ArrayList<ISynTreeElement>();
 		Set<List<Group>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Group> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
 			boolean atLeastOneComponentIsFromTheLastGeneration = 

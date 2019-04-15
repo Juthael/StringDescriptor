@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
+import model.copycatModel.synTreeGrammar.CharString;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;

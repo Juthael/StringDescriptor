@@ -3,8 +3,8 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
 import syntacticTreesGeneration.IGroupBuilder;
 import syntacticTreesGeneration.IGroupsBuilderRelational;
 import syntacticTreesGeneration.IRelationDataContainer;

@@ -3,10 +3,10 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -54,15 +54,15 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	}
 	
 	@Override
-	public List<ISynTreeIntegrableElement> getListOfNewDescriptors() 
+	public List<ISynTreeElement> getListOfNewDescriptors() 
 			throws SynTreeGenerationException, CloneNotSupportedException{
-		List<ISynTreeIntegrableElement> listOfNewDescriptors = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> listOfNewDescriptors = new ArrayList<ISynTreeElement>();
 		for (IRelationDataContainer relationDataContainer : listOfRelationDataContainers) {
 			boolean relationDataContainerIsValid = testIfRelationDataContainerIsValid(relationDataContainer);
 			if (relationDataContainerIsValid == true) {
 				INewDescriptorBuilder iNewDescriptorBuilder = 
 						new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFactorizableDescriptors);
-				ISynTreeIntegrableElement newDescriptor = iNewDescriptorBuilder.getNewDescriptor();
+				ISynTreeElement newDescriptor = iNewDescriptorBuilder.getNewDescriptor();
 				listOfNewDescriptors.add(newDescriptor);
 			}
 		}
@@ -104,7 +104,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 				numberOfNonConstantSequences = 0;
 				numberOfSimpleEnumerations = checkNumberOfSimpleEnumerations(relationDataContainer);
 				if (numberOfRelations > 0 && 
-						numberOfRelations <= Settings.MAX_NB_OF_RELATION && 
+						numberOfRelations <= Settings.MAX_NB_OF_RELATIONS && 
 						numberOfSimpleEnumerations <= Settings.MAX_NB_OF_SIMPLE_ENUMERATIONS_IN_RELATION) {
 					for (IEnumerationRelationalData enumerationRD : relationDataContainer.getListOfEnumerations()) {
 						numberOfDimensions++;
@@ -179,7 +179,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		if (componentsMaxGenerationNumber >= 2) {
 			for (Group group : listOfFactorizableDescriptors) {
 				List<Integer> listOfLetterPositions = 
-						DescriptorSpanGetterImpl.getDescriptorSpan((ISynTreeIntegrableElement) group);
+						DescriptorSpanGetterImpl.getDescriptorSpan((ISynTreeElement) group);
 				if (listOfLetterPositions.size() == 1) {
 					List<String> listOfProperties = group.getListOfPropertiesWithPath();
 					if (listOfProperties.get(2).contains("group/relation"))

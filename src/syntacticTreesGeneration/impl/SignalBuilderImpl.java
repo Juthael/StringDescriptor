@@ -3,14 +3,14 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.Letter;
-import copycatModel.synTreeModel.grammar.PlatonicLetter;
-import copycatModel.synTreeModel.grammar.Position;
-import copycatModel.synTreeModel.grammar.Size;
-import copycatModel.synTreeModel.impl.SignalImpl;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Letter;
+import model.copycatModel.synTreeGrammar.PlatonicLetter;
+import model.copycatModel.synTreeGrammar.Position;
+import model.copycatModel.synTreeGrammar.Size;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.impl.SignalImpl;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 
@@ -28,8 +28,8 @@ public class SignalBuilderImpl implements ISignalBuilder {
 				char iChar = chars[i];
 				String iString = getLetterAlphabeticPositionString(iChar);
 				Letter iLetter = getLetter(iString, Integer.toString(i+1));
-				Size iSize = new Size(false, "1");
-				Position iPosition = new Position(false, Settings.AWAITING_POSITION_VALUE);
+				Size iSize = new Size("1");
+				Position iPosition = new Position(Settings.AWAITING_POSITION_VALUE);
 				Group group = new Group(true, iSize, iPosition, iLetter);
 				listOfGroups.add(group);
 			}
@@ -44,9 +44,9 @@ public class SignalBuilderImpl implements ISignalBuilder {
 	}
 	
 	private Letter getLetter(String platonicLetterValue, String positionValue) {
-		Position position = new Position(false, positionValue);
-		PlatonicLetter platonicLetter = new PlatonicLetter(false, platonicLetterValue);
-		Letter letter = new Letter(true, position, platonicLetter);
+		Position position = new Position(positionValue);
+		PlatonicLetter platonicLetter = new PlatonicLetter(platonicLetterValue);
+		Letter letter = new Letter(position, platonicLetter);
 		return letter;
 	}
 	

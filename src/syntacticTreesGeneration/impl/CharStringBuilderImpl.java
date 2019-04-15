@@ -3,14 +3,14 @@ package syntacticTreesGeneration.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.CharString;
-import copycatModel.synTreeModel.grammar.Direction;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.Groups;
-import copycatModel.synTreeModel.grammar.Relation;
-import copycatModel.synTreeModel.grammar.Size;
-import copycatModel.synTreeModel.grammar.Structure;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.CharString;
+import model.copycatModel.synTreeGrammar.Direction;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.Relation;
+import model.copycatModel.synTreeGrammar.Size;
+import model.copycatModel.synTreeGrammar.Structure;
 import settings.Settings;
 import syntacticTreesGeneration.IGroupsBuilder;
 import syntacticTreesGeneration.ICharStringBuilder;
@@ -32,9 +32,9 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	public CharStringBuilderImpl(String directionValue, List<Group> listOfGroups, 
 			IRelationDataContainer relationDataContainer) 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		direction = new Direction(false, directionValue);
+		direction = new Direction(directionValue);
 		String charStringSizeValue = getCharStringSizeValue(listOfGroups);
-		Size size = new Size(false, charStringSizeValue);
+		Size size = new Size(charStringSizeValue);
 		Relation structureRelation;
 		IGroupsBuilder groupsBuilder;
 		if (relationDataContainer.getListOfEnumerations().size() == 0) {
@@ -48,13 +48,13 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 			else structureRelation = getMonoStructureRelation(listOfGroups);
 		}
 		
-		structure = new Structure(false, size, structureRelation);		
+		structure = new Structure(size, structureRelation);		
 		groups = groupsBuilder.getGroups();
 	}
 	
 	@Override
 	public CharString getCharString() throws SynTreeGenerationException {
-		CharString charString = new CharString(false, direction, structure, groups);
+		CharString charString = new CharString(direction, structure, groups);
 		return charString;
 	}
 	

@@ -2,17 +2,17 @@ package syntacticTreesGeneration.impl;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.AbsCommonDiff;
-import copycatModel.synTreeModel.grammar.CommonDiff;
-import copycatModel.synTreeModel.grammar.Dimension;
-import copycatModel.synTreeModel.grammar.Enumeration;
-import copycatModel.synTreeModel.grammar.Relation;
-import copycatModel.synTreeModel.grammar.Sequence;
-import copycatModel.synTreeModel.grammar.SequenceAndSymmetryRel;
-import copycatModel.synTreeModel.grammar.SequenceRel;
-import copycatModel.synTreeModel.grammar.Symmetry;
-import copycatModel.synTreeModel.grammar.SymmetryRel;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.AbsCommonDiff;
+import model.copycatModel.synTreeGrammar.CommonDiff;
+import model.copycatModel.synTreeGrammar.Dimension;
+import model.copycatModel.synTreeGrammar.Enumeration;
+import model.copycatModel.synTreeGrammar.Relation;
+import model.copycatModel.synTreeGrammar.Sequence;
+import model.copycatModel.synTreeGrammar.SequenceAndSymmetryRel;
+import model.copycatModel.synTreeGrammar.SequenceRel;
+import model.copycatModel.synTreeGrammar.Symmetry;
+import model.copycatModel.synTreeGrammar.SymmetryRel;
 import syntacticTreesGeneration.IRelationBuilder;
 import syntacticTreesGeneration.IRelationalData;
 import syntacticTreesGeneration.ISequenceRelationalData;
@@ -44,7 +44,7 @@ public class RelationBuilderImpl implements IRelationBuilder {
 		String indexedPath;
 		try {
 			indexedPath = relationData.get(0).getIndexedPath();
-			dimension = new Dimension(false, indexedPath);
+			dimension = new Dimension(indexedPath);
 		} 
 		catch (Exception e) {
 			throw new SynTreeGenerationException("RelationBuilder : parameter is empty");
@@ -58,8 +58,8 @@ public class RelationBuilderImpl implements IRelationBuilder {
 		switch (relationalDataList.size()) {
 			case 1:
 				if (relationalDataList.get(0).getName().equals("enumeration")) {
-					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
-					relation = new Relation(false, dimension, enumeration);
+					Enumeration enumeration = new Enumeration(relationalDataList.get(0).getEnumerationValue());
+					relation = new Relation(dimension, enumeration);
 				}
 				else throw new SynTreeGenerationException("Relation Builder : unique relation in RelationalDataList "
 						+ "isn't an enumeration.");
@@ -67,20 +67,20 @@ public class RelationBuilderImpl implements IRelationBuilder {
 			case 2:
 				if (relationalDataList.get(0).getName().equals("enumeration") 
 						&& relationalDataList.get(1).getName().equals("sequence")) {
-					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
+					Enumeration enumeration = new Enumeration(relationalDataList.get(0).getEnumerationValue());
 					ISequenceRelationalData sequenceRelationalData = (ISequenceRelationalData) relationalDataList.get(1);
-					CommonDiff commonDiff = new CommonDiff(false, sequenceRelationalData.getCommonDifference());
+					CommonDiff commonDiff = new CommonDiff(sequenceRelationalData.getCommonDifference());
 					String absCommonDiffString = sequenceRelationalData.getCommonDifference().replace("-", "");
-					AbsCommonDiff absCommonDiff = new AbsCommonDiff(false, absCommonDiffString);
-					Sequence sequence = new Sequence(false, commonDiff, absCommonDiff);
-					relation = new SequenceRel(false, dimension, enumeration, sequence);
+					AbsCommonDiff absCommonDiff = new AbsCommonDiff(absCommonDiffString);
+					Sequence sequence = new Sequence(commonDiff, absCommonDiff);
+					relation = new SequenceRel(dimension, enumeration, sequence);
 				}
 				else if (relationalDataList.get(0).getName().equals("enumeration") 
 						&& relationalDataList.get(1).getName().equals("symmetry")) {
-					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
+					Enumeration enumeration = new Enumeration(relationalDataList.get(0).getEnumerationValue());
 					ISymmetryRelationalData symmetryRelationalData = (ISymmetryRelationalData) relationalDataList.get(1);
-					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());
-					relation = new SymmetryRel(false, dimension, enumeration, symmetry);
+					Symmetry symmetry = new Symmetry(symmetryRelationalData.getTypeOfSymmetry());
+					relation = new SymmetryRel(dimension, enumeration, symmetry);
 				}
 				else throw new SynTreeGenerationException("Relation Builder : list of 2 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence] or [enumeration,symmetry].");
@@ -89,15 +89,15 @@ public class RelationBuilderImpl implements IRelationBuilder {
 				if (relationalDataList.get(0).getName().equals("enumeration") 
 						&& relationalDataList.get(1).getName().equals("sequence") 
 						&& relationalDataList.get(2).getName().equals("symmetry")) {
-					Enumeration enumeration = new Enumeration(false, relationalDataList.get(0).getEnumerationValue());
+					Enumeration enumeration = new Enumeration(relationalDataList.get(0).getEnumerationValue());
 					ISequenceRelationalData sequenceRelationalData = (ISequenceRelationalData) relationalDataList.get(1);
-					CommonDiff commonDiff = new CommonDiff(false, sequenceRelationalData.getCommonDifference());
+					CommonDiff commonDiff = new CommonDiff(sequenceRelationalData.getCommonDifference());
 					String absCommonDiffString = sequenceRelationalData.getCommonDifference().replace("-", "");
-					AbsCommonDiff absCommonDiff = new AbsCommonDiff(false, absCommonDiffString);
-					Sequence sequence = new Sequence(false, commonDiff, absCommonDiff);		
+					AbsCommonDiff absCommonDiff = new AbsCommonDiff(absCommonDiffString);
+					Sequence sequence = new Sequence(commonDiff, absCommonDiff);		
 					ISymmetryRelationalData symmetryRelationalData = (ISymmetryRelationalData) relationalDataList.get(2);
-					Symmetry symmetry = new Symmetry(false, symmetryRelationalData.getTypeOfSymmetry());			
-					relation = new SequenceAndSymmetryRel(false, dimension, enumeration, sequence, symmetry);
+					Symmetry symmetry = new Symmetry(symmetryRelationalData.getTypeOfSymmetry());			
+					relation = new SequenceAndSymmetryRel(dimension, enumeration, sequence, symmetry);
 				}
 				else throw new SynTreeGenerationException("Relation Builder : list of 3 relations in the "
 						+ "RelationalDataList isn't of type [enumeration,sequence,symmetry].");

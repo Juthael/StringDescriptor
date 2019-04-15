@@ -3,8 +3,8 @@ package verbalization.dataEncoding.encoders.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.VerbalizationException;
+import model.copycatModel.synTreeGrammar.CharString;
 import settings.Settings;
 import verbalization.dataEncoding.encoders.IDescriptionCoder;
 import verbalization.dataEncoding.encoders.IRecipeCoder;

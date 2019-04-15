@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.Relations;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Relations;
+import model.synTreeModel.ISignal;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
 import syntacticTreesGeneration.IRelationsBuilder;

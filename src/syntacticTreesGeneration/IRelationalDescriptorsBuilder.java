@@ -2,7 +2,7 @@ package syntacticTreesGeneration;
 
 import java.util.List;
 
-import copycatModel.synTreeModel.grammar.CharString;
+import model.copycatModel.synTreeGrammar.CharString;
 
 public interface IRelationalDescriptorsBuilder {
 

@@ -1,6 +1,7 @@
 package syntacticTreesGeneration.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,35 +11,31 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.AbsCommonDiff;
-import copycatModel.synTreeModel.grammar.CommonDiff;
-import copycatModel.synTreeModel.grammar.Dimension;
-import copycatModel.synTreeModel.grammar.DimensionX2;
-import copycatModel.synTreeModel.grammar.Enumeration;
-import copycatModel.synTreeModel.grammar.Group;
-import copycatModel.synTreeModel.grammar.GroupX2;
-import copycatModel.synTreeModel.grammar.Groups;
-import copycatModel.synTreeModel.grammar.HowManyGroups;
-import copycatModel.synTreeModel.grammar.Position;
-import copycatModel.synTreeModel.grammar.RelationX2;
-import copycatModel.synTreeModel.grammar.Relations;
-import copycatModel.synTreeModel.grammar.RelationsOrLetter;
-import copycatModel.synTreeModel.grammar.Sequence;
-import copycatModel.synTreeModel.grammar.SequenceRel;
-import copycatModel.synTreeModel.grammar.Size;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.AbsCommonDiff;
+import model.copycatModel.synTreeGrammar.CommonDiff;
+import model.copycatModel.synTreeGrammar.Dimension;
+import model.copycatModel.synTreeGrammar.DimensionX;
+import model.copycatModel.synTreeGrammar.Enumeration;
+import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.GroupX;
+import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.HowManyGroups;
+import model.copycatModel.synTreeGrammar.Position;
+import model.copycatModel.synTreeGrammar.Relation;
+import model.copycatModel.synTreeGrammar.RelationX;
+import model.copycatModel.synTreeGrammar.Relations;
+import model.copycatModel.synTreeGrammar.RelationsOrLetter;
+import model.copycatModel.synTreeGrammar.Sequence;
+import model.copycatModel.synTreeGrammar.SequenceRel;
+import model.copycatModel.synTreeGrammar.Size;
+import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
 import syntacticTreesGeneration.INewDescriptorBuilder;
 import syntacticTreesGeneration.IRelationDataContainer;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.ComponentGrouperImpl;
-import syntacticTreesGeneration.impl.DescriptorSpanGetterImpl;
-import syntacticTreesGeneration.impl.Gen2Size1RelationDataContainerBuilderImpl;
-import syntacticTreesGeneration.impl.NewDescriptorBuilderImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
 public class ComponentGrouperImplTest {
 
@@ -148,18 +145,18 @@ public class ComponentGrouperImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<Group> previousGenOfDescriptors = signal.getGroups();
-		CommonDiff commonDiff1 = new CommonDiff(false, "1");
-		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff(false, "1");
-		CommonDiff commonDiff0 = new CommonDiff(false, "0");
-		AbsCommonDiff absCommonDiff0 = new AbsCommonDiff(false, "0");
-		Sequence sequence1 = new Sequence(false, commonDiff1, absCommonDiff1);
-		Sequence sequence0 = new Sequence(false, commonDiff0, absCommonDiff0);
-		Enumeration enumeration12 = new Enumeration(false, "1,2");
-		Enumeration enumeration23 = new Enumeration(false, "2,3");
-		Enumeration enumeration11 = new Enumeration(false, "1,1");
-		Dimension dimensionPlatonicLetter = new Dimension(false, "platonicLetter");
-		Dimension dimensionSize = new Dimension(false, "size");
-		Size size2 = new Size(false, "2");
+		CommonDiff commonDiff1 = new CommonDiff("1");
+		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff("1");
+		CommonDiff commonDiff0 = new CommonDiff("0");
+		AbsCommonDiff absCommonDiff0 = new AbsCommonDiff("0");
+		Sequence sequence1 = new Sequence(commonDiff1, absCommonDiff1);
+		Sequence sequence0 = new Sequence(commonDiff0, absCommonDiff0);
+		Enumeration enumeration12 = new Enumeration("1,2");
+		Enumeration enumeration23 = new Enumeration("2,3");
+		Enumeration enumeration11 = new Enumeration("1,1");
+		Dimension dimensionPlatonicLetter = new Dimension("platonicLetter");
+		Dimension dimensionSize = new Dimension("size");
+		Size size2 = new Size("2");
 		//Build Gen2Size1_A
 		ArrayList<Group> listOf1ComponentA = new ArrayList<Group>();
 		Group groupA = (Group) previousGenOfDescriptors.get(0);
@@ -201,25 +198,40 @@ public class ComponentGrouperImplTest {
 		}			
 		
 		//Build Gen2usual
-		DimensionX2 dimensionX2 = new DimensionX2(false, dimensionPlatonicLetter, dimensionSize);
+		List<Dimension> listOfDimensionsX2 = new ArrayList<Dimension>();
+		listOfDimensionsX2.add(dimensionPlatonicLetter);
+		listOfDimensionsX2.add(dimensionSize);
+		DimensionX dimensionX2 = new DimensionX(listOfDimensionsX2);
 		//AB
-		SequenceRel relationABplatonicLetter = new SequenceRel(false, dimensionPlatonicLetter, enumeration12, sequence1);
-		SequenceRel relationABSize = new SequenceRel(false, dimensionSize, enumeration11, sequence0);
-		RelationX2 relationX2AB = new RelationX2(false, relationABplatonicLetter, relationABSize);
-		HowManyGroups groupX2AB = new GroupX2(false, previousGenOfDescriptors.get(0), previousGenOfDescriptors.get(1));
-		Groups groupsAB = new Groups(false, size2, groupX2AB);
-		RelationsOrLetter relationsAB = new Relations(false, groupsAB, dimensionX2, relationX2AB);
-		Position positionAB = new Position(false, Settings.AWAITING_POSITION_VALUE);
+		SequenceRel relationABplatonicLetter = new SequenceRel(dimensionPlatonicLetter, enumeration12, sequence1);
+		SequenceRel relationABSize = new SequenceRel(dimensionSize, enumeration11, sequence0);
+		List<Relation> listOfRelationsAB = new ArrayList<Relation>();
+		listOfRelationsAB.add(relationABplatonicLetter);
+		listOfRelationsAB.add(relationABSize);
+		RelationX relationX2AB = new RelationX(listOfRelationsAB);
+		List<Group> previousGenOfDescriptors01 = new ArrayList<Group>();
+		previousGenOfDescriptors01.add(previousGenOfDescriptors.get(0));
+		previousGenOfDescriptors01.add(previousGenOfDescriptors.get(1));
+		HowManyGroups groupX2AB = new GroupX(previousGenOfDescriptors01);
+		Groups groupsAB = new Groups(size2, groupX2AB);
+		RelationsOrLetter relationsAB = new Relations(groupsAB, dimensionX2, relationX2AB);
+		Position positionAB = new Position(Settings.AWAITING_POSITION_VALUE);
 		Group groupAB = new Group(false, size2, positionAB, relationsAB);
 		previousDescriptors.add(groupAB);
 		//BC
-		SequenceRel relationBCplatonicLetter = new SequenceRel(false, dimensionPlatonicLetter, enumeration23, sequence1);
-		SequenceRel relationBCSize = new SequenceRel(false, dimensionSize, enumeration11, sequence0);
-		RelationX2 relationX2BC = new RelationX2(false, relationBCplatonicLetter, relationBCSize);
-		HowManyGroups groupX2BC = new GroupX2(false, previousGenOfDescriptors.get(1), previousGenOfDescriptors.get(2));
-		Groups groupsBC = new Groups(false, size2, groupX2BC);
-		RelationsOrLetter relationsBC = new Relations(false, groupsBC, dimensionX2, relationX2BC);
-		Position positionBC = new Position(false, Settings.AWAITING_POSITION_VALUE);
+		SequenceRel relationBCplatonicLetter = new SequenceRel(dimensionPlatonicLetter, enumeration23, sequence1);
+		SequenceRel relationBCSize = new SequenceRel(dimensionSize, enumeration11, sequence0);
+		List<Relation> listOfRelationsBC = new ArrayList<Relation>();
+		listOfRelationsBC.add(relationBCplatonicLetter);
+		listOfRelationsBC.add(relationBCSize);
+		RelationX relationX2BC = new RelationX(listOfRelationsBC);
+		List<Group> previousGenOfDescriptors12 = new ArrayList<Group>();
+		previousGenOfDescriptors12.add(previousGenOfDescriptors.get(1));
+		previousGenOfDescriptors12.add(previousGenOfDescriptors.get(2));
+		HowManyGroups groupX2BC = new GroupX(previousGenOfDescriptors12);
+		Groups groupsBC = new Groups(size2, groupX2BC);
+		RelationsOrLetter relationsBC = new Relations(groupsBC, dimensionX2, relationX2BC);
+		Position positionBC = new Position(Settings.AWAITING_POSITION_VALUE);
 		Group groupBC = new Group(false, size2, positionBC, relationsBC);
 		previousDescriptors.add(groupBC);		
 		//Assert
@@ -277,18 +289,18 @@ public class ComponentGrouperImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<Group> previousGenOfDescriptors = signal.getGroups();
-		CommonDiff commonDiff1 = new CommonDiff(false, "1");
-		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff(false, "1");
-		CommonDiff commonDiff0 = new CommonDiff(false, "0");
-		AbsCommonDiff absCommonDiff0 = new AbsCommonDiff(false, "0");
-		Sequence sequence1 = new Sequence(false, commonDiff1, absCommonDiff1);
-		Sequence sequence0 = new Sequence(false, commonDiff0, absCommonDiff0);
-		Enumeration enumeration12 = new Enumeration(false, "1,2");
-		Enumeration enumeration23 = new Enumeration(false, "2,3");
-		Enumeration enumeration11 = new Enumeration(false, "1,1");
-		Dimension dimensionPlatonicLetter = new Dimension(false, "platonicLetter");
-		Dimension dimensionSize = new Dimension(false, "size");
-		Size size2 = new Size(false, "2");
+		CommonDiff commonDiff1 = new CommonDiff("1");
+		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff("1");
+		CommonDiff commonDiff0 = new CommonDiff("0");
+		AbsCommonDiff absCommonDiff0 = new AbsCommonDiff("0");
+		Sequence sequence1 = new Sequence(commonDiff1, absCommonDiff1);
+		Sequence sequence0 = new Sequence(commonDiff0, absCommonDiff0);
+		Enumeration enumeration12 = new Enumeration("1,2");
+		Enumeration enumeration23 = new Enumeration("2,3");
+		Enumeration enumeration11 = new Enumeration("1,1");
+		Dimension dimensionPlatonicLetter = new Dimension("platonicLetter");
+		Dimension dimensionSize = new Dimension("size");
+		Size size2 = new Size("2");
 		//Build Gen2Size1_A
 		ArrayList<Group> listOf1ComponentA = new ArrayList<Group>();
 		Group groupA = (Group) previousGenOfDescriptors.get(0);
@@ -330,25 +342,40 @@ public class ComponentGrouperImplTest {
 		}			
 		
 		//Build Gen2usual
-		DimensionX2 dimensionX2 = new DimensionX2(false, dimensionPlatonicLetter, dimensionSize);
+		List<Dimension> listOfDimensionsX2 = new ArrayList<Dimension>();
+		listOfDimensionsX2.add(dimensionPlatonicLetter);
+		listOfDimensionsX2.add(dimensionSize);
+		DimensionX dimensionX2 = new DimensionX(listOfDimensionsX2);
 		//AB
-		SequenceRel relationABplatonicLetter = new SequenceRel(false, dimensionPlatonicLetter, enumeration12, sequence1);
-		SequenceRel relationABSize = new SequenceRel(false, dimensionSize, enumeration11, sequence0);
-		RelationX2 relationX2AB = new RelationX2(false, relationABplatonicLetter, relationABSize);
-		HowManyGroups groupX2AB = new GroupX2(false, previousGenOfDescriptors.get(0), previousGenOfDescriptors.get(1));
-		Groups groupsAB = new Groups(false, size2, groupX2AB);
-		RelationsOrLetter relationsAB = new Relations(false, groupsAB, dimensionX2, relationX2AB);
-		Position positionAB = new Position(false, Settings.AWAITING_POSITION_VALUE);
+		SequenceRel relationABplatonicLetter = new SequenceRel(dimensionPlatonicLetter, enumeration12, sequence1);
+		SequenceRel relationABSize = new SequenceRel(dimensionSize, enumeration11, sequence0);
+		List<Relation> listOfRelationsAB = new ArrayList<Relation>();
+		listOfRelationsAB.add(relationABplatonicLetter);
+		listOfRelationsAB.add(relationABSize);		
+		RelationX relationX2AB = new RelationX(listOfRelationsAB);
+		List<Group> previousGenOfDescriptors01B = new ArrayList<Group>();
+		previousGenOfDescriptors01B.add(previousGenOfDescriptors.get(0));
+		previousGenOfDescriptors01B.add(previousGenOfDescriptors.get(1));		
+		HowManyGroups groupX2AB = new GroupX(previousGenOfDescriptors01B);
+		Groups groupsAB = new Groups(size2, groupX2AB);
+		RelationsOrLetter relationsAB = new Relations(groupsAB, dimensionX2, relationX2AB);
+		Position positionAB = new Position(Settings.AWAITING_POSITION_VALUE);
 		Group groupAB = new Group(false, size2, positionAB, relationsAB);
 		previousDescriptors.add(groupAB);
 		//BC
-		SequenceRel relationBCplatonicLetter = new SequenceRel(false, dimensionPlatonicLetter, enumeration23, sequence1);
-		SequenceRel relationBCSize = new SequenceRel(false, dimensionSize, enumeration11, sequence0);
-		RelationX2 relationX2BC = new RelationX2(false, relationBCplatonicLetter, relationBCSize);
-		HowManyGroups groupX2BC = new GroupX2(false, previousGenOfDescriptors.get(1), previousGenOfDescriptors.get(2));
-		Groups groupsBC = new Groups(false, size2, groupX2BC);
-		RelationsOrLetter relationsBC = new Relations(false, groupsBC, dimensionX2, relationX2BC);
-		Position positionBC = new Position(false, Settings.AWAITING_POSITION_VALUE);
+		SequenceRel relationBCplatonicLetter = new SequenceRel(dimensionPlatonicLetter, enumeration23, sequence1);
+		SequenceRel relationBCSize = new SequenceRel(dimensionSize, enumeration11, sequence0);
+		List<Relation> listOfRelationsBC = new ArrayList<Relation>();
+		listOfRelationsBC.add(relationBCplatonicLetter);
+		listOfRelationsBC.add(relationBCSize);
+		RelationX relationX2BC = new RelationX(listOfRelationsBC);
+		List<Group> previousGenOfDescriptors12B = new ArrayList<Group>();
+		previousGenOfDescriptors12B.add(previousGenOfDescriptors.get(1));
+		previousGenOfDescriptors12B.add(previousGenOfDescriptors.get(2));		
+		HowManyGroups groupX2BC = new GroupX(previousGenOfDescriptors12B);
+		Groups groupsBC = new Groups(size2, groupX2BC);
+		RelationsOrLetter relationsBC = new Relations(groupsBC, dimensionX2, relationX2BC);
+		Position positionBC = new Position(Settings.AWAITING_POSITION_VALUE);
 		Group groupBC = new Group(false, size2, positionBC, relationsBC);
 		previousDescriptors.add(groupBC);		
 		//Assert

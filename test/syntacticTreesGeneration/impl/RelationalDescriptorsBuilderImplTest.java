@@ -8,9 +8,9 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.grammar.CharString;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.CharString;
+import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;

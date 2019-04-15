@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import copycatModel.synTreeModel.ISignal;
-import copycatModel.synTreeModel.ISynTreeIntegrableElement;
-import copycatModel.synTreeModel.grammar.Group;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Group;
+import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
 import syntacticTreesGeneration.INewDescriptorBuilder;
@@ -93,7 +93,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	@Test
 	public void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		List<ISynTreeIntegrableElement> newGroups = new ArrayList<ISynTreeIntegrableElement>();
+		List<ISynTreeElement> newGroups = new ArrayList<ISynTreeElement>();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderA = 
 				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
 		List<IRelationDataContainer> listOfRDContainerA = 
