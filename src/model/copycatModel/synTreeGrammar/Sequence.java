@@ -3,8 +3,13 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
+import model.copycatModel.ordSetGrammar.CommonDiffOS;
+import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -30,7 +35,7 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(commonDiff, absCommonDiff));
 		return componentDescriptors;
@@ -46,5 +51,18 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement sequenceOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer sequenceIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String sequenceID = getDescriptorName().concat(sequenceIndex.toString());
+		CommonDiffOS commonDiffOS = (CommonDiffOS) commonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		AbsCommonDiffOS absCommonDiffOS = 
+				(AbsCommonDiffOS) absCommonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		sequenceOS = new SequenceOS(sequenceID, commonDiffOS, absCommonDiffOS);
+		return sequenceOS;		
+	}	
 
 }

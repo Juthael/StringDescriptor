@@ -13,7 +13,7 @@ public abstract class RelationsOrLetter extends SynTreeElementImpl implements IS
 	}
 
 	@Override
-	abstract protected List<IElement> buildListOfComponents();
+	abstract protected List<IElement> getListOfComponents();
 
 	@Override
 	abstract public String getDescriptorName();

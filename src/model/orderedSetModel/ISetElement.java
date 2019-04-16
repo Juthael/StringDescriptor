@@ -12,7 +12,7 @@ public interface ISetElement extends IElement {
 	
 	Map<String, Set<String>> getRelation();
 	
-	List<String> getElementDescription();
+	List<String> getLowerSetDescription();
 	
 	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
 	

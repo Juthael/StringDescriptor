@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.IrrelevantSetElementImpl;
+import model.orderedSetModel.impl.NonMinimalIrrelevantSetElement;
 
-public class RelationXOS extends IrrelevantSetElementImpl implements HowManyRelationsOS {
+public class RelationXOS extends NonMinimalIrrelevantSetElement implements HowManyRelationsOS {
 
+	private static final String PARTIAL_NAME = "relationX";
 	private List<RelationOS> listOfRelations;
 	
 	public RelationXOS(String elementID, List<RelationOS> listOfRelations) {
@@ -15,15 +16,16 @@ public class RelationXOS extends IrrelevantSetElementImpl implements HowManyRela
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.addAll(listOfRelations);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		String name = PARTIAL_NAME.concat(Integer.toString(listOfRelations.size()));
+		return name;
 	}
 
 }

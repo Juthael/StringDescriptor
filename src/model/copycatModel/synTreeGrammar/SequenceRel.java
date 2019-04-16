@@ -3,8 +3,14 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
+import model.copycatModel.ordSetGrammar.SequenceOS;
+import model.copycatModel.ordSetGrammar.SequenceRelOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -29,7 +35,7 @@ public class SequenceRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimension, enumeration, sequence));
 		return componentDescriptors;
@@ -38,9 +44,22 @@ public class SequenceRel extends Relation implements ISynTreeElement, Cloneable 
 	@Override
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
-		for (IElement component : buildListOfComponents())
+		for (IElement component : getListOfComponents())
 			listOfRelevantComponents.add((SynTreeElementImpl) component);
 		return listOfRelevantComponents;
 	}	
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement sequenceRelOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer sequenceRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String sequenceRelID = getDescriptorName().concat(sequenceRelIndex.toString());
+		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		SequenceOS sequenceOS = (SequenceOS) sequence.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		sequenceRelOS = new SequenceRelOS(sequenceRelID, dimensionOS, enumerationOS, sequenceOS);
+		return sequenceRelOS;		
+	}		
 
 }

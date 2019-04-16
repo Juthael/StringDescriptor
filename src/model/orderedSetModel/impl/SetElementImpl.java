@@ -42,24 +42,12 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 	public String getElementID() {
 		return elementID;
 	}
-
-	@Override
-	public void setMayBeTheCodedElement(boolean mayBeTheCodedElement) {
-		this.mayBeTheCodedElement = mayBeTheCodedElement;
-
-	}
-
-	@Override
-	public void setIsTheCodedElement(boolean isTheCodedElement) {
-		this.isTheCodedElement = isTheCodedElement;
-
-	}
 	
 	@Override
 	public Map<String, Set<String>> getRelation() {
 		Map<String, Set<String>> relation = new HashMap<String, Set<String>>();
 		relation.put(getElementID(), getLowerSet());
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ISetElement setComponent = (SetElementImpl) component;
 			relation.putAll(setComponent.getRelation());
@@ -68,12 +56,12 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 	}
 
 	@Override
-	public List<String> getElementDescription() {
+	public List<String> getLowerSetDescription() {
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ISetElement setComponent = (SetElementImpl) component;
-			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getElementDescription();
+			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getLowerSetDescription();
 			for (String componentMaximalString : listOfMaximalStringsOfComponentLowerSet) {
 				String maximalString = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalString);
 				listOfMaximalStringsOfElementLowerSet.add(maximalString);
@@ -102,7 +90,7 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 	protected Set<String> getUnionOfComponentsLowerSets() {
 		Set<String> unionOfComponentsLowerSets = new HashSet<String>();
 		List<SetElementImpl> listOfComponents = new ArrayList<SetElementImpl>();
-		for (IElement component : buildListOfComponents()) {
+		for (IElement component : getListOfComponents()) {
 			listOfComponents.add((SetElementImpl) component);
 		}
 		for (SetElementImpl component : listOfComponents) {
@@ -110,11 +98,20 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 		}
 		return unionOfComponentsLowerSets;
 	}
+	
+	@Override
+	public void setMayBeTheCodedElement(boolean mayBeTheCodedElement) {
+		this.mayBeTheCodedElement = mayBeTheCodedElement;
+
+	}
 
 	@Override
-	abstract protected List<IElement> buildListOfComponents();
+	public void setIsTheCodedElement(boolean isTheCodedElement) {
+		this.isTheCodedElement = isTheCodedElement;
+
+	}	
 
 	@Override
-	abstract public String getDescriptorName();	
+	abstract public String getDescriptorName();
 
 }

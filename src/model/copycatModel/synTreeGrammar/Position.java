@@ -2,8 +2,13 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.PositionOS;
+import model.copycatModel.ordSetGrammar.SpecialPositionOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -41,7 +46,7 @@ public class Position extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -53,7 +58,8 @@ public class Position extends SynTreeElementImpl implements ISynTreeElement, Clo
 	
 	@Override
 	protected void doUpdatePosition(String newPositionValue) {
-		if (Settings.AWAITING_POSITION_VALUE.equals(positionValue) && !Settings.NO_POSITION_INFORMATION.equals(newPositionValue)) {
+		if (Settings.AWAITING_POSITION_VALUE.equals(positionValue) 
+				&& !Settings.NO_POSITION_INFORMATION.equals(newPositionValue)) {
 			if (newPositionValue.contains(Settings.POSITION_VALUES_SEPARATOR)) {
 				String[] positionValuesArray = newPositionValue.split(Settings.POSITION_VALUES_SEPARATOR);
 				positionValue = positionValuesArray[0];
@@ -91,5 +97,22 @@ public class Position extends SynTreeElementImpl implements ISynTreeElement, Clo
 		listOfPropertiesWithPath.add(sB.toString());
 		return listOfPropertiesWithPath;
 	}		
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement positionOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer positionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String positionID = getDescriptorName().concat(positionIndex.toString());
+		MinimalSetElement positionProperty = new MinimalSetElement(positionValue);
+		if (specialPositionValue.isEmpty()){
+			positionOS = new PositionOS(positionID, positionProperty);
+		}
+		else {
+			MinimalSetElement specialPositionProperty = new MinimalSetElement(specialPositionValue);
+			positionOS = new SpecialPositionOS(positionID, positionProperty, specialPositionProperty);
+		}
+		return positionOS;		
+	}	
 	
 }

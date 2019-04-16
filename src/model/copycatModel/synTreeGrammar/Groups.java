@@ -3,9 +3,14 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.GroupsOS;
+import model.copycatModel.ordSetGrammar.HowManyGroupsOS;
+import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -35,7 +40,7 @@ public class Groups extends SynTreeElementImpl implements ISynTreeElement, Clone
 		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupX.getDescriptorName().equals("group")){
 			this.size = size;
 			this.groupHM = groupX;
-			List<IElement> componentDescriptors = buildListOfComponents();
+			List<IElement> componentDescriptors = getListOfComponents();
 			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, componentDescriptors);	
 		} else throw new SynTreeGenerationException("Groups : illegal parameter values in constructor");
 	}
@@ -54,7 +59,7 @@ public class Groups extends SynTreeElementImpl implements ISynTreeElement, Clone
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(size, groupHM));
 		return componentDescriptors;
@@ -72,5 +77,17 @@ public class Groups extends SynTreeElementImpl implements ISynTreeElement, Clone
 		listOfRelevantComponentsForPositionUpdate.add(singleGroup);
 		return listOfRelevantComponentsForPositionUpdate;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement groupsOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer groupsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String groupsID = getDescriptorName().concat(groupsIndex.toString());
+		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		HowManyGroupsOS groupHMOS = (HowManyGroupsOS) groupHM.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		groupsOS = new GroupsOS(groupsID, sizeOS, groupHMOS);
+		return groupsOS;		
+	}	
 
 }

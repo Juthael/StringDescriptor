@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.IrrelevantSetElementImpl;
+import model.orderedSetModel.impl.NonMinimalIrrelevantSetElement;
 
-public class GroupXOS extends IrrelevantSetElementImpl implements HowManyGroupsOS {
+public class GroupXOS extends NonMinimalIrrelevantSetElement implements HowManyGroupsOS {
 
+	private static final String PARTIAL_NAME = "groupX";
 	private List<GroupOS> listOfGroups;
 	
 	public GroupXOS(String elementID, List<GroupOS> listOfGroups) {
@@ -15,15 +16,16 @@ public class GroupXOS extends IrrelevantSetElementImpl implements HowManyGroupsO
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.addAll(listOfGroups);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		String name = PARTIAL_NAME.concat(Integer.toString(listOfGroups.size()));
+		return name;
 	}
 
 }

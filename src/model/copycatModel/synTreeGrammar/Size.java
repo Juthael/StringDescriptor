@@ -2,8 +2,12 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -25,7 +29,7 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 	}
 	
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		ArrayList<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -50,5 +54,16 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
 	}	
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement sizeOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer sizeIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String sizeID = getDescriptorName().concat(sizeIndex.toString());
+		MinimalSetElement sizeProperty = new MinimalSetElement(sizeValue);
+		sizeOS = new SizeOS(sizeID, sizeProperty);
+		return sizeOS;		
+	}		
 	
 }

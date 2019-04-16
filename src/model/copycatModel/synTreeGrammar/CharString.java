@@ -3,8 +3,14 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.CharStringOS;
+import model.copycatModel.ordSetGrammar.DirectionOS;
+import model.copycatModel.ordSetGrammar.GroupsOS;
+import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -32,7 +38,7 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 	}
 	
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(direction, structure, groups));
 		return componentDescriptors;
@@ -42,5 +48,18 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement charStringOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer charStringIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String charStringID = getDescriptorName().concat(charStringIndex.toString());
+		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		charStringOS = new CharStringOS(charStringID, directionOS, structureOS, groupsOS);
+		return charStringOS;
+	}	
 	
 }

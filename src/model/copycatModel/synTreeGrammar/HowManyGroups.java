@@ -14,7 +14,7 @@ public abstract class HowManyGroups extends SynTreeElementImpl implements ISynTr
 	}
 
 	@Override
-	abstract protected List<IElement> buildListOfComponents();
+	abstract protected List<IElement> getListOfComponents();
 	
 	@Override
 	abstract public String getDescriptorName();	

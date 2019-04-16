@@ -2,8 +2,12 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -24,7 +28,7 @@ public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElemen
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -48,6 +52,17 @@ public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElemen
 	@Override
 	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
-	}		
+	}	
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement platonicLetterOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer platonicLetterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String platonicLetterID = getDescriptorName().concat(platonicLetterIndex.toString());
+		MinimalSetElement platonicLetterProperty = new MinimalSetElement(platonicLetterValue);
+		platonicLetterOS = new PlatonicLetterOS(platonicLetterID, platonicLetterProperty);
+		return platonicLetterOS;		
+	}	
 
 }

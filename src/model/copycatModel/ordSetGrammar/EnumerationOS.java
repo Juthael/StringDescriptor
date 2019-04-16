@@ -4,28 +4,29 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.PropertyOSImpl;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class EnumerationOS extends SetElementImpl implements ISetElement {
+public class EnumerationOS extends NonMinimalRelevantSetElement implements ISetElement {
 
-	PropertyOSImpl enumerationProperty;
+	private static final String NAME = "enumeration";
+	private MinimalSetElement enumerationProperty;
 	
-	public EnumerationOS(String elementID, PropertyOSImpl enumerationProperty) {
+	public EnumerationOS(String elementID, MinimalSetElement enumerationProperty) {
 		super(elementID);
 		this.enumerationProperty = enumerationProperty;
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(enumerationProperty);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

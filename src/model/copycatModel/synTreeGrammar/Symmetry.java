@@ -2,9 +2,13 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -36,7 +40,7 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}
 
 	@Override
-	protected ArrayList<IElement> buildListOfComponents(){
+	protected ArrayList<IElement> getListOfComponents(){
 		ArrayList<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -60,6 +64,17 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 	@Override
 	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
+	}	
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement symmetryOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer symmetryIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String symmetryID = getDescriptorName().concat(symmetryIndex.toString());
+		MinimalSetElement symmetryProperty = new MinimalSetElement(symmetryValue);
+		symmetryOS = new SymmetryOS(symmetryID, symmetryProperty);
+		return symmetryOS;		
 	}	
 
 }

@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class GroupOS extends SetElementImpl implements HowManyGroupsOS {
+public class GroupOS extends NonMinimalRelevantSetElement implements HowManyGroupsOS {
 
+	private static final String NAME = "group";
 	private SizeOS size;
 	private PositionOS position;
 	private RelationsOrLetterOS relationsOrLetter;
@@ -27,15 +28,17 @@ public class GroupOS extends SetElementImpl implements HowManyGroupsOS {
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(size);
+		listOfComponents.add(position);
+		listOfComponents.add(relationsOrLetter);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

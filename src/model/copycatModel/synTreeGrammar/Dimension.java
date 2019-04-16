@@ -2,8 +2,12 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.impl.DimensionEncodingManager;
@@ -25,7 +29,7 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
+	protected List<IElement> getListOfComponents() {
 		List<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -55,5 +59,16 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 		String codedDimension = DimensionEncodingManager.getDimensionCodeFromIndexedPath(fullDimensionValue);
 		return codedDimension;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement dimensionOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer dimensionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String dimensionID = getDescriptorName().concat(dimensionIndex.toString());
+		MinimalSetElement dimensionProperty = new MinimalSetElement(getDimensionCode(indexedPath));
+		dimensionOS = new DimensionOS(dimensionID, dimensionProperty);
+		return dimensionOS;		
+	}	
 
 }

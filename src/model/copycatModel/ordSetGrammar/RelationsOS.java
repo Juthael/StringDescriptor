@@ -4,10 +4,11 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class RelationsOS extends SetElementImpl implements ISetElement {
+public class RelationsOS extends NonMinimalRelevantSetElement implements ISetElement {
 
+	private static final String NAME = "relations";
 	private HowManyDimensionsOS dimensionHM;
 	private HowManyRelationsOS relationsHM;
 	private GroupsOS groups;
@@ -20,15 +21,17 @@ public class RelationsOS extends SetElementImpl implements ISetElement {
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(dimensionHM);
+		listOfComponents.add(relationsHM);
+		listOfComponents.add(groups);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

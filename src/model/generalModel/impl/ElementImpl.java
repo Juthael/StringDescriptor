@@ -28,7 +28,7 @@ public abstract class ElementImpl implements IElement {
 	@Override
 	public List<String> getListOfPropertiesWithPath(){
 		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement componentDescriptor : listOfComponents) {
 			List<String> listOfComponentPropertiesWithPath = componentDescriptor.getListOfPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentPropertiesWithPath){
@@ -49,7 +49,6 @@ public abstract class ElementImpl implements IElement {
 			listOfPropertiesWithPathWithoutQuantifiers.add(propertyWithoutQuantifiers);
 		}
 		return listOfPropertiesWithPathWithoutQuantifiers;
-		
 	}	
 
 	@Override
@@ -60,17 +59,19 @@ public abstract class ElementImpl implements IElement {
 		return setOfAllPropertyListsAccessibleFromThisDescriptor;
 	}
 	
-	public Set<List<String>> getSetOfAllPropertyListsAccessibleFromComponents(){
+	private Set<List<String>> getSetOfAllPropertyListsAccessibleFromComponents(){
 		Set<List<String>> setOfAllPropertyListsAccessibleFromComponents = new HashSet<List<String>>();
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			setOfAllPropertyListsAccessibleFromComponents.add(component.getListOfPropertiesWithPath());
 		}
 		return setOfAllPropertyListsAccessibleFromComponents;
 	}
 
-	//Abstract
-	abstract protected List<IElement> buildListOfComponents();	
+	protected List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		return listOfComponents;
+	}
 	
 	@Override
 	abstract public String getDescriptorName();

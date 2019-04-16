@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.IrrelevantSetElementImpl;
+import model.orderedSetModel.impl.NonMinimalIrrelevantSetElement;
 
-public class DimensionXOS extends IrrelevantSetElementImpl implements HowManyDimensionsOS {
+public class DimensionXOS extends NonMinimalIrrelevantSetElement implements HowManyDimensionsOS {
 
+	private static final String PARTIAL_NAME = "dimensionX";
 	private List<DimensionOS> listOfDimensions;
 	
 	public DimensionXOS(String elementID, List<DimensionOS> listOfDimensions) {
@@ -15,15 +16,16 @@ public class DimensionXOS extends IrrelevantSetElementImpl implements HowManyDim
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.addAll(listOfDimensions);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		String name = PARTIAL_NAME.concat(Integer.toString(listOfDimensions.size()));
+		return name;
 	}
 
 }

@@ -2,9 +2,13 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.RelationOS;
+import model.copycatModel.ordSetGrammar.RelationXOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 
@@ -21,7 +25,7 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
+	protected List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		for (Relation relation : listOfRelations)
 			listOfComponents.add(relation);
@@ -48,5 +52,20 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfRelations.size()));
 		return name;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement relationXOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer relationXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String relationXID = getDescriptorName().concat(relationXIndex.toString());
+		List<RelationOS> listOfRelationsOS = new ArrayList<RelationOS>();
+		for (Relation relation : listOfRelations) {
+			RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			listOfRelationsOS.add(relationOS);
+		}
+		relationXOS = new RelationXOS(relationXID, listOfRelationsOS);
+		return relationXOS;		
+	}		
 
 }

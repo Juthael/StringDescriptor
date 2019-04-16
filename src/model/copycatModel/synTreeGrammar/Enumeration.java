@@ -2,8 +2,12 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -25,7 +29,7 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>();
 		return componentDescriptors;
 	}
@@ -49,6 +53,17 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	@Override
 	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
-	}		
+	}	
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement enumerationOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer enumerationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String enumerationID = getDescriptorName().concat(enumerationIndex.toString());
+		MinimalSetElement enumerationProperty = new MinimalSetElement(enumerationValue);
+		enumerationOS = new EnumerationOS(enumerationID, enumerationProperty);
+		return enumerationOS;		
+	}
 
 }

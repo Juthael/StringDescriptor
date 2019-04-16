@@ -1,33 +1,32 @@
 package model.copycatModel.ordSetGrammar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.PropertyOSImpl;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class AbsCommonDiffOS extends SetElementImpl implements ISetElement {
+public class AbsCommonDiffOS extends NonMinimalRelevantSetElement implements ISetElement {
 	
-	private static final String name = "absCommonDiff";
-	private PropertyOSImpl absCommonDiffProperty;
+	private static final String NAME = "absCommonDiff";
+	private MinimalSetElement absCommonDiffProperty;
 
-	public AbsCommonDiffOS(String elementID, PropertyOSImpl absCommonDiffProperty) {
+	public AbsCommonDiffOS(String elementID, MinimalSetElement absCommonDiffProperty) {
 		super(elementID);
 		this.absCommonDiffProperty = absCommonDiffProperty;
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		List<IElement> listOfComponents = new ArrayList<IElement>();
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(absCommonDiffProperty);
 		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		return name;
+		return NAME;
 	}
 
 }

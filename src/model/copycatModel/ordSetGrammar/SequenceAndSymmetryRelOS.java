@@ -2,6 +2,8 @@ package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
 
+import model.generalModel.IElement;
+
 public class SequenceAndSymmetryRelOS extends RelationOS implements HowManyRelationsOS {
 
 	private SequenceOS sequence;
@@ -13,5 +15,13 @@ public class SequenceAndSymmetryRelOS extends RelationOS implements HowManyRelat
 		this.sequence = sequence;
 		this.symmetry = symmetry;
 	}
+	
+	@Override
+	protected List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(sequence);
+		listOfComponents.add(symmetry);
+		return listOfComponents;
+	}		
 
 }

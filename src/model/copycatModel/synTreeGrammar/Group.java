@@ -3,9 +3,15 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.GroupOS;
+import model.copycatModel.ordSetGrammar.PositionOS;
+import model.copycatModel.ordSetGrammar.RelationsOrLetterOS;
+import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -52,7 +58,7 @@ public class Group extends HowManyGroups implements Cloneable, ISynTreeElement {
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(size, position, relationsOrLetter));
 		return componentDescriptors;
@@ -77,6 +83,20 @@ public class Group extends HowManyGroups implements Cloneable, ISynTreeElement {
 			}
 		}
 		return listOfRelevantPropertiesWithPath;
+	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement groupOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer groupIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String groupID = getDescriptorName().concat(groupIndex.toString());
+		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		RelationsOrLetterOS relationsOrLetterOS = 
+				(RelationsOrLetterOS) relationsOrLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		groupOS = new GroupOS(groupID, sizeOS, positionOS, relationsOrLetterOS);
+		return groupOS;		
 	}	
 
 }

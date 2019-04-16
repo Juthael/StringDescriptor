@@ -87,7 +87,7 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	protected void updateComponentsPosition(String newPosition,	List<IElement> componentDescriptors) {
 		for (IElement componentDescriptor : componentDescriptors) {
 			SynTreeElementImpl synTreeComponent = (SynTreeElementImpl) componentDescriptor;
-			synTreeComponent.updatePosition(newPosition, synTreeComponent.buildListOfComponents());
+			synTreeComponent.updatePosition(newPosition, synTreeComponent.getListOfComponents());
 		}
 	}
 	
@@ -105,7 +105,7 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 					sB.append(Settings.POSITION_VALUES_SEPARATOR);
 					sB.append(specialPositionValue);	
 				}
-				componentDescriptor.updatePosition(sB.toString(), componentDescriptor.buildListOfComponents());
+				componentDescriptor.updatePosition(sB.toString(), componentDescriptor.getListOfComponents());
 				positionIndex++;			
 			}
 		} else throw new SynTreeGenerationException(
@@ -114,7 +114,7 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
-		for (IElement component : buildListOfComponents()) {
+		for (IElement component : getListOfComponents()) {
 			listOfRelevantComponents.add((SynTreeElementImpl) component);
 		}
 		return listOfRelevantComponents;
@@ -142,5 +142,7 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 		}
 		return specialPositionValue;
 	}
+	
+	
 
 }

@@ -2,9 +2,13 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.GroupOS;
+import model.copycatModel.ordSetGrammar.GroupXOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -21,7 +25,7 @@ public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable 
 		else {
 			this.listOfGroups = listOfGroups;
 			List<SynTreeElementImpl> synTreeComponents = new ArrayList<SynTreeElementImpl>();
-			for (IElement component : buildListOfComponents())
+			for (IElement component : getListOfComponents())
 				synTreeComponents.add((SynTreeElementImpl) component);
 			updateComponentsPosition(Settings.COMPONENT_AUTO_POSITIONING, synTreeComponents);	
 		}
@@ -42,7 +46,7 @@ public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable 
 	}	
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
+	protected List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		for (Group group : listOfGroups)
 			listOfComponents.add(group);
@@ -66,7 +70,22 @@ public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable 
 		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
 		listOfRelevantComponents.add(listOfGroups.get(0));
 		return listOfRelevantComponents;
-	}		
+	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement groupXOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer groupXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String groupXID = getDescriptorName().concat(groupXIndex.toString());
+		List<GroupOS> listOfGroupsOS = new ArrayList<GroupOS>();
+		for (Group group : listOfGroups) {
+			GroupOS groupOS = (GroupOS) group.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			listOfGroupsOS.add(groupOS);
+		}
+		groupXOS = new GroupXOS(groupXID, listOfGroupsOS);
+		return groupXOS;		
+	}	
 
 	@Override
 	public String getDescriptorName() {

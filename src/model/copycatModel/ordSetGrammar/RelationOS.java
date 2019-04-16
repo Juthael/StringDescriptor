@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class RelationOS extends SetElementImpl implements HowManyRelationsOS {
+public class RelationOS extends NonMinimalRelevantSetElement implements HowManyRelationsOS {
 
+	private static final String NAME = "relation";
 	private DimensionOS dimension;
 	private EnumerationOS enumeration;
 	
@@ -16,26 +17,17 @@ public class RelationOS extends SetElementImpl implements HowManyRelationsOS {
 		this.enumeration = enumeration;
 	}
 
-	public RelationOS(String elementID, boolean isCodingByDecomposition) {
-		super(elementID, isCodingByDecomposition);
-		// TODO Auto-generated constructor stub
-	}
-
-	public RelationOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(dimension);
+		listOfComponents.add(enumeration);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

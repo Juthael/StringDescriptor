@@ -3,8 +3,13 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.LetterOS;
+import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
+import model.copycatModel.ordSetGrammar.PositionOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -30,7 +35,7 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents(){
+	protected List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(position, platonicLetter));
 		return componentDescriptors;
@@ -47,5 +52,18 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement letterOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer letterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String letterID = getDescriptorName().concat(letterIndex.toString());
+		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		PlatonicLetterOS platonicLetterOS = 
+				(PlatonicLetterOS) platonicLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		letterOS = new LetterOS(letterID, positionOS, platonicLetterOS);
+		return letterOS;		
+	}		
 
 }

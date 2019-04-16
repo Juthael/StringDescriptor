@@ -10,27 +10,19 @@ import java.util.Set;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 
-public abstract class IrrelevantSetElementImpl extends SetElementImpl implements ISetElement {
+public abstract class NonMinimalIrrelevantSetElement extends SetElementImpl implements ISetElement {
 
-	public IrrelevantSetElementImpl(String elementID) {
+	public NonMinimalIrrelevantSetElement(String elementID) {
 		super(elementID);
 	}
 
-	public IrrelevantSetElementImpl(String elementID, boolean isCodingByDecomposition) {
-		super(elementID, isCodingByDecomposition);
-	}
-
-	public IrrelevantSetElementImpl(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
-	}
-	
 	@Override
-	public List<String> getElementDescription() {
+	public List<String> getLowerSetDescription() {
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ISetElement setComponent = (SetElementImpl) component;
-			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getElementDescription();
+			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getLowerSetDescription();
 			listOfMaximalStringsOfElementLowerSet.addAll(listOfMaximalStringsOfComponentLowerSet);
 		}
 		return listOfMaximalStringsOfElementLowerSet;
@@ -39,7 +31,7 @@ public abstract class IrrelevantSetElementImpl extends SetElementImpl implements
 	@Override
 	public Map<String, Set<String>> getRelation() {
 		Map<String, Set<String>> relation = new HashMap<String, Set<String>>();
-		List<IElement> listOfComponents = buildListOfComponents();
+		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ISetElement setComponent = (SetElementImpl) component;
 			relation.putAll(setComponent.getRelation());

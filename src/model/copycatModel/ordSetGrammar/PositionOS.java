@@ -4,28 +4,29 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.PropertyOSImpl;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class PositionOS extends SetElementImpl implements ISetElement {
+public class PositionOS extends NonMinimalRelevantSetElement implements ISetElement {
 
-	private PropertyOSImpl positionProperty;
+	private static final String NAME = "position";
+	private MinimalSetElement positionProperty;
 	
-	public PositionOS(String elementID, PropertyOSImpl positionProperty) {
+	public PositionOS(String elementID, MinimalSetElement positionProperty) {
 		super(elementID);
 		this.positionProperty = positionProperty;
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(positionProperty);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

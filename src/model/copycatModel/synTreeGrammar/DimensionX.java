@@ -2,9 +2,13 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.DimensionXOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 
@@ -37,7 +41,7 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	protected List<IElement> buildListOfComponents() {
+	protected List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		for (Dimension dimension : listOfDimensions) {
 			listOfComponents.add(dimension);
@@ -50,6 +54,21 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfDimensions.size()));
 		return name;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement dimensionXOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());
+		List<DimensionOS> listOfDimensionsOS = new ArrayList<DimensionOS>();
+		for (Dimension dimension : listOfDimensions) {
+			DimensionOS dimensionOS= (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			listOfDimensionsOS.add(dimensionOS);
+		}
+		dimensionXOS = new DimensionXOS(dimensionXID, listOfDimensionsOS);
+		return dimensionXOS;		
+	}	
 
 
 

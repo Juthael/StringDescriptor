@@ -3,28 +3,29 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.PropertyOSImpl;
-import model.orderedSetModel.impl.SetElementImpl;
+import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class DimensionOS extends SetElementImpl implements HowManyDimensionsOS {
+public class DimensionOS extends NonMinimalRelevantSetElement implements HowManyDimensionsOS {
 
-	PropertyOSImpl dimensionProperty;
+	private static final String NAME = "dimension";
+	private MinimalSetElement dimensionProperty;
 	
-	public DimensionOS(String elementID, PropertyOSImpl dimensionProperty) {
+	public DimensionOS(String elementID, MinimalSetElement dimensionProperty) {
 		super(elementID);
 		this.dimensionProperty = dimensionProperty;
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
-		// TODO Auto-generated method stub
-		return null;
+	protected List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(dimensionProperty);
+		return listOfComponents;
 	}
 
 	@Override
 	public String getDescriptorName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 }

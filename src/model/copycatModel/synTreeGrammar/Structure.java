@@ -3,8 +3,13 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.RelationOS;
+import model.copycatModel.ordSetGrammar.SizeOS;
+import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -30,7 +35,7 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	}
 
 	@Override
-	protected List<IElement> buildListOfComponents() {
+	protected List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>(
 				Arrays.asList(size, relation));
 		return listOfComponents;
@@ -40,5 +45,17 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
 	}
+	
+	@Override
+	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ISetElement structureOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer structureIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String structureID = getDescriptorName().concat(structureIndex.toString());
+		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		structureOS = new StructureOS(structureID, sizeOS, relationOS);
+		return structureOS;		
+	}		
 
 }
