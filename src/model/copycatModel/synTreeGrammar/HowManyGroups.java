@@ -3,19 +3,19 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.generalModel.IElement;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 
-public abstract class HowManyGroups extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public abstract class HowManyGroups extends SynTreeElementWithPositionImpl implements ISynTreeElementWithPosition, Cloneable {
 
-	public HowManyGroups(boolean codingDescriptor) {
-		super(codingDescriptor);
+	public HowManyGroups() {
+	}
+	
+	public HowManyGroups(boolean isCodingDescriptor) {
+		super(isCodingDescriptor);
 	}
 
-	@Override
-	abstract protected List<IElement> getListOfComponents();
-	
 	@Override
 	abstract public String getDescriptorName();	
 	

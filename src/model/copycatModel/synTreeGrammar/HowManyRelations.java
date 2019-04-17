@@ -3,18 +3,13 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.generalModel.IElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
 public abstract class HowManyRelations extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
 
-	public HowManyRelations(boolean codingDescriptor) {
-		super(codingDescriptor);
+	public HowManyRelations() {
 	}
-
-	@Override
-	abstract protected List<IElement> getListOfComponents();
 
 	@Override
 	abstract public String getDescriptorName();

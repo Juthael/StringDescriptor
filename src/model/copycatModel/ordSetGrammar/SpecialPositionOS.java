@@ -16,7 +16,7 @@ public class SpecialPositionOS extends PositionOS implements ISetElement {
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public List<IElement> getListOfComponents(){
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(specialPositionProperty);
 		return listOfComponents;

@@ -58,6 +58,14 @@ public abstract class ElementImpl implements IElement {
 		setOfAllPropertyListsAccessibleFromThisDescriptor.addAll(getSetOfAllPropertyListsAccessibleFromComponents());
 		return setOfAllPropertyListsAccessibleFromThisDescriptor;
 	}
+
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		return listOfComponents;
+	}
+	
+	@Override
+	abstract public String getDescriptorName();
 	
 	private Set<List<String>> getSetOfAllPropertyListsAccessibleFromComponents(){
 		Set<List<String>> setOfAllPropertyListsAccessibleFromComponents = new HashSet<List<String>>();
@@ -66,15 +74,7 @@ public abstract class ElementImpl implements IElement {
 			setOfAllPropertyListsAccessibleFromComponents.add(component.getListOfPropertiesWithPath());
 		}
 		return setOfAllPropertyListsAccessibleFromComponents;
-	}
-
-	protected List<IElement> getListOfComponents(){
-		List<IElement> listOfComponents = new ArrayList<IElement>();
-		return listOfComponents;
-	}
-	
-	@Override
-	abstract public String getDescriptorName();
+	}	
 	
 	private String getPropertyWithoutQuantifiers(String property) {
 		String propertyWithoutQuantifiers;

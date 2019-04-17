@@ -23,19 +23,26 @@ public class DescriptionCoderImplTest {
 	@Test
 	public void whenParameterIsThisListOfPropertiesThenExpectedNumberOfRecipesIsReturned() 
 			throws VerbalizationException, SynTreeGenerationException, CloneNotSupportedException {
-		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
-		boolean numberOfRecipesIsUnexpected = false;
-		for (CharString descriptor : listOfDescriptors) {
-			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
-			int numberOfUnfactorizedGroups = getNbOfUnfactorizedGroups(listOfProperties);
-			IDescriptionCoder descriptionCoder = new DescriptionCoderImpl(descriptor);
-			IDescriptionCodeGetter descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
-			List<IRecipeCodeGetter> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
-			if (listOfRecipeCodeGetters.size() != numberOfUnfactorizedGroups)
-				numberOfRecipesIsUnexpected = true;
+		try {
+			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
+			List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+			boolean numberOfRecipesIsUnexpected = false;
+			for (CharString descriptor : listOfDescriptors) {
+				List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
+				int numberOfUnfactorizedGroups = getNbOfUnfactorizedGroups(listOfProperties);
+				IDescriptionCoder descriptionCoder = new DescriptionCoderImpl(descriptor);
+				IDescriptionCodeGetter descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
+				List<IRecipeCodeGetter> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
+				if (listOfRecipeCodeGetters.size() != numberOfUnfactorizedGroups)
+					numberOfRecipesIsUnexpected = true;
+			}
+			assertTrue(numberOfRecipesIsUnexpected);
 		}
-		assertTrue(numberOfRecipesIsUnexpected);
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private int getNbOfUnfactorizedGroups(List<String> listOfProperties) {

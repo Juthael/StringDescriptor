@@ -18,7 +18,7 @@ public class AbsCommonDiffOS extends NonMinimalRelevantSetElement implements ISe
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(absCommonDiffProperty);
 		return listOfComponents;

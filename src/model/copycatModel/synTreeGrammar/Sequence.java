@@ -20,7 +20,6 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	private AbsCommonDiff absCommonDiff;
 	
 	public Sequence(CommonDiff commonDiff, AbsCommonDiff absCommonDiff) {
-		super(false);
 		this.commonDiff = commonDiff;
 		this.absCommonDiff = absCommonDiff;	
 	}
@@ -35,7 +34,12 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(commonDiff, absCommonDiff));
 		return componentDescriptors;
@@ -46,12 +50,7 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 				Arrays.asList(commonDiff));
 		return componentDescriptors;
 	}	
-	
-	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
-	}
-	
+
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
 		ISetElement sequenceOS;

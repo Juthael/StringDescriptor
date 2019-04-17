@@ -16,7 +16,7 @@ public class RelationXOS extends NonMinimalIrrelevantSetElement implements HowMa
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.addAll(listOfRelations);
 		return listOfComponents;

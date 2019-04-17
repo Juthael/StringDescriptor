@@ -18,7 +18,7 @@ public class CommonDiffOS extends NonMinimalRelevantSetElement implements ISetEl
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(commonDiffProperty);
 		return listOfComponents;

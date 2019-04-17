@@ -22,7 +22,6 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 	protected Groups groups;
 
 	public CharString(Direction direction, Structure structure, Groups groups) {
-		super(false);
 		this.direction = direction;
 		this.structure = structure;
 		this.groups = groups;
@@ -38,16 +37,17 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(direction, structure, groups));
 		return componentDescriptors;
 	}
-	
-	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
-	}
+
 	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

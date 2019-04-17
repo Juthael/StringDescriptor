@@ -13,6 +13,8 @@ public interface IElement {
 	
 	Set<List<String>> getSetOfAllPropertyListsAccessibleFromThisDescriptor();
 	
+	List<IElement> getListOfComponents();
+	
 	String getDescriptorName();
 	
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.DimensionOS;
-import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -18,7 +17,6 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	private String indexedPath;
 	
 	public Dimension(String indexedPath) {
-		super(false);
 		this.indexedPath = getDimensionCode(indexedPath);
 	}
 	
@@ -26,12 +24,6 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	protected Dimension clone() throws CloneNotSupportedException {
 		Dimension cloneDimension = new Dimension(indexedPath);
 		return cloneDimension;
-	}
-
-	@Override
-	protected List<IElement> getListOfComponents() {
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
 	}
 	
 	@Override
@@ -55,11 +47,6 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 		return getListOfPropertiesWithPath();
 	}		
 	
-	private String getDimensionCode(String fullDimensionValue) {
-		String codedDimension = DimensionEncodingManager.getDimensionCodeFromIndexedPath(fullDimensionValue);
-		return codedDimension;
-	}
-	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
 		ISetElement dimensionOS;
@@ -69,6 +56,11 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 		MinimalSetElement dimensionProperty = new MinimalSetElement(getDimensionCode(indexedPath));
 		dimensionOS = new DimensionOS(dimensionID, dimensionProperty);
 		return dimensionOS;		
+	}	
+	
+	private String getDimensionCode(String fullDimensionValue) {
+		String codedDimension = DimensionEncodingManager.getDimensionCodeFromIndexedPath(fullDimensionValue);
+		return codedDimension;
 	}	
 
 }

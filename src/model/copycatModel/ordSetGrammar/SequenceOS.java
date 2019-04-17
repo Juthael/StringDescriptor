@@ -19,7 +19,7 @@ public class SequenceOS extends NonMinimalRelevantSetElement implements ISetElem
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(commonDiff);
 		listOfComponents.add(absCommonDiff);

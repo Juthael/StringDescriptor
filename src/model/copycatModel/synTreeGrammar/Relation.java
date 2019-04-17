@@ -21,7 +21,6 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 	protected Enumeration enumeration;
 
 	public Relation(Dimension dimension, Enumeration enumeration) {
-		super(false);
 		this.dimension = dimension;
 		this.enumeration = enumeration;
 	}
@@ -36,15 +35,15 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimension, enumeration));
 		return componentDescriptors;
-	}
-	
-	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
 	}
 	
 	@Override
@@ -61,7 +60,7 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 			}
 		}
 		return listOfRelevantPropertiesWithPath;
-	}
+	}		
 	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

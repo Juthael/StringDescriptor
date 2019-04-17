@@ -33,7 +33,7 @@ public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimension, enumeration, symmetry));
 		return componentDescriptors;

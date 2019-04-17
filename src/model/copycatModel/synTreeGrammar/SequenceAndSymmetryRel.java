@@ -40,7 +40,7 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimension, enumeration, sequence, symmetry));
 		return componentDescriptors;

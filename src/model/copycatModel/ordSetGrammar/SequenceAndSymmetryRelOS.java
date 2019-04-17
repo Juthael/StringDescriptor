@@ -17,7 +17,7 @@ public class SequenceAndSymmetryRelOS extends RelationOS implements HowManyRelat
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public List<IElement> getListOfComponents(){
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(sequence);
 		listOfComponents.add(symmetry);

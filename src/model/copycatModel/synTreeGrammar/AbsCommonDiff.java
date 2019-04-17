@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
-import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -18,7 +17,6 @@ public class AbsCommonDiff extends SynTreeElementImpl implements ISynTreeElement
 	private final String absCommonDiffValue; // {"0", "1", "2"}
 	
 	public AbsCommonDiff(String absCommonDiffValue) {
-		super(false);
 		this.absCommonDiffValue = absCommonDiffValue;
 	}
 	
@@ -26,12 +24,6 @@ public class AbsCommonDiff extends SynTreeElementImpl implements ISynTreeElement
 	protected AbsCommonDiff clone() {
 		AbsCommonDiff cloneAbsCommonDiff = new AbsCommonDiff(absCommonDiffValue);
 		return cloneAbsCommonDiff;
-	}
-	
-	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
 	}
 	
 	@Override

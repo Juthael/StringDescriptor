@@ -22,7 +22,6 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	
 	public Relations(Groups groups, HowManyDimensions dimensionX, 
 			HowManyRelations relationX) {
-		super(false);
 		this.groups = groups;
 		this.dimensionHM = dimensionX;
 		this.relationHM = relationX;
@@ -37,17 +36,17 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		cloneRelations = new Relations(cloneGroups, cloneDimensionX, cloneRelationX);
 		return cloneRelations;
 	}
-
-	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>(
-				Arrays.asList(dimensionHM, relationHM, groups));
-		return componentDescriptors;
-	}
-
+	
 	@Override
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
+	}	
+
+	@Override
+	public List<IElement> getListOfComponents(){
+		List<IElement> componentDescriptors = new ArrayList<IElement>(
+				Arrays.asList(dimensionHM, relationHM, groups));
+		return componentDescriptors;
 	}
 	
 	@Override

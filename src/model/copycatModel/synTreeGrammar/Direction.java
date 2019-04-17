@@ -29,14 +29,14 @@ public class Direction extends SynTreeElementImpl implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
-	}
-
-	@Override
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
+		List<IElement> componentDescriptors = new ArrayList<IElement>();
+		return componentDescriptors;
 	}
 	
 	@Override

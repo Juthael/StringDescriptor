@@ -18,7 +18,7 @@ public class SymmetryOS extends NonMinimalRelevantSetElement implements ISetElem
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(symmetryProperty);
 		return listOfComponents;

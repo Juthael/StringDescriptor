@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import exceptions.SynTreeGenerationException;
 import model.generalModel.IElement;
 import model.generalModel.impl.ElementImpl;
 import model.synTreeModel.IProperty;
@@ -16,14 +15,12 @@ import settings.Settings;
 public abstract class SynTreeElementImpl extends ElementImpl implements Cloneable, ISynTreeElement {
 
 	public SynTreeElementImpl() {
-		super();
 	}
 	
 	public SynTreeElementImpl(boolean isCodingByDecomposition) {
 		super(isCodingByDecomposition);
 	}
 	
-	//Getters
 	@Override
 	public IPropertyContainer getpropertyContainer() {
 		IPropertyContainer propertyContainer;
@@ -76,73 +73,21 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 			}
 		}
 		return listOfRelevantPropertiesWithPath;
-	}
-	
-	//Updater
-	public void updatePosition(String newPosition, List<IElement>componentDescriptors) {
-		doUpdatePosition(newPosition);
-		updateComponentsPosition(newPosition, componentDescriptors);
-	}
-	
-	protected void updateComponentsPosition(String newPosition,	List<IElement> componentDescriptors) {
-		for (IElement componentDescriptor : componentDescriptors) {
-			SynTreeElementImpl synTreeComponent = (SynTreeElementImpl) componentDescriptor;
-			synTreeComponent.updatePosition(newPosition, synTreeComponent.getListOfComponents());
-		}
-	}
-	
-	protected void updateComponentsPosition(int autoPosition, List<SynTreeElementImpl> componentDescriptors) 
-			throws SynTreeGenerationException {
-		if (autoPosition == Settings.COMPONENT_AUTO_POSITIONING) {
-			int positionIndex = 1;
-			StringBuilder sB;
-			for (SynTreeElementImpl componentDescriptor : componentDescriptors) {
-				sB = new StringBuilder();
-				String positionValue = Integer.toString(positionIndex);
-				String specialPositionValue = getSpecialPositionValue(positionIndex, componentDescriptors.size());
-				sB.append(positionValue);
-				if (!specialPositionValue.isEmpty()) {
-					sB.append(Settings.POSITION_VALUES_SEPARATOR);
-					sB.append(specialPositionValue);	
-				}
-				componentDescriptor.updatePosition(sB.toString(), componentDescriptor.getListOfComponents());
-				positionIndex++;			
-			}
-		} else throw new SynTreeGenerationException(
-				"AbstractDescriptor.updateComponents() : illegal constant value.");
-	}
+	}	
 	
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
-		for (IElement component : getListOfComponents()) {
-			listOfRelevantComponents.add((SynTreeElementImpl) component);
-		}
-		return listOfRelevantComponents;
+		return getListOfAllComponentsForRelationBuilding();
 	}
-	
-	protected void doUpdatePosition(String newPosition) {
-	}	
 
 	@Override
 	abstract protected SynTreeElementImpl clone() throws CloneNotSupportedException;
 	
-	private String getSpecialPositionValue(int positionIndex, int nbOfComponentDescriptors) {
-		String specialPositionValue = "";
-		if (nbOfComponentDescriptors > 1) {
-			if (positionIndex == 1)
-				specialPositionValue = Settings.FIRST_POSITION;
-			else if (positionIndex == nbOfComponentDescriptors) {
-				specialPositionValue = Settings.LAST_POSITION;
-			}
-			else if (nbOfComponentDescriptors % 2 == 1) {
-				int halfIntegerPart = (int) nbOfComponentDescriptors/2;
-				if (positionIndex == (halfIntegerPart + 1))
-					specialPositionValue = Settings.CENTRAL_POSITION;
-			}
+	private List<SynTreeElementImpl> getListOfAllComponentsForRelationBuilding() {
+		List<SynTreeElementImpl> listOfAllComponents = new ArrayList<SynTreeElementImpl>();
+		for (IElement component : getListOfComponents()) {
+			listOfAllComponents.add((SynTreeElementImpl) component);
 		}
-		return specialPositionValue;
+		return listOfAllComponents;
 	}
-	
-	
 
 }

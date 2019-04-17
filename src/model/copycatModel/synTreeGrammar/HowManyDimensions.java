@@ -3,18 +3,13 @@ package model.copycatModel.synTreeGrammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.generalModel.IElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
 public abstract class HowManyDimensions extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
 
-	public HowManyDimensions(boolean codingDescriptor) {
-		super(codingDescriptor);
+	public HowManyDimensions() {
 	}
-
-	@Override
-	abstract protected List<IElement> getListOfComponents();
 
 	@Override
 	abstract public String getDescriptorName();

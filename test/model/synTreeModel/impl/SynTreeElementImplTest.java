@@ -1,4 +1,4 @@
-package copycatModel.impl;
+package model.synTreeModel.impl;
 
 
 
@@ -24,7 +24,7 @@ import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class SynTreeIntegrableElementImplTest {
+public class SynTreeElementImplTest {
 
 	@Test
 	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
@@ -100,11 +100,11 @@ public class SynTreeIntegrableElementImplTest {
 		boolean groupX3ContainsGroupPosition2 = false;
 		boolean group2ContainsGroupPosition2 = false;
 		for (String group2PropertyWithPath : listOfGroup2PropertiesWithpath) {
-			if (group2PropertyWithPath.contains("group/position/2"))
+			if (group2PropertyWithPath.contains("group/prominentPosition/position/2"))
 				group2ContainsGroupPosition2 = true;
 		}		
 		for (String groupX3PropertyWithPath : listOfGroupX3PropertiesWithPath) {
-			if (groupX3PropertyWithPath.contains("group/position/2"))
+			if (groupX3PropertyWithPath.contains("group/prominentPosition/position/2"))
 				groupX3ContainsGroupPosition2 = true;
 		}		
 		onlyClonedGroupsAreRelatedInNewDescriptor = 

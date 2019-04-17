@@ -18,7 +18,6 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 	private String sizeValue;
 
 	public Size(String sizeValue) {
-		super(false);
 		this.sizeValue = sizeValue;
 	}
 	
@@ -29,14 +28,14 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents(){
-		ArrayList<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
-	}
-
-	@Override
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
+		ArrayList<IElement> componentDescriptors = new ArrayList<IElement>();
+		return componentDescriptors;
 	}
 	
 	@Override

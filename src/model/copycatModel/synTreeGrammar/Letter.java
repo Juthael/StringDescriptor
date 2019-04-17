@@ -20,7 +20,6 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	private PlatonicLetter platonicLetter;
 	
 	public Letter(Position position, PlatonicLetter platonicLetter) {
-		super(false);
 		this.position = position;
 		this.platonicLetter = platonicLetter;
 	}
@@ -33,9 +32,14 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 		cloneLetter = new Letter(clonePosition, clonePlatonicLetter);
 		return cloneLetter;
 	}
+	
+	@Override
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
+	}	
 
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(position, platonicLetter));
 		return componentDescriptors;
@@ -47,11 +51,6 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 				Arrays.asList(platonicLetter));
 		return componentDescriptors;
 	}	
-
-	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
-	}
 	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

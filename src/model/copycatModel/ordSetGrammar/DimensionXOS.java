@@ -16,7 +16,7 @@ public class DimensionXOS extends NonMinimalIrrelevantSetElement implements HowM
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.addAll(listOfDimensions);
 		return listOfComponents;

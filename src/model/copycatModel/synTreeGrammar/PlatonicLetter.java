@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
-import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -18,19 +17,12 @@ public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElemen
 	private String platonicLetterValue; 
 	
 	public PlatonicLetter(String platonicLetterValue) {
-		super(false);
 		this.platonicLetterValue = platonicLetterValue;
 	}
 	
 	protected PlatonicLetter clone() throws CloneNotSupportedException {
 		PlatonicLetter clonePlatonicLetter = new PlatonicLetter(platonicLetterValue);
 		return clonePlatonicLetter;
-	}
-
-	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
 	}
 
 	@Override

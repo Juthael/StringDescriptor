@@ -164,7 +164,7 @@ public class DescriptorsBuildingManagerImplTest {
 			}
 			System.out.println("");
 		} */
-		assertTrue(!descriptors.isEmpty());
+		assertTrue(!descriptors.isEmpty());	
 	}
 	
 	@Test

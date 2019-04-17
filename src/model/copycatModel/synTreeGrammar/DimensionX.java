@@ -18,7 +18,6 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	private List<Dimension> listOfDimensions;
 	
 	public DimensionX(List<Dimension> listOfDimensions) throws SynTreeGenerationException {
-		super(false);
 		if (listOfDimensions.size() > 1 && listOfDimensions.size() <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
 			this.listOfDimensions = listOfDimensions;
 		}
@@ -41,18 +40,18 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public String getDescriptorName() {
+		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfDimensions.size()));
+		return name;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		for (Dimension dimension : listOfDimensions) {
 			listOfComponents.add(dimension);
 		}
 		return listOfComponents;
-	}
-
-	@Override
-	public String getDescriptorName() {
-		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfDimensions.size()));
-		return name;
 	}
 	
 	@Override

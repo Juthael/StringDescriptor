@@ -9,24 +9,24 @@ import model.copycatModel.ordSetGrammar.GroupOS;
 import model.copycatModel.ordSetGrammar.GroupXOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 import settings.Settings;
 
-public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable {
+public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition, Cloneable {
 
 	private static final String DESCRIPTOR_PARTIAL_NAME = "groupX";
 	private List<Group> listOfGroups;
 	
 	public GroupX(List<Group> listOfGroups) throws SynTreeGenerationException {
-		super(false);
 		if (listOfGroups.size() < 2 || listOfGroups.size() > Settings.MAX_NB_OF_GROUPS_IN_RELATIONS)
 			throw new SynTreeGenerationException("GroupX() : illegal number of groups (" + listOfGroups.size() + ")");
 		else {
 			this.listOfGroups = listOfGroups;
-			List<SynTreeElementImpl> synTreeComponents = new ArrayList<SynTreeElementImpl>();
+			List<SynTreeElementWithPositionImpl> synTreeComponents = new ArrayList<SynTreeElementWithPositionImpl>();
 			for (IElement component : getListOfComponents())
-				synTreeComponents.add((SynTreeElementImpl) component);
+				synTreeComponents.add((SynTreeElementWithPositionImpl) component);
 			updateComponentsPosition(Settings.COMPONENT_AUTO_POSITIONING, synTreeComponents);	
 		}
 	}
@@ -44,9 +44,15 @@ public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable 
 		}
 		return cloneGroupX;
 	}	
+	
+	@Override
+	public String getDescriptorName() {
+		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfGroups.size()));
+		return name;
+	}	
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		for (Group group : listOfGroups)
 			listOfComponents.add(group);
@@ -86,11 +92,5 @@ public class GroupX extends HowManyGroups implements ISynTreeElement, Cloneable 
 		groupXOS = new GroupXOS(groupXID, listOfGroupsOS);
 		return groupXOS;		
 	}	
-
-	@Override
-	public String getDescriptorName() {
-		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfGroups.size()));
-		return name;
-	}
 
 }

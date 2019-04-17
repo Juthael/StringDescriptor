@@ -6,7 +6,6 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
-import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -19,7 +18,6 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 	private final String symmetryValue;
 	
 	public Symmetry(String symmetryValue) throws SynTreeGenerationException {
-		super(false);
 		if (symmetryValue.equals(Settings.SYMMETRY_WITH_CENTRAL_ELEMENT) 
 				|| symmetryValue.equals(Settings.SYMMETRY_WITHOUT_CENTRAL_ELEMENT)) {
 			this.symmetryValue = symmetryValue;
@@ -37,12 +35,6 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 		catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Symmetry.clone() : " + e.getMessage());
 		}
-	}
-
-	@Override
-	protected ArrayList<IElement> getListOfComponents(){
-		ArrayList<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
 	}
 
 	@Override

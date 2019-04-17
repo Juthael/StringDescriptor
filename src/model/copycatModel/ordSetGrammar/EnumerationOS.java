@@ -18,7 +18,7 @@ public class EnumerationOS extends NonMinimalRelevantSetElement implements ISetE
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(enumerationProperty);
 		return listOfComponents;

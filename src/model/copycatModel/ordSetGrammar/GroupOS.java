@@ -28,7 +28,7 @@ public class GroupOS extends NonMinimalRelevantSetElement implements HowManyGrou
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(size);
 		listOfComponents.add(position);

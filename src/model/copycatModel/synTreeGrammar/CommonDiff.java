@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.CommonDiffOS;
-import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -15,10 +14,9 @@ import settings.Settings;
 public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "commonDiff";
-	private final String commonDiffValue; // "-3"< x <"3"
+	private final String commonDiffValue; 
 	
 	public CommonDiff(String commonDiffValue) {
-		super(false);
 		this.commonDiffValue = commonDiffValue;
 	}
 	
@@ -26,12 +24,6 @@ public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, C
 	protected CommonDiff clone() throws CloneNotSupportedException {
 		CommonDiff cloneCommonDiff = new CommonDiff(commonDiffValue);
 		return cloneCommonDiff;
-	}
-
-	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
 	}
 	
 	@Override

@@ -15,5 +15,4 @@ public interface ISynTreeElement extends IElement {
 	List<String> getListOfRelevantPropertiesWithPath();
 	
 	ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
-
 }

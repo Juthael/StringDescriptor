@@ -26,8 +26,8 @@ public class GroupsBuilderImplTest {
 		for (Group group : listOfGroups) {
 			List<String> listOfProperties = group.getListOfPropertiesWithPath();
 			for (String property : listOfProperties) {
-				if (property.contains("group/position/1") 
-						|| property.contains("group/position/" + Settings.FIRST_POSITION))
+				if (property.contains("group/prominentPosition/position/1") 
+						|| property.contains("group/prominentPosition/endPosition/" + Settings.FIRST_POSITION))
 					groupPositionsUpdatedAsExpected = false;
 			}
 		}
@@ -39,9 +39,9 @@ public class GroupsBuilderImplTest {
 			boolean nowItContainsPosition1 = false;
 			List<String> listOfGroupsProperties = groups.getListOfPropertiesWithPath();
 			for (String property : listOfGroupsProperties) {
-				if (property.contains("group/position/1")) 
+				if (property.contains("group/prominentPosition/position/1")) 
 					nowItContainsPosition1 = true;
-				else if (property.contains("group/position/" + Settings.FIRST_POSITION))
+				else if (property.contains("group/prominentPosition/endPosition/" + Settings.FIRST_POSITION))
 					nowItContainsFirstPosition = true;
 			}
 			groupPositionsUpdatedAsExpected = (nowItContainsPosition1 == true && nowItContainsFirstPosition == true);

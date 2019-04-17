@@ -20,7 +20,6 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	private Relation relation;
 	
 	public Structure(Size size, Relation relation) {
-		super(false);
 		this.size = size;
 		this.relation = relation;
 	}
@@ -33,17 +32,17 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 		cloneStructuration = new Structure(cloneSize, cloneRelation);
 		return cloneStructuration;
 	}
-
-	@Override
-	protected List<IElement> getListOfComponents() {
-		List<IElement> listOfComponents = new ArrayList<IElement>(
-				Arrays.asList(size, relation));
-		return listOfComponents;
-	}
-
+	
 	@Override
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
+	}	
+
+	@Override
+	public List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = new ArrayList<IElement>(
+				Arrays.asList(size, relation));
+		return listOfComponents;
 	}
 	
 	@Override

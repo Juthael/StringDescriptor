@@ -18,7 +18,6 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	private String enumerationValue; //"w,x,y,z" (simple enumeration) or "w,x-y,z" (2nd degree enumeration)
 	
 	public Enumeration(String enumerationValue) {
-		super(false);
 		this.enumerationValue = enumerationValue;
 	}
 	
@@ -29,14 +28,14 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
 	}
 	
 	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
+	public List<IElement> getListOfComponents(){
+		List<IElement> componentDescriptors = new ArrayList<IElement>();
+		return componentDescriptors;
 	}
 	
 	@Override

@@ -18,20 +18,11 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 	private List<Relation> listOfRelations;
 	
 	public RelationX(List<Relation> listOfRelations) throws SynTreeGenerationException {
-		super(false);
 		if (listOfRelations.size() > 1 && listOfRelations.size() <= Settings.MAX_NB_OF_RELATIONS)
 			this.listOfRelations = listOfRelations;
 		else throw new SynTreeGenerationException("RelationX() : illegal number of relations (" + listOfRelations.size() + ").");
 	}
 
-	@Override
-	protected List<IElement> getListOfComponents() {
-		List<IElement> listOfComponents = new ArrayList<IElement>();
-		for (Relation relation : listOfRelations)
-			listOfComponents.add(relation);
-		return listOfComponents;
-	}
-	
 	@Override
 	protected HowManyRelations clone() throws CloneNotSupportedException {
 		HowManyRelations cloneRelationX;
@@ -46,11 +37,19 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 		}
 		return cloneRelationX;
 	}	
-
+	
 	@Override
 	public String getDescriptorName() {
 		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfRelations.size()));
 		return name;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		for (Relation relation : listOfRelations)
+			listOfComponents.add(relation);
+		return listOfComponents;
 	}
 	
 	@Override

@@ -11,37 +11,45 @@ import model.copycatModel.ordSetGrammar.HowManyGroupsOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.ISynTreeElementWithPosition;
+import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 import settings.Settings;
 
-public class Groups extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeElementWithPosition, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "groups";
 	private Size size;
 	private HowManyGroups groupHM;
 	
-	public Groups(Size size, HowManyGroups groupX) 
+	public Groups(Size size, HowManyGroups groupHM) 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		super(false);
 		this.size = size;
-		if (groupX.getDescriptorName().equals("group")) {
-			Group groupXCasted = (Group) groupX;
-			this.groupHM = groupXCasted;
-			List<IElement> listWithSingleGroup = buildListOfRelevantComponentsForPositionUpdate();
+		if (groupHM.getDescriptorName().equals("group")) {
+			this.groupHM = (Group) groupHM;
+			List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
+			listWithSingleGroup.add(this.groupHM);
 			updateComponentsPosition("1", listWithSingleGroup);
 		}
-		else this.groupHM = groupX;
+		else this.groupHM = groupHM;
 	}
 	
-	public Groups(Size size, HowManyGroups groupX, boolean fullStringGroup) 
+	public Groups(Size size, HowManyGroups groupHM, boolean fullStringGroup) 
 			throws SynTreeGenerationException {
-		super(false);
-		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupX.getDescriptorName().equals("group")){
+		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupHM.getDescriptorName().equals("group")){
 			this.size = size;
-			this.groupHM = groupX;
-			List<IElement> componentDescriptors = getListOfComponents();
-			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, componentDescriptors);	
+			this.groupHM = groupHM;
+			if (groupHM.getDescriptorName().equals("group")) {
+				this.groupHM = (Group) groupHM;
+				List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
+				listWithSingleGroup.add(this.groupHM);
+				updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, listWithSingleGroup);
+			}
+			else {
+				this.groupHM = (GroupX) groupHM;
+				updateComponentsPosition(
+						Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, this.groupHM.getListOfComponents());
+			}
+				
 		} else throw new SynTreeGenerationException("Groups : illegal parameter values in constructor");
 	}
 	
@@ -59,23 +67,15 @@ public class Groups extends SynTreeElementImpl implements ISynTreeElement, Clone
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents(){
+	public String getDescriptorName() {
+		return DESCRIPTOR_NAME;
+	}	
+
+	@Override
+	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(size, groupHM));
 		return componentDescriptors;
-	}
-
-	@Override
-	public String getDescriptorName() {
-		return DESCRIPTOR_NAME;
-	}
-	
-	private List<IElement> buildListOfRelevantComponentsForPositionUpdate() {
-		List<IElement> listOfRelevantComponentsForPositionUpdate = 
-				new ArrayList<IElement>();
-		Group singleGroup = (Group) groupHM;
-		listOfRelevantComponentsForPositionUpdate.add(singleGroup);
-		return listOfRelevantComponentsForPositionUpdate;
 	}
 	
 	@Override

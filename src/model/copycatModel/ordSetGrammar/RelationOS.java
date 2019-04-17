@@ -18,7 +18,7 @@ public class RelationOS extends NonMinimalRelevantSetElement implements HowManyR
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(dimension);
 		listOfComponents.add(enumeration);

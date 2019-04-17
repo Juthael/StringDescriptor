@@ -18,7 +18,7 @@ public class LetterOS extends NonMinimalRelevantSetElement implements RelationsO
 	}
 
 	@Override
-	protected List<IElement> getListOfComponents() {
+	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(position);
 		listOfComponents.add(platonicLetter);
