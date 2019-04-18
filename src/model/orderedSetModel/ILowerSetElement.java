@@ -12,7 +12,7 @@ public interface ILowerSetElement extends IElement {
 	
 	Map<String, Set<String>> getRelation();
 	
-	List<String> getLowerSetDescription();
+	List<String> getListOfLowerSetMaximalChains();
 	
 	boolean getMayBeTheCodedElement();
 	

@@ -56,12 +56,12 @@ public abstract class LowerSetElementImpl extends ElementImpl implements ILowerS
 	}
 
 	@Override
-	public List<String> getLowerSetDescription() {
+	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalChainsOfElementLowerSet = new ArrayList<String>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ILowerSetElement setComponent = (ILowerSetElement) component;
-			List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getLowerSetDescription();
+			List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getListOfLowerSetMaximalChains();
 			for (String componentMaximalChain : listOfMaximalChainsOfComponentLowerSet) {
 				String maximalChain = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalChain);
 				listOfMaximalChainsOfElementLowerSet.add(maximalChain);

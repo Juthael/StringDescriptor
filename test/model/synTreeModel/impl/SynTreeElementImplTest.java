@@ -141,12 +141,12 @@ public class SynTreeElementImplTest {
 		List<ILowerSetElement> listOfOrderedSetElements = new ArrayList<ILowerSetElement>();
 		for (CharString descriptor : listOfDescriptors)
 			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
-		for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
-			List<String> listOfMaximalChains = lowerSetElement.getLowerSetDescription();
+		/* for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
+			List<String> listOfMaximalChains = lowerSetElement.getListOfLowerSetMaximalChains();
 			for (String chain : listOfMaximalChains) {
 				System.out.println(chain);
 			}
-		}
+		} */
 		//System.out.println("");
 		assertTrue(listOfDescriptors.size() == listOfOrderedSetElements.size());
 	}

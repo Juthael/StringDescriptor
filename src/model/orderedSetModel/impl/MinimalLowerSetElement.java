@@ -19,7 +19,7 @@ public class MinimalLowerSetElement extends LowerSetElementImpl implements ILowe
 	}
 	
 	@Override
-	public List<String> getLowerSetDescription() {
+	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
 		listOfMaximalStringsOfElementLowerSet.add(getElementID());
 		return listOfMaximalStringsOfElementLowerSet;

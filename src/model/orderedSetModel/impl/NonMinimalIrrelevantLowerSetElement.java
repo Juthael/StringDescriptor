@@ -17,12 +17,12 @@ public abstract class NonMinimalIrrelevantLowerSetElement extends LowerSetElemen
 	}
 
 	@Override
-	public List<String> getLowerSetDescription() {
+	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ILowerSetElement setComponent = (LowerSetElementImpl) component;
-			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getLowerSetDescription();
+			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getListOfLowerSetMaximalChains();
 			listOfMaximalStringsOfElementLowerSet.addAll(listOfMaximalStringsOfComponentLowerSet);
 		}
 		return listOfMaximalStringsOfElementLowerSet;
