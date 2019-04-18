@@ -3,14 +3,14 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 
 public class CentralProminentPositionOS extends ProminentPositionOS implements WhichPositionTypeOS {
 
-	private MinimalSetElement centralProminentPositionProperty;
+	private MinimalLowerSetElement centralProminentPositionProperty;
 	
 	public CentralProminentPositionOS(String elementID, PositionOS position, 
-			MinimalSetElement centralProminentPositionProperty) {
+			MinimalLowerSetElement centralProminentPositionProperty) {
 		super(elementID, position);
 		this.centralProminentPositionProperty = centralProminentPositionProperty;
 	}

@@ -3,7 +3,7 @@ package model.copycatModel.synTreeGrammar;
 import java.util.List;
 import java.util.Map;
 
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
 
 public abstract class ProminentPosition extends WhichPositionType implements ISynTreeElementWithPosition, Cloneable {
@@ -24,6 +24,6 @@ public abstract class ProminentPosition extends WhichPositionType implements ISy
 	}	
 
 	@Override
-	abstract public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
+	abstract public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
 
 }

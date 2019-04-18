@@ -3,11 +3,11 @@ package orderedSetsGeneration;
 import java.util.Map;
 import java.util.Set;
 
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 
 public interface IOrderedSetBuilder {
 	
-	ISetElement getOrderedSet();
+	ILowerSetElement getOrderedSet();
 	
 	Map<String, Set<String>> getRelation();
 

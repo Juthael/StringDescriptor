@@ -6,7 +6,7 @@ import java.util.Set;
 
 import model.generalModel.IElement;
 
-public interface ISetElement extends IElement {
+public interface ILowerSetElement extends IElement {
 	
 	String getElementID();
 	

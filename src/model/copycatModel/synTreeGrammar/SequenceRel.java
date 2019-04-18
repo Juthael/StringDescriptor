@@ -10,7 +10,7 @@ import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.copycatModel.ordSetGrammar.SequenceRelOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -50,8 +50,8 @@ public class SequenceRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement sequenceRelOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement sequenceRelOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceRelID = getDescriptorName().concat(sequenceRelIndex.toString());

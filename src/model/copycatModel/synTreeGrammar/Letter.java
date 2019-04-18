@@ -9,7 +9,7 @@ import model.copycatModel.ordSetGrammar.LetterOS;
 import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
 import model.copycatModel.ordSetGrammar.PositionOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -53,8 +53,8 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	}	
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement letterOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement letterOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer letterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String letterID = getDescriptorName().concat(letterIndex.toString());

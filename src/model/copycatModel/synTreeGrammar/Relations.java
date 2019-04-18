@@ -10,7 +10,7 @@ import model.copycatModel.ordSetGrammar.HowManyDimensionsOS;
 import model.copycatModel.ordSetGrammar.HowManyRelationsOS;
 import model.copycatModel.ordSetGrammar.RelationsOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 
 public class Relations extends RelationsOrLetter implements ISynTreeElement, Cloneable {
@@ -50,8 +50,8 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement relationsOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement relationsOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationsID = getDescriptorName().concat(relationsIndex.toString());

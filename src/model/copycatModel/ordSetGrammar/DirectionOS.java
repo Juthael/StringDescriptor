@@ -3,16 +3,16 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class DirectionOS extends NonMinimalRelevantSetElement implements ISetElement {
+public class DirectionOS extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
 
 	private static final String NAME = "direction";
-	private MinimalSetElement directionProperty;
+	private MinimalLowerSetElement directionProperty;
 	
-	public DirectionOS(String elementID, MinimalSetElement directionProperty) {
+	public DirectionOS(String elementID, MinimalLowerSetElement directionProperty) {
 		super(elementID);
 		this.directionProperty = directionProperty;
 	}

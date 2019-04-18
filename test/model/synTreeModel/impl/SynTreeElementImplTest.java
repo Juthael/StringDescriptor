@@ -22,7 +22,7 @@ import model.copycatModel.synTreeGrammar.Group;
 import model.copycatModel.synTreeGrammar.GroupX;
 import model.copycatModel.synTreeGrammar.HowManyGroups;
 import model.copycatModel.synTreeGrammar.Relation;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.IProperty;
 import model.synTreeModel.IPropertyContainer;
 import model.synTreeModel.ISignal;
@@ -138,16 +138,16 @@ public class SynTreeElementImplTest {
 			listOfPropertiesToIndex.put(listOfProperties, listOfPropertiesIndex);
 			listOfPropertiesIndex++;
 		}
-		List<ISetElement> listOfOrderedSetElements = new ArrayList<ISetElement>();
+		List<ILowerSetElement> listOfOrderedSetElements = new ArrayList<ILowerSetElement>();
 		for (CharString descriptor : listOfDescriptors)
 			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
-		for (ISetElement setElement : listOfOrderedSetElements) {
-			List<String> listOfMaximalChains = setElement.getLowerSetDescription();
+		for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
+			List<String> listOfMaximalChains = lowerSetElement.getLowerSetDescription();
 			for (String chain : listOfMaximalChains) {
 				System.out.println(chain);
 			}
 		}
-		System.out.println("");
+		//System.out.println("");
 		assertTrue(listOfDescriptors.size() == listOfOrderedSetElements.size());
 	}
 

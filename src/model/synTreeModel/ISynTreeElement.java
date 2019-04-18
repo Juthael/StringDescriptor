@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 
 public interface ISynTreeElement extends IElement {
 
@@ -14,5 +14,5 @@ public interface ISynTreeElement extends IElement {
 	
 	List<String> getListOfRelevantPropertiesWithPath();
 	
-	ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
+	ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
 }

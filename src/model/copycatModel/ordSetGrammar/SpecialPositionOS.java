@@ -3,14 +3,14 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 
-public class SpecialPositionOS extends PositionOS implements ISetElement {
+public class SpecialPositionOS extends PositionOS implements ILowerSetElement {
 
-	private MinimalSetElement specialPositionProperty;
+	private MinimalLowerSetElement specialPositionProperty;
 	
-	public SpecialPositionOS(String elementID, MinimalSetElement positionProperty, MinimalSetElement specialPositionProperty) {
+	public SpecialPositionOS(String elementID, MinimalLowerSetElement positionProperty, MinimalLowerSetElement specialPositionProperty) {
 		super(elementID, positionProperty);
 		this.specialPositionProperty = specialPositionProperty;
 	}

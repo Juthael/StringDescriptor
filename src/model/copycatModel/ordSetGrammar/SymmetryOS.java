@@ -3,16 +3,16 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class SymmetryOS extends NonMinimalRelevantSetElement implements ISetElement {
+public class SymmetryOS extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
 
 	private static final String NAME = "symmetry";
-	private MinimalSetElement symmetryProperty;
+	private MinimalLowerSetElement symmetryProperty;
 	
-	public SymmetryOS(String elementID, MinimalSetElement symmetryProperty) {
+	public SymmetryOS(String elementID, MinimalLowerSetElement symmetryProperty) {
 		super(elementID);
 		this.symmetryProperty = symmetryProperty;
 	}

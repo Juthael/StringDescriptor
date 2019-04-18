@@ -7,8 +7,9 @@ import java.util.Map;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.DimensionXOS;
+import model.copycatModel.ordSetGrammar.factories.DimensionXOSFactory;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -66,8 +67,8 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	}		
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement dimensionXOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement dimensionXOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());
@@ -76,7 +77,7 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 			DimensionOS dimensionOS= (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfDimensionsOS.add(dimensionOS);
 		}
-		dimensionXOS = new DimensionXOS(dimensionXID, listOfDimensionsOS);
+		dimensionXOS = DimensionXOSFactory.getDimensionX(dimensionXID, listOfDimensionsOS);
 		return dimensionXOS;		
 	}	
 

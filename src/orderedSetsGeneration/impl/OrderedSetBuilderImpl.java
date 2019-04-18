@@ -6,28 +6,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import orderedSetsGeneration.IOrderedSetBuilder;
 
 public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 
-	private ISetElement omega;
+	private ILowerSetElement omega;
 	private int mapIndex = 1;
 	private Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
 	
 	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
-		List<ISetElement> listOfSubMaximalPowerSetElements = new ArrayList<ISetElement>();
+		List<ILowerSetElement> listOfSubMaximalPowerSetElements = new ArrayList<ILowerSetElement>();
 		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
-			ISetElement subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			ILowerSetElement subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
 		omega = new OmegaElement(listOfSubMaximalPowerSetElements);
 	}
 
 	@Override
-	public ISetElement getOrderedSet() {
+	public ILowerSetElement getOrderedSet() {
 		return omega;
 	}
 

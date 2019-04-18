@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.DimensionOS;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.impl.DimensionEncodingManager;
@@ -48,12 +48,12 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	}		
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement dimensionOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement dimensionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionID = getDescriptorName().concat(dimensionIndex.toString());
-		MinimalSetElement dimensionProperty = new MinimalSetElement(getDimensionCode(indexedPath));
+		MinimalLowerSetElement dimensionProperty = new MinimalLowerSetElement(getDimensionCode(indexedPath));
 		dimensionOS = new DimensionOS(dimensionID, dimensionProperty);
 		return dimensionOS;		
 	}	

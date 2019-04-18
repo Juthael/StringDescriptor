@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class OmegaElement extends NonMinimalRelevantSetElement implements ISetElement {
+public class OmegaElement extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
 
 	private static final String NAME = "omega";
-	private List<ISetElement> listOfSubMaxElements = new ArrayList<ISetElement>();
+	private List<ILowerSetElement> listOfSubMaxElements = new ArrayList<ILowerSetElement>();
 	
-	public OmegaElement(List<ISetElement> listOfSetElements) {
+	public OmegaElement(List<ILowerSetElement> listOfSetElements) {
 		super(NAME);
-		for (ISetElement element : listOfSetElements) {
+		for (ILowerSetElement element : listOfSetElements) {
 			element.setMayBeTheCodedElement(true);
 			this.listOfSubMaxElements.add(element);
 		}

@@ -6,8 +6,8 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.EndPositionOS;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 import settings.Settings;
@@ -56,12 +56,12 @@ public class EndPosition extends SynTreeElementWithPositionImpl implements ISynT
 	}	
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement endPositionOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement endPositionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer positionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String endPositionID = getDescriptorName().concat(positionIndex.toString());
-		MinimalSetElement endPositionProperty = new MinimalSetElement(endPositionValue);
+		MinimalLowerSetElement endPositionProperty = new MinimalLowerSetElement(endPositionValue);
 		endPositionOS = new EndPositionOS(endPositionID, endPositionProperty);
 		return endPositionOS;		
 	}	

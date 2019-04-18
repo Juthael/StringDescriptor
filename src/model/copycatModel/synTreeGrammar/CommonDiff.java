@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.CommonDiffOS;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -48,12 +48,12 @@ public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, C
 	}
 
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement commonDiffOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement commonDiffOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer commonDiffIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String commonDiffID = getDescriptorName().concat(commonDiffIndex.toString());
-		MinimalSetElement commonDiffProperty = new MinimalSetElement(commonDiffValue);
+		MinimalLowerSetElement commonDiffProperty = new MinimalLowerSetElement(commonDiffValue);
 		commonDiffOS = new CommonDiffOS(commonDiffID, commonDiffProperty);
 		return commonDiffOS;		
 	}			

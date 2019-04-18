@@ -9,7 +9,7 @@ import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
 import model.copycatModel.ordSetGrammar.CommonDiffOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -52,8 +52,8 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}	
 
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement sequenceOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement sequenceOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceID = getDescriptorName().concat(sequenceIndex.toString());

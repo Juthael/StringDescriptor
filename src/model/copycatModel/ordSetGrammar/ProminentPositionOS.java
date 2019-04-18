@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public abstract class ProminentPositionOS extends NonMinimalRelevantSetElement implements WhichPositionTypeOS {
+public abstract class ProminentPositionOS extends NonMinimalRelevantLowerSetElement implements WhichPositionTypeOS {
 
 	private static final String NAME = "prominentPosition";
 	protected PositionOS position;

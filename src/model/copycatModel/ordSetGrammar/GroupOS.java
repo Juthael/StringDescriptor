@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class GroupOS extends NonMinimalRelevantSetElement implements HowManyGroupsOS {
+public class GroupOS extends NonMinimalRelevantLowerSetElement implements HowManyGroupsOS {
 
 	private static final String NAME = "group";
 	private SizeOS size;

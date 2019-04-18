@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 
-public interface WhichPositionTypeOS extends ISetElement {
+public interface WhichPositionTypeOS extends ILowerSetElement {
 
 }

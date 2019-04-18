@@ -3,14 +3,14 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalIrrelevantLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalDeadLowerSetElement;
 
-public class DimensionXOS extends NonMinimalIrrelevantLowerSetElement implements IDimensionX {
+public class DimensionXOS2Dead extends NonMinimalDeadLowerSetElement implements IDimensionX {
 
 	private static final String PARTIAL_NAME = "dimensionX";
 	private List<DimensionOS> listOfDimensions;
 	
-	public DimensionXOS(String elementID, List<DimensionOS> listOfDimensions) {
+	public DimensionXOS2Dead(String elementID, List<DimensionOS> listOfDimensions) {
 		super(elementID);
 		this.listOfDimensions = listOfDimensions;
 	}

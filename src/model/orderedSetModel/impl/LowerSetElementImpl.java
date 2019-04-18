@@ -9,29 +9,29 @@ import java.util.Set;
 
 import model.generalModel.IElement;
 import model.generalModel.impl.ElementImpl;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import settings.Settings;
 
-public abstract class SetElementImpl extends ElementImpl implements ISetElement {
+public abstract class LowerSetElementImpl extends ElementImpl implements ILowerSetElement {
 
 	private String elementID;
 	private boolean mayBeTheCodedElement;
 	private boolean isTheCodedElement;
 	
-	public SetElementImpl(String elementID) {
+	public LowerSetElementImpl(String elementID) {
 		this.elementID = elementID;
 		mayBeTheCodedElement = false;
 		isTheCodedElement = false;
 	}
 	
-	public SetElementImpl(String elementID, boolean isCodingByDecomposition) {
+	public LowerSetElementImpl(String elementID, boolean isCodingByDecomposition) {
 		super(isCodingByDecomposition);
 		this.elementID = elementID;
 		mayBeTheCodedElement = false;
 		isTheCodedElement = false;
 	}
 	
-	public SetElementImpl(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
+	public LowerSetElementImpl(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
 		super(isCodingByDecomposition);
 		this.elementID = elementID;
 		this.mayBeTheCodedElement = mayBeTheCodedElement;
@@ -49,7 +49,7 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 		relation.put(getElementID(), getLowerSet());
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (ISetElement) component;
+			ILowerSetElement setComponent = (ILowerSetElement) component;
 			relation.putAll(setComponent.getRelation());
 		}
 		return relation;
@@ -60,7 +60,7 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 		List<String> listOfMaximalChainsOfElementLowerSet = new ArrayList<String>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (ISetElement) component;
+			ILowerSetElement setComponent = (ILowerSetElement) component;
 			List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getLowerSetDescription();
 			for (String componentMaximalChain : listOfMaximalChainsOfComponentLowerSet) {
 				String maximalChain = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalChain);
@@ -89,11 +89,11 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 	
 	protected Set<String> getUnionOfComponentsLowerSets() {
 		Set<String> unionOfComponentsLowerSets = new HashSet<String>();
-		List<ISetElement> listOfComponents = new ArrayList<ISetElement>();
+		List<ILowerSetElement> listOfComponents = new ArrayList<ILowerSetElement>();
 		for (IElement component : getListOfComponents()) {
-			listOfComponents.add((ISetElement) component);
+			listOfComponents.add((ILowerSetElement) component);
 		}
-		for (ISetElement component : listOfComponents) {
+		for (ILowerSetElement component : listOfComponents) {
 			unionOfComponentsLowerSets.addAll(component.getLowerSet());
 		}
 		return unionOfComponentsLowerSets;

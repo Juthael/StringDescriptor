@@ -3,16 +3,16 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class SizeOS extends NonMinimalRelevantSetElement implements ISetElement {
+public class SizeOS extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
 
 	private static final String NAME = "size";
-	private MinimalSetElement sizeProperty;
+	private MinimalLowerSetElement sizeProperty;
 	
-	public SizeOS(String elementID, MinimalSetElement sizeProperty) {
+	public SizeOS(String elementID, MinimalLowerSetElement sizeProperty) {
 		super(elementID);
 		this.sizeProperty = sizeProperty;
 	}

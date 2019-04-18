@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 
-public interface HowManyRelationsOS extends ISetElement {
+public interface HowManyRelationsOS extends ILowerSetElement {
 
 }

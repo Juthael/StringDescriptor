@@ -11,7 +11,7 @@ import model.copycatModel.ordSetGrammar.SequenceAndSymmetryRelOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -54,8 +54,8 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	}
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement sequenceAndSymmetryRelOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement sequenceAndSymmetryRelOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceAndSymmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceAndSymmetryRelID = getDescriptorName().concat(sequenceAndSymmetryRelIndex.toString());

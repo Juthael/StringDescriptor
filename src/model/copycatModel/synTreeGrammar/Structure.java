@@ -9,7 +9,7 @@ import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -46,8 +46,8 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement structureOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement structureOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer structureIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String structureID = getDescriptorName().concat(structureIndex.toString());

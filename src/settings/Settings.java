@@ -47,5 +47,9 @@ public class Settings {
 	public static final int MAX_NB_OF_DESCRIPTOR_GENERATIONS = 3; //error if >5
 	public static final int MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION = 4;
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
+	
+	//3. Parameters allowing to declare "dead" (and not subsequently taken into account) some subsets of the ordered set.
+	public static final boolean DIMENSIONX_LOWERSET_IS_DEAD = true;
+	
 
 }

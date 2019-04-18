@@ -6,8 +6,8 @@ import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -55,12 +55,12 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	}	
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement enumerationOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement enumerationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer enumerationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String enumerationID = getDescriptorName().concat(enumerationIndex.toString());
-		MinimalSetElement enumerationProperty = new MinimalSetElement(enumerationValue);
+		MinimalLowerSetElement enumerationProperty = new MinimalLowerSetElement(enumerationValue);
 		enumerationOS = new EnumerationOS(enumerationID, enumerationProperty);
 		return enumerationOS;		
 	}

@@ -6,8 +6,8 @@ import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -55,12 +55,12 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 	}	
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement sizeOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement sizeOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sizeIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sizeID = getDescriptorName().concat(sizeIndex.toString());
-		MinimalSetElement sizeProperty = new MinimalSetElement(sizeValue);
+		MinimalLowerSetElement sizeProperty = new MinimalLowerSetElement(sizeValue);
 		sizeOS = new SizeOS(sizeID, sizeProperty);
 		return sizeOS;		
 	}		

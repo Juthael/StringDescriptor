@@ -6,8 +6,8 @@ import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
-import model.orderedSetModel.impl.MinimalSetElement;
+import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -56,12 +56,12 @@ public class Direction extends SynTreeElementImpl implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ISetElement directionOS;
+	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		ILowerSetElement directionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer directionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String directionID = getDescriptorName().concat(directionIndex.toString());
-		MinimalSetElement directionProperty = new MinimalSetElement(directionValue);
+		MinimalLowerSetElement directionProperty = new MinimalLowerSetElement(directionValue);
 		directionOS = new DirectionOS(directionID, directionProperty);
 		return directionOS;		
 	}	

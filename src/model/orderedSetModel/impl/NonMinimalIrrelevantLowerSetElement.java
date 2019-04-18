@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
+import model.orderedSetModel.ILowerSetElement;
 
-public abstract class NonMinimalIrrelevantSetElement extends SetElementImpl implements ISetElement {
+public abstract class NonMinimalIrrelevantLowerSetElement extends LowerSetElementImpl implements ILowerSetElement {
 
-	public NonMinimalIrrelevantSetElement(String elementID) {
+	public NonMinimalIrrelevantLowerSetElement(String elementID) {
 		super(elementID);
 	}
 
@@ -21,7 +21,7 @@ public abstract class NonMinimalIrrelevantSetElement extends SetElementImpl impl
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (SetElementImpl) component;
+			ILowerSetElement setComponent = (LowerSetElementImpl) component;
 			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getLowerSetDescription();
 			listOfMaximalStringsOfElementLowerSet.addAll(listOfMaximalStringsOfComponentLowerSet);
 		}
@@ -33,7 +33,7 @@ public abstract class NonMinimalIrrelevantSetElement extends SetElementImpl impl
 		Map<String, Set<String>> relation = new HashMap<String, Set<String>>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (SetElementImpl) component;
+			ILowerSetElement setComponent = (LowerSetElementImpl) component;
 			relation.putAll(setComponent.getRelation());
 		}
 		return relation;
