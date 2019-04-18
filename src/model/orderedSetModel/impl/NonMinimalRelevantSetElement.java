@@ -7,7 +7,7 @@ import model.orderedSetModel.ISetElement;
 
 public abstract class NonMinimalRelevantSetElement extends SetElementImpl implements ISetElement {
 
-	protected static MinimalIdiosyncraticSetElement minimalIdiosyncraticSetElement;
+	protected MinimalIdiosyncraticSetElement minimalIdiosyncraticSetElement;
 	
 	public NonMinimalRelevantSetElement(String elementID) {
 		super(elementID);
@@ -29,7 +29,7 @@ public abstract class NonMinimalRelevantSetElement extends SetElementImpl implem
 		return listOfComponents;
 	}	
 
-	private void setIdiosyncraticProperty() {
+	protected void setIdiosyncraticProperty() {
 		minimalIdiosyncraticSetElement = new MinimalIdiosyncraticSetElement(getDescriptorName());
 	}
 	

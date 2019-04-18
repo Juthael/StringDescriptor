@@ -15,11 +15,11 @@ public class ElementImplTest {
 
 	@Test
 	public void whenAllAccessiblePropertyListsAreRequestedThenExpectedNumberOfListsReturned() {
-		/*Position position = new Position("1", "firstPosition");
+		Position position = new Position("1");
 		PlatonicLetter platonicLetter = new PlatonicLetter("a");
 		Letter letter = new Letter(position, platonicLetter);
 		Set<List<String>> listOfAllAccessibleListsOfProperties = letter.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
-		assertTrue(listOfAllAccessibleListsOfProperties.size() == 3); */
+		assertTrue(listOfAllAccessibleListsOfProperties.size() == 3);
 	}
 
 }

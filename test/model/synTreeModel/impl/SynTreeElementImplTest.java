@@ -5,23 +5,32 @@ package model.synTreeModel.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.Enumeration;
 import model.copycatModel.synTreeGrammar.Group;
 import model.copycatModel.synTreeGrammar.GroupX;
 import model.copycatModel.synTreeGrammar.HowManyGroups;
 import model.copycatModel.synTreeGrammar.Relation;
+import model.orderedSetModel.ISetElement;
 import model.synTreeModel.IProperty;
 import model.synTreeModel.IPropertyContainer;
 import model.synTreeModel.ISignal;
+import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
+import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
 public class SynTreeElementImplTest {
@@ -111,6 +120,35 @@ public class SynTreeElementImplTest {
 				(group2ContainsGroupPosition2 == false && 
 				groupX3ContainsGroupPosition2 == true);
 		assertEquals(onlyClonedGroupsAreRelatedInNewDescriptor, true);
+	}
+	
+	@Test
+	public void whenSynTreeElementsAreUpgradedThenOrderedSetElementsAreReturned() 
+			throws SynTreeGenerationException, CloneNotSupportedException {
+		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
+				new ListOfDescriptorsBuilderImpl("abcde", "fromLeftToRight");
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		Set<List<String>> setOfAccessibleListOfProperties = new HashSet<List<String>>();
+		for (CharString charString : listOfDescriptors) {
+			setOfAccessibleListOfProperties.addAll(charString.getSetOfAllPropertyListsAccessibleFromThisDescriptor());
+		}
+		Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
+		int listOfPropertiesIndex = 0;
+		for (List<String> listOfProperties : setOfAccessibleListOfProperties) {
+			listOfPropertiesToIndex.put(listOfProperties, listOfPropertiesIndex);
+			listOfPropertiesIndex++;
+		}
+		List<ISetElement> listOfOrderedSetElements = new ArrayList<ISetElement>();
+		for (CharString descriptor : listOfDescriptors)
+			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		for (ISetElement setElement : listOfOrderedSetElements) {
+			List<String> listOfMaximalChains = setElement.getLowerSetDescription();
+			for (String chain : listOfMaximalChains) {
+				System.out.println(chain);
+			}
+		}
+		System.out.println("");
+		assertTrue(listOfDescriptors.size() == listOfOrderedSetElements.size());
 	}
 
 }

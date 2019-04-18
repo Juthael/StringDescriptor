@@ -40,7 +40,7 @@ public abstract class NonMinimalIrrelevantSetElement extends SetElementImpl impl
 	}
 	
 	@Override
-	protected Set<String> getLowerSet() {
+	public Set<String> getLowerSet() {
 		Set<String> lowerSet = new HashSet<String>();
 		lowerSet.addAll(getUnionOfComponentsLowerSets());
 		return lowerSet;

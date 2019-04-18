@@ -49,7 +49,7 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 		relation.put(getElementID(), getLowerSet());
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (SetElementImpl) component;
+			ISetElement setComponent = (ISetElement) component;
 			relation.putAll(setComponent.getRelation());
 		}
 		return relation;
@@ -57,17 +57,17 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 
 	@Override
 	public List<String> getLowerSetDescription() {
-		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
+		List<String> listOfMaximalChainsOfElementLowerSet = new ArrayList<String>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			ISetElement setComponent = (SetElementImpl) component;
-			List<String> listOfMaximalStringsOfComponentLowerSet = setComponent.getLowerSetDescription();
-			for (String componentMaximalString : listOfMaximalStringsOfComponentLowerSet) {
-				String maximalString = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalString);
-				listOfMaximalStringsOfElementLowerSet.add(maximalString);
+			ISetElement setComponent = (ISetElement) component;
+			List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getLowerSetDescription();
+			for (String componentMaximalChain : listOfMaximalChainsOfComponentLowerSet) {
+				String maximalChain = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalChain);
+				listOfMaximalChainsOfElementLowerSet.add(maximalChain);
 			}
 		}
-		return listOfMaximalStringsOfElementLowerSet;
+		return listOfMaximalChainsOfElementLowerSet;
 	}	
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 		return isTheCodedElement;
 	}
 	
-	protected Set<String> getLowerSet() {
+	public Set<String> getLowerSet() {
 		Set<String> lowerSet = new HashSet<String>();
 		lowerSet.add(getElementID());
 		lowerSet.addAll(getUnionOfComponentsLowerSets());
@@ -89,11 +89,11 @@ public abstract class SetElementImpl extends ElementImpl implements ISetElement 
 	
 	protected Set<String> getUnionOfComponentsLowerSets() {
 		Set<String> unionOfComponentsLowerSets = new HashSet<String>();
-		List<SetElementImpl> listOfComponents = new ArrayList<SetElementImpl>();
+		List<ISetElement> listOfComponents = new ArrayList<ISetElement>();
 		for (IElement component : getListOfComponents()) {
-			listOfComponents.add((SetElementImpl) component);
+			listOfComponents.add((ISetElement) component);
 		}
-		for (SetElementImpl component : listOfComponents) {
+		for (ISetElement component : listOfComponents) {
 			unionOfComponentsLowerSets.addAll(component.getLowerSet());
 		}
 		return unionOfComponentsLowerSets;

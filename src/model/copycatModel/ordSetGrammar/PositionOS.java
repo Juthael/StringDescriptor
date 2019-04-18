@@ -3,11 +3,10 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ISetElement;
 import model.orderedSetModel.impl.MinimalSetElement;
 import model.orderedSetModel.impl.NonMinimalRelevantSetElement;
 
-public class PositionOS extends NonMinimalRelevantSetElement implements ISetElement {
+public class PositionOS extends NonMinimalRelevantSetElement implements WhichPositionTypeOS {
 
 	private static final String NAME = "position";
 	private MinimalSetElement positionProperty;

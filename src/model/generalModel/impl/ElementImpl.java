@@ -71,7 +71,8 @@ public abstract class ElementImpl implements IElement {
 		Set<List<String>> setOfAllPropertyListsAccessibleFromComponents = new HashSet<List<String>>();
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
-			setOfAllPropertyListsAccessibleFromComponents.add(component.getListOfPropertiesWithPath());
+			setOfAllPropertyListsAccessibleFromComponents.addAll(
+					component.getSetOfAllPropertyListsAccessibleFromThisDescriptor());
 		}
 		return setOfAllPropertyListsAccessibleFromComponents;
 	}	

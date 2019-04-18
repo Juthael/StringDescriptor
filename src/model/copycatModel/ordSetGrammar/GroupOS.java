@@ -9,21 +9,22 @@ public class GroupOS extends NonMinimalRelevantSetElement implements HowManyGrou
 
 	private static final String NAME = "group";
 	private SizeOS size;
-	private PositionOS position;
+	private WhichPositionTypeOS positionType;
 	private RelationsOrLetterOS relationsOrLetter;
 	
-	public GroupOS(String elementID, SizeOS size, PositionOS position, RelationsOrLetterOS relationsOrLetter) {
+	public GroupOS(String elementID, SizeOS size, WhichPositionTypeOS positionType, 
+			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID);
 		this.size = size;
-		this.position = position;
+		this.positionType = positionType;
 		this.relationsOrLetter = relationsOrLetter;
 	}
 
-	public GroupOS(String elementID, boolean isCodingByDecomposition, SizeOS size, PositionOS position, 
+	public GroupOS(String elementID, boolean isCodingByDecomposition, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID, isCodingByDecomposition);
 		this.size = size;
-		this.position = position;
+		this.positionType = positionType;
 		this.relationsOrLetter = relationsOrLetter;		
 	}
 
@@ -31,7 +32,7 @@ public class GroupOS extends NonMinimalRelevantSetElement implements HowManyGrou
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(size);
-		listOfComponents.add(position);
+		listOfComponents.add(positionType);
 		listOfComponents.add(relationsOrLetter);
 		return listOfComponents;
 	}

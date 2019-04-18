@@ -7,9 +7,9 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.GroupOS;
-import model.copycatModel.ordSetGrammar.PositionOS;
 import model.copycatModel.ordSetGrammar.RelationsOrLetterOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
+import model.copycatModel.ordSetGrammar.WhichPositionTypeOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
@@ -111,7 +111,8 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 		Integer groupIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String groupID = getDescriptorName().concat(groupIndex.toString());
 		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		PositionOS positionOS = (PositionOS) positionType.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		WhichPositionTypeOS positionOS = 
+				(WhichPositionTypeOS) positionType.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		RelationsOrLetterOS relationsOrLetterOS = 
 				(RelationsOrLetterOS) relationsOrLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		groupOS = new GroupOS(groupID, sizeOS, positionOS, relationsOrLetterOS);

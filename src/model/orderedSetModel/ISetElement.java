@@ -14,12 +14,14 @@ public interface ISetElement extends IElement {
 	
 	List<String> getLowerSetDescription();
 	
-	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
-	
-	void setIsTheCodedElement(boolean isTheCodedElement);
-	
 	boolean getMayBeTheCodedElement();
 	
 	boolean getIsTheCodedElement();
+	
+	Set<String> getLowerSet();
+	
+	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
+	
+	void setIsTheCodedElement(boolean isTheCodedElement);	
 
 }
