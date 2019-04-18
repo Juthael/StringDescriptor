@@ -11,8 +11,6 @@ import model.copycatModel.ordSetGrammar.RelationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
-import settings.Settings;
 
 public class Relation extends HowManyRelations implements ISynTreeElement, Cloneable {
 	
@@ -44,22 +42,6 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimension, enumeration));
 		return componentDescriptors;
-	}
-	
-	@Override
-	public List<String> getListOfRelevantPropertiesWithPath(){
-		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
-			List<String> listOfComponentRelevantPropertiesWithPath = 
-					componentDescriptor.getListOfRelevantPropertiesWithPath();
-			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
-				String propertyWithUpdatedPath = 
-						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
-				listOfRelevantPropertiesWithPath.add(propertyWithUpdatedPath);
-			}
-		}
-		return listOfRelevantPropertiesWithPath;
 	}		
 	
 	@Override

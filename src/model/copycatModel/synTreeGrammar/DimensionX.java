@@ -10,6 +10,7 @@ import model.copycatModel.ordSetGrammar.DimensionXOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
 
 public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cloneable {
@@ -53,6 +54,16 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 		}
 		return listOfComponents;
 	}
+	
+	@Override
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
+			listOfRelevantPropertiesWithPath.addAll(componentDescriptor.getListOfRelevantPropertiesWithPath());
+		}
+		return listOfRelevantPropertiesWithPath;
+	}		
 	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

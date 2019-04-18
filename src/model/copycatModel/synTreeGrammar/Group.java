@@ -70,22 +70,6 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	}	
 	
 	@Override
-	public List<String> getListOfRelevantPropertiesWithPath(){
-		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
-			List<String> listOfComponentRelevantPropertiesWithPath = 
-					componentDescriptor.getListOfRelevantPropertiesWithPath();
-			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
-				String propertyWithUpdatedPath = 
-						this.getDescriptorName().concat(Settings.PATH_SEPARATOR + propertyWithPath);
-				listOfRelevantPropertiesWithPath.add(propertyWithUpdatedPath);
-			}
-		}
-		return listOfRelevantPropertiesWithPath;
-	}		
-	
-	@Override
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
 		listOfRelevantComponents.add(size);

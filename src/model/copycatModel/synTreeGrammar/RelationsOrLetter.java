@@ -9,8 +9,5 @@ public abstract class RelationsOrLetter extends SynTreeElementImpl implements IS
 	}
 
 	@Override
-	abstract public String getDescriptorName();
-	
-	@Override
 	abstract protected RelationsOrLetter clone() throws CloneNotSupportedException;
 }

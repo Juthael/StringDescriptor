@@ -10,6 +10,7 @@ import model.copycatModel.ordSetGrammar.RelationXOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ISetElement;
 import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
 
 public class RelationX extends HowManyRelations implements ISynTreeElement, Cloneable {
@@ -51,6 +52,16 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 			listOfComponents.add(relation);
 		return listOfComponents;
 	}
+	
+	@Override
+	public List<String> getListOfRelevantPropertiesWithPath(){
+		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
+		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
+			listOfRelevantPropertiesWithPath.addAll(componentDescriptor.getListOfRelevantPropertiesWithPath());
+		}
+		return listOfRelevantPropertiesWithPath;
+	}	
 	
 	@Override
 	public ISetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

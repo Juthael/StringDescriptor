@@ -64,9 +64,7 @@ public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition
 		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
 		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
 		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
-			List<String> listOfComponentRelevantPropertiesWithPath = 
-					componentDescriptor.getListOfRelevantPropertiesWithPath();
-			listOfRelevantPropertiesWithPath.addAll(listOfComponentRelevantPropertiesWithPath);
+			listOfRelevantPropertiesWithPath.addAll(componentDescriptor.getListOfRelevantPropertiesWithPath());
 		}
 		return listOfRelevantPropertiesWithPath;
 	}	
