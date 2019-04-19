@@ -8,10 +8,10 @@ import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 public class RelationOS extends NonMinimalRelevantLowerSetElement implements HowManyRelationsOS {
 
 	private static final String NAME = "relation";
-	private DimensionOS dimension;
-	private EnumerationOS enumeration;
+	private IDimensionOS dimension;
+	private IEnumerationOS enumeration;
 	
-	public RelationOS(String elementID, DimensionOS dimension, EnumerationOS enumeration) {
+	public RelationOS(String elementID, IDimensionOS dimension, IEnumerationOS enumeration) {
 		super(elementID);
 		this.dimension = dimension;
 		this.enumeration = enumeration;

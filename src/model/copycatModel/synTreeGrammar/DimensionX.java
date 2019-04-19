@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.DimensionOS;
-import model.copycatModel.ordSetGrammar.factories.DimensionXOSFactory;
+import model.copycatModel.ordSetGrammar.IDimensionOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -71,12 +71,12 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());
-		List<DimensionOS> listOfDimensionsOS = new ArrayList<DimensionOS>();
+		List<IDimensionOS> listOfDimensionsOS = new ArrayList<IDimensionOS>();
 		for (Dimension dimension : listOfDimensions) {
-			DimensionOS dimensionOS= (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			IDimensionOS dimensionOS= (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfDimensionsOS.add(dimensionOS);
 		}
-		dimensionXOS = DimensionXOSFactory.getDimensionX(dimensionXID, listOfDimensionsOS);
+		dimensionXOS = OSFactory.getDimensionXOS(dimensionXID, listOfDimensionsOS);
 		return dimensionXOS;		
 	}	
 

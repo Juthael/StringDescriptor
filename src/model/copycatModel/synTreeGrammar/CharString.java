@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.CharStringOS;
-import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.copycatModel.ordSetGrammar.GroupsOS;
+import model.copycatModel.ordSetGrammar.IDirectionOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
@@ -55,7 +55,7 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer charStringIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String charStringID = getDescriptorName().concat(charStringIndex.toString());
-		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		IDirectionOS directionOS = (IDirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		charStringOS = new CharStringOS(charStringID, directionOS, structureOS, groupsOS);

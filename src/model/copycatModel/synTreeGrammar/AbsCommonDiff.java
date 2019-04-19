@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.orderedSetModel.ILowerSetElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -54,7 +54,7 @@ public class AbsCommonDiff extends SynTreeElementImpl implements ISynTreeElement
 		Integer absCommonDiffIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String absCommonDiffID = getDescriptorName().concat(absCommonDiffIndex.toString());
 		MinimalLowerSetElement absCommonDiffProperty = new MinimalLowerSetElement(absCommonDiffValue);
-		absCommonDiffOS = new AbsCommonDiffOS(absCommonDiffID, absCommonDiffProperty);
+		absCommonDiffOS = OSFactory.getAbsCommonDiffOS(absCommonDiffID, absCommonDiffProperty);
 		return absCommonDiffOS;		
 	}	
 

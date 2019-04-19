@@ -40,9 +40,9 @@ public abstract class NonMinimalIrrelevantLowerSetElement extends LowerSetElemen
 	}
 	
 	@Override
-	public Set<String> getLowerSet() {
+	public Set<String> getLowerSetIDs() {
 		Set<String> lowerSet = new HashSet<String>();
-		lowerSet.addAll(getUnionOfComponentsLowerSets());
+		lowerSet.addAll(getUnionOfComponentsLowerSetsIDs());
 		return lowerSet;
 	}
 

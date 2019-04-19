@@ -3,9 +3,9 @@ package model.copycatModel.synTreeGrammar;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.EndPositionOS;
 import model.copycatModel.ordSetGrammar.EndProminentPositionOS;
-import model.copycatModel.ordSetGrammar.PositionOS;
+import model.copycatModel.ordSetGrammar.IEndPositionOS;
+import model.copycatModel.ordSetGrammar.IPositionOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
@@ -41,8 +41,8 @@ public class EndProminentPosition extends ProminentPosition implements ISynTreeE
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer endProminentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String endOfProminentPositionID = getDescriptorName().concat(endProminentPositionIndex.toString());
-		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		EndPositionOS endPositionOS = (EndPositionOS) endPosition.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex); 
+		IPositionOS positionOS = (IPositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		IEndPositionOS endPositionOS = (IEndPositionOS) endPosition.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex); 
 		endProminentPositionOS = new EndProminentPositionOS(endOfProminentPositionID, positionOS, endPositionOS);
 		return endProminentPositionOS;		
 	}		

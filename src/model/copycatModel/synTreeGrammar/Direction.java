@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.DirectionOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
@@ -62,7 +62,7 @@ public class Direction extends SynTreeElementImpl implements ISynTreeElement, Cl
 		Integer directionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String directionID = getDescriptorName().concat(directionIndex.toString());
 		MinimalLowerSetElement directionProperty = new MinimalLowerSetElement(directionValue);
-		directionOS = new DirectionOS(directionID, directionProperty);
+		directionOS = OSFactory.getDirectionOS(directionID, directionProperty);
 		return directionOS;		
 	}	
 	

@@ -23,7 +23,7 @@ public class Settings {
 	public static final String SYMMETRY_WITHOUT_CENTRAL_ELEMENT = "withoutCentralElement";
 	public static final String POSITION_VALUES_SEPARATOR = ":";
 	
-	//2.Parameters preventing combinatorial explosion
+	//2.Parameters preventing combinatorial explosion during the syntactic trees generation 
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
 	public static final int MAX_NB_OF_UNRELATED_GROUPS = 4;
 	public static final int MAX_NB_OF_GROUPS_IN_RELATIONS = 10; //error if >12
@@ -48,8 +48,17 @@ public class Settings {
 	public static final int MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION = 4;
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
 	
-	//3. Parameters allowing to declare "dead" (and not subsequently taken into account) some subsets of the ordered set.
+	//3. Parameters reducing the size of ordered sets
+	//3.1. allows to declare "dead" (and not subsequently taken into account) some subsets of the ordered set.
 	public static final boolean DIMENSIONX_LOWERSET_IS_DEAD = true;
+	//3.2. allows to declare a lower set as minimal if it has a single lower bound (besides idiosyncratic element)
+	public static boolean IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = true;
+	
+	//4. Settings modifiers : for test purpose only
+	
+	public void setIfSngleLowerBoundThenMinimalToFalse() {
+		IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = false;
+	}
 	
 
 }

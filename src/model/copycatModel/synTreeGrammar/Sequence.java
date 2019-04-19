@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
-import model.copycatModel.ordSetGrammar.CommonDiffOS;
+import model.copycatModel.ordSetGrammar.IAbsCommonDiffOS;
+import model.copycatModel.ordSetGrammar.ICommonDiffOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
@@ -57,9 +57,9 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceID = getDescriptorName().concat(sequenceIndex.toString());
-		CommonDiffOS commonDiffOS = (CommonDiffOS) commonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		AbsCommonDiffOS absCommonDiffOS = 
-				(AbsCommonDiffOS) absCommonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		ICommonDiffOS commonDiffOS = (ICommonDiffOS) commonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		IAbsCommonDiffOS absCommonDiffOS = 
+				(IAbsCommonDiffOS) absCommonDiff.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		sequenceOS = new SequenceOS(sequenceID, commonDiffOS, absCommonDiffOS);
 		return sequenceOS;		
 	}	

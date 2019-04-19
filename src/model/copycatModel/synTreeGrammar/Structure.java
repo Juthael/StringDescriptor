@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import model.copycatModel.ordSetGrammar.ISizeOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
-import model.copycatModel.ordSetGrammar.SizeOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
@@ -51,7 +51,7 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer structureIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String structureID = getDescriptorName().concat(structureIndex.toString());
-		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		ISizeOS sizeOS = (ISizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		structureOS = new StructureOS(structureID, sizeOS, relationOS);
 		return structureOS;		

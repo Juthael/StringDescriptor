@@ -6,9 +6,9 @@ import model.generalModel.IElement;
 
 public class SymmetryRelOS extends RelationOS implements HowManyRelationsOS {
 
-	private SymmetryOS symmetry;
+	private ISymmetryOS symmetry;
 	
-	public SymmetryRelOS(String elementID, DimensionOS dimension, EnumerationOS enumeration, SymmetryOS symmetry) {
+	public SymmetryRelOS(String elementID, IDimensionOS dimension, IEnumerationOS enumeration, ISymmetryOS symmetry) {
 		super(elementID, dimension, enumeration);
 		this.symmetry = symmetry;
 	}

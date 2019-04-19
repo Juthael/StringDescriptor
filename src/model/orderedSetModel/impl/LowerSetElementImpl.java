@@ -46,7 +46,7 @@ public abstract class LowerSetElementImpl extends ElementImpl implements ILowerS
 	@Override
 	public Map<String, Set<String>> getRelation() {
 		Map<String, Set<String>> relation = new HashMap<String, Set<String>>();
-		relation.put(getElementID(), getLowerSet());
+		relation.put(getElementID(), getLowerSetIDs());
 		List<IElement> listOfComponents = getListOfComponents();
 		for (IElement component : listOfComponents) {
 			ILowerSetElement setComponent = (ILowerSetElement) component;
@@ -80,21 +80,21 @@ public abstract class LowerSetElementImpl extends ElementImpl implements ILowerS
 		return isTheCodedElement;
 	}
 	
-	public Set<String> getLowerSet() {
+	public Set<String> getLowerSetIDs() {
 		Set<String> lowerSet = new HashSet<String>();
 		lowerSet.add(getElementID());
-		lowerSet.addAll(getUnionOfComponentsLowerSets());
+		lowerSet.addAll(getUnionOfComponentsLowerSetsIDs());
 		return lowerSet;
 	}
 	
-	protected Set<String> getUnionOfComponentsLowerSets() {
+	protected Set<String> getUnionOfComponentsLowerSetsIDs() {
 		Set<String> unionOfComponentsLowerSets = new HashSet<String>();
 		List<ILowerSetElement> listOfComponents = new ArrayList<ILowerSetElement>();
 		for (IElement component : getListOfComponents()) {
 			listOfComponents.add((ILowerSetElement) component);
 		}
 		for (ILowerSetElement component : listOfComponents) {
-			unionOfComponentsLowerSets.addAll(component.getLowerSet());
+			unionOfComponentsLowerSets.addAll(component.getLowerSetIDs());
 		}
 		return unionOfComponentsLowerSets;
 	}

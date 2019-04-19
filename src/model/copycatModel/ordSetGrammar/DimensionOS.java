@@ -6,7 +6,7 @@ import model.generalModel.IElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
-public class DimensionOS extends NonMinimalRelevantLowerSetElement implements HowManyDimensionsOS {
+public class DimensionOS extends NonMinimalRelevantLowerSetElement implements IDimensionOS {
 
 	private static final String NAME = "dimension";
 	private MinimalLowerSetElement dimensionProperty;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.PositionOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.orderedSetModel.ILowerSetElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
@@ -58,7 +58,7 @@ public class Position extends WhichPositionType implements ISynTreeElementWithPo
 		Integer positionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String positionID = getDescriptorName().concat(positionIndex.toString());
 		MinimalLowerSetElement positionProperty = new MinimalLowerSetElement(positionValue);
-		positionOS = new PositionOS(positionID, positionProperty);
+		positionOS = OSFactory.getPositionOS(positionID, positionProperty);
 		return positionOS;		
 	}	
 	

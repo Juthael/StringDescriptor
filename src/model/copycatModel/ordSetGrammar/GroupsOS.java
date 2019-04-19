@@ -9,10 +9,10 @@ import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 public class GroupsOS extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
 
 	private static final String NAME = "groups";
-	private SizeOS size;
+	private ISizeOS size;
 	private HowManyGroupsOS groupHM;
 	
-	public GroupsOS(String elementID, SizeOS size, HowManyGroupsOS groupHM) {
+	public GroupsOS(String elementID, ISizeOS size, HowManyGroupsOS groupHM) {
 		super(elementID);
 		this.size = size;
 		this.groupHM = groupHM;

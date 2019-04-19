@@ -6,9 +6,9 @@ import model.generalModel.IElement;
 
 public class EndProminentPositionOS extends ProminentPositionOS implements WhichPositionTypeOS {
 
-	private EndPositionOS endPosition;
+	private IEndPositionOS endPosition;
 	
-	public EndProminentPositionOS(String elementID, PositionOS position, EndPositionOS endPosition) {
+	public EndProminentPositionOS(String elementID, IPositionOS position, IEndPositionOS endPosition) {
 		super(elementID, position);
 		this.endPosition = endPosition;
 	}

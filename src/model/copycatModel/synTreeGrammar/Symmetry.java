@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.SymmetryOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.orderedSetModel.ILowerSetElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -65,7 +65,7 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 		Integer symmetryIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String symmetryID = getDescriptorName().concat(symmetryIndex.toString());
 		MinimalLowerSetElement symmetryProperty = new MinimalLowerSetElement(symmetryValue);
-		symmetryOS = new SymmetryOS(symmetryID, symmetryProperty);
+		symmetryOS = OSFactory.getSymmetryOS(symmetryID, symmetryProperty);
 		return symmetryOS;		
 	}	
 

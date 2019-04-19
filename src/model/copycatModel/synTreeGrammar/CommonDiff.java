@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.CommonDiffOS;
+import model.copycatModel.ordSetGrammar.factories.OSFactory;
 import model.orderedSetModel.ILowerSetElement;
 import model.orderedSetModel.impl.MinimalLowerSetElement;
 import model.synTreeModel.ISynTreeElement;
@@ -54,7 +54,7 @@ public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, C
 		Integer commonDiffIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String commonDiffID = getDescriptorName().concat(commonDiffIndex.toString());
 		MinimalLowerSetElement commonDiffProperty = new MinimalLowerSetElement(commonDiffValue);
-		commonDiffOS = new CommonDiffOS(commonDiffID, commonDiffProperty);
+		commonDiffOS = OSFactory.getCommonDiffOS(commonDiffID, commonDiffProperty);
 		return commonDiffOS;		
 	}			
 

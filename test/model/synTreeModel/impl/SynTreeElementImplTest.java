@@ -4,6 +4,7 @@ package model.synTreeModel.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,8 +139,15 @@ public class SynTreeElementImplTest {
 			listOfPropertiesIndex++;
 		}
 		List<ILowerSetElement> listOfOrderedSetElements = new ArrayList<ILowerSetElement>();
-		for (CharString descriptor : listOfDescriptors)
-			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		try {
+			for (CharString descriptor : listOfDescriptors)
+				listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			fail();
+		}
 		for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
 			List<String> listOfMaximalChains = lowerSetElement.getListOfLowerSetMaximalChains();
 			for (String chain : listOfMaximalChains) {

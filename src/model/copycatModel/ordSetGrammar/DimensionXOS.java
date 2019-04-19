@@ -8,9 +8,9 @@ import model.orderedSetModel.impl.NonMinimalIrrelevantLowerSetElement;
 public class DimensionXOS extends NonMinimalIrrelevantLowerSetElement implements IDimensionXOS {
 
 	private static final String PARTIAL_NAME = "dimensionX";
-	private List<DimensionOS> listOfDimensions;
+	private List<IDimensionOS> listOfDimensions;
 	
-	public DimensionXOS(String elementID, List<DimensionOS> listOfDimensions) {
+	public DimensionXOS(String elementID, List<IDimensionOS> listOfDimensions) {
 		super(elementID);
 		this.listOfDimensions = listOfDimensions;
 	}

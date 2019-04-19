@@ -5,12 +5,12 @@ import java.util.List;
 import model.generalModel.IElement;
 import model.orderedSetModel.impl.NonMinimalDeadLowerSetElement;
 
-public class DimensionXOS2Dead extends NonMinimalDeadLowerSetElement implements IDimensionXOS {
+public class DimensionXOSDead extends NonMinimalDeadLowerSetElement implements IDimensionXOS {
 
 	private static final String PARTIAL_NAME = "dimensionX";
-	private List<DimensionOS> listOfDimensions;
+	private List<IDimensionOS> listOfDimensions;
 	
-	public DimensionXOS2Dead(String elementID, List<DimensionOS> listOfDimensions) {
+	public DimensionXOSDead(String elementID, List<IDimensionOS> listOfDimensions) {
 		super(elementID);
 		this.listOfDimensions = listOfDimensions;
 	}

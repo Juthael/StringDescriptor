@@ -10,5 +10,4 @@ public abstract class HowManyRelations extends SynTreeElementImpl implements ISy
 
 	@Override
 	abstract protected HowManyRelations clone() throws CloneNotSupportedException;
-
 }

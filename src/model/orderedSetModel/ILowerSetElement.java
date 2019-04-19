@@ -18,7 +18,7 @@ public interface ILowerSetElement extends IElement {
 	
 	boolean getIsTheCodedElement();
 	
-	Set<String> getLowerSet();
+	Set<String> getLowerSetIDs();
 	
 	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
 	

@@ -28,7 +28,7 @@ public abstract class NonMinimalDeadLowerSetElement extends LowerSetElementImpl 
 	}
 	
 	@Override
-	public Set<String> getLowerSet() {
+	public Set<String> getLowerSetIDs() {
 		Set<String> lowerSet = new HashSet<String>();
 		return lowerSet;
 	}

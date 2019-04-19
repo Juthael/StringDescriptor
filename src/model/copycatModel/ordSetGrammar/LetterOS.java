@@ -8,10 +8,10 @@ import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 public class LetterOS extends NonMinimalRelevantLowerSetElement implements RelationsOrLetterOS {
 
 	private static final String NAME = "letter";
-	private PositionOS position;
-	private PlatonicLetterOS platonicLetter;
+	private IPositionOS position;
+	private IPlatonicLetterOS platonicLetter;
 	
-	public LetterOS(String elementID, PositionOS position, PlatonicLetterOS platonicLetter) {
+	public LetterOS(String elementID, IPositionOS position, IPlatonicLetterOS platonicLetter) {
 		super(elementID);
 		this.position = position;
 		this.platonicLetter = platonicLetter;

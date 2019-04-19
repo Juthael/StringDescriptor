@@ -9,7 +9,7 @@ public class CentralProminentPositionOS extends ProminentPositionOS implements W
 
 	private MinimalLowerSetElement centralProminentPositionProperty;
 	
-	public CentralProminentPositionOS(String elementID, PositionOS position, 
+	public CentralProminentPositionOS(String elementID, IPositionOS position, 
 			MinimalLowerSetElement centralProminentPositionProperty) {
 		super(elementID, position);
 		this.centralProminentPositionProperty = centralProminentPositionProperty;
