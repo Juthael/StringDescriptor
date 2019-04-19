@@ -26,7 +26,6 @@ import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.IProperty;
 import model.synTreeModel.IPropertyContainer;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -141,13 +140,13 @@ public class SynTreeElementImplTest {
 		List<ILowerSetElement> listOfOrderedSetElements = new ArrayList<ILowerSetElement>();
 		for (CharString descriptor : listOfDescriptors)
 			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
-		/* for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
+		for (ILowerSetElement lowerSetElement : listOfOrderedSetElements) {
 			List<String> listOfMaximalChains = lowerSetElement.getListOfLowerSetMaximalChains();
 			for (String chain : listOfMaximalChains) {
 				System.out.println(chain);
 			}
-		} */
-		//System.out.println("");
+			System.out.println("");
+		} 
 		assertTrue(listOfDescriptors.size() == listOfOrderedSetElements.size());
 	}
 

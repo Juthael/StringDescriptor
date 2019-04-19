@@ -1,8 +1,10 @@
 package model.copycatModel.synTreeGrammar;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
 import model.synTreeModel.ISynTreeElementWithPosition;
 
@@ -21,6 +23,13 @@ public abstract class ProminentPosition extends WhichPositionType implements ISy
 	@Override
 	public String getDescriptorName() {
 		return DESCRIPTOR_NAME;
+	}	
+	
+	@Override
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(position);
+		return listOfComponents;
 	}	
 
 	@Override

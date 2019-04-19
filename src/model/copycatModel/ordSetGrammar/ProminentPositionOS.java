@@ -1,5 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
+import java.util.List;
+
+import model.generalModel.IElement;
 import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
 
 public abstract class ProminentPositionOS extends NonMinimalRelevantLowerSetElement implements WhichPositionTypeOS {
@@ -16,5 +19,12 @@ public abstract class ProminentPositionOS extends NonMinimalRelevantLowerSetElem
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public List<IElement> getListOfComponents() {
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(position);
+		return listOfComponents;
+	}		
 
 }

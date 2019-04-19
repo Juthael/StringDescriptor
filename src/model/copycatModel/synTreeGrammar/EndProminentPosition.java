@@ -1,7 +1,5 @@
 package model.copycatModel.synTreeGrammar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +30,9 @@ public class EndProminentPosition extends ProminentPosition implements ISynTreeE
 	
 	@Override
 	public List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>(
-				Arrays.asList(position, endPosition));
-		return componentDescriptors;
+		List<IElement> listOfComponents = super.getListOfComponents();
+		listOfComponents.add(endPosition);
+		return listOfComponents;
 	}
 	
 	@Override

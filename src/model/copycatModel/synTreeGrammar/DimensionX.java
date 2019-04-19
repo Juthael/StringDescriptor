@@ -6,7 +6,6 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
-import model.copycatModel.ordSetGrammar.DimensionXOS;
 import model.copycatModel.ordSetGrammar.factories.DimensionXOSFactory;
 import model.generalModel.IElement;
 import model.orderedSetModel.ILowerSetElement;
