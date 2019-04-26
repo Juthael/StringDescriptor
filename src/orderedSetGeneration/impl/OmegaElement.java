@@ -1,20 +1,20 @@
-package orderedSetsGeneration.impl;
+package orderedSetGeneration.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class OmegaElement extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
+public class OmegaElement extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "omega";
-	private List<ILowerSetElement> listOfSubMaxElements = new ArrayList<ILowerSetElement>();
+	private List<IOrderedSet> listOfSubMaxElements = new ArrayList<IOrderedSet>();
 	
-	public OmegaElement(List<ILowerSetElement> listOfSetElements) {
+	public OmegaElement(List<IOrderedSet> listOfSetElements) {
 		super(NAME);
-		for (ILowerSetElement element : listOfSetElements) {
+		for (IOrderedSet element : listOfSetElements) {
 			element.setMayBeTheCodedElement(true);
 			this.listOfSubMaxElements.add(element);
 		}

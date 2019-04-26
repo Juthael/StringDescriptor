@@ -30,7 +30,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
 				Letter iLetter = getLetter(iString, Integer.toString(i+1));
 				Size iSize = new Size("1");
 				Position iPosition = new Position(Settings.AWAITING_POSITION_VALUE);
-				Group group = new Group(true, iSize, iPosition, iLetter);
+				Group group = new Group(iSize, iPosition, iLetter);
 				listOfGroups.add(group);
 			}
 			signal = new SignalImpl(listOfGroups, directionValue);			
@@ -46,7 +46,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
 	private Letter getLetter(String platonicLetterValue, String positionValue) {
 		Position position = new Position(positionValue);
 		PlatonicLetter platonicLetter = new PlatonicLetter(platonicLetterValue);
-		Letter letter = new Letter(position, platonicLetter);
+		Letter letter = new Letter(Settings.THIS_IS_A_CODING_ELEMENT, position, platonicLetter);
 		return letter;
 	}
 	

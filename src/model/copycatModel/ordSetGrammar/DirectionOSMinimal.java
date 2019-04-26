@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class DirectionOSMinimal extends MinimalLowerSetElement implements IDirectionOS {
+public class DirectionOSMinimal extends MinimalOS implements IDirectionOS {
 
 	private static final String NAME = "direction";
 	

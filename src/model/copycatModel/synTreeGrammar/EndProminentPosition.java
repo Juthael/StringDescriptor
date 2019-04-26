@@ -7,7 +7,7 @@ import model.copycatModel.ordSetGrammar.EndProminentPositionOS;
 import model.copycatModel.ordSetGrammar.IEndPositionOS;
 import model.copycatModel.ordSetGrammar.IPositionOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
 
 public class EndProminentPosition extends ProminentPosition implements ISynTreeElementWithPosition, Cloneable {
@@ -36,8 +36,8 @@ public class EndProminentPosition extends ProminentPosition implements ISynTreeE
 	}
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement endProminentPositionOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet endProminentPositionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer endProminentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String endOfProminentPositionID = getDescriptorName().concat(endProminentPositionIndex.toString());

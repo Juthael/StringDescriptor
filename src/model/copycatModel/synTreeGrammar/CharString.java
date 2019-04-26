@@ -10,7 +10,7 @@ import model.copycatModel.ordSetGrammar.GroupsOS;
 import model.copycatModel.ordSetGrammar.IDirectionOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -50,8 +50,8 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement charStringOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet charStringOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer charStringIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String charStringID = getDescriptorName().concat(charStringIndex.toString());

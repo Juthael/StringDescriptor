@@ -6,8 +6,8 @@ import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.CentralProminentPositionOS;
 import model.copycatModel.ordSetGrammar.IPositionOS;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 
@@ -44,13 +44,13 @@ public class CentralProminentPosition extends ProminentPosition implements ISynT
 	}	
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement centralProminentPositionOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet centralProminentPositionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer prominentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String prominentPositionID = getDescriptorName().concat(prominentPositionIndex.toString());
 		IPositionOS positionOS = (IPositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		MinimalLowerSetElement centralPositionProperty = new MinimalLowerSetElement(Settings.CENTRAL_POSITION);
+		MinimalOS centralPositionProperty = new MinimalOS(Settings.CENTRAL_POSITION);
 		centralProminentPositionOS = new CentralProminentPositionOS(prominentPositionID, positionOS, centralPositionProperty);
 		return centralProminentPositionOS;	
 	}	

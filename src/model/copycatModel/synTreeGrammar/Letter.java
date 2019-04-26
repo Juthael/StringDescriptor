@@ -9,7 +9,7 @@ import model.copycatModel.ordSetGrammar.IPlatonicLetterOS;
 import model.copycatModel.ordSetGrammar.IPositionOS;
 import model.copycatModel.ordSetGrammar.LetterOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -24,12 +24,18 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 		this.platonicLetter = platonicLetter;
 	}
 	
+	public Letter(boolean codingDescriptor, Position position, PlatonicLetter platonicLetter) {
+		super(codingDescriptor);
+		this.position = position;
+		this.platonicLetter = platonicLetter;
+	}	
+	
 	@Override
 	protected Letter clone() throws CloneNotSupportedException {
 		Letter cloneLetter;
 		Position clonePosition = position.clone();
 		PlatonicLetter clonePlatonicLetter = platonicLetter.clone();
-		cloneLetter = new Letter(clonePosition, clonePlatonicLetter);
+		cloneLetter = new Letter(isCodingByDecomposition, clonePosition, clonePlatonicLetter);
 		return cloneLetter;
 	}
 	
@@ -53,15 +59,15 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	}	
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement letterOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet letterOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer letterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String letterID = getDescriptorName().concat(letterIndex.toString());
 		IPositionOS positionOS = (IPositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		IPlatonicLetterOS platonicLetterOS = 
 				(IPlatonicLetterOS) platonicLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		letterOS = new LetterOS(letterID, positionOS, platonicLetterOS);
+		letterOS = new LetterOS(letterID, isCodingByDecomposition, positionOS, platonicLetterOS);
 		return letterOS;		
 	}		
 

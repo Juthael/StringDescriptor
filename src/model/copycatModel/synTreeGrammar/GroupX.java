@@ -8,7 +8,7 @@ import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.GroupOS;
 import model.copycatModel.ordSetGrammar.GroupXOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
@@ -77,8 +77,8 @@ public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition
 	}
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement groupXOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet groupXOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer groupXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String groupXID = getDescriptorName().concat(groupXIndex.toString());

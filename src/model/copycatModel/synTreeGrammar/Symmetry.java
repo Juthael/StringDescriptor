@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.factories.OSFactory;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -59,12 +59,12 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}	
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement symmetryOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet symmetryOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer symmetryIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String symmetryID = getDescriptorName().concat(symmetryIndex.toString());
-		MinimalLowerSetElement symmetryProperty = new MinimalLowerSetElement(symmetryValue);
+		MinimalOS symmetryProperty = new MinimalOS(symmetryValue);
 		symmetryOS = OSFactory.getSymmetryOS(symmetryID, symmetryProperty);
 		return symmetryOS;		
 	}	

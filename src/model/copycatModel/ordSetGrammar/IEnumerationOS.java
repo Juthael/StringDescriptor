@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public interface IEnumerationOS extends ILowerSetElement {
+public interface IEnumerationOS extends IOrderedSet {
 
 }

@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class EndPositionOSMinimal extends MinimalLowerSetElement implements IEndPositionOS {
+public class EndPositionOSMinimal extends MinimalOS implements IEndPositionOS {
 
 	private static final String NAME = "endPosition";
 	

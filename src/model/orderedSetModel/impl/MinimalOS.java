@@ -3,11 +3,11 @@ package model.orderedSetModel.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public class MinimalLowerSetElement extends LowerSetElementImpl implements ILowerSetElement {
+public class MinimalOS extends OrderedSetImpl implements IOrderedSet {
 
-	public MinimalLowerSetElement(String value) {
+	public MinimalOS(String value) {
 		super(value);
 	}
 

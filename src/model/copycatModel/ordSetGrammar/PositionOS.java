@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class PositionOS extends NonMinimalRelevantLowerSetElement implements IPositionOS {
+public class PositionOS extends NonMinimalRelevantOS implements IPositionOS {
 
 	private static final String NAME = "position";
-	private MinimalLowerSetElement positionProperty;
+	private MinimalOS positionProperty;
 	
-	public PositionOS(String elementID, MinimalLowerSetElement positionProperty) {
+	public PositionOS(String elementID, MinimalOS positionProperty) {
 		super(elementID);
 		this.positionProperty = positionProperty;
 	}

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factories.OSFactory;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
 import syntacticTreesGeneration.impl.DimensionEncodingManager;
@@ -48,12 +48,12 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	}		
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement dimensionOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet dimensionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionID = getDescriptorName().concat(dimensionIndex.toString());
-		MinimalLowerSetElement dimensionProperty = new MinimalLowerSetElement(getDimensionCode(indexedPath));
+		MinimalOS dimensionProperty = new MinimalOS(getDimensionCode(indexedPath));
 		dimensionOS = OSFactory.getDimensionOS(dimensionID, dimensionProperty);
 		return dimensionOS;		
 	}	

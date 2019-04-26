@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public interface IPlatonicLetterOS extends ILowerSetElement {
+public interface IPlatonicLetterOS extends IOrderedSet {
 
 }

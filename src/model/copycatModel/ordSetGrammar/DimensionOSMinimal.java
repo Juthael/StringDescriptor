@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class DimensionOSMinimal extends MinimalLowerSetElement implements IDimensionOS {
+public class DimensionOSMinimal extends MinimalOS implements IDimensionOS {
 
 	private static final String NAME = "dimension";
 	

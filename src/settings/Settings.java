@@ -3,6 +3,7 @@ package settings;
 public class Settings {
 
 	//1.Conventions
+	public static final boolean THIS_IS_A_CODING_ELEMENT = true;
 	public static final boolean USE_LOWERCASE_LETTER = true;
 	public static final String AWAITING_POSITION_VALUE = "noValueYet";
 	public static final int COMPONENT_AUTO_POSITIONING = 0;
@@ -23,7 +24,7 @@ public class Settings {
 	public static final String SYMMETRY_WITHOUT_CENTRAL_ELEMENT = "withoutCentralElement";
 	public static final String POSITION_VALUES_SEPARATOR = ":";
 	
-	//2.Parameters preventing combinatorial explosion during the syntactic trees generation 
+	//2.Parameters concerning the generation of syntactic trees
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
 	public static final int MAX_NB_OF_UNRELATED_GROUPS = 4;
 	public static final int MAX_NB_OF_GROUPS_IN_RELATIONS = 10; //error if >12
@@ -48,17 +49,15 @@ public class Settings {
 	public static final int MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION = 4;
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
 	
-	//3. Parameters reducing the size of ordered sets
+	//3. Parameters concerning the generation of ordered sets
 	//3.1. allows to declare "dead" (and not subsequently taken into account) some subsets of the ordered set.
 	public static final boolean DIMENSIONX_LOWERSET_IS_DEAD = true;
 	//3.2. allows to declare a lower set as minimal if it has a single lower bound (besides idiosyncratic element)
-	public static boolean IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = true;
+	public static final boolean IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = false;
+	public static final boolean RELATION_MUST_BE_CLARIFIED = true;
 	
-	//4. Settings modifiers : for test purpose only
-	
-	public void setIfSngleLowerBoundThenMinimalToFalse() {
-		IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = false;
-	}
+	//4. Parameters concerning the generation of binary contexts
+	public static final boolean CONTEXTS_MUST_BE_CLARIFIED = true;
 	
 
 }

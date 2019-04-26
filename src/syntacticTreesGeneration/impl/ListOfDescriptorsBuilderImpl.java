@@ -27,6 +27,14 @@ public class ListOfDescriptorsBuilderImpl implements IListOfDescriptorsBuilder {
 		listOfStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 	}
 	
+	public ListOfDescriptorsBuilderImpl(ISignal signal) throws SynTreeGenerationException, CloneNotSupportedException {
+		charString = "unknown";
+		directionValue = signal.getDirectionValue();
+		this.signal = signal;
+		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = new RelationalDescriptorsBuilderImpl(signal);
+		listOfStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
+	}
+	
 	@Override
 	public List<CharString> getListOfStringDescriptors(){
 		return listOfStringDescriptors;

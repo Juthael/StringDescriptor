@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factories.OSFactory;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -48,12 +48,12 @@ public class AbsCommonDiff extends SynTreeElementImpl implements ISynTreeElement
 	}		
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement absCommonDiffOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet absCommonDiffOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer absCommonDiffIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String absCommonDiffID = getDescriptorName().concat(absCommonDiffIndex.toString());
-		MinimalLowerSetElement absCommonDiffProperty = new MinimalLowerSetElement(absCommonDiffValue);
+		MinimalOS absCommonDiffProperty = new MinimalOS(absCommonDiffValue);
 		absCommonDiffOS = OSFactory.getAbsCommonDiffOS(absCommonDiffID, absCommonDiffProperty);
 		return absCommonDiffOS;		
 	}	

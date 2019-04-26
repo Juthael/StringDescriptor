@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class RelationsOS extends NonMinimalRelevantLowerSetElement implements RelationsOrLetterOS {
+public class RelationsOS extends NonMinimalRelevantOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "relations";
 	private HowManyDimensionsOS dimensionHM;

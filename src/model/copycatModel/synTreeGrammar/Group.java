@@ -11,7 +11,7 @@ import model.copycatModel.ordSetGrammar.ISizeOS;
 import model.copycatModel.ordSetGrammar.RelationsOrLetterOS;
 import model.copycatModel.ordSetGrammar.WhichPositionTypeOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -22,6 +22,13 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	private Size size;
 	private WhichPositionType positionType;
 	private RelationsOrLetter relationsOrLetter;
+	
+	public Group(Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
+			throws SynTreeGenerationException {
+		this.size = size;
+		this.positionType = positionType;
+		this.relationsOrLetter = relationsOrLetter;
+	}
 	
 	public Group(boolean codingDescriptor, Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
 			throws SynTreeGenerationException {
@@ -105,8 +112,8 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	}
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement groupOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet groupOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer groupIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String groupID = getDescriptorName().concat(groupIndex.toString());
@@ -115,7 +122,7 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 				(WhichPositionTypeOS) positionType.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		RelationsOrLetterOS relationsOrLetterOS = 
 				(RelationsOrLetterOS) relationsOrLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		groupOS = new GroupOS(groupID, sizeOS, positionOS, relationsOrLetterOS);
+		groupOS = new GroupOS(groupID, isCodingByDecomposition, sizeOS, positionOS, relationsOrLetterOS);
 		return groupOS;		
 	}
 

@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class PlatonicLetterOSMinimal extends MinimalLowerSetElement implements IPlatonicLetterOS {
+public class PlatonicLetterOSMinimal extends MinimalOS implements IPlatonicLetterOS {
 
 	private static final String NAME = "platonicLetter";
 	

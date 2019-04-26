@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class AbsCommonDiffOSMinimal extends MinimalLowerSetElement implements IAbsCommonDiffOS {
+public class AbsCommonDiffOSMinimal extends MinimalOS implements IAbsCommonDiffOS {
 	
 	private static final String NAME = "absCommonDiff";
 

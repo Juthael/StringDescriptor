@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class SymmetryOSMinimal extends MinimalLowerSetElement implements ISymmetryOS {
+public class SymmetryOSMinimal extends MinimalOS implements ISymmetryOS {
 
 	private static final String NAME = "symmetry";
 	

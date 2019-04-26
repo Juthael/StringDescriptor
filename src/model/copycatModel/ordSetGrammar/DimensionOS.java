@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class DimensionOS extends NonMinimalRelevantLowerSetElement implements IDimensionOS {
+public class DimensionOS extends NonMinimalRelevantOS implements IDimensionOS {
 
 	private static final String NAME = "dimension";
-	private MinimalLowerSetElement dimensionProperty;
+	private MinimalOS dimensionProperty;
 	
-	public DimensionOS(String elementID, MinimalLowerSetElement dimensionProperty) {
+	public DimensionOS(String elementID, MinimalOS dimensionProperty) {
 		super(elementID);
 		this.dimensionProperty = dimensionProperty;
 	}

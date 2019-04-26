@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class PlatonicLetterOS extends NonMinimalRelevantLowerSetElement implements IPlatonicLetterOS {
+public class PlatonicLetterOS extends NonMinimalRelevantOS implements IPlatonicLetterOS {
 
 	private static final String NAME = "platonicLetter";
-	private MinimalLowerSetElement platonicLetterProperty;
+	private MinimalOS platonicLetterProperty;
 	
-	public PlatonicLetterOS(String elementID, MinimalLowerSetElement platonicLetterProperty) {
+	public PlatonicLetterOS(String elementID, MinimalOS platonicLetterProperty) {
 		super(elementID);
 		this.platonicLetterProperty = platonicLetterProperty;
 	}

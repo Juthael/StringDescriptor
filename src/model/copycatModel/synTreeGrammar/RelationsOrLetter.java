@@ -7,6 +7,10 @@ public abstract class RelationsOrLetter extends SynTreeElementImpl implements IS
 
 	public RelationsOrLetter() {
 	}
+	
+	public RelationsOrLetter(boolean codingDescriptor) {
+		super(codingDescriptor);
+	}
 
 	@Override
 	abstract protected RelationsOrLetter clone() throws CloneNotSupportedException;

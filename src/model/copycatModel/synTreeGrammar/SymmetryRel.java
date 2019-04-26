@@ -10,7 +10,7 @@ import model.copycatModel.ordSetGrammar.IEnumerationOS;
 import model.copycatModel.ordSetGrammar.ISymmetryOS;
 import model.copycatModel.ordSetGrammar.SymmetryRelOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 
 public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable {
@@ -40,8 +40,8 @@ public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement symmetryRel;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet symmetryRel;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer symmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String symmetryRelID = getDescriptorName().concat(symmetryRelIndex.toString());

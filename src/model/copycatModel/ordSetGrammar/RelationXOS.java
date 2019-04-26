@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalIrrelevantLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalIrrelevantOS;
 
-public class RelationXOS extends NonMinimalIrrelevantLowerSetElement implements HowManyRelationsOS {
+public class RelationXOS extends NonMinimalIrrelevantOS implements HowManyRelationsOS {
 
 	private static final String PARTIAL_NAME = "relationX";
 	private List<RelationOS> listOfRelations;

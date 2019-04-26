@@ -10,7 +10,7 @@ import model.copycatModel.ordSetGrammar.GroupsOS;
 import model.copycatModel.ordSetGrammar.HowManyGroupsOS;
 import model.copycatModel.ordSetGrammar.ISizeOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 import settings.Settings;
@@ -79,8 +79,8 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 	}
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement groupsOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet groupsOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer groupsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String groupsID = getDescriptorName().concat(groupsIndex.toString());

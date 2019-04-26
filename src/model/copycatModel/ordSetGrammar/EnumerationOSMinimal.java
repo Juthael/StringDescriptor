@@ -1,8 +1,8 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 
-public class EnumerationOSMinimal extends MinimalLowerSetElement implements IEnumerationOS {
+public class EnumerationOSMinimal extends MinimalOS implements IEnumerationOS {
 
 	private static final String NAME = "enumeration";
 	

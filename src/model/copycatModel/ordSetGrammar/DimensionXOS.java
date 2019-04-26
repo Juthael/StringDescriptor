@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalIrrelevantLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalIrrelevantOS;
 
-public class DimensionXOS extends NonMinimalIrrelevantLowerSetElement implements IDimensionXOS {
+public class DimensionXOS extends NonMinimalIrrelevantOS implements IDimensionXOS {
 
 	private static final String PARTIAL_NAME = "dimensionX";
 	private List<IDimensionOS> listOfDimensions;

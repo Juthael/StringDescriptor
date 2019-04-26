@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
 
 public abstract class ProminentPosition extends WhichPositionType implements ISynTreeElementWithPosition, Cloneable {
@@ -33,6 +33,6 @@ public abstract class ProminentPosition extends WhichPositionType implements ISy
 	}	
 
 	@Override
-	abstract public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
+	abstract public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
 
 }

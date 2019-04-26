@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class EndPositionOS extends NonMinimalRelevantLowerSetElement implements IEndPositionOS {
+public class EndPositionOS extends NonMinimalRelevantOS implements IEndPositionOS {
 
 	private static final String NAME = "endPosition";
-	private MinimalLowerSetElement endPositionProperty;
+	private MinimalOS endPositionProperty;
 	
-	public EndPositionOS(String elementID, MinimalLowerSetElement endPositionProperty) {
+	public EndPositionOS(String elementID, MinimalOS endPositionProperty) {
 		super(elementID);
 		this.endPositionProperty = endPositionProperty;
 	}

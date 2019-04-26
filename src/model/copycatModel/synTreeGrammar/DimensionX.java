@@ -6,9 +6,9 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.IDimensionOS;
-import model.copycatModel.ordSetGrammar.factories.OSFactory;
+import model.copycatModel.ordSetGrammar.factory.OSFactory;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -66,8 +66,8 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	}		
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement dimensionXOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet dimensionXOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());

@@ -8,7 +8,7 @@ import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.RelationXOS;
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
@@ -64,8 +64,8 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 	}	
 	
 	@Override
-	public ILowerSetElement upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		ILowerSetElement relationXOS;
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+		IOrderedSet relationXOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationXID = getDescriptorName().concat(relationXIndex.toString());

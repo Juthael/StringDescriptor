@@ -3,10 +3,10 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.ILowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class SequenceOS extends NonMinimalRelevantLowerSetElement implements ILowerSetElement {
+public class SequenceOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "sequence";
 	private ICommonDiffOS commonDiff;

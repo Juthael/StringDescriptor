@@ -1,6 +1,7 @@
 package model.ordSetModel;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +12,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.CharString;
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
@@ -21,7 +23,7 @@ import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 public class LowerSetElementImplTest {
 
 	@Test
-	public void whenLowerSetElementIsBuiltThenAccurateRelationIsProvided() throws SynTreeGenerationException, CloneNotSupportedException {
+	public void whenLowerSetElementIsBuiltThenAccurateRelationIsProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
@@ -35,35 +37,42 @@ public class LowerSetElementImplTest {
 			listOfPropertiesToIndex.put(listOfProperties, listOfPropertiesIndex);
 			listOfPropertiesIndex++;
 		}
-		List<ILowerSetElement> listOfOrderedSetElements = new ArrayList<ILowerSetElement>();
-		for (CharString descriptor : listOfDescriptors)
-			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
-		ILowerSetElement lowerSetElement = listOfOrderedSetElements.get(0);
-		List<String> listOfLowerSetMaximalChains = lowerSetElement.getListOfLowerSetMaximalChains();
-		Map<String, Set<String>> relation = lowerSetElement.getRelation();
-		boolean aRelationAtLeastCantBeVerified = false;
-		for (String element : relation.keySet()) {
-			for (String relatedElement : relation.get(element)) {
-				boolean thisRelationHasBeenVerified = false;
-				for (String maximalChain : listOfLowerSetMaximalChains) {
-					String[] maximalChainArray = maximalChain.split(Settings.PATH_SEPARATOR);
-					boolean elementHasBeenFound = false;
-					boolean relatedElementHasBeenFound = false;
-					for (String currentElement : maximalChainArray) {
-						if (currentElement.equals(element))
-							elementHasBeenFound = true;
-						if (currentElement.equals(relatedElement))
-							relatedElementHasBeenFound = true;
+		List<IOrderedSet> listOfOrderedSetElements = new ArrayList<IOrderedSet>();
+		try {
+			for (CharString descriptor : listOfDescriptors)
+				listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			IOrderedSet orderedSet = listOfOrderedSetElements.get(0);
+			List<String> listOfLowerSetMaximalChains = orderedSet.getListOfLowerSetMaximalChains();
+			Map<String, Set<String>> relation = orderedSet.getRelation();
+			boolean aRelationAtLeastCantBeVerified = false;
+			for (String element : relation.keySet()) {
+				for (String relatedElement : relation.get(element)) {
+					boolean thisRelationHasBeenVerified = false;
+					for (String maximalChain : listOfLowerSetMaximalChains) {
+						String[] maximalChainArray = maximalChain.split(Settings.PATH_SEPARATOR);
+						boolean elementHasBeenFound = false;
+						boolean relatedElementHasBeenFound = false;
+						for (String currentElement : maximalChainArray) {
+							if (currentElement.equals(element))
+								elementHasBeenFound = true;
+							if (currentElement.equals(relatedElement))
+								relatedElementHasBeenFound = true;
+						}
+						if (elementHasBeenFound == true && relatedElementHasBeenFound == true) {
+							thisRelationHasBeenVerified = true;
+						}
 					}
-					if (elementHasBeenFound == true && relatedElementHasBeenFound == true) {
-						thisRelationHasBeenVerified = true;
-					}
+					if (thisRelationHasBeenVerified == false)
+						aRelationAtLeastCantBeVerified = true;
 				}
-				if (thisRelationHasBeenVerified == false)
-					aRelationAtLeastCantBeVerified = true;
 			}
+			assertFalse(aRelationAtLeastCantBeVerified);
 		}
-		assertFalse(aRelationAtLeastCantBeVerified);
+		catch (Exception unexpected) {
+			System.out.println(unexpected.getMessage());
+			unexpected.printStackTrace();
+			fail();
+		}
 	}
 
 }

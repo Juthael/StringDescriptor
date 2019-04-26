@@ -1,38 +1,48 @@
-package orderedSetsGeneration.impl;
+package orderedSetGeneration.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
-import model.orderedSetModel.ILowerSetElement;
+import exceptions.OrderedSetsGenerationException;
+import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
-import orderedSetsGeneration.IOrderedSetBuilder;
+import orderedSetGeneration.IOrderedSetBuilder;
 
 public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 
-	private ILowerSetElement omega;
+	private IOrderedSet omega;
 	private int mapIndex = 1;
 	private Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
 	
 	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
-		List<ILowerSetElement> listOfSubMaximalPowerSetElements = new ArrayList<ILowerSetElement>();
+		List<IOrderedSet> listOfSubMaximalPowerSetElements = new ArrayList<IOrderedSet>();
 		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
-			ILowerSetElement subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
 		omega = new OmegaElement(listOfSubMaximalPowerSetElements);
 	}
+	
+	public OrderedSetBuilderImpl(ISynTreeElement synTreeElement) {
+		List<ISynTreeElement> listOfSynTreeElement = new ArrayList<ISynTreeElement>();
+		listOfSynTreeElement.add(synTreeElement);
+		setListOfPropertiesToIndexMap(listOfSynTreeElement);
+		omega = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		omega.setElementID("charString".concat(getRandomIDNumber()));
+	}
 
 	@Override
-	public ILowerSetElement getOrderedSet() {
+	public IOrderedSet getOrderedSet() {
 		return omega;
 	}
 
 	@Override
-	public Map<String, Set<String>> getRelation() {
+	public Map<String, Set<String>> getRelation() throws OrderedSetsGenerationException {
 		return omega.getRelation();
 	}
 	
@@ -46,6 +56,15 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 				}
 			}
 		}
+	}
+	
+	private String getRandomIDNumber() {
+		String IDNumber = "";
+		Random random = new Random();
+		while (IDNumber.length() !=8) {
+			IDNumber = IDNumber.concat(Integer.toString(random.nextInt(10)));
+		}
+		return IDNumber;
 	}
 
 }

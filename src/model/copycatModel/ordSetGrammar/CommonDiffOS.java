@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class CommonDiffOS extends NonMinimalRelevantLowerSetElement implements ICommonDiffOS {
+public class CommonDiffOS extends NonMinimalRelevantOS implements ICommonDiffOS {
 
 	private static final String NAME = "commonDiff";
-	private MinimalLowerSetElement commonDiffProperty;
+	private MinimalOS commonDiffProperty;
 	
-	public CommonDiffOS(String elementID, MinimalLowerSetElement commonDiffProperty) {
+	public CommonDiffOS(String elementID, MinimalOS commonDiffProperty) {
 		super(elementID);
 		this.commonDiffProperty = commonDiffProperty;
 	}

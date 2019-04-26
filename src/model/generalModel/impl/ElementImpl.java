@@ -12,6 +12,7 @@ public abstract class ElementImpl implements IElement {
 
 	protected boolean isCodingByDecomposition;
 	
+	
 	public ElementImpl() {
 		isCodingByDecomposition = false;
 	}

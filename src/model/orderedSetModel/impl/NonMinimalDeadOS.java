@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public abstract class NonMinimalDeadLowerSetElement extends LowerSetElementImpl implements ILowerSetElement {
+public abstract class NonMinimalDeadOS extends OrderedSetImpl implements IOrderedSet {
 
-	public NonMinimalDeadLowerSetElement(String elementID) {
+	public NonMinimalDeadOS(String elementID) {
 		super(elementID);
 	}
 

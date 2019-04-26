@@ -1,4 +1,4 @@
-package model.copycatModel.ordSetGrammar.factories;
+package model.copycatModel.ordSetGrammar.factory;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import model.copycatModel.ordSetGrammar.SizeOS;
 import model.copycatModel.ordSetGrammar.SizeOSMinimal;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.copycatModel.ordSetGrammar.SymmetryOSMinimal;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
 
 public class OSFactory {
@@ -43,7 +43,7 @@ public class OSFactory {
 	private OSFactory() {
 	}
 	
-	public static IAbsCommonDiffOS getAbsCommonDiffOS(String elementID, MinimalLowerSetElement absCommonDiffProperty) {
+	public static IAbsCommonDiffOS getAbsCommonDiffOS(String elementID, MinimalOS absCommonDiffProperty) {
 		IAbsCommonDiffOS absCommonDiffOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			absCommonDiffOS = new AbsCommonDiffOSMinimal(elementID);
@@ -51,7 +51,7 @@ public class OSFactory {
 		return absCommonDiffOS;
 	}
 	
-	public static ICommonDiffOS getCommonDiffOS(String elementID, MinimalLowerSetElement commonDiffProperty) {
+	public static ICommonDiffOS getCommonDiffOS(String elementID, MinimalOS commonDiffProperty) {
 		ICommonDiffOS commonDiffOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			commonDiffOS = new CommonDiffOSMinimal(elementID);
@@ -59,7 +59,7 @@ public class OSFactory {
 		return commonDiffOS;
 	}
 	
-	public static IDimensionOS getDimensionOS(String elementID, MinimalLowerSetElement dimensionProperty) {
+	public static IDimensionOS getDimensionOS(String elementID, MinimalOS dimensionProperty) {
 		IDimensionOS dimensionOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			dimensionOS = new DimensionOSMinimal(elementID);
@@ -76,7 +76,7 @@ public class OSFactory {
 		return dimensionXOS;
 	}
 	
-	public static IDirectionOS getDirectionOS(String elementID, MinimalLowerSetElement directionProperty) {
+	public static IDirectionOS getDirectionOS(String elementID, MinimalOS directionProperty) {
 		IDirectionOS directionOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			directionOS = new DirectionOSMinimal(elementID);
@@ -84,7 +84,7 @@ public class OSFactory {
 		return directionOS;
 	}	
 	
-	public static IEndPositionOS getEndPositionOS(String elementID, MinimalLowerSetElement endPositionProperty) {
+	public static IEndPositionOS getEndPositionOS(String elementID, MinimalOS endPositionProperty) {
 		IEndPositionOS endPositionOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			endPositionOS = new EndPositionOSMinimal(elementID);
@@ -92,7 +92,7 @@ public class OSFactory {
 		return endPositionOS;
 	}
 	
-	public static IEnumerationOS getEnumerationOS(String elementID, MinimalLowerSetElement enumerationProperty) {
+	public static IEnumerationOS getEnumerationOS(String elementID, MinimalOS enumerationProperty) {
 		IEnumerationOS enumerationOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			enumerationOS = new EnumerationOSMinimal(elementID);
@@ -100,7 +100,7 @@ public class OSFactory {
 		return enumerationOS;
 	}
 	
-	public static IPlatonicLetterOS getPlatonicLetterOS(String elementID, MinimalLowerSetElement platonicLetterProperty) {
+	public static IPlatonicLetterOS getPlatonicLetterOS(String elementID, MinimalOS platonicLetterProperty) {
 		IPlatonicLetterOS platonicLetterOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			platonicLetterOS = new PlatonicLetterOSMinimal(elementID);
@@ -108,7 +108,7 @@ public class OSFactory {
 		return platonicLetterOS;
 	}
 	
-	public static IPositionOS getPositionOS(String elementID, MinimalLowerSetElement positionProperty) {
+	public static IPositionOS getPositionOS(String elementID, MinimalOS positionProperty) {
 		IPositionOS positionOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			positionOS = new PositionOSMinimal(elementID);
@@ -116,7 +116,7 @@ public class OSFactory {
 		return positionOS;
 	}
 	
-	public static ISymmetryOS getSymmetryOS(String elementID, MinimalLowerSetElement symmetryProperty) {
+	public static ISymmetryOS getSymmetryOS(String elementID, MinimalOS symmetryProperty) {
 		ISymmetryOS symmetryOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			symmetryOS = new SymmetryOSMinimal(elementID);
@@ -124,7 +124,7 @@ public class OSFactory {
 		return symmetryOS;
 	}
 	
-	public static ISizeOS getSizeOS(String elementID, MinimalLowerSetElement sizeProperty) {
+	public static ISizeOS getSizeOS(String elementID, MinimalOS sizeProperty) {
 		ISizeOS sizeOS;
 		if (Settings.IF_SINGLE_LOWER_BOUND_THEN_MINIMAL)
 			sizeOS = new SizeOSMinimal(elementID);

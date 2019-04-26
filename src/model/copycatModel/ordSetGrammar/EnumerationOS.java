@@ -3,15 +3,15 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.MinimalLowerSetElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.MinimalOS;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class EnumerationOS extends NonMinimalRelevantLowerSetElement implements IEnumerationOS {
+public class EnumerationOS extends NonMinimalRelevantOS implements IEnumerationOS {
 
 	private static final String NAME = "enumeration";
-	private MinimalLowerSetElement enumerationProperty;
+	private MinimalOS enumerationProperty;
 	
-	public EnumerationOS(String elementID, MinimalLowerSetElement enumerationProperty) {
+	public EnumerationOS(String elementID, MinimalOS enumerationProperty) {
 		super(elementID);
 		this.enumerationProperty = enumerationProperty;
 	}

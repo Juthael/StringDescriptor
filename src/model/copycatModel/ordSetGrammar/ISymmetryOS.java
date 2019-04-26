@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public interface ISymmetryOS extends ILowerSetElement {
+public interface ISymmetryOS extends IOrderedSet {
 
 }

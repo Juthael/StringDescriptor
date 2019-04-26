@@ -1,7 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
-import model.orderedSetModel.ILowerSetElement;
+import model.orderedSetModel.IOrderedSet;
 
-public interface ICommonDiffOS extends ILowerSetElement {
+public interface ICommonDiffOS extends IOrderedSet {
 
 }

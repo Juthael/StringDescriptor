@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantLowerSetElement;
+import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class LetterOS extends NonMinimalRelevantLowerSetElement implements RelationsOrLetterOS {
+public class LetterOS extends NonMinimalRelevantOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "letter";
 	private IPositionOS position;
@@ -16,6 +16,12 @@ public class LetterOS extends NonMinimalRelevantLowerSetElement implements Relat
 		this.position = position;
 		this.platonicLetter = platonicLetter;
 	}
+	
+	public LetterOS(String elementID, boolean isCodingByDecomposition, IPositionOS position, IPlatonicLetterOS platonicLetter) {
+		super(elementID, isCodingByDecomposition);
+		this.position = position;
+		this.platonicLetter = platonicLetter;
+	}	
 
 	@Override
 	public List<IElement> getListOfComponents() {
