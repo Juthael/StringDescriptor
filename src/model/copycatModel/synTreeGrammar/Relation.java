@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.IDimensionOS;
-import model.copycatModel.ordSetGrammar.IEnumerationOS;
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -50,8 +50,8 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationID = getDescriptorName().concat(relationIndex.toString());
-		IDimensionOS dimensionOS = (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		IEnumerationOS enumerationOS = (IEnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		relationOS = new RelationOS(relationID, dimensionOS, enumerationOS);
 		return relationOS;		
 	}	

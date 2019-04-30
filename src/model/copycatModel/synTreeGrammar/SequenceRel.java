@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.IDimensionOS;
-import model.copycatModel.ordSetGrammar.IEnumerationOS;
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.copycatModel.ordSetGrammar.SequenceRelOS;
 import model.generalModel.IElement;
@@ -55,8 +55,8 @@ public class SequenceRel extends Relation implements ISynTreeElement, Cloneable 
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceRelID = getDescriptorName().concat(sequenceRelIndex.toString());
-		IDimensionOS dimensionOS = (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		IEnumerationOS enumerationOS = (IEnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		SequenceOS sequenceOS = (SequenceOS) sequence.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		sequenceRelOS = new SequenceRelOS(sequenceRelID, dimensionOS, enumerationOS, sequenceOS);
 		return sequenceRelOS;		

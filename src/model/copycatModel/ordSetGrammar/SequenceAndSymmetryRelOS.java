@@ -7,10 +7,10 @@ import model.generalModel.IElement;
 public class SequenceAndSymmetryRelOS extends RelationOS implements HowManyRelationsOS {
 
 	private SequenceOS sequence;
-	private ISymmetryOS symmetry;
+	private SymmetryOS symmetry;
 	
-	public SequenceAndSymmetryRelOS(String elementID, IDimensionOS dimension, IEnumerationOS enumeration, 
-			SequenceOS sequence, ISymmetryOS symmetry) {
+	public SequenceAndSymmetryRelOS(String elementID, DimensionOS dimension, EnumerationOS enumeration, 
+			SequenceOS sequence, SymmetryOS symmetry) {
 		super(elementID, dimension, enumeration);
 		this.sequence = sequence;
 		this.symmetry = symmetry;

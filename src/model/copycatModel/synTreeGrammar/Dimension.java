@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
@@ -54,7 +54,7 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 		Integer dimensionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionID = getDescriptorName().concat(dimensionIndex.toString());
 		MinimalOS dimensionProperty = new MinimalOS(getDimensionCode(indexedPath));
-		dimensionOS = OSFactory.getDimensionOS(dimensionID, dimensionProperty);
+		dimensionOS = new DimensionOS(dimensionID, dimensionProperty);
 		return dimensionOS;		
 	}	
 	

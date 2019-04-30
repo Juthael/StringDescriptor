@@ -8,9 +8,9 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public abstract class ProminentPositionOS extends NonMinimalRelevantOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "prominentPosition";
-	protected IPositionOS position;
+	protected PositionOS position;
 	
-	public ProminentPositionOS(String elementID, IPositionOS position) {
+	public ProminentPositionOS(String elementID, PositionOS position) {
 		super(elementID);
 		this.position = position;
 	}

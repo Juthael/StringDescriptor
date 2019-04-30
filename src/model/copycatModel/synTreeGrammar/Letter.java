@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.IPlatonicLetterOS;
-import model.copycatModel.ordSetGrammar.IPositionOS;
 import model.copycatModel.ordSetGrammar.LetterOS;
+import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
+import model.copycatModel.ordSetGrammar.PositionOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
@@ -64,9 +64,9 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer letterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String letterID = getDescriptorName().concat(letterIndex.toString());
-		IPositionOS positionOS = (IPositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		IPlatonicLetterOS platonicLetterOS = 
-				(IPlatonicLetterOS) platonicLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		PlatonicLetterOS platonicLetterOS = 
+				(PlatonicLetterOS) platonicLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		letterOS = new LetterOS(letterID, isCodingByDecomposition, positionOS, platonicLetterOS);
 		return letterOS;		
 	}		

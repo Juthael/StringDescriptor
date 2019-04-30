@@ -6,7 +6,7 @@ import model.generalModel.IElement;
 import model.orderedSetModel.impl.MinimalOS;
 import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class PositionOS extends NonMinimalRelevantOS implements IPositionOS {
+public class PositionOS extends NonMinimalRelevantOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "position";
 	private MinimalOS positionProperty;

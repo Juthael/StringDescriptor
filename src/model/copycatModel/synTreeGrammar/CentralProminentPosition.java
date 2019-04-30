@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.copycatModel.ordSetGrammar.CentralProminentPositionOS;
-import model.copycatModel.ordSetGrammar.IPositionOS;
+import model.copycatModel.ordSetGrammar.PositionOS;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
@@ -49,7 +49,7 @@ public class CentralProminentPosition extends ProminentPosition implements ISynT
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer prominentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String prominentPositionID = getDescriptorName().concat(prominentPositionIndex.toString());
-		IPositionOS positionOS = (IPositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		MinimalOS centralPositionProperty = new MinimalOS(Settings.CENTRAL_POSITION);
 		centralProminentPositionOS = new CentralProminentPositionOS(prominentPositionID, positionOS, centralPositionProperty);
 		return centralProminentPositionOS;	

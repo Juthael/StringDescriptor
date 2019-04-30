@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class EndPositionOS extends NonMinimalRelevantOS implements IEndPositionOS {
+public class EndPositionOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "endPosition";
 	private MinimalOS endPositionProperty;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.IDimensionOS;
+import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.factory.OSFactory;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -71,9 +71,9 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());
-		List<IDimensionOS> listOfDimensionsOS = new ArrayList<IDimensionOS>();
+		List<DimensionOS> listOfDimensionsOS = new ArrayList<DimensionOS>();
 		for (Dimension dimension : listOfDimensions) {
-			IDimensionOS dimensionOS= (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			DimensionOS dimensionOS= (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfDimensionsOS.add(dimensionOS);
 		}
 		dimensionXOS = OSFactory.getDimensionXOS(dimensionXID, listOfDimensionsOS);

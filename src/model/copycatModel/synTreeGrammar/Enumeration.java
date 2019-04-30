@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
@@ -61,7 +61,7 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 		Integer enumerationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String enumerationID = getDescriptorName().concat(enumerationIndex.toString());
 		MinimalOS enumerationProperty = new MinimalOS(enumerationValue);
-		enumerationOS = OSFactory.getEnumerationOS(enumerationID, enumerationProperty);
+		enumerationOS = new EnumerationOS(enumerationID, enumerationProperty);
 		return enumerationOS;		
 	}
 

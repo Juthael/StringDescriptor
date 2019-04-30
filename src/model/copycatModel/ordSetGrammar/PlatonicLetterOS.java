@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class PlatonicLetterOS extends NonMinimalRelevantOS implements IPlatonicLetterOS {
+public class PlatonicLetterOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "platonicLetter";
 	private MinimalOS platonicLetterProperty;

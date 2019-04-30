@@ -3,10 +3,11 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.orderedSetModel.impl.NonMinimalRelevantOS;
 
-public class EnumerationOS extends NonMinimalRelevantOS implements IEnumerationOS {
+public class EnumerationOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "enumeration";
 	private MinimalOS enumerationProperty;

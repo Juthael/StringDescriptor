@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.IDimensionOS;
-import model.copycatModel.ordSetGrammar.IEnumerationOS;
-import model.copycatModel.ordSetGrammar.ISymmetryOS;
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
+import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.copycatModel.ordSetGrammar.SymmetryRelOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -45,9 +45,9 @@ public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable 
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer symmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String symmetryRelID = getDescriptorName().concat(symmetryRelIndex.toString());
-		IDimensionOS dimensionOS = (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		IEnumerationOS enumerationOS = (IEnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		ISymmetryOS symmetryOS = (ISymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		SymmetryOS symmetryOS = (SymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		symmetryRel = new SymmetryRelOS(symmetryRelID, dimensionOS, enumerationOS, symmetryOS);
 		return symmetryRel;		
 	}	

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.copycatModel.ordSetGrammar.EndPositionOS;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElementWithPosition;
@@ -62,7 +62,7 @@ public class EndPosition extends SynTreeElementWithPositionImpl implements ISynT
 		Integer positionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String endPositionID = getDescriptorName().concat(positionIndex.toString());
 		MinimalOS endPositionProperty = new MinimalOS(endPositionValue);
-		endPositionOS = OSFactory.getEndPositionOS(endPositionID, endPositionProperty);
+		endPositionOS = new EndPositionOS(endPositionID, endPositionProperty);
 		return endPositionOS;		
 	}	
 

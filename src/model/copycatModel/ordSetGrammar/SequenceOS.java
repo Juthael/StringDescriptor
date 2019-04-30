@@ -9,10 +9,10 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public class SequenceOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "sequence";
-	private ICommonDiffOS commonDiff;
-	private IAbsCommonDiffOS absCommonDiff;
+	private CommonDiffOS commonDiff;
+	private AbsCommonDiffOS absCommonDiff;
 	
-	public SequenceOS(String elementID, ICommonDiffOS commonDiff, IAbsCommonDiffOS absCommonDiff) {
+	public SequenceOS(String elementID, CommonDiffOS commonDiff, AbsCommonDiffOS absCommonDiff) {
 		super(elementID);
 		this.commonDiff = commonDiff;
 		this.absCommonDiff = absCommonDiff;

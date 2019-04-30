@@ -8,11 +8,11 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public class GroupOS extends NonMinimalRelevantOS implements HowManyGroupsOS {
 
 	private static final String NAME = "group";
-	private ISizeOS size;
+	private SizeOS size;
 	private WhichPositionTypeOS positionType;
 	private RelationsOrLetterOS relationsOrLetter;
 	
-	public GroupOS(String elementID, ISizeOS size, WhichPositionTypeOS positionType, 
+	public GroupOS(String elementID, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID);
 		this.size = size;
@@ -20,7 +20,7 @@ public class GroupOS extends NonMinimalRelevantOS implements HowManyGroupsOS {
 		this.relationsOrLetter = relationsOrLetter;
 	}
 
-	public GroupOS(String elementID, boolean isCodingByDecomposition, ISizeOS size, WhichPositionTypeOS positionType, 
+	public GroupOS(String elementID, boolean isCodingByDecomposition, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID, isCodingByDecomposition);
 		this.size = size;

@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.IDimensionOS;
-import model.copycatModel.ordSetGrammar.IEnumerationOS;
-import model.copycatModel.ordSetGrammar.ISymmetryOS;
+import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SequenceAndSymmetryRelOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
+import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
@@ -59,10 +59,10 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceAndSymmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sequenceAndSymmetryRelID = getDescriptorName().concat(sequenceAndSymmetryRelIndex.toString());
-		IDimensionOS dimensionOS = (IDimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		IEnumerationOS enumerationOS = (IEnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		SequenceOS sequenceOS = (SequenceOS) sequence.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		ISymmetryOS symmetryOS = (ISymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		SymmetryOS symmetryOS = (SymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		sequenceAndSymmetryRelOS = 
 				new SequenceAndSymmetryRelOS(sequenceAndSymmetryRelID, dimensionOS, enumerationOS, sequenceOS, symmetryOS);
 		return sequenceAndSymmetryRelOS;		

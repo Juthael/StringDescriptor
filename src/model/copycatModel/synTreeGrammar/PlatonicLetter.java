@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.ISynTreeElement;
@@ -53,7 +53,7 @@ public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElemen
 		Integer platonicLetterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String platonicLetterID = getDescriptorName().concat(platonicLetterIndex.toString());
 		MinimalOS platonicLetterProperty = new MinimalOS(platonicLetterValue);
-		platonicLetterOS = OSFactory.getPlatonicLetterOS(platonicLetterID, platonicLetterProperty);
+		platonicLetterOS = new PlatonicLetterOS(platonicLetterID, platonicLetterProperty);
 		return platonicLetterOS;		
 	}	
 

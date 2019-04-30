@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
+import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
@@ -61,7 +61,7 @@ public class Size extends SynTreeElementImpl implements ISynTreeElement, Cloneab
 		Integer sizeIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String sizeID = getDescriptorName().concat(sizeIndex.toString());
 		MinimalOS sizeProperty = new MinimalOS(sizeValue);
-		sizeOS = OSFactory.getSizeOS(sizeID, sizeProperty);
+		sizeOS = new SizeOS(sizeID, sizeProperty);
 		return sizeOS;		
 	}		
 	

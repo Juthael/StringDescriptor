@@ -9,10 +9,10 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public class StructureOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "structure";
-	private ISizeOS size;
+	private SizeOS size;
 	private RelationOS relation;
 	
-	public StructureOS(String elementID, ISizeOS size, RelationOS relation) {
+	public StructureOS(String elementID, SizeOS size, RelationOS relation) {
 		super(elementID);
 		this.size = size;
 		this.relation = relation;

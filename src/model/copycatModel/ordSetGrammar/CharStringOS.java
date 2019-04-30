@@ -9,11 +9,11 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public class CharStringOS extends NonMinimalRelevantOS implements IOrderedSet {
 
 	private static final String NAME = "charString";
-	private IDirectionOS direction;
+	private DirectionOS direction;
 	private StructureOS structure;
 	private GroupsOS groups;
 	
-	public CharStringOS(String elementID, IDirectionOS direction, StructureOS structure, GroupsOS groups) {
+	public CharStringOS(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups) {
 		super(elementID);
 		this.direction = direction;
 		this.structure = structure;

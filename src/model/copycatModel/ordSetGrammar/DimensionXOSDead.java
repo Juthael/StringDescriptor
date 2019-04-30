@@ -8,9 +8,9 @@ import model.orderedSetModel.impl.NonMinimalDeadOS;
 public class DimensionXOSDead extends NonMinimalDeadOS implements IDimensionXOS {
 
 	private static final String PARTIAL_NAME = "dimensionX";
-	private List<IDimensionOS> listOfDimensions;
+	private List<DimensionOS> listOfDimensions;
 	
-	public DimensionXOSDead(String elementID, List<IDimensionOS> listOfDimensions) {
+	public DimensionXOSDead(String elementID, List<DimensionOS> listOfDimensions) {
 		super(elementID);
 		this.listOfDimensions = listOfDimensions;
 	}

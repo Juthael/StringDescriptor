@@ -8,16 +8,16 @@ import model.orderedSetModel.impl.NonMinimalRelevantOS;
 public class LetterOS extends NonMinimalRelevantOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "letter";
-	private IPositionOS position;
-	private IPlatonicLetterOS platonicLetter;
+	private PositionOS position;
+	private PlatonicLetterOS platonicLetter;
 	
-	public LetterOS(String elementID, IPositionOS position, IPlatonicLetterOS platonicLetter) {
+	public LetterOS(String elementID, PositionOS position, PlatonicLetterOS platonicLetter) {
 		super(elementID);
 		this.position = position;
 		this.platonicLetter = platonicLetter;
 	}
 	
-	public LetterOS(String elementID, boolean isCodingByDecomposition, IPositionOS position, IPlatonicLetterOS platonicLetter) {
+	public LetterOS(String elementID, boolean isCodingByDecomposition, PositionOS position, PlatonicLetterOS platonicLetter) {
 		super(elementID, isCodingByDecomposition);
 		this.position = position;
 		this.platonicLetter = platonicLetter;
