@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class LetterOS extends NonMinimalRelevantOS implements RelationsOrLetterOS {
+public class LetterOS extends AbstractNonMinimalOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "letter";
 	private PositionOS position;

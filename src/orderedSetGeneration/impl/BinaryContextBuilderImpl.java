@@ -25,7 +25,7 @@ public class BinaryContextBuilderImpl implements IBinaryContextBuilder {
 	
 	private BinaryContext setContext(IOrderedSet orderedSet) throws OrderedSetsGenerationException {
 		BinaryContext context;
-		Map<String, Set<String>> relation = orderedSet.getClarifiedRelation();
+		Map<String, Set<String>> relation = orderedSet.getRelation();
 		Vector<String> attributes = new Vector<String>(relation.keySet());
 		Vector<String> objects = new Vector<String>(attributes);
 		Vector<Vector<String>> values = new Vector<Vector<String>>();

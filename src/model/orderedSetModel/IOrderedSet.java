@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 
 public interface IOrderedSet extends IElement {
@@ -14,8 +13,6 @@ public interface IOrderedSet extends IElement {
 	List<String> getListOfCodingComponentsIDs();
 	
 	Map<String, Set<String>> getRelation();
-	
-	Map<String, Set<String>> getClarifiedRelation() throws OrderedSetsGenerationException;
 	
 	List<String> getListOfLowerSetMaximalChains();
 	
@@ -31,6 +28,12 @@ public interface IOrderedSet extends IElement {
 	
 	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
 	
-	void setIsTheCodedElement(boolean isTheCodedElement);	
+	void setIsTheCodedElement(boolean isTheCodedElement);
+
+	int getNbOfParents();	
+	
+	int getNbOfInformativeChildren();
+
+	boolean getThisSetIsInformative();
 
 }

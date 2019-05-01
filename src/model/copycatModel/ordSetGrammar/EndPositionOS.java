@@ -5,9 +5,9 @@ import java.util.List;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class EndPositionOS extends NonMinimalRelevantOS implements IOrderedSet {
+public class EndPositionOS extends AbstractNonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "endPosition";
 	private MinimalOS endPositionProperty;

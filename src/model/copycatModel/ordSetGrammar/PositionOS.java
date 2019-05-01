@@ -4,9 +4,9 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class PositionOS extends NonMinimalRelevantOS implements WhichPositionTypeOS {
+public class PositionOS extends AbstractNonMinimalOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "position";
 	private MinimalOS positionProperty;

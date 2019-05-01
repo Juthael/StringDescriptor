@@ -3,8 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
 
-public class SymmetryRelOS extends RelationOS implements HowManyRelationsOS {
+public class SymmetryRelOS extends RelationOS implements IOrderedSet {
 
 	private SymmetryOS symmetry;
 	

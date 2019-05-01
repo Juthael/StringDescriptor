@@ -3,9 +3,10 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class GroupOS extends NonMinimalRelevantOS implements HowManyGroupsOS {
+public class GroupOS extends AbstractNonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "group";
 	private SizeOS size;

@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.ordSetGrammar.GroupOS;
 import model.copycatModel.ordSetGrammar.GroupsOS;
-import model.copycatModel.ordSetGrammar.HowManyGroupsOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -79,14 +80,27 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet groupsOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer groupsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String groupsID = getDescriptorName().concat(groupsIndex.toString());
 		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		HowManyGroupsOS groupHMOS = (HowManyGroupsOS) groupHM.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		groupsOS = new GroupsOS(groupsID, sizeOS, groupHMOS);
+		List<GroupOS> listOfGroupOS = new ArrayList<GroupOS>();
+		if (groupHM.getDescriptorName().contains("groupX")) {
+			for (IElement element : groupHM.getListOfComponents()) {
+				Group group = (Group) element;
+				listOfGroupOS.add((GroupOS) group.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			}
+		}
+		else if (groupHM.getDescriptorName().contentEquals("group")){
+			Group group = (Group) groupHM;
+			listOfGroupOS.add((GroupOS) group.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		}
+		else throw new OrderedSetsGenerationException("Groups.upgradeAsTheElementOfAnOrderedSet : "
+			+ "groupHM descriptor name was unexpected. (" + groupHM.getDescriptorName() + ")");
+		groupsOS = new GroupsOS(groupsID, sizeOS, listOfGroupOS);
 		return groupsOS;		
 	}	
 

@@ -46,7 +46,7 @@ public class OrderedSetBuilderImplTest {
 	}
 	
 	@Test
-	public void whenOrderedSetIsBuiltThenCodedElementsCanBeRetrieved() throws SynTreeGenerationException, CloneNotSupportedException {
+	public void whenOrderedSetIsBuiltThenCodedElementsCanBeRetrieved() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		int nbOfCodedElements;
 		String thisString = "abcd";
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 
@@ -69,7 +69,7 @@ public class OrderedSetBuilderImplTest {
 	
 	@Test
 	public void whenOrderedSetIsBuiltThenRelationWhithNoRedundancyIsReturned() 
-			throws SynTreeGenerationException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		boolean thereIsNoRedundancy = true;
 		String thisString = "abcd";
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 

@@ -4,9 +4,9 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class StructureOS extends NonMinimalRelevantOS implements IOrderedSet {
+public class StructureOS extends AbstractNonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "structure";
 	private SizeOS size;

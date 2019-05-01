@@ -3,6 +3,7 @@ package model.synTreeModel;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 
@@ -14,5 +15,6 @@ public interface ISynTreeElement extends IElement {
 	
 	List<String> getListOfRelevantPropertiesWithPath();
 	
-	IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
+	IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException;
 }

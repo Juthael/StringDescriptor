@@ -4,25 +4,25 @@ import java.util.List;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class GroupsOS extends NonMinimalRelevantOS implements IOrderedSet {
+public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "groups";
 	private SizeOS size;
-	private HowManyGroupsOS groupHM;
+	private List<GroupOS> listOfGroups;
 	
-	public GroupsOS(String elementID, SizeOS size, HowManyGroupsOS groupHM) {
+	public GroupsOS(String elementID, SizeOS size, List<GroupOS> listOfGroups) {
 		super(elementID);
 		this.size = size;
-		this.groupHM = groupHM;
+		this.listOfGroups = listOfGroups;
 	}
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(size);
-		listOfComponents.add(groupHM);
+		listOfComponents.addAll(listOfGroups);
 		return listOfComponents;
 	}
 

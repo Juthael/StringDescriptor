@@ -3,9 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public abstract class ProminentPositionOS extends NonMinimalRelevantOS implements WhichPositionTypeOS {
+public abstract class ProminentPositionOS extends AbstractNonMinimalOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "prominentPosition";
 	protected PositionOS position;

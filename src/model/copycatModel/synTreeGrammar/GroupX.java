@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.GroupOS;
-import model.copycatModel.ordSetGrammar.GroupXOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElementWithPosition;
@@ -77,18 +76,9 @@ public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		IOrderedSet groupXOS;
-		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer groupXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String groupXID = getDescriptorName().concat(groupXIndex.toString());
-		List<GroupOS> listOfGroupsOS = new ArrayList<GroupOS>();
-		for (Group group : listOfGroups) {
-			GroupOS groupOS = (GroupOS) group.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-			listOfGroupsOS.add(groupOS);
-		}
-		groupXOS = new GroupXOS(groupXID, listOfGroupsOS);
-		return groupXOS;		
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
+		throw new OrderedSetsGenerationException("GroupX can't be upgraded.");	
 	}	
 
 }

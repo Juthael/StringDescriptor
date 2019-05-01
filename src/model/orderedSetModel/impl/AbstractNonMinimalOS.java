@@ -5,21 +5,21 @@ import java.util.List;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 
-public abstract class NonMinimalRelevantOS extends OrderedSetImpl implements IOrderedSet {
+public abstract class AbstractNonMinimalOS extends AbstractOrderedSet implements IOrderedSet {
 
 	protected MinimalIdiosyncraticOS minimalIdiosyncraticOS;
 	
-	public NonMinimalRelevantOS(String elementID) {
+	public AbstractNonMinimalOS(String elementID) {
 		super(elementID);
 		setIdiosyncraticProperty();
 	}
 
-	public NonMinimalRelevantOS(String elementID, boolean isCodingByDecomposition) {
+	public AbstractNonMinimalOS(String elementID, boolean isCodingByDecomposition) {
 		super(elementID, isCodingByDecomposition);
 		setIdiosyncraticProperty();
 	}
 
-	public NonMinimalRelevantOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
+	public AbstractNonMinimalOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
 		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
 		setIdiosyncraticProperty();
 	}

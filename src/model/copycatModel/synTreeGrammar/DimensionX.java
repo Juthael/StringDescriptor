@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.DimensionOS;
-import model.copycatModel.ordSetGrammar.factory.OSFactory;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
@@ -66,18 +65,8 @@ public class DimensionX extends HowManyDimensions implements ISynTreeElement, Cl
 	}		
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		IOrderedSet dimensionXOS;
-		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer dimensionXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String dimensionXID = getDescriptorName().concat(dimensionXIndex.toString());
-		List<DimensionOS> listOfDimensionsOS = new ArrayList<DimensionOS>();
-		for (Dimension dimension : listOfDimensions) {
-			DimensionOS dimensionOS= (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-			listOfDimensionsOS.add(dimensionOS);
-		}
-		dimensionXOS = OSFactory.getDimensionXOS(dimensionXID, listOfDimensionsOS);
-		return dimensionXOS;		
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) throws OrderedSetsGenerationException {
+		throw new OrderedSetsGenerationException("DimensionX can't be upgraded.");
 	}	
 
 

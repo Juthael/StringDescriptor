@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.GroupsOS;
-import model.copycatModel.ordSetGrammar.HowManyDimensionsOS;
-import model.copycatModel.ordSetGrammar.HowManyRelationsOS;
+import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.RelationsOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -50,17 +50,27 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet relationsOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationsID = getDescriptorName().concat(relationsIndex.toString());
 		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		HowManyDimensionsOS dimensionHMOS = 
-				(HowManyDimensionsOS) dimensionHM.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		HowManyRelationsOS relationHMOS = 
-				(HowManyRelationsOS) relationHM.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		relationsOS = new RelationsOS(relationsID, dimensionHMOS, relationHMOS, groupsOS);
+		List<RelationOS> listOfRelationOS = new ArrayList<RelationOS>();
+		if (relationHM.getDescriptorName().contains("relationX")) {
+			for (IElement element : relationHM.getListOfComponents()) {
+				Relation relation = (Relation) element;
+				listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			}
+		}
+		else if (relationHM.getDescriptorName().equals("relation")) {
+			Relation relation = (Relation) relationHM;
+			listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		}
+		else throw new OrderedSetsGenerationException("Relations.upgradeAsTheElementOfAnOrderedSet : "
+				+ "relationHM.descriptorName was unexpected (" + relationHM.getDescriptorName() + ").");
+		relationsOS = new RelationsOS(relationsID, listOfRelationOS, groupsOS);
 		return relationsOS;		
 	}	
 }

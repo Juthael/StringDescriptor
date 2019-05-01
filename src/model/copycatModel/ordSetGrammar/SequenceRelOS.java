@@ -3,8 +3,9 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
 
-public class SequenceRelOS extends RelationOS implements HowManyRelationsOS {
+public class SequenceRelOS extends RelationOS implements IOrderedSet {
 
 	private SequenceOS sequence;
 	

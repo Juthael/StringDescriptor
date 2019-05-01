@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
 import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.copycatModel.ordSetGrammar.GroupsOS;
@@ -50,7 +51,8 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet charStringOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer charStringIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

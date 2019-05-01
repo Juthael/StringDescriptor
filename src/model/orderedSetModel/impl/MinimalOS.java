@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.orderedSetModel.IOrderedSet;
 
-public class MinimalOS extends OrderedSetImpl implements IOrderedSet {
+public class MinimalOS extends AbstractOrderedSet implements IOrderedSet {
 
 	public MinimalOS(String value) {
 		super(value);

@@ -3,27 +3,24 @@ package model.copycatModel.ordSetGrammar;
 import java.util.List;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.NonMinimalRelevantOS;
+import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class RelationsOS extends NonMinimalRelevantOS implements RelationsOrLetterOS {
+public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "relations";
-	private HowManyDimensionsOS dimensionHM;
-	private HowManyRelationsOS relationsHM;
+	private List<RelationOS> listOfRelations;
 	private GroupsOS groups;
 	
-	public RelationsOS(String elementID, HowManyDimensionsOS dimensionHM, HowManyRelationsOS relationsHM, GroupsOS groups) {
+	public RelationsOS(String elementID, List<RelationOS> listOfRelations, GroupsOS groups) {
 		super(elementID);
-		this.dimensionHM = dimensionHM;
-		this.relationsHM = relationsHM;
+		this.listOfRelations = listOfRelations;
 		this.groups = groups;
 	}
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
-		listOfComponents.add(dimensionHM);
-		listOfComponents.add(relationsHM);
+		listOfComponents.addAll(listOfRelations);
 		listOfComponents.add(groups);
 		return listOfComponents;
 	}

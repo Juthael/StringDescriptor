@@ -52,9 +52,6 @@ public class Settings {
 	//3. Parameters concerning the generation of ordered sets
 	//3.1. allows to declare "dead" (and not subsequently taken into account) some subsets of the ordered set.
 	public static final boolean DIMENSIONX_LOWERSET_IS_DEAD = true;
-	//3.2. allows to declare a lower set as minimal if it has a single lower bound (besides idiosyncratic element)
-	public static final boolean IF_SINGLE_LOWER_BOUND_THEN_MINIMAL = false;
-	public static final boolean RELATION_MUST_BE_CLARIFIED = true;
 	
 	//4. Parameters concerning the generation of binary contexts
 	public static final boolean CONTEXTS_MUST_BE_CLARIFIED = true;

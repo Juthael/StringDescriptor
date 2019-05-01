@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.GroupOS;
 import model.copycatModel.ordSetGrammar.RelationsOrLetterOS;
@@ -112,7 +113,8 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet groupOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer groupIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

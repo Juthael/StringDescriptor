@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.RelationOS;
-import model.copycatModel.ordSetGrammar.RelationXOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
@@ -64,18 +63,9 @@ public class RelationX extends HowManyRelations implements ISynTreeElement, Clon
 	}	
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		IOrderedSet relationXOS;
-		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer relationXIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String relationXID = getDescriptorName().concat(relationXIndex.toString());
-		List<RelationOS> listOfRelationsOS = new ArrayList<RelationOS>();
-		for (Relation relation : listOfRelations) {
-			RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-			listOfRelationsOS.add(relationOS);
-		}
-		relationXOS = new RelationXOS(relationXID, listOfRelationsOS);
-		return relationXOS;		
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
+		throw new OrderedSetsGenerationException("RelationX can't be upgraded.");
 	}		
 
 }

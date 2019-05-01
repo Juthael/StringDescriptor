@@ -9,6 +9,7 @@ import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.OmegaElement;
 import model.synTreeModel.ISynTreeElement;
 import orderedSetGeneration.IOrderedSetBuilder;
 
@@ -18,7 +19,7 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 	private int mapIndex = 1;
 	private Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
 	
-	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) {
+	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) throws OrderedSetsGenerationException {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
 		List<IOrderedSet> listOfSubMaximalPowerSetElements = new ArrayList<IOrderedSet>();
 		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
@@ -28,7 +29,7 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 		omega = new OmegaElement(listOfSubMaximalPowerSetElements);
 	}
 	
-	public OrderedSetBuilderImpl(ISynTreeElement synTreeElement) {
+	public OrderedSetBuilderImpl(ISynTreeElement synTreeElement) throws OrderedSetsGenerationException {
 		List<ISynTreeElement> listOfSynTreeElement = new ArrayList<ISynTreeElement>();
 		listOfSynTreeElement.add(synTreeElement);
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
