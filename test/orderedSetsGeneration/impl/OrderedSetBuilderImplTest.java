@@ -71,25 +71,31 @@ public class OrderedSetBuilderImplTest {
 	public void whenOrderedSetIsBuiltThenRelationWhithNoRedundancyIsReturned() 
 			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		boolean thereIsNoRedundancy = true;
-		String thisString = "abcd";
-		ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 
-		ISignal signal = signalBuilder.getSignal();
-		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl(signal);
-		List<ISynTreeElement> listOfDescriptors = 
-				new ArrayList<ISynTreeElement>(listOfDescriptorsBuilder.getListOfStringDescriptors());
-		IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(listOfDescriptors);
-		IOrderedSet omega = orderedSetBuilder.getOrderedSet();
-		Map<String, Set<String>> relation = omega.getRelation();
-		List<String> attributes = new ArrayList<String>(relation.keySet());
-		for (int i=0 ; i<attributes.size() ; i++) {
-			Set<String> currentLowerSet = relation.get(attributes.get(i));
-			for (int j=i+1 ; j<attributes.size() ; j++) {
-				Set<String> comparedLowerSet = relation.get(attributes.get(j));
-				if (currentLowerSet.equals(comparedLowerSet))
-					thereIsNoRedundancy = false;
+		try {
+			String thisString = "abcd";
+			ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 
+			ISignal signal = signalBuilder.getSignal();
+			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl(signal);
+			List<ISynTreeElement> listOfDescriptors = 
+					new ArrayList<ISynTreeElement>(listOfDescriptorsBuilder.getListOfStringDescriptors());
+			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(listOfDescriptors);
+			IOrderedSet omega = orderedSetBuilder.getOrderedSet();
+			Map<String, Set<String>> relation = omega.getRelation();
+			List<String> attributes = new ArrayList<String>(relation.keySet());
+			for (int i=0 ; i<attributes.size() ; i++) {
+				Set<String> currentLowerSet = relation.get(attributes.get(i));
+				for (int j=i+1 ; j<attributes.size() ; j++) {
+					Set<String> comparedLowerSet = relation.get(attributes.get(j));
+					if (currentLowerSet.equals(comparedLowerSet))
+						thereIsNoRedundancy = false;
+				}
 			}
+			assertTrue(thereIsNoRedundancy);
 		}
-		assertTrue(thereIsNoRedundancy);
+		catch (Exception unexpected) {
+			System.out.println(unexpected.getMessage());
+			unexpected.printStackTrace();
+		}
 	}
 
 }

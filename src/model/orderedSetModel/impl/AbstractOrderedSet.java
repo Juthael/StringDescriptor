@@ -141,8 +141,10 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	protected void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
 		for (IElement element : getListOfComponents()) {
 			AbstractOrderedSet abstractOrderedSet = (AbstractOrderedSet) element;
-			if (abstractOrderedSet.hashCode() != idToIOrderedSet.get(abstractOrderedSet.getElementID()).hashCode())
-				abstractOrderedSet = (AbstractOrderedSet) idToIOrderedSet.get(abstractOrderedSet.getElementID());
+			AbstractOrderedSet abstractOrderedSetRef = 
+					(AbstractOrderedSet) idToIOrderedSet.get(abstractOrderedSet.getElementID());
+			if (!abstractOrderedSet.equals(abstractOrderedSetRef))
+				abstractOrderedSet = abstractOrderedSetRef;
 			abstractOrderedSet.eliminateRedundancies(idToIOrderedSet);
 		}
 	}

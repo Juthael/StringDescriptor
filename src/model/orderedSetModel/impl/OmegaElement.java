@@ -8,6 +8,7 @@ import java.util.Set;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import settings.Settings;
 
 public class OmegaElement extends AbstractNonMinimalOS implements IOrderedSet {
 
@@ -20,6 +21,9 @@ public class OmegaElement extends AbstractNonMinimalOS implements IOrderedSet {
 			element.setMayBeTheCodedElement(true);
 			this.listOfSubMaxElements.add(element);
 		}
+		eliminateRedundancies();
+		if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
+			checkThatInformativeStatusIsUpToDate();
 	}
 
 	@Override
@@ -33,10 +37,10 @@ public class OmegaElement extends AbstractNonMinimalOS implements IOrderedSet {
 		return listOfComponents;
 	}
 
-	public void eliminateRedundancies() {
-		Set<IOrderedSet> lowerSet = getLowerSet();
+	private void eliminateRedundancies() {
+		Set<IOrderedSet> unionOfComponentsLowerSetS = getUnionOfComponentsLowerSets();
 		Map<String, IOrderedSet> idToIOrderedSet = new HashMap<String, IOrderedSet>();
-		for (IOrderedSet orderedSet : lowerSet) {
+		for (IOrderedSet orderedSet : unionOfComponentsLowerSetS) {
 			if (!idToIOrderedSet.keySet().contains(orderedSet.getElementID()))
 					idToIOrderedSet.put(orderedSet.getElementID(), orderedSet);
 		}
