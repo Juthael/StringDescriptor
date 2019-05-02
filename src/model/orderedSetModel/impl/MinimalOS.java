@@ -2,6 +2,7 @@ package model.orderedSetModel.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import model.orderedSetModel.IOrderedSet;
 
@@ -21,13 +22,19 @@ public class MinimalOS extends AbstractOrderedSet implements IOrderedSet {
 	@Override
 	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalStringsOfElementLowerSet = new ArrayList<String>();
-		listOfMaximalStringsOfElementLowerSet.add(getElementID());
+		if (getThisSetIsInformative() == true) {
+			listOfMaximalStringsOfElementLowerSet.add(getElementID());
+		}
 		return listOfMaximalStringsOfElementLowerSet;
 	}	
 
 	@Override
 	public String getDescriptorName() {
 		return getElementID();
+	}
+
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
 	}
 
 }

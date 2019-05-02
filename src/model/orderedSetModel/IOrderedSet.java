@@ -24,16 +24,20 @@ public interface IOrderedSet extends IElement {
 	
 	Set<IOrderedSet> getLowerSet();
 	
-	void setElementID(String elementID);
+	Set<IOrderedSet> getInformativeLowerSet();
 	
-	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
-	
-	void setIsTheCodedElement(boolean isTheCodedElement);
-
 	int getNbOfParents();	
 	
 	int getNbOfInformativeChildren();
 
 	boolean getThisSetIsInformative();
+	
+	void setElementID(String elementID);
+	
+	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
+	
+	void setIsTheCodedElement(boolean isTheCodedElement);
+	
+	void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet);
 
 }

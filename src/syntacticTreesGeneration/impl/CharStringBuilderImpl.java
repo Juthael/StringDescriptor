@@ -42,7 +42,8 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 			structureRelation = getStructureRelation(listOfGroups);
 		} 
 		else {
-			groupsBuilder = new GroupsBuilderRelationalImpl(listOfGroups, relationDataContainer);
+			groupsBuilder = new GroupsBuilderRelationalImpl(listOfGroups, relationDataContainer, 
+					Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING);
 			if (Settings.TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE)
 				structureRelation = getStructureRelation(listOfGroups);
 			else structureRelation = getMonoStructureRelation(listOfGroups);
@@ -60,7 +61,7 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	
 	private Relation getStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
-		String dimension = "charString.groups.group.size";
+		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();
 		for(Group group : listOfGroups) {
 			List<Integer> currentGroupLetterPositions = DescriptorSpanGetterImpl.getDescriptorSpan(group);
@@ -92,7 +93,7 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 	
 	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
 		Relation structureRelation;
-		String dimension = "charString/groups/group/size";
+		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
 		for(Group group : listOfGroups) {

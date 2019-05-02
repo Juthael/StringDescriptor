@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -28,5 +29,12 @@ public class PlatonicLetterOS extends AbstractNonMinimalOS implements IOrderedSe
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!platonicLetterProperty.equals(idToIOrderedSet.get(platonicLetterProperty.getElementID())))
+			platonicLetterProperty = (MinimalOS) idToIOrderedSet.get(platonicLetterProperty.getElementID());
+	}		
 
 }

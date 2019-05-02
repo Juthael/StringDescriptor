@@ -1,6 +1,7 @@
 package model.orderedSetModel.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -29,6 +30,11 @@ public abstract class AbstractNonMinimalOS extends AbstractOrderedSet implements
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(minimalIdiosyncraticOS);
 		return listOfComponents;
+	}	
+	
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		if (!minimalIdiosyncraticOS.equals(idToIOrderedSet.get(minimalIdiosyncraticOS.getElementID())))
+			minimalIdiosyncraticOS = (MinimalIdiosyncraticOS) idToIOrderedSet.get(minimalIdiosyncraticOS.getElementID());
 	}	
 
 	protected void setIdiosyncraticProperty() {

@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -30,5 +31,16 @@ public class SequenceOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!commonDiff.equals(idToIOrderedSet.get(commonDiff.getElementID())))
+			commonDiff = (CommonDiffOS) idToIOrderedSet.get(commonDiff.getElementID());
+		commonDiff.eliminateRedundancies(idToIOrderedSet);
+		if (!absCommonDiff.equals(idToIOrderedSet.get(absCommonDiff.getElementID())))
+			absCommonDiff = (AbsCommonDiffOS) idToIOrderedSet.get(absCommonDiff.getElementID());
+		absCommonDiff.eliminateRedundancies(idToIOrderedSet);
+	}	
 
 }

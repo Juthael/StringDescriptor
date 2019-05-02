@@ -37,20 +37,13 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 	public Groups(Size size, HowManyGroups groupHM, boolean fullStringGroup) 
 			throws SynTreeGenerationException {
 		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupHM.getDescriptorName().equals("group")){
+			isCodingByDecomposition = Settings.THIS_IS_A_CODING_ELEMENT;
 			this.size = size;
 			this.groupHM = groupHM;
-			if (groupHM.getDescriptorName().equals("group")) {
 				this.groupHM = (Group) groupHM;
 				List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
 				listWithSingleGroup.add(this.groupHM);
-				updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, listWithSingleGroup);
-			}
-			else {
-				this.groupHM = (GroupX) groupHM;
-				updateComponentsPosition(
-						Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, this.groupHM.getListOfComponents());
-			}
-				
+				updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, listWithSingleGroup);				
 		} else throw new SynTreeGenerationException("Groups : illegal parameter values in constructor");
 	}
 	
@@ -100,7 +93,7 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 		}
 		else throw new OrderedSetsGenerationException("Groups.upgradeAsTheElementOfAnOrderedSet : "
 			+ "groupHM descriptor name was unexpected. (" + groupHM.getDescriptorName() + ")");
-		groupsOS = new GroupsOS(groupsID, sizeOS, listOfGroupOS);
+		groupsOS = new GroupsOS(groupsID, isCodingByDecomposition, sizeOS, listOfGroupOS);
 		return groupsOS;		
 	}	
 

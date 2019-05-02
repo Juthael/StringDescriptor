@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -17,6 +18,12 @@ public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
 		this.size = size;
 		this.listOfGroups = listOfGroups;
 	}
+	
+	public GroupsOS(String elementID, boolean isCodingByDecomposition, SizeOS size, List<GroupOS> listOfGroups) {
+		super(elementID, isCodingByDecomposition);
+		this.size = size;
+		this.listOfGroups = listOfGroups;
+	}	
 
 	@Override
 	public List<IElement> getListOfComponents() {
@@ -30,5 +37,17 @@ public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!size.equals(idToIOrderedSet.get(size.getElementID())))
+			size = (SizeOS) idToIOrderedSet.get(size.getElementID());
+		for (GroupOS group : listOfGroups) {
+			if (!group.equals(idToIOrderedSet.get(group.getElementID())))
+				group = (GroupOS) idToIOrderedSet.get(group.getElementID());
+			group.eliminateRedundancies(idToIOrderedSet);
+		}
+	}		
 
 }

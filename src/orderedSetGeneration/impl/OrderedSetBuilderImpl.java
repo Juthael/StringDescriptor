@@ -9,7 +9,7 @@ import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.OmegaElement;
+import model.orderedSetModel.impl.GenericOmegaElement;
 import model.synTreeModel.ISynTreeElement;
 import orderedSetGeneration.IOrderedSetBuilder;
 
@@ -26,7 +26,7 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
-		omega = new OmegaElement(listOfSubMaximalPowerSetElements);
+		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements);
 	}
 	
 	public OrderedSetBuilderImpl(ISynTreeElement synTreeElement) throws OrderedSetsGenerationException {

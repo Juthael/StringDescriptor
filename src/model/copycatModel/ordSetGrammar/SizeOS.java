@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -28,5 +29,12 @@ public class SizeOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!sizeProperty.equals(idToIOrderedSet.get(sizeProperty.getElementID())))
+			sizeProperty = (MinimalOS) idToIOrderedSet.get(sizeProperty.getElementID());
+	}	
 
 }

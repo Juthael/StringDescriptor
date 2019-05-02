@@ -42,7 +42,7 @@ public class OrderedSetBuilderImplTest {
 				retrievedSetOfCodingElementsIDs.add(lowerSetElement.getElementID());
 			}
 		}
-		assertTrue(retrievedSetOfCodingElementsIDs.size() == thisString.length());
+		assertTrue(!retrievedSetOfCodingElementsIDs.isEmpty());
 	}
 	
 	@Test

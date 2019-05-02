@@ -15,6 +15,6 @@ public class MinimalIdiosyncraticOS extends MinimalOS implements IOrderedSet {
 	public List<String> getListOfPropertiesWithPath(){
 		List<String> listOfPropertiesWithPath = new ArrayList<String>();
 		return listOfPropertiesWithPath;
-	}	
+	}
 
 }

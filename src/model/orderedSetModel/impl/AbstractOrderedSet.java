@@ -20,6 +20,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	private int nbOfParents = 0;
 	private int nbOfInformativeChildren = 0;
 	private boolean thisSetIsInformative = true;
+	private boolean componentsNbOfParentsHaveBeenIncremented = false;
 	
 	public AbstractOrderedSet(String elementID) {
 		this.elementID = elementID;
@@ -71,17 +72,21 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	@Override
 	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalChainsOfElementLowerSet = new ArrayList<String>();
-		List<IElement> listOfComponents = getListOfComponents();
-		for (IElement component : listOfComponents) {
-			IOrderedSet setComponent = (IOrderedSet) component;
-			List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getListOfLowerSetMaximalChains();
-			for (String componentMaximalChain : listOfMaximalChainsOfComponentLowerSet) {
-				String maximalChain = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalChain);
-				listOfMaximalChainsOfElementLowerSet.add(maximalChain);
+		if (thisSetIsInformative == true) {
+			List<IElement> listOfComponents = getListOfComponents();
+			for (IElement component : listOfComponents) {
+				IOrderedSet setComponent = (IOrderedSet) component;
+				if (setComponent.getThisSetIsInformative() == true) {
+					List<String> listOfMaximalChainsOfComponentLowerSet = setComponent.getListOfLowerSetMaximalChains();
+					for (String componentMaximalChain : listOfMaximalChainsOfComponentLowerSet) {
+						String maximalChain = this.getElementID().concat(Settings.PATH_SEPARATOR + componentMaximalChain);
+						listOfMaximalChainsOfElementLowerSet.add(maximalChain);
+					}
+				}
 			}
 		}
 		return listOfMaximalChainsOfElementLowerSet;
-	}	
+	}
 	
 	@Override
 	public boolean getMayBeTheCodedElement() {
@@ -105,6 +110,15 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		lowerSet.add(this);
 		lowerSet.addAll(getUnionOfComponentsLowerSets());
 		return lowerSet;
+	}
+	
+	public Set<IOrderedSet> getInformativeLowerSet(){
+		Set<IOrderedSet> informativeLowerSet = new HashSet<IOrderedSet>();
+		if (thisSetIsInformative == true) {
+			informativeLowerSet.add(this);
+			informativeLowerSet.addAll(getUnionOfComponentsInformativeLowerSets());
+		}
+		return informativeLowerSet;
 	}
 	
 	@Override
@@ -138,17 +152,6 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		return thisSetIsInformative;
 	}
 	
-	protected void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		for (IElement element : getListOfComponents()) {
-			AbstractOrderedSet abstractOrderedSet = (AbstractOrderedSet) element;
-			AbstractOrderedSet abstractOrderedSetRef = 
-					(AbstractOrderedSet) idToIOrderedSet.get(abstractOrderedSet.getElementID());
-			if (!abstractOrderedSet.equals(abstractOrderedSetRef))
-				abstractOrderedSet = abstractOrderedSetRef;
-			abstractOrderedSet.eliminateRedundancies(idToIOrderedSet);
-		}
-	}
-	
 	protected Set<String> getUnionOfComponentsLowerSetsIDs() {
 		Set<String> unionOfComponentsLowerSetsIDs = new HashSet<String>();
 		List<IOrderedSet> listOfComponents = new ArrayList<IOrderedSet>();
@@ -173,20 +176,28 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		return unionOfComponentsLowerSets;
 	}
 	
-	protected void initializeNbOfParents() {
-		nbOfParents = 0;
-		for (IElement element : getListOfComponents()) {
-			AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
-			orderedSetComponent.initializeNbOfParents();
+	protected Set<IOrderedSet> getUnionOfComponentsInformativeLowerSets(){
+		Set<IOrderedSet> unionOfComponentsLowerSets = new HashSet<IOrderedSet>();
+		List<IOrderedSet> listOfComponents = new ArrayList<IOrderedSet>();
+		for (IElement component : getListOfComponents()) {
+			listOfComponents.add((IOrderedSet) component);
 		}
-	}
+		for (IOrderedSet component :listOfComponents) {
+			if (component.getThisSetIsInformative() == true)
+				unionOfComponentsLowerSets.addAll(component.getInformativeLowerSet());
+		}
+		return unionOfComponentsLowerSets;
+	}	
 	
-	protected void setNbOfParents() {
-		for (IElement element : getListOfComponents()) {
-			AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
-			orderedSetComponent.incrementNbOfParents();
-			orderedSetComponent.setNbOfParents();
+	protected void incrementComponentsNbOfParents() {
+		if (componentsNbOfParentsHaveBeenIncremented == false) {
+			for (IElement element : getListOfComponents()) {
+				AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
+				orderedSetComponent.incrementNbOfParents();
+				orderedSetComponent.incrementComponentsNbOfParents();
+			}
 		}
+		componentsNbOfParentsHaveBeenIncremented = true;
 	}
 	
 	protected void incrementNbOfParents() {
@@ -209,8 +220,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 			if (nbOfParents == 1 && nbOfInformativeChildren == 0) {
 				thisSetIsInformative = false;
 				thisElementHasBeenUpdated = true;
-			}
-				
+			}	
 			else {
 				for (IElement element : getListOfComponents()) {
 					AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;

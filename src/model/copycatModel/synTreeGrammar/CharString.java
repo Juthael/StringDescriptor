@@ -2,16 +2,20 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
+import model.copycatModel.ordSetGrammar.CharStringOmega;
 import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.copycatModel.ordSetGrammar.GroupsOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.AbstractOmegaElement;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
 
@@ -62,6 +66,29 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		charStringOS = new CharStringOS(charStringID, directionOS, structureOS, groupsOS);
 		return charStringOS;
-	}	
+	}
+	
+	public AbstractOmegaElement upgradeAsTheSupremumOfAnOrderedSet() 
+			throws OrderedSetsGenerationException {
+		AbstractOmegaElement charStringOmega;
+		Integer charStringIndex = 1;
+		Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
+		int mapIndex = 1;
+		for (IElement element : getListOfComponents()) {
+			Set<List<String>> setOfPropertyLists = element.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
+			for (List<String> listOfPropertiesWithPath : setOfPropertyLists) {
+				if (!listOfPropertiesToIndex.containsKey(listOfPropertiesWithPath)) {
+					listOfPropertiesToIndex.put(listOfPropertiesWithPath, mapIndex);
+					mapIndex++;
+				}
+			}
+		}
+		String charStringID = getDescriptorName().concat(charStringIndex.toString());
+		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		charStringOmega = new CharStringOmega(charStringID, directionOS, structureOS, groupsOS);
+		return charStringOmega;
+	}
 	
 }

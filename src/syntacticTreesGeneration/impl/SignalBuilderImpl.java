@@ -46,7 +46,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
 	private Letter getLetter(String platonicLetterValue, String positionValue) {
 		Position position = new Position(positionValue);
 		PlatonicLetter platonicLetter = new PlatonicLetter(platonicLetterValue);
-		Letter letter = new Letter(Settings.THIS_IS_A_CODING_ELEMENT, position, platonicLetter);
+		Letter letter = new Letter(position, platonicLetter);
 		return letter;
 	}
 	

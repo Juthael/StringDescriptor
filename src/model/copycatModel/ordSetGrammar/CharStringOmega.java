@@ -5,28 +5,25 @@ import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import model.orderedSetModel.impl.AbstractOmegaElement;
+import settings.Settings;
 
-public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class CharStringOmega extends AbstractOmegaElement implements IOrderedSet {
 
 	private static final String NAME = "charString";
 	private DirectionOS direction;
 	private StructureOS structure;
 	private GroupsOS groups;
 	
-	public CharStringOS(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups) {
+	public CharStringOmega(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups) {
 		super(elementID);
 		this.direction = direction;
 		this.structure = structure;
 		this.groups = groups;
-	}
-
-	public CharStringOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement, DirectionOS direction, 
-			StructureOS structure, GroupsOS groups) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
-		this.direction = direction;
-		this.structure = structure;
-		this.groups = groups;
+		setMayBeTheCodedElement(true);
+		eliminateRedundancies();
+		if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
+			checkThatInformativeStatusIsUpToDate();
 	}
 
 	@Override
@@ -41,7 +38,7 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 	@Override
 	public String getDescriptorName() {
 		return NAME;
-	}
+	}	
 	
 	@Override
 	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {

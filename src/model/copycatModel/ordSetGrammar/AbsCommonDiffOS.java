@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -27,6 +28,13 @@ public class AbsCommonDiffOS extends AbstractNonMinimalOS implements IOrderedSet
 	@Override
 	public String getDescriptorName() {
 		return NAME;
+	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!absCommonDiffProperty.equals(idToIOrderedSet.get(absCommonDiffProperty.getElementID())))
+			absCommonDiffProperty = (MinimalOS) idToIOrderedSet.get(absCommonDiffProperty.getElementID());
 	}
 
 }

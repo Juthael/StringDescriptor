@@ -1,6 +1,7 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
+import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -27,6 +28,13 @@ public class SymmetryOS extends AbstractNonMinimalOS implements IOrderedSet {
 	@Override
 	public String getDescriptorName() {
 		return NAME;
+	}
+	
+	@Override
+	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
+		super.eliminateRedundancies(idToIOrderedSet);
+		if (!symmetryProperty.equals(idToIOrderedSet.get(symmetryProperty.getElementID())))
+			symmetryProperty = (MinimalOS) idToIOrderedSet.get(symmetryProperty.getElementID());
 	}
 
 }
