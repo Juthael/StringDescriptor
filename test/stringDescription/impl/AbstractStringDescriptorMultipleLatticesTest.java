@@ -90,7 +90,7 @@ public class AbstractStringDescriptorMultipleLatticesTest {
 	@Test
 	public void whenSignalEnteredThenVerbalDescriptionToScoreReturned() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilderImpl("ab", "fromLeftToRight");
 			ISignal signal = signalBuilder.getSignal();
 			AbstractStringDescriptorMultipleLattices stringDescriptor = new StringDescriptorMultipleLatticesImpl(signal);
 			Map<String, Double> verbalDescriptionToScore = stringDescriptor.getVerbalDescriptionToScore();

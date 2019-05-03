@@ -14,6 +14,8 @@ public interface IOrderedSet extends IElement {
 	
 	Map<String, Set<String>> getRelation();
 	
+	Map<String, Set<String>> getReducedRelation();
+	
 	List<String> getListOfLowerSetMaximalChains();
 	
 	boolean getMayBeTheCodedElement();
@@ -21,6 +23,8 @@ public interface IOrderedSet extends IElement {
 	boolean getIsTheCodedElement();
 	
 	Set<String> getLowerSetIDs();
+	
+	Set<String> getLowerSetInformativeIDs();	
 	
 	Set<IOrderedSet> getLowerSet();
 	

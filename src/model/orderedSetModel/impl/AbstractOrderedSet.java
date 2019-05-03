@@ -70,6 +70,21 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	}
 	
 	@Override
+	public Map<String, Set<String>> getReducedRelation(){
+		Map<String, Set<String>> reducedRelation = new HashMap<String, Set<String>>();
+		if (thisSetIsInformative == true) {
+			reducedRelation.put(getElementID(), getLowerSetInformativeIDs());
+			List<IElement> listOfComponents = getListOfComponents();
+			for (IElement component : listOfComponents) {
+				IOrderedSet setComponent = (IOrderedSet) component;
+				if (setComponent.getThisSetIsInformative() == true)
+					reducedRelation.putAll(setComponent.getReducedRelation());
+			}	
+		}
+		return reducedRelation;
+	}	
+	
+	@Override
 	public List<String> getListOfLowerSetMaximalChains() {
 		List<String> listOfMaximalChainsOfElementLowerSet = new ArrayList<String>();
 		if (thisSetIsInformative == true) {
@@ -98,11 +113,22 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		return isTheCodedElement;
 	}
 	
+	@Override
 	public Set<String> getLowerSetIDs() {
 		Set<String> lowerSet = new HashSet<String>();
 		lowerSet.add(getElementID());
 		lowerSet.addAll(getUnionOfComponentsLowerSetsIDs());
 		return lowerSet;
+	}
+	
+	@Override
+	public Set<String> getLowerSetInformativeIDs(){
+		Set<String> informativeLowerSet = new HashSet<String>();
+		if (thisSetIsInformative == true) {
+			informativeLowerSet.add(getElementID());
+			informativeLowerSet.addAll(getUnionOfComponentsInformativeLowerSetsIDs());
+		}
+		return informativeLowerSet;
 	}
 	
 	public Set<IOrderedSet> getLowerSet(){
@@ -163,6 +189,20 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		}
 		return unionOfComponentsLowerSetsIDs;
 	}
+	
+	protected Set<String> getUnionOfComponentsInformativeLowerSetsIDs() {
+		Set<String> unionOfComponentsLowerSetsIDs = new HashSet<String>();
+		List<IOrderedSet> listOfComponents = new ArrayList<IOrderedSet>();
+		for (IElement component : getListOfComponents()) {
+			listOfComponents.add((IOrderedSet) component);
+		}
+		for (IOrderedSet component : listOfComponents) {
+			if (component.getThisSetIsInformative() == true) {
+				unionOfComponentsLowerSetsIDs.addAll(component.getLowerSetInformativeIDs());
+			}
+		}
+		return unionOfComponentsLowerSetsIDs;
+	}	
 	
 	protected Set<IOrderedSet> getUnionOfComponentsLowerSets(){
 		Set<IOrderedSet> unionOfComponentsLowerSets = new HashSet<IOrderedSet>();

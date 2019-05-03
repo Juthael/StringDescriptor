@@ -1,6 +1,7 @@
 package model.orderedSetModel;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -22,8 +23,10 @@ import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
 public class AbstractOrderedSetTest {
 
+	// check Relation / reduced Relation
+	
 	@Test
-	public void whenOrderedSetIsBuiltThenAccurateRelationIsProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+	public void whenOrderedSetIsBuiltThenRelationMapCanBeProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
@@ -38,45 +41,38 @@ public class AbstractOrderedSetTest {
 			listOfPropertiesIndex++;
 		}
 		List<IOrderedSet> listOfOrderedSetElements = new ArrayList<IOrderedSet>();
-		try {
-			for (CharString descriptor : listOfDescriptors)
-				listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
-			IOrderedSet orderedSet = listOfOrderedSetElements.get(0);
-			List<String> listOfLowerSetMaximalChains = orderedSet.getListOfLowerSetMaximalChains();
-			Map<String, Set<String>> relation = orderedSet.getRelation();
-			boolean aRelationAtLeastCantBeVerified = false;
-			for (String element : relation.keySet()) {
-				for (String relatedElement : relation.get(element)) {
-					boolean thisRelationHasBeenVerified = false;
-					for (String maximalChain : listOfLowerSetMaximalChains) {
-						String[] maximalChainArray = maximalChain.split(Settings.PATH_SEPARATOR);
-						boolean elementHasBeenFound = false;
-						boolean relatedElementHasBeenFound = false;
-						for (String currentElement : maximalChainArray) {
-							if (currentElement.equals(element))
-								elementHasBeenFound = true;
-							if (currentElement.equals(relatedElement))
-								relatedElementHasBeenFound = true;
-						}
-						if (elementHasBeenFound == true && relatedElementHasBeenFound == true) {
-							thisRelationHasBeenVerified = true;
-						}
+		for (CharString descriptor : listOfDescriptors)
+			listOfOrderedSetElements.add(descriptor.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		IOrderedSet orderedSet = listOfOrderedSetElements.get(0);
+		List<String> listOfLowerSetMaximalChains = orderedSet.getListOfLowerSetMaximalChains();
+		Map<String, Set<String>> relation = orderedSet.getRelation();
+		boolean aRelationAtLeastCantBeVerified = false;
+		for (String element : relation.keySet()) {
+			for (String relatedElement : relation.get(element)) {
+				boolean thisRelationHasBeenVerified = false;
+				for (String maximalChain : listOfLowerSetMaximalChains) {
+					String[] maximalChainArray = maximalChain.split(Settings.PATH_SEPARATOR);
+					boolean elementHasBeenFound = false;
+					boolean relatedElementHasBeenFound = false;
+					for (String currentElement : maximalChainArray) {
+						if (currentElement.equals(element))
+							elementHasBeenFound = true;
+						if (currentElement.equals(relatedElement))
+							relatedElementHasBeenFound = true;
 					}
-					if (thisRelationHasBeenVerified == false)
-						aRelationAtLeastCantBeVerified = true;
+					if (elementHasBeenFound == true && relatedElementHasBeenFound == true) {
+						thisRelationHasBeenVerified = true;
+					}
 				}
+				if (thisRelationHasBeenVerified == false)
+					aRelationAtLeastCantBeVerified = true;
 			}
-			assertFalse(aRelationAtLeastCantBeVerified);
 		}
-		catch (Exception unexpected) {
-			System.out.println(unexpected.getMessage());
-			unexpected.printStackTrace();
-			fail();
-		}
+		assertFalse(aRelationAtLeastCantBeVerified);
 	}
 	
 	@Test
-	public void whenOrderedSetsAreBuiltThenTwoComponentsNeverHaveTheSameElementID() 
+	public void whenOrderedSetIsBuiltThenTwoComponentsNeverHaveTheSameElementID() 
 			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
@@ -116,7 +112,7 @@ public class AbstractOrderedSetTest {
 	}
 	
 	@Test
-	public void whenOrderedSetIsBuiltThenReducedSetIsReturned() 
+	public void whenOrderedSetIsBuiltThenReducedSetCanBeProvided() 
 			throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
@@ -168,6 +164,43 @@ public class AbstractOrderedSetTest {
 				fail();
 			}	
 		}
-	} 
+	}
+	
+	@Test
+	public void whenOrderedSetIsBuiltThenReducedRelationCanBeProvided() 
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
+				new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		List<IOrderedSet> listOfOrderedSetElements = new ArrayList<IOrderedSet>();
+		for (CharString descriptor : listOfDescriptors)
+			listOfOrderedSetElements.add(descriptor.upgradeAsTheSupremumOfAnOrderedSet());
+		IOrderedSet orderedSet = listOfOrderedSetElements.get(0);
+		List<String> maxChains = orderedSet.getListOfLowerSetMaximalChains();
+		/* for (String maxChain : maxChains) {
+			System.out.println(maxChain);
+		}
+		System.out.println("");
+		System.out.println(""); */
+		Map<String, Set<String>> relation = orderedSet.getRelation();		
+		Map<String, Set<String>> reducedRelation = orderedSet.getReducedRelation();
+		/* System.out.println("REDUCED RELATION : ");
+		System.out.println("");
+		for (String key : reducedRelation.keySet()) {
+			System.out.print(key.concat(" : "));
+			System.out.println(reducedRelation.get(key).toString());
+			System.out.println("");
+		}
+		System.out.println("KEYS REMOVED :");
+		System.out.println("");
+		for (String key : relation.keySet()) {
+			if (!reducedRelation.containsKey(key)) {
+				System.out.print(key.concat(" : "));
+				System.out.println(relation.get(key).toString());
+				System.out.println("");
+			}
+		} */
+		assertTrue(relation.size() > reducedRelation.size());
+	}
 
 }
