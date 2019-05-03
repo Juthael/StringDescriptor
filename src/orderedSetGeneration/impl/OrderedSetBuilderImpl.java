@@ -8,16 +8,30 @@ import java.util.Random;
 import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
+import exceptions.VerbalizationException;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.AbstractOmegaElement;
 import model.orderedSetModel.impl.GenericOmegaElement;
 import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.ISynTreeStartElement;
 import orderedSetGeneration.IOrderedSetBuilder;
+import settings.Settings;
 
 public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 
-	private IOrderedSet omega;
+	private AbstractOmegaElement omega;
 	private int mapIndex = 1;
 	private Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
+	
+	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement, String verbalDescription) throws OrderedSetsGenerationException {
+		setListOfPropertiesToIndexMap(listOfSynTreeElement);
+		List<IOrderedSet> listOfSubMaximalPowerSetElements = new ArrayList<IOrderedSet>();
+		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
+			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
+		}
+		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements, verbalDescription);
+	}
 	
 	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) throws OrderedSetsGenerationException {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
@@ -26,14 +40,13 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
-		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements);
-	}
+		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements, Settings.NO_VERBAL_DESCRIPTION);
+	}	
 	
-	public OrderedSetBuilderImpl(ISynTreeElement synTreeElement) throws OrderedSetsGenerationException {
+	public OrderedSetBuilderImpl(ISynTreeStartElement startElement) throws OrderedSetsGenerationException, VerbalizationException {
 		List<ISynTreeElement> listOfSynTreeElement = new ArrayList<ISynTreeElement>();
-		listOfSynTreeElement.add(synTreeElement);
-		setListOfPropertiesToIndexMap(listOfSynTreeElement);
-		omega = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		listOfSynTreeElement.add(startElement);
+		omega = startElement.upgradeAsTheSupremumOfAnOrderedSet();
 		omega.setElementID("charString".concat(getRandomIDNumber()));
 	}
 

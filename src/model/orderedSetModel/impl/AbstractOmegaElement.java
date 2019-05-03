@@ -9,8 +9,15 @@ import model.orderedSetModel.IOrderedSet;
 
 public abstract class AbstractOmegaElement extends AbstractNonMinimalOS implements IOrderedSet {
 
-	public AbstractOmegaElement(String name) {
+	private String verbalDescription;
+	
+	public AbstractOmegaElement(String name, String verbalDescription) {
 		super(name);
+		this.verbalDescription = verbalDescription;
+	}
+	
+	public String getVerbalDescription() {
+		return verbalDescription;
 	}
 
 	protected void eliminateRedundancies() {

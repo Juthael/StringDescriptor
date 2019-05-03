@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
+import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.orderedSetModel.IOrderedSet;
 import settings.Settings;
@@ -22,8 +23,6 @@ import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
 public class AbstractOrderedSetTest {
-
-	// check Relation / reduced Relation
 	
 	@Test
 	public void whenOrderedSetIsBuiltThenRelationMapCanBeProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
@@ -73,7 +72,7 @@ public class AbstractOrderedSetTest {
 	
 	@Test
 	public void whenOrderedSetIsBuiltThenTwoComponentsNeverHaveTheSameElementID() 
-			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
@@ -113,7 +112,7 @@ public class AbstractOrderedSetTest {
 	
 	@Test
 	public void whenOrderedSetIsBuiltThenReducedSetCanBeProvided() 
-			throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException {
+			throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
@@ -168,7 +167,7 @@ public class AbstractOrderedSetTest {
 	
 	@Test
 	public void whenOrderedSetIsBuiltThenReducedRelationCanBeProvided() 
-			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();

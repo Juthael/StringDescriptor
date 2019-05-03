@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
+import exceptions.VerbalizationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
 import model.copycatModel.ordSetGrammar.CharStringOmega;
 import model.copycatModel.ordSetGrammar.DirectionOS;
@@ -16,10 +17,12 @@ import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.AbstractOmegaElement;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.ISynTreeStartElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
+import verbalization.dataEncoding.encoders.IVerbalizer;
+import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
 
-public class CharString extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class CharString extends SynTreeElementImpl implements ISynTreeStartElement, Cloneable {
 	
 	private final static String DESCRIPTOR_NAME = "charString";
 	protected Direction direction;
@@ -68,8 +71,9 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 		return charStringOS;
 	}
 	
+	@Override
 	public AbstractOmegaElement upgradeAsTheSupremumOfAnOrderedSet() 
-			throws OrderedSetsGenerationException {
+			throws OrderedSetsGenerationException, VerbalizationException {
 		AbstractOmegaElement charStringOmega;
 		Integer charStringIndex = 1;
 		Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
@@ -87,8 +91,17 @@ public class CharString extends SynTreeElementImpl implements ISynTreeElement, C
 		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		charStringOmega = new CharStringOmega(charStringID, directionOS, structureOS, groupsOS);
+		String verbalDescription = getVerbalDescription();
+		charStringOmega = new CharStringOmega(charStringID, directionOS, structureOS, groupsOS, verbalDescription);
 		return charStringOmega;
+	}
+
+	@Override
+	public String getVerbalDescription() throws VerbalizationException {
+		String verbalDescription;
+		IVerbalizer verbalizer = new VerbalizerImpl(this);
+		verbalDescription = verbalizer.getTranslationInNaturalLanguage();
+		return verbalDescription;
 	}
 	
 }

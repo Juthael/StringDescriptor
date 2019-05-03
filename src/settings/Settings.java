@@ -24,6 +24,7 @@ public class Settings {
 	public static final String SYMMETRY_WITHOUT_CENTRAL_ELEMENT = "withoutCentralElement";
 	public static final String POSITION_VALUES_SEPARATOR = ":";
 	public static final String STRUCTURE_RELATION_CONVENTIONAL_DIMENSION = "group.size";
+	public static final String NO_VERBAL_DESCRIPTION = "No verbal description available";
 	
 	//2.Parameters concerning the generation of syntactic trees
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;

@@ -12,8 +12,8 @@ public class GenericOmegaElement extends AbstractOmegaElement implements IOrdere
 	private static final String NAME = "omega";
 	private List<IOrderedSet> listOfOrderedSets = new ArrayList<IOrderedSet>();
 	
-	public GenericOmegaElement(List<IOrderedSet> listOfSetElements) {
-		super(NAME);
+	public GenericOmegaElement(List<IOrderedSet> listOfSetElements, String verbalDescription) {
+		super(NAME, verbalDescription);
 		for (IOrderedSet element : listOfSetElements) {
 			element.setMayBeTheCodedElement(true);
 			this.listOfOrderedSets.add(element);

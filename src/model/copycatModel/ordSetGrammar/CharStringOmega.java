@@ -15,8 +15,8 @@ public class CharStringOmega extends AbstractOmegaElement implements IOrderedSet
 	private StructureOS structure;
 	private GroupsOS groups;
 	
-	public CharStringOmega(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups) {
-		super(elementID);
+	public CharStringOmega(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups, String verbalDescription) {
+		super(elementID, verbalDescription);
 		this.direction = direction;
 		this.structure = structure;
 		this.groups = groups;
