@@ -50,7 +50,10 @@ public class GroupsBuilderImpl implements IGroupsBuilder {
 				for (Group group : listOfGroups)
 					cloneListOfGroups.add(group.clone());
 				howManyGroups = new GroupX(cloneListOfGroups);
-				groups = new Groups(size, howManyGroups);	
+				groups = new Groups(size, howManyGroups);
+				if (listOfGroupsCoverTheFullString == true) {
+					groups.setIsCodingByDecomposition(Settings.THIS_IS_A_CODING_ELEMENT);
+				}
 			}
 		} else throw new SynTreeGenerationException("GroupsBuilder : listOfGroups size is illegal.");
 		return groups;	

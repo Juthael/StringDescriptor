@@ -15,32 +15,39 @@ public class KnowledgeEfficiencyCalculator implements IScoreCalculator {
 	@Override
 	public double calculateScore(IOrderedSet orderedSet, ConceptLattice lattice) {
 		double score;
-		int nbOfInfReducibleSupIrreducibleElements = 0;
-		int nbOfSupReducibleElements = 0;
+		double nbOfInfReducibleElements = 0;
+		double nbOfSupReducibleElements = 0;
 		Vector<FormalConcept> listOfConcepts = lattice.getConcepts();
 		for (FormalConcept concept : listOfConcepts) {
 			boolean thisElementIsInfReducible;
 			boolean thisElementIsSupReducible;
 			int nbOfChildren = concept.getChildren().size();
 			int nbOfParents = concept.getParents().size();
-			if (nbOfChildren == 1)
+			if (nbOfParents == 1)
 				thisElementIsInfReducible = false;
 			else thisElementIsInfReducible = true;
-			if (nbOfParents == 1)
+			if (nbOfChildren == 1)
 				thisElementIsSupReducible = false;
 			else thisElementIsSupReducible = true;
 			if (thisElementIsSupReducible == true)
 				nbOfSupReducibleElements++;
-			else if (thisElementIsInfReducible == true)
-				nbOfInfReducibleSupIrreducibleElements++; 
+			if (thisElementIsInfReducible == true)
+				nbOfInfReducibleElements++; 
 		}
-		score = log2(nbOfSupReducibleElements) / log2(nbOfInfReducibleSupIrreducibleElements);
+		score = nbOfSupReducibleElements / nbOfInfReducibleElements;
+		/*
+		System.out.print("Sup-reducibles : ");
+		System.out.println(nbOfSupReducibleElements);
+		System.out.print("Inf-Reducible : " );
+		System.out.println(nbOfInfReducibleElements);
+		System.out.print("Score : ");
+		System.out.println(score); */
 		return score;
 	}
-	
+	/*
 	private double log2(int i) {
 		double x = (double) i;
 		return (Math.log(x) / Math.log(2));
-	}
+	} */
 
 }

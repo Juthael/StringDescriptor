@@ -12,6 +12,7 @@ import model.copycatModel.ordSetGrammar.RelationsOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
+import settings.Settings;
 
 public class Relations extends RelationsOrLetter implements ISynTreeElement, Cloneable {
 
@@ -47,6 +48,10 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
 				Arrays.asList(dimensionHM, relationHM, groups));
 		return componentDescriptors;
+	}
+	
+	public void setGroupsAsCodingDescriptors() {
+		groups.setIsCodingByDecomposition(Settings.THIS_IS_A_CODING_ELEMENT);
 	}
 	
 	@Override

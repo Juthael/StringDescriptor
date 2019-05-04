@@ -37,13 +37,13 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 	public Groups(Size size, HowManyGroups groupHM, boolean fullStringGroup) 
 			throws SynTreeGenerationException {
 		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupHM.getDescriptorName().equals("group")){
-			isCodingByDecomposition = Settings.THIS_IS_A_CODING_ELEMENT;
 			this.size = size;
-			this.groupHM = groupHM;
-				this.groupHM = (Group) groupHM;
-				List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
-				listWithSingleGroup.add(this.groupHM);
-				updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, listWithSingleGroup);				
+			Group group = (Group) groupHM;
+			group.setLetterOrRelationsComponentsAsCodingDescriptor();
+			this.groupHM = group;
+			List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
+			listWithSingleGroup.add(this.groupHM);
+			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP, listWithSingleGroup);				
 		} else throw new SynTreeGenerationException("Groups : illegal parameter values in constructor");
 	}
 	

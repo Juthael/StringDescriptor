@@ -67,6 +67,11 @@ public class Description implements IDescription {
 	}
 	
 	@Override
+	public List<String> getOrderedListOfOrderedSetIDs() {
+		return orderedListOfOrderedSetIDs;
+	}	
+	
+	@Override
 	public Map<String, IOrderedSet> getOrderedSetIDToOrderedSet() {
 		return orderedSetIDToOrderedSet;
 	}	

@@ -48,7 +48,6 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 				structureRelation = getStructureRelation(listOfGroups);
 			else structureRelation = getMonoStructureRelation(listOfGroups);
 		}
-		
 		structure = new Structure(size, structureRelation);		
 		groups = groupsBuilder.getGroups();
 	}

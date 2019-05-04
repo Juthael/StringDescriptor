@@ -112,6 +112,15 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 		}
 	}
 	
+	public void setLetterOrRelationsComponentsAsCodingDescriptor() {
+		if (relationsOrLetter.getDescriptorName().equals("letter"))
+				relationsOrLetter.setIsCodingByDecomposition(Settings.THIS_IS_A_CODING_ELEMENT);
+		else if (relationsOrLetter.getDescriptorName().equals("relations")) {
+			Relations relations = (Relations) relationsOrLetter;
+			relations.setGroupsAsCodingDescriptors();
+		}
+	}
+	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
 			throws OrderedSetsGenerationException {

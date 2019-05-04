@@ -12,6 +12,8 @@ public interface IDescription {
 	
 	List<ISynTreeElement> getListOfStringSyntacticTrees();
 	
+	List<String> getOrderedListOfOrderedSetIDs();
+	
 	Map<String, IOrderedSet> getOrderedSetIDToOrderedSet();
 	
 	Map<String, List<String>> getOrderedSetIDToListOfPropertiesMapping();

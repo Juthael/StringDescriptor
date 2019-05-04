@@ -78,6 +78,11 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		return getListOfAllComponentsForRelationBuilding();
 	}
+	
+	@Override 
+	public void setIsCodingByDecomposition(boolean isCodingByDecomposition) {
+		this.isCodingByDecomposition = isCodingByDecomposition;
+	}
 
 	@Override
 	abstract protected SynTreeElementImpl clone() throws CloneNotSupportedException;
