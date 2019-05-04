@@ -11,19 +11,16 @@ public class StructureOS extends AbstractNonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "structure";
 	private SizeOS size;
-	private RelationOS relation;
 	
-	public StructureOS(String elementID, SizeOS size, RelationOS relation) {
+	public StructureOS(String elementID, SizeOS size) {
 		super(elementID);
 		this.size = size;
-		this.relation = relation;
 	}
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(size);
-		listOfComponents.add(relation);
 		return listOfComponents;
 	}
 
@@ -38,9 +35,6 @@ public class StructureOS extends AbstractNonMinimalOS implements IOrderedSet {
 		if (!size.equals(idToIOrderedSet.get(size.getElementID())))
 			size = (SizeOS) idToIOrderedSet.get(size.getElementID());
 		size.eliminateRedundancies(idToIOrderedSet);
-		if (!relation.equals(idToIOrderedSet.get(relation.getElementID())))
-			relation = (RelationOS) idToIOrderedSet.get(relation.getElementID());
-		relation.eliminateRedundancies(idToIOrderedSet);
 	}	
 
 }

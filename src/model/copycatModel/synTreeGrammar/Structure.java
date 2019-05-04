@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
+import model.copycatModel.ordSetGrammar.StructureWithRelationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
@@ -46,14 +48,17 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) throws OrderedSetsGenerationException {
 		IOrderedSet structureOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer structureIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String structureID = getDescriptorName().concat(structureIndex.toString());
 		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		structureOS = new StructureOS(structureID, sizeOS, relationOS);
+		if (relation.getThisRelationIsUpgradable()) {
+			RelationOS relationOS = (RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			structureOS = new StructureWithRelationOS(structureID, sizeOS, relationOS);
+		}
+		else structureOS = new StructureOS(structureID, sizeOS);
 		return structureOS;		
 	}		
 

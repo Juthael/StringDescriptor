@@ -45,6 +45,13 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 		return componentDescriptors;
 	}
 	
+	public boolean getThisIsAConstantSequence() {
+		boolean thisIsAConstantSequence = false;
+		if (commonDiff.getValue().equals("0"))
+			thisIsAConstantSequence = true;
+		return thisIsAConstantSequence;
+	}
+	
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		List<SynTreeElementImpl> componentDescriptors = new ArrayList<SynTreeElementImpl>(
 				Arrays.asList(commonDiff));

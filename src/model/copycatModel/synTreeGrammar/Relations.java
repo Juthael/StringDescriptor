@@ -66,12 +66,14 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		if (relationHM.getDescriptorName().contains("relationX")) {
 			for (IElement element : relationHM.getListOfComponents()) {
 				Relation relation = (Relation) element;
-				listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+				if (relation.getThisRelationIsUpgradable() == true)
+					listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
 			}
 		}
 		else if (relationHM.getDescriptorName().equals("relation")) {
 			Relation relation = (Relation) relationHM;
-			listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			if (relation.getThisRelationIsUpgradable() == true)
+				listOfRelationOS.add((RelationOS) relation.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
 		}
 		else throw new OrderedSetsGenerationException("Relations.upgradeAsTheElementOfAnOrderedSet : "
 				+ "relationHM.descriptorName was unexpected (" + relationHM.getDescriptorName() + ").");

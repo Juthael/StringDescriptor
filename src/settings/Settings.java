@@ -52,6 +52,7 @@ public class Settings {
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
 	
 	//3. Parameters concerning the generation of ordered sets and binary contexts
+	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
 	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = true;
 

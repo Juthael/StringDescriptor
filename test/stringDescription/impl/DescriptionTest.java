@@ -64,13 +64,13 @@ public class DescriptionTest {
 				if (listOfCodingDescriptorIDs1.isEmpty())
 					anEmptyListOfCodingDescriptorsWasFound = true;
 				List<String> maxChains1 = orderedSet1.getListOfLowerSetMaximalChains();
-				/* for (String maxChain : maxChains1) {
+				for (String maxChain : maxChains1) {
 					System.out.println(maxChain);
 				}
 				System.out.println("");
 				for (String codingID : listOfCodingDescriptorIDs1)
 					System.out.println(codingID);
-				System.out.println(""); */
+				System.out.println(""); 
 			}
 			assertFalse(anEmptyListOfCodingDescriptorsWasFound);
 		}

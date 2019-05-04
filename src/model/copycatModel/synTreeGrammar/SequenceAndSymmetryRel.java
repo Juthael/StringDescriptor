@@ -10,10 +10,12 @@ import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SequenceAndSymmetryRelOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
+import model.copycatModel.ordSetGrammar.SymmetryRelOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISynTreeElement;
 import model.synTreeModel.impl.SynTreeElementImpl;
+import settings.Settings;
 
 public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement, Cloneable {
 
@@ -55,17 +57,22 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		IOrderedSet sequenceAndSymmetryRelOS;
+		IOrderedSet relationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceAndSymmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String sequenceAndSymmetryRelID = getDescriptorName().concat(sequenceAndSymmetryRelIndex.toString());
+		String relationID = getDescriptorName().concat(sequenceAndSymmetryRelIndex.toString());
 		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		SequenceOS sequenceOS = (SequenceOS) sequence.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		SymmetryOS symmetryOS = (SymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		sequenceAndSymmetryRelOS = 
-				new SequenceAndSymmetryRelOS(sequenceAndSymmetryRelID, dimensionOS, enumerationOS, sequenceOS, symmetryOS);
-		return sequenceAndSymmetryRelOS;		
+		if (sequence.getThisIsAConstantSequence() == false || Settings.CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS) {
+			SequenceOS sequenceOS = (SequenceOS) sequence.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			relationOS = 
+					new SequenceAndSymmetryRelOS(relationID, dimensionOS, enumerationOS, sequenceOS, symmetryOS);	
+		}
+		else {
+			relationOS = new SymmetryRelOS(relationID, dimensionOS, enumerationOS, symmetryOS);
+		}
+		return relationOS;
 	}		
 
 }

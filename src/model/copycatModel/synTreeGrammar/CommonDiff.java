@@ -46,6 +46,10 @@ public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, C
 	public List<String> getListOfRelevantPropertiesWithPath() {
 		return getListOfPropertiesWithPath();
 	}
+	
+	public String getValue() {
+		return commonDiffValue;
+	}
 
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {

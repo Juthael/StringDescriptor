@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
@@ -44,8 +45,12 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 		return componentDescriptors;
 	}		
 	
+	public boolean getThisRelationIsUpgradable() {
+		return true;
+	}
+	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) throws OrderedSetsGenerationException {
 		IOrderedSet relationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
