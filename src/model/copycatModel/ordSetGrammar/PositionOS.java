@@ -5,10 +5,11 @@ import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import settings.Settings;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 import model.orderedSetModel.IOrderedSet;
 
-public class PositionOS extends AbstractNonMinimalOS implements WhichPositionTypeOS {
+public class PositionOS extends AbstractNonMinimalExplicitOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "position";
 	private MinimalOS positionProperty;
@@ -16,6 +17,8 @@ public class PositionOS extends AbstractNonMinimalOS implements WhichPositionTyp
 	public PositionOS(String elementID, MinimalOS positionProperty) {
 		super(elementID);
 		this.positionProperty = positionProperty;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -35,6 +38,18 @@ public class PositionOS extends AbstractNonMinimalOS implements WhichPositionTyp
 		super.eliminateRedundancies(idToIOrderedSet);
 		if (!positionProperty.equals(idToIOrderedSet.get(positionProperty.getElementID())))
 			positionProperty = (MinimalOS) idToIOrderedSet.get(positionProperty.getElementID());
+	}
+
+	@Override
+	public String getExplicitID() {
+		String explicitID;
+		StringBuilder sB = new StringBuilder();
+		sB.append(NAME);
+		sB.append("(");
+		sB.append(positionProperty.getElementID());
+		sB.append(")");
+		explicitID = sB.toString();
+		return explicitID;
 	}		
 
 }

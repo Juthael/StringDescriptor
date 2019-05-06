@@ -6,9 +6,10 @@ import java.util.Map;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import settings.Settings;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class SymmetryOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class SymmetryOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "symmetry";
 	private MinimalOS symmetryProperty;
@@ -16,6 +17,8 @@ public class SymmetryOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public SymmetryOS(String elementID, MinimalOS symmetryProperty) {
 		super(elementID);
 		this.symmetryProperty = symmetryProperty;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -35,6 +38,17 @@ public class SymmetryOS extends AbstractNonMinimalOS implements IOrderedSet {
 		super.eliminateRedundancies(idToIOrderedSet);
 		if (!symmetryProperty.equals(idToIOrderedSet.get(symmetryProperty.getElementID())))
 			symmetryProperty = (MinimalOS) idToIOrderedSet.get(symmetryProperty.getElementID());
+	}
+
+	@Override
+	public String getExplicitID() {
+		String explicitID;
+		if (symmetryProperty.getElementID().equals(Settings.SYMMETRY_WITHOUT_CENTRAL_ELEMENT))
+			explicitID = "symm";
+		else if (symmetryProperty.getElementID().equals(Settings.SYMMETRY_WITH_CENTRAL_ELEMENT))
+			explicitID = "symm".concat("WithCenter");
+		else explicitID = getElementID();
+		return explicitID;
 	}
 
 }

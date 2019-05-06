@@ -5,9 +5,10 @@ import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
+import settings.Settings;
 
-public class SequenceOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class SequenceOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "sequence";
 	private CommonDiffOS commonDiff;
@@ -17,6 +18,8 @@ public class SequenceOS extends AbstractNonMinimalOS implements IOrderedSet {
 		super(elementID);
 		this.commonDiff = commonDiff;
 		this.absCommonDiff = absCommonDiff;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -41,6 +44,18 @@ public class SequenceOS extends AbstractNonMinimalOS implements IOrderedSet {
 		if (!absCommonDiff.equals(idToIOrderedSet.get(absCommonDiff.getElementID())))
 			absCommonDiff = (AbsCommonDiffOS) idToIOrderedSet.get(absCommonDiff.getElementID());
 		absCommonDiff.eliminateRedundancies(idToIOrderedSet);
+	}
+
+	@Override
+	public String getExplicitID() {
+		String explicitID;
+		StringBuilder sB = new StringBuilder();
+		sB.append(NAME);
+		sB.append("(");
+		sB.append(commonDiff.getCommonDiffValue());
+		sB.append(")");
+		explicitID = sB.toString();
+		return explicitID;
 	}	
 
 }

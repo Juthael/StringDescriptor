@@ -32,4 +32,9 @@ public class CentralProminentPositionOS extends ProminentPositionOS implements W
 					MinimalOS) idToIOrderedSet.get(centralProminentPositionProperty.getElementID());
 	}
 
+	@Override
+	public String getExplicitID() {
+		return "CentralPosition";
+	}
+
 }

@@ -81,7 +81,7 @@ public class SignalBuilderImpl implements ISignalBuilder {
     }
     
     private boolean testIfDirectionValueIsLegal(String directionValue) {
-		boolean directionValueIsLegal = (directionValue.equals("fromLeftToRight") || directionValue.equals("fromRightToLeft"));
+		boolean directionValueIsLegal = (directionValue.equals(Settings.LEFT_TO_RIGHT) || directionValue.equals(Settings.RIGHT_TO_LEFT));
 		return directionValueIsLegal; 	
     }
 

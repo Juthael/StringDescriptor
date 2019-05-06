@@ -29,6 +29,11 @@ public class EndProminentPositionOS extends ProminentPositionOS implements Which
 			endPosition = (EndPositionOS) idToIOrderedSet.get(endPosition.getElementID());
 			endPosition.eliminateRedundancies(idToIOrderedSet);
 		}
+	}
+
+	@Override
+	public String getExplicitID() {
+		return getElementID();
 	}	
 
 }

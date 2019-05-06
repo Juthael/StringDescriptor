@@ -17,6 +17,8 @@ public class Settings {
 	public static final String PROPERTY_INDEX_SEPARATOR = "_";
 	public static final boolean LIST_OF_GROUPS_COVER_THE_FULL_STRING = true;	
 	public static final boolean TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE = true;
+	public static final String LEFT_TO_RIGHT = "fromLeftToRight";
+	public static final String RIGHT_TO_LEFT = "fromRightToLeft";
 	public static final String FIRST_POSITION = "firstPosition";
 	public static final String CENTRAL_POSITION = "centralPosition";
 	public static final String LAST_POSITION = "lastPosition";
@@ -55,5 +57,7 @@ public class Settings {
 	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
 	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = true;
+	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = true;
+	//debug Here
 
 }

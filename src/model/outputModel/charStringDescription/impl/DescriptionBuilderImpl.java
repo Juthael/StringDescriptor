@@ -9,6 +9,7 @@ import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.outputModel.charStringDescription.IDescription;
 import model.outputModel.charStringDescription.IDescriptionBuilder;
+import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
@@ -41,12 +42,12 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
 				IListOfDescriptorsBuilder descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderImpl(
-						stringToBeDescribed, "fromLeftToRight");
+						stringToBeDescribed, Settings.LEFT_TO_RIGHT);
 				listOfWholeStringDescriptors.addAll(descriptorsBuilderLeftToRight.getListOfStringDescriptors());
 				if (stringCanBeReadInBothDirections == true) {
 					StringBuilder sB = new StringBuilder(stringToBeDescribed);
 					IListOfDescriptorsBuilder descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilderImpl(
-							sB.reverse().toString(), "fromRightToLeft");
+							sB.reverse().toString(), Settings.RIGHT_TO_LEFT);
 					listOfWholeStringDescriptors.addAll(descriptorsBuilderRightToLeft.getListOfStringDescriptors());
 				}
 				if (listOfWholeStringDescriptors.isEmpty())

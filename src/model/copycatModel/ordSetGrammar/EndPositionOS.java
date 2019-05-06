@@ -6,9 +6,10 @@ import java.util.Map;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import settings.Settings;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class EndPositionOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class EndPositionOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "endPosition";
 	private MinimalOS endPositionProperty;
@@ -16,6 +17,8 @@ public class EndPositionOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public EndPositionOS(String elementID, MinimalOS endPositionProperty) {
 		super(elementID);
 		this.endPositionProperty = endPositionProperty;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -35,6 +38,17 @@ public class EndPositionOS extends AbstractNonMinimalOS implements IOrderedSet {
 		super.eliminateRedundancies(idToIOrderedSet);
 		if (!endPositionProperty.equals(idToIOrderedSet.get(endPositionProperty.getElementID())))
 			endPositionProperty = (MinimalOS) idToIOrderedSet.get(endPositionProperty.getElementID());
+	}
+
+	@Override
+	public String getExplicitID() {
+		String explicitID;
+		if (endPositionProperty.getElementID().equals(Settings.FIRST_POSITION))
+			explicitID = NAME.concat("(first)");
+		else if (endPositionProperty.getElementID().equals(Settings.LAST_POSITION))
+			explicitID = NAME.concat("(last)");
+		else explicitID = getElementID();
+		return explicitID;
 	}	
 
 }

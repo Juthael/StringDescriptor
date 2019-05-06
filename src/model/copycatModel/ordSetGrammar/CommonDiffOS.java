@@ -6,9 +6,10 @@ import java.util.Map;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import settings.Settings;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class CommonDiffOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class CommonDiffOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "commonDiff";
 	private MinimalOS commonDiffProperty;
@@ -16,6 +17,8 @@ public class CommonDiffOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public CommonDiffOS(String elementID, MinimalOS commonDiffProperty) {
 		super(elementID);
 		this.commonDiffProperty = commonDiffProperty;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -35,6 +38,22 @@ public class CommonDiffOS extends AbstractNonMinimalOS implements IOrderedSet {
 		super.eliminateRedundancies(idToIOrderedSet);
 		if (!commonDiffProperty.equals(idToIOrderedSet.get(commonDiffProperty.getElementID())))
 			commonDiffProperty = (MinimalOS) idToIOrderedSet.get(commonDiffProperty.getElementID());
-	}		
+	}
+
+	@Override
+	public String getExplicitID() {
+		String explicitID;
+		StringBuilder sB = new StringBuilder();
+		sB.append(NAME);
+		sB.append("(");
+		sB.append(commonDiffProperty.getElementID());
+		sB.append(")");
+		explicitID = sB.toString();
+		return explicitID;
+	}	
+	
+	public String getCommonDiffValue() {
+		return commonDiffProperty.getElementID();
+	}
 
 }

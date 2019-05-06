@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
+import settings.Settings;
 
 
-public abstract class ProminentPositionOS extends AbstractNonMinimalOS implements WhichPositionTypeOS {
+public abstract class ProminentPositionOS extends AbstractNonMinimalExplicitOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "prominentPosition";
 	protected PositionOS position;
@@ -16,6 +17,8 @@ public abstract class ProminentPositionOS extends AbstractNonMinimalOS implement
 	public ProminentPositionOS(String elementID, PositionOS position) {
 		super(elementID);
 		this.position = position;
+		if (Settings.MAKE_ELEMENT_ID_MORE_EXPLICIT)
+			setElementID(getExplicitID());
 	}
 
 	@Override
@@ -37,5 +40,8 @@ public abstract class ProminentPositionOS extends AbstractNonMinimalOS implement
 			position = (PositionOS) idToIOrderedSet.get(position.getElementID());
 		position.eliminateRedundancies(idToIOrderedSet);
 	}	
+	
+	@Override
+	abstract public String getExplicitID();
 
 }
