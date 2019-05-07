@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
@@ -40,15 +41,20 @@ public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
-		IOrderedSet symmetryRel;
-		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer symmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String symmetryRelID = getDescriptorName().concat(symmetryRelIndex.toString());
-		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		SymmetryOS symmetryOS = (SymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		symmetryRel = new SymmetryRelOS(symmetryRelID, dimensionOS, enumerationOS, symmetryOS);
-		return symmetryRel;		
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
+		if (getThisRelationIsUpgradable() == true) {
+			IOrderedSet symmetryRel;
+			List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+			Integer symmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+			String symmetryRelID = getDescriptorName().concat(symmetryRelIndex.toString());
+			DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			SymmetryOS symmetryOS = (SymmetryOS) symmetry.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			symmetryRel = new SymmetryRelOS(symmetryRelID, dimensionOS, enumerationOS, symmetryOS);
+			return symmetryRel;
+		}
+		else throw new OrderedSetsGenerationException("Relation.upgradeAsTheElementOfAnOrderedSet() : "
+				+ "this SequenceRel can't be upgraded.");
 	}	
 }

@@ -55,6 +55,7 @@ public class Settings {
 	
 	//3. Parameters concerning the generation of ordered sets and binary contexts
 	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;
+	public static final boolean ENUM_OF_IDENTICAL_ELEMENTS_CAN_NEVER_BE_UPGRADED = true; //if true, then previous boolean = false
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
 	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = true;
 	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = true;

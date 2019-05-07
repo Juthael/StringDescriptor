@@ -99,6 +99,8 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 					}
 				}
 			}
+			if (listOfMaximalChainsOfElementLowerSet.isEmpty())
+				listOfMaximalChainsOfElementLowerSet.add(this.getElementID());
 		}
 		return listOfMaximalChainsOfElementLowerSet;
 	}

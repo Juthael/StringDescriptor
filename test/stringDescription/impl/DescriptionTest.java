@@ -64,13 +64,13 @@ public class DescriptionTest {
 				if (listOfCodingDescriptorIDs1.isEmpty())
 					anEmptyListOfCodingDescriptorsWasFound = true;
 				List<String> maxChains1 = orderedSet1.getListOfLowerSetMaximalChains();
-				for (String maxChain : maxChains1) {
+				/* for (String maxChain : maxChains1) {
 					System.out.println(maxChain);
 				}
 				System.out.println("");
 				for (String codingID : listOfCodingDescriptorIDs1)
 					System.out.println(codingID);
-				System.out.println(""); 
+				System.out.println(""); */
 			}
 			assertFalse(anEmptyListOfCodingDescriptorsWasFound);
 		}
@@ -127,18 +127,19 @@ public class DescriptionTest {
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
 			List<String> listOfIDs = new ArrayList<String>(orderedSetIDToConceptLattice.keySet());
-			/*
-			ConceptLattice testLattice = orderedSetIDToConceptLattice.get(listOfIDs.get(0));
-			BinaryContext testBinaryContext = description.getOrderedSetIDToBinaryContextMapping().get(listOfIDs.get(0));
+			String firstID = listOfIDs.get(0);
+			String otherID = listOfIDs.get(listOfIDs.size()-1);
+			ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(listOfIDs.get(0));
+			BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(listOfIDs.get(0));
 			LMLogger.getLMLogger();
 			LMImages.getLMImages();
 			LMIcons.getLMIcons();
-			LatticeStructure testLatticeStructure = new LatticeStructure(testLattice, testBinaryContext, LatticeStructure.BEST);
-			GraphicalLattice testGraphicalLattice = new GraphicalLattice(testLattice, testLatticeStructure);
-			LatticeViewer testLatticeViewer = new LatticeViewer(testGraphicalLattice);
-			testLatticeViewer.setVisible(true);
-			*/
+			LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
+			GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
+			LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
+			latticeViewerFirst.setVisible(true);
 			assertTrue(!orderedSetIDToConceptLattice.isEmpty());
+			
 		}
 		catch (Exception unexpected) {
 			System.out.println(unexpected.getMessage());

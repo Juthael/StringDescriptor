@@ -18,6 +18,22 @@ public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLett
 		super(elementID);
 		this.listOfRelations = listOfRelations;
 		this.groups = groups;
+		//HERE
+		System.out.println("SET" + getElementID());
+		List<String> listOfProperties = getListOfPropertiesWithPath();
+		List<String> maxChains = getListOfLowerSetMaximalChains();
+		System.out.println("Properties : ");
+		for (String property : listOfProperties) {
+			System.out.println(property);
+		}
+		System.out.println("");
+		System.out.print("Max chains");
+		for (String maxChain : maxChains) {
+			System.out.println(maxChain);
+		}
+		System.out.println("");
+		System.out.println("*******************");
+		System.out.println("");		
 	}
 
 	@Override

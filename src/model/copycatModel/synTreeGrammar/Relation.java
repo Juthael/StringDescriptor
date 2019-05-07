@@ -51,14 +51,18 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) throws OrderedSetsGenerationException {
-		IOrderedSet relationOS;
-		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer relationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String relationID = getDescriptorName().concat(relationIndex.toString());
-		DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		relationOS = new RelationOS(relationID, dimensionOS, enumerationOS);
-		return relationOS;		
+		if (getThisRelationIsUpgradable() == true) {
+			IOrderedSet relationOS;
+			List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+			Integer relationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+			String relationID = getDescriptorName().concat(relationIndex.toString());
+			DimensionOS dimensionOS = (DimensionOS) dimension.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			EnumerationOS enumerationOS = (EnumerationOS) enumeration.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+			relationOS = new RelationOS(relationID, dimensionOS, enumerationOS);
+			return relationOS;	
+		}
+		else throw new OrderedSetsGenerationException("Relation.upgradeAsTheElementOfAnOrderedSet() : "
+				+ "this SequenceRel can't be upgraded.");
 	}	
 	
 }

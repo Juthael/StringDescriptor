@@ -16,6 +16,22 @@ public class SequenceAndSymmetryRelOS extends RelationOS implements IOrderedSet 
 		super(elementID, dimension, enumeration);
 		this.sequence = sequence;
 		this.symmetry = symmetry;
+		//HERE
+		System.out.println("SET" + getElementID());
+		List<String> listOfProperties = getListOfPropertiesWithPath();
+		List<String> maxChains = getListOfLowerSetMaximalChains();
+		System.out.println("Properties : ");
+		for (String property : listOfProperties) {
+			System.out.println(property);
+		}
+		System.out.println("");
+		System.out.print("Max chains");
+		for (String maxChain : maxChains) {
+			System.out.println(maxChain);
+		}
+		System.out.println("");
+		System.out.println("*******************");
+		System.out.println("");
 	}
 	
 	@Override

@@ -42,5 +42,5 @@ public class RelationOS extends AbstractNonMinimalOS implements IOrderedSet {
 			enumeration = (EnumerationOS) idToIOrderedSet.get(enumeration.getElementID());
 		enumeration.eliminateRedundancies(idToIOrderedSet);
 	}	
-
+	
 }

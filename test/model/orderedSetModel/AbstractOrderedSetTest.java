@@ -114,14 +114,14 @@ public class AbstractOrderedSetTest {
 	public void whenOrderedSetIsBuiltThenReducedSetCanBeProvided() 
 			throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
-				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
+				new ListOfDescriptorsBuilderImpl("aabbcc", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
-		CharString charString = listOfDescriptors.get(0);
+		CharString charString = listOfDescriptors.get(9);
 		IOrderedSet charStringOmega = charString.upgradeAsTheSupremumOfAnOrderedSet();
 		List<String> propertiesWithPath = charStringOmega.getListOfPropertiesWithPath();
 		List<String> lowerSetMaximalChains = charStringOmega.getListOfLowerSetMaximalChains();
 		Set<IOrderedSet> lowerSet = charStringOmega.getLowerSet();
-		/* for (IOrderedSet set : lowerSet) {
+		for (IOrderedSet set : lowerSet) {
 			System.out.print("SET ID : ");
 			System.out.println(set.getElementID());
 			System.out.print("HASHCODE : ");
@@ -133,8 +133,8 @@ public class AbstractOrderedSetTest {
 			System.out.print("INFORMATIVE : ");
 			System.out.println(set.getThisSetIsInformative());
 			System.out.println("");
-		} */
-		/* System.out.println("DESCRIPTION : ");
+		} 
+		System.out.println("DESCRIPTION : ");
 		for (String property : propertiesWithPath) {
 			System.out.println(property);
 		}
@@ -142,7 +142,7 @@ public class AbstractOrderedSetTest {
 		System.out.println("SET : ");
 		for (String maxChain : lowerSetMaximalChains) {
 			System.out.println(maxChain);
-		} */
+		}
 		Map<String, Set<String>> minimalElementToParents = new HashMap<String, Set<String>>();
 		for (String maxChain : lowerSetMaximalChains) {
 			int lastSlashIndex = maxChain.lastIndexOf(Settings.PATH_SEPARATOR);

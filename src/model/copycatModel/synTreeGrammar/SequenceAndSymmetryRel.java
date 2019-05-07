@@ -56,6 +56,12 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	}
 	
 	@Override
+	public boolean getThisRelationIsUpgradable() {
+		return ((sequence.getThisIsAConstantSequence() == false) || 
+				(Settings.ENUM_OF_IDENTICAL_ELEMENTS_CAN_NEVER_BE_UPGRADED == false));
+	}	
+	
+	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
 		IOrderedSet relationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();

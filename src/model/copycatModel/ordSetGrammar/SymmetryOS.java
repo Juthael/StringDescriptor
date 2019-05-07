@@ -48,7 +48,7 @@ public class SymmetryOS extends AbstractNonMinimalExplicitOS implements IOrdered
 		else if (symmetryProperty.getElementID().equals(Settings.SYMMETRY_WITH_CENTRAL_ELEMENT))
 			explicitID = "symm".concat("WithCenter");
 		else explicitID = getElementID();
-		return explicitID;
+		return explicitID; 
 	}
 
 }

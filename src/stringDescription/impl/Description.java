@@ -195,8 +195,24 @@ public class Description implements IDescription {
 	}
 	
 	private List<String> setOrderedListOfOrderedSetIDs() {
-		List<String> orderedListOfOrderedSetIDs = new ArrayList<String>(orderedSetIDToOrderedSet.keySet());
-		Collections.sort(orderedListOfOrderedSetIDs, Collections.reverseOrder());
+		List<String> orderedListOfOrderedSetIDs = new ArrayList<String>();
+		List<String> listOfIDs = new ArrayList<String>(orderedSetIDToScore.keySet());
+		double maxScore;
+		String maxScoreID;
+		while (!listOfIDs.isEmpty()) {
+			maxScore = -1;
+			maxScoreID = "";
+			for (String id : listOfIDs) {
+				double currentScore = orderedSetIDToScore.get(id);
+				if (currentScore > maxScore) {
+					maxScore = currentScore;
+					maxScoreID = id;
+				}
+			}
+			orderedListOfOrderedSetIDs.add(maxScoreID);
+			listOfIDs.remove(maxScoreID);			
+		}
+		Collections.reverse(orderedListOfOrderedSetIDs);
 		return orderedListOfOrderedSetIDs;		
 	}
 
