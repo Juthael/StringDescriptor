@@ -76,16 +76,16 @@ public class DimensionEncodingManager {
 		String path = deIndexPath(indexedPath);
 		StringBuilder codedDimensionBuilder = new StringBuilder();
 			String[] pathArray = path.split(Settings.PATH_SEPARATOR);
-			int lastGroupsIndex = -1;
+			int lastComponentsIndex = -1;
 			for (int i=0 ; i<pathArray.length ; i++) {
-				if (pathArray[i].equals("groups"))
-					lastGroupsIndex = i;
+				if (pathArray[i].equals("components"))
+					lastComponentsIndex = i;
 			}
 			for (int i=0 ; i<pathArray.length ; i++) {
-				if (pathArray[i].equals("groups")) {
+				if (pathArray[i].equals("components")) {
 					codedDimensionBuilder.append(":");
 				}
-				if (i > lastGroupsIndex) {
+				if (i > lastComponentsIndex) {
 					if (!pathArray[i].contains("X")) {
 						codedDimensionBuilder.append(pathArray[i]);
 						if (i < pathArray.length - 1)

@@ -13,13 +13,13 @@ public class CharStringOmega extends AbstractOmegaElement implements IOrderedSet
 	private static final String NAME = "charString";
 	private DirectionOS direction;
 	private StructureOS structure;
-	private GroupsOS groups;
+	private ComponentsOS components;
 	
-	public CharStringOmega(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups, String verbalDescription) {
+	public CharStringOmega(String elementID, DirectionOS direction, StructureOS structure, ComponentsOS components, String verbalDescription) {
 		super(elementID, verbalDescription);
 		this.direction = direction;
 		this.structure = structure;
-		this.groups = groups;
+		this.components = components;
 		setMayBeTheCodedElement(true);
 		eliminateRedundancies();
 		if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
@@ -31,7 +31,7 @@ public class CharStringOmega extends AbstractOmegaElement implements IOrderedSet
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(direction);
 		listOfComponents.add(structure);
-		listOfComponents.add(groups);
+		listOfComponents.add(components);
 		return listOfComponents;
 	}
 
@@ -51,9 +51,9 @@ public class CharStringOmega extends AbstractOmegaElement implements IOrderedSet
 			structure = (StructureOS) idToIOrderedSet.get(structure.getElementID());
 			structure.eliminateRedundancies(idToIOrderedSet);
 		}
-		if (!groups.equals(idToIOrderedSet.get(groups.getElementID()))) {
-			groups = (GroupsOS) idToIOrderedSet.get(groups.getElementID());
-			groups.eliminateRedundancies(idToIOrderedSet);
+		if (!components.equals(idToIOrderedSet.get(components.getElementID()))) {
+			components = (ComponentsOS) idToIOrderedSet.get(components.getElementID());
+			components.eliminateRedundancies(idToIOrderedSet);
 		}
 	}	
 

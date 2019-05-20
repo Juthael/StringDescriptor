@@ -6,8 +6,8 @@ import java.util.List;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.DimensionX;
-import model.copycatModel.synTreeGrammar.Group;
-import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.Frame;
+import model.copycatModel.synTreeGrammar.Components;
 import model.copycatModel.synTreeGrammar.HowManyDimensions;
 import model.copycatModel.synTreeGrammar.HowManyRelations;
 import model.copycatModel.synTreeGrammar.Relation;
@@ -15,7 +15,7 @@ import model.copycatModel.synTreeGrammar.RelationX;
 import model.copycatModel.synTreeGrammar.Relations;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
-import syntacticTreesGeneration.IGroupsBuilder;
+import syntacticTreesGeneration.IComponentsBuilder;
 import syntacticTreesGeneration.IRelationDataContainer;
 import syntacticTreesGeneration.IRelationalData;
 import syntacticTreesGeneration.IRelationsBuilder;
@@ -23,22 +23,22 @@ import syntacticTreesGeneration.IRelationsBuilder;
 public class RelationsBuilderImpl implements IRelationsBuilder {
 
 	private final IRelationDataContainer relationDataContainer;
-	private final List<Group> listOfGroups;
+	private final List<Frame> listOfFrames;
 	
-	public RelationsBuilderImpl(IRelationDataContainer relationDataContainer, List<Group> listOfGroups) {
+	public RelationsBuilderImpl(IRelationDataContainer relationDataContainer, List<Frame> listOfFrames) {
 		this.relationDataContainer = relationDataContainer;
-		this.listOfGroups = listOfGroups;
+		this.listOfFrames = listOfFrames;
 	}
 	
 	@Override
 	public Relations getRelations() throws SynTreeGenerationException, CloneNotSupportedException {
 		List<Dimension> listOfDimensions = buildListOfDimensions(relationDataContainer);
 		List<Relation> listOfRelations = buildListOfRelations(relationDataContainer);
-		IGroupsBuilder groupsBuilder = new GroupsBuilderImpl(listOfGroups);
-		Groups groups = groupsBuilder.getGroups();
+		IComponentsBuilder componentsBuilder = new ComponentsBuilderImpl(listOfFrames);
+		Components components = componentsBuilder.getComponents();
 		HowManyDimensions howManyDimensions = buildHowManyDimensions(listOfDimensions);
 		HowManyRelations howManyRelations = getHowManyRelations(listOfRelations);
-		Relations relations = new Relations(groups, howManyDimensions, howManyRelations);
+		Relations relations = new Relations(components, howManyDimensions, howManyRelations);
 		return relations;
 	}
 	

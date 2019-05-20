@@ -65,17 +65,17 @@ public class RelationDataContainerImpl implements IRelationDataContainer {
 		List<ISymmetryRelationalData> cleanListOfSymmetries = new ArrayList<ISymmetryRelationalData>();
 		for (IEnumerationRelationalData enumerationData : listOfEnumerations) {
 			String dimension = enumerationData.getIndexedPath();
-			if (!dimension.contains("groups"))
+			if (!dimension.contains("components"))
 				cleanListOfEnumerations.add(enumerationData);
 		}
 		for (ISequenceRelationalData sequenceData : listOfSequences) {
 			String dimension = sequenceData.getIndexedPath();
-			if (!dimension.contains("groups"))
+			if (!dimension.contains("components"))
 				cleanListOfSequences.add(sequenceData);
 		}	
 		for (ISymmetryRelationalData symmetryData : listOfSymmetries) {
 			String dimension = symmetryData.getIndexedPath();
-			if (!dimension.contains("groups"))
+			if (!dimension.contains("components"))
 				cleanListOfSymmetries.add(symmetryData);
 		}
 		listOfEnumerations = cleanListOfEnumerations;

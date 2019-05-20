@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.Letter;
 import model.copycatModel.synTreeGrammar.PlatonicLetter;
 import model.copycatModel.synTreeGrammar.Position;
@@ -23,17 +23,17 @@ public class SignalBuilderImpl implements ISignalBuilder {
 		boolean directionValueIsLegal = testIfDirectionValueIsLegal(directionValue);
 		if (charStringIsLegal == true && directionValueIsLegal == true) {
 			char[] chars = charString.toCharArray();
-			List<Group> listOfGroups = new ArrayList<Group>();
+			List<Frame> listOfFrames = new ArrayList<Frame>();
 			for (int i=0 ; i<chars.length ; i++) {
 				char iChar = chars[i];
 				String iString = getLetterAlphabeticPositionString(iChar);
 				Letter iLetter = getLetter(iString, Integer.toString(i+1));
 				Size iSize = new Size("1");
 				Position iPosition = new Position(Settings.AWAITING_POSITION_VALUE);
-				Group group = new Group(iSize, iPosition, iLetter);
-				listOfGroups.add(group);
+				Frame frame = new Frame(iSize, iPosition, iLetter);
+				listOfFrames.add(frame);
 			}
-			signal = new SignalImpl(listOfGroups, directionValue);			
+			signal = new SignalImpl(listOfFrames, directionValue);			
 		}
 		else throw new SynTreeGenerationException("SignalBuilder : illegal parameter.");
 	}

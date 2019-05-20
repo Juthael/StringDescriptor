@@ -14,8 +14,6 @@ import exceptions.SynTreeGenerationException;
 import settings.Settings;
 
 public class DimensionEncodingManagerTest {
-
-	
 	
 	@Test 
 	public void whenListOfPropertiesAndPathEnteredThenCompleteDimensionReturned(){
@@ -36,15 +34,15 @@ public class DimensionEncodingManagerTest {
 		list1OfPropertiesWithPath.add("relations/relationX2/relation/enumeration/1,2");
 		list1OfPropertiesWithPath.add("relations/relationX2/relation/sequence/commonDiff/1");
 		list1OfPropertiesWithPath.add("relations/relationX2/relation/sequence/absCommonDiff/1");
-		list1OfPropertiesWithPath.add("relations/groups/size/2");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/position/1");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/1");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/1");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/position/2");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/2");
-		list1OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/2");
+		list1OfPropertiesWithPath.add("relations/components/size/2");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/position/1");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/1");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/1");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/position/2");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/2");
+		list1OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/2");
 
 		list2OfPropertiesWithPath.add("size/2");
 		list2OfPropertiesWithPath.add("position/2");
@@ -58,15 +56,15 @@ public class DimensionEncodingManagerTest {
 		list2OfPropertiesWithPath.add("relations/relationX2/relation/enumeration/3,3");
 		list2OfPropertiesWithPath.add("relations/relationX2/relation/sequence/commonDiff/0");
 		list2OfPropertiesWithPath.add("relations/relationX2/relation/sequence/absCommonDiff/0");
-		list2OfPropertiesWithPath.add("relations/groups/size/2");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/position/1");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/3");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/3");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/position/2");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/4");
-		list2OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/3");
+		list2OfPropertiesWithPath.add("relations/components/size/2");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/position/1");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/3");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/3");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/position/2");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/4");
+		list2OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/3");
 
 		list3OfPropertiesWithPath.add("size/2");
 		list3OfPropertiesWithPath.add("position/3");
@@ -80,15 +78,15 @@ public class DimensionEncodingManagerTest {
 		list3OfPropertiesWithPath.add("relations/relationX2/relation/enumeration/2,1");
 		list3OfPropertiesWithPath.add("relations/relationX2/relation/sequence/commonDiff/-1");
 		list3OfPropertiesWithPath.add("relations/relationX2/relation/sequence/absCommonDiff/1");
-		list3OfPropertiesWithPath.add("relations/groups/size/2");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/position/1");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/5");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/2");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/size/1");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/position/2");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/position/6");
-		list3OfPropertiesWithPath.add("relations/groups/groupX2/group/letter/platonicLetter/1");
+		list3OfPropertiesWithPath.add("relations/components/size/2");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/position/1");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/5");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/2");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/size/1");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/position/2");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/position/6");
+		list3OfPropertiesWithPath.add("relations/components/frameX2/frame/letter/platonicLetter/1");
 		
 		listOfPropertyLists.add(list1OfPropertiesWithPath);
 		listOfPropertyLists.add(list2OfPropertiesWithPath);
@@ -117,8 +115,8 @@ public class DimensionEncodingManagerTest {
 	public void whenDimensionEnteredThenExpectedDimensionCodeReturned() {
 		String code1 = "relations.relation.sequence.commonDiff";
 		String dim1 = "relations/relation/sequence/commonDiff";
-		String code2 = ":group.size";
-		String dim2 = "relations/groups/group/size";
+		String code2 = ":frame.size";
+		String dim2 = "relations/components/frame/size";
 		String code3 = "relations.relation.sequence.commonDiff>letter.platonicLetter";
 		String dim3 = "relations/relation/sequence/commonDiff>letter/platonicLetter";
 		boolean anErrorWasFound = false;
@@ -138,8 +136,8 @@ public class DimensionEncodingManagerTest {
 	public void whenDimensionCodeEnteredThenExpectedDimensionReturned() {
 		String code1 = "relations.relation.sequence.commonDiff";
 		String dim1 = "relations/relation/sequence/commonDiff";
-		String code2 = ":group.size";
-		String dim2 = "relations/groups/group/size";
+		String code2 = ":frame.size";
+		String dim2 = "relations/components/frame/size";
 		String code3 = "relations.relation.sequence.commonDiff>letter.platonicLetter";
 		String dim3 = "relations/relation/sequence/commonDiff>letter/platonicLetter";
 		boolean anErrorWasFound = false;
@@ -160,8 +158,8 @@ public class DimensionEncodingManagerTest {
 	
 	@Test
 	public void whenDimensionCodeEnteredThenExpectedDimensionTypeReturned() {
-		String code1 = ":group.size";
-		String code2 = ":group.size" + Settings.SECOND_DEG_DIMENSION_SEPARATOR + "platonicLetter" ;
+		String code1 = ":frame.size";
+		String code2 = ":frame.size" + Settings.SECOND_DEG_DIMENSION_SEPARATOR + "platonicLetter" ;
 		StringBuilder sB = new StringBuilder();
 		sB.append(DimensionEncodingManager.getDimensionTypeFromCode(code1));
 		sB.append(",");
@@ -172,7 +170,7 @@ public class DimensionEncodingManagerTest {
 	@Test
 	public void whenDimensionCodeEnteredThenExpectedDimensionDegreeReturned() {
 		String code1 = "size";
-		String code2 = ":group.size";
+		String code2 = ":frame.size";
 		String code3 = "::relation.sequence.commonDiff";
 		String code4 = "::relation.sequence.commonDiff" + Settings.SECOND_DEG_DIMENSION_SEPARATOR + "size";
 		StringBuilder sB = new StringBuilder();

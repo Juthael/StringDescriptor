@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 
 public interface IComponentGrouper {
 
-	Set<List<Group>> getSetsOfFactorizableDescriptors()
+	Set<List<Frame>> getSetsOfFactorizableDescriptors()
 			throws SynTreeGenerationException;
 
 }

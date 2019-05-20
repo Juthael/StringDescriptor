@@ -30,33 +30,33 @@ public class DescriptionCoderImpl implements IDescriptionCoder {
 		IDescriptionCodeGetter descriptionCodeGetter;
 		String readingDirection = "";
 		List<IRecipeCodeGetter> listOfRecipeCodeGetters = new ArrayList<IRecipeCodeGetter>();
-		List<List<String>> listOfUnfactorizedGroupsPropertyLists = new ArrayList<List<String>>();
-		List<String> currentUnfactorizedGroupListOfProperties = new ArrayList<String>();
-		int unfactorizedGroupIndex = 0;
+		List<List<String>> listOfUnfactorizedFramesPropertyLists = new ArrayList<List<String>>();
+		List<String> currentUnfactorizedFrameListOfProperties = new ArrayList<String>();
+		int unfactorizedFrameIndex = 0;
 		for (String property : listOfDescriptorProperties) {
-			String groupProperty = property.substring(unfactorizedGroupIndex);
-			if (unfactorizedGroupIndex == 0) {
-				if (groupProperty.contains("direction")) {
-					int lastSlashIndex = groupProperty.lastIndexOf(Settings.PATH_SEPARATOR);
-					readingDirection = groupProperty.substring(lastSlashIndex + 1);
+			String frameProperty = property.substring(unfactorizedFrameIndex);
+			if (unfactorizedFrameIndex == 0) {
+				if (frameProperty.contains("direction")) {
+					int lastSlashIndex = frameProperty.lastIndexOf(Settings.PATH_SEPARATOR);
+					readingDirection = frameProperty.substring(lastSlashIndex + 1);
 				}
-				else if (groupProperty.contains("group/size")) {
-					unfactorizedGroupIndex = groupProperty.lastIndexOf("group/size");
-					currentUnfactorizedGroupListOfProperties.add(property.substring(unfactorizedGroupIndex));
+				else if (frameProperty.contains("frame/size")) {
+					unfactorizedFrameIndex = frameProperty.lastIndexOf("frame/size");
+					currentUnfactorizedFrameListOfProperties.add(property.substring(unfactorizedFrameIndex));
 				}
 			}
-			else if (groupProperty.startsWith("group/size")) {
-				List<String> currentUnfactorizedGroupListOfPropertiesClone = new ArrayList<String>();
-				currentUnfactorizedGroupListOfPropertiesClone.addAll(currentUnfactorizedGroupListOfProperties);
-				listOfUnfactorizedGroupsPropertyLists.add(currentUnfactorizedGroupListOfPropertiesClone);
-				currentUnfactorizedGroupListOfProperties.clear();
-				currentUnfactorizedGroupListOfProperties.add(groupProperty);
+			else if (frameProperty.startsWith("frame/size")) {
+				List<String> currentUnfactorizedFrameListOfPropertiesClone = new ArrayList<String>();
+				currentUnfactorizedFrameListOfPropertiesClone.addAll(currentUnfactorizedFrameListOfProperties);
+				listOfUnfactorizedFramesPropertyLists.add(currentUnfactorizedFrameListOfPropertiesClone);
+				currentUnfactorizedFrameListOfProperties.clear();
+				currentUnfactorizedFrameListOfProperties.add(frameProperty);
 			}
-			else currentUnfactorizedGroupListOfProperties.add(groupProperty);
+			else currentUnfactorizedFrameListOfProperties.add(frameProperty);
 		}
-		listOfUnfactorizedGroupsPropertyLists.add(currentUnfactorizedGroupListOfProperties);
-		for (List<String> listOfUnfactorizedGroupProperties : listOfUnfactorizedGroupsPropertyLists) {
-			IRecipeCoder recipeCoder = new RecipeCoderImpl(listOfUnfactorizedGroupProperties);
+		listOfUnfactorizedFramesPropertyLists.add(currentUnfactorizedFrameListOfProperties);
+		for (List<String> listOfUnfactorizedFrameProperties : listOfUnfactorizedFramesPropertyLists) {
+			IRecipeCoder recipeCoder = new RecipeCoderImpl(listOfUnfactorizedFrameProperties);
 			IRecipeCodeGetter iRecipeCodeGetter = recipeCoder.getRecipeCodeGetter();
 			listOfRecipeCodeGetters.add(iRecipeCodeGetter);
 		}

@@ -13,16 +13,16 @@ import model.synTreeModel.impl.SynTreeElementImpl;
 import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
 import settings.Settings;
 
-public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition, Cloneable {
+public class FrameX extends HowManyFrames implements ISynTreeElementWithPosition, Cloneable {
 
-	private static final String DESCRIPTOR_PARTIAL_NAME = "groupX";
-	private List<Group> listOfGroups;
+	private static final String DESCRIPTOR_PARTIAL_NAME = "frameX";
+	private List<Frame> listOfFrames;
 	
-	public GroupX(List<Group> listOfGroups) throws SynTreeGenerationException {
-		if (listOfGroups.size() < 2 || listOfGroups.size() > Settings.MAX_NB_OF_GROUPS_IN_RELATIONS)
-			throw new SynTreeGenerationException("GroupX() : illegal number of groups (" + listOfGroups.size() + ")");
+	public FrameX(List<Frame> listOfFrames) throws SynTreeGenerationException {
+		if (listOfFrames.size() < 2 || listOfFrames.size() > Settings.MAX_NB_OF_FRAMES_IN_RELATIONS)
+			throw new SynTreeGenerationException("FrameX() : illegal number of frames (" + listOfFrames.size() + ")");
 		else {
-			this.listOfGroups = listOfGroups;
+			this.listOfFrames = listOfFrames;
 			List<SynTreeElementWithPositionImpl> synTreeComponents = new ArrayList<SynTreeElementWithPositionImpl>();
 			for (IElement component : getListOfComponents())
 				synTreeComponents.add((SynTreeElementWithPositionImpl) component);
@@ -31,30 +31,30 @@ public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition
 	}
 	
 	@Override
-	protected HowManyGroups clone() throws CloneNotSupportedException {
-		GroupX cloneGroupX;
-		List<Group> cloneListOfGroups = new ArrayList<Group>();
-		for (Group group : listOfGroups)
-			cloneListOfGroups.add(group.clone());
+	protected HowManyFrames clone() throws CloneNotSupportedException {
+		FrameX cloneFrameX;
+		List<Frame> cloneListOfFrames = new ArrayList<Frame>();
+		for (Frame frame : listOfFrames)
+			cloneListOfFrames.add(frame.clone());
 		try {
-			cloneGroupX = new GroupX(cloneListOfGroups);
+			cloneFrameX = new FrameX(cloneListOfFrames);
 		} catch (SynTreeGenerationException e) {
-			throw new CloneNotSupportedException("GroupX.clone() : " + e.getMessage());
+			throw new CloneNotSupportedException("Frame.clone() : " + e.getMessage());
 		}
-		return cloneGroupX;
+		return cloneFrameX;
 	}	
 	
 	@Override
 	public String getDescriptorName() {
-		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfGroups.size()));
+		String name = DESCRIPTOR_PARTIAL_NAME.concat(Integer.toString(listOfFrames.size()));
 		return name;
 	}	
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = new ArrayList<IElement>();
-		for (Group group : listOfGroups)
-			listOfComponents.add(group);
+		for (Frame frame : listOfFrames)
+			listOfComponents.add(frame);
 		return listOfComponents;
 	}
 	
@@ -71,14 +71,14 @@ public class GroupX extends HowManyGroups implements ISynTreeElementWithPosition
 	@Override
 	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
 		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
-		listOfRelevantComponents.add(listOfGroups.get(0));
+		listOfRelevantComponents.add(listOfFrames.get(0));
 		return listOfRelevantComponents;
 	}
 	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
 			throws OrderedSetsGenerationException {
-		throw new OrderedSetsGenerationException("GroupX can't be upgraded.");	
+		throw new OrderedSetsGenerationException("FrameX can't be upgraded.");	
 	}	
 
 }

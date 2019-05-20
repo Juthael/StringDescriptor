@@ -12,19 +12,19 @@ public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLett
 
 	private static final String NAME = "relations";
 	private List<RelationOS> listOfRelations;
-	private GroupsOS groups;
+	private ComponentsOS components;
 	
-	public RelationsOS(String elementID, List<RelationOS> listOfRelations, GroupsOS groups) {
+	public RelationsOS(String elementID, List<RelationOS> listOfRelations, ComponentsOS components) {
 		super(elementID);
 		this.listOfRelations = listOfRelations;
-		this.groups = groups;	
+		this.components = components;	
 	}
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.addAll(listOfRelations);
-		listOfComponents.add(groups);
+		listOfComponents.add(components);
 		return listOfComponents;
 	}
 
@@ -43,9 +43,9 @@ public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLett
 			listOfRelationsWithNoRedundancy.add(rightRelation);
 		}
 		listOfRelations = listOfRelationsWithNoRedundancy;
-		if (!groups.equals(idToIOrderedSet.get(groups.getElementID())))
-			groups = (GroupsOS) idToIOrderedSet.get(groups.getElementID());
-		groups.eliminateRedundancies(idToIOrderedSet);
+		if (!components.equals(idToIOrderedSet.get(components.getElementID())))
+			components = (ComponentsOS) idToIOrderedSet.get(components.getElementID());
+		components.eliminateRedundancies(idToIOrderedSet);
 	}	
 
 }

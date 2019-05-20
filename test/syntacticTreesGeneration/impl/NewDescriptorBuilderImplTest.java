@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
@@ -31,20 +31,20 @@ public class NewDescriptorBuilderImplTest {
 
 	ISignalBuilder signalBuilder;
 	ISignal signal;
-	List<Group> listOfGroupsABC;
+	List<Frame> listOfFramesABC;
 	
 	@Test
-	public void whenComponentsDontCoverThenWholeStringThenGroupIsBuilt() 
+	public void whenComponentsDontCoverThenWholeStringThenFrameIsBuilt() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfGroupsABC = signal.getGroups();	
-		List<Group> listOfGroupsAB = new ArrayList<Group>();
-		listOfGroupsAB.add(listOfGroupsABC.get(0));
-		listOfGroupsAB.add(listOfGroupsABC.get(1));
+		listOfFramesABC = signal.getFrames();	
+		List<Frame> listOfFramesAB = new ArrayList<Frame>();
+		listOfFramesAB.add(listOfFramesABC.get(0));
+		listOfFramesAB.add(listOfFramesABC.get(1));
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
-		String dimension1 = "group/size";
-		String dimension2 = "group/letter/platonicLetter";
+		String dimension1 = "frame/size";
+		String dimension2 = "frame/letter/platonicLetter";
 		IEnumerationRelationalData enumerationRD1 = new EnumerationRelationalDataImpl(dimension1, "1,1");
 		IEnumerationRelationalData enumerationRD2 = new EnumerationRelationalDataImpl(dimension2, "1,2");
 		ISequenceRelationalData sequenceRD1 = new SequenceRelationalDataImpl(dimension1, "1,1", "0");
@@ -57,9 +57,9 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSequence(sequenceRD2);
 		relationDataContainer.addSymmetry(symmetry1);
 		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsAB);
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesAB);
 		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
-		assertEquals(descriptor.getDescriptorName(), "group");
+		assertEquals(descriptor.getDescriptorName(), "frame");
 	}
 	
 	@Test
@@ -67,11 +67,11 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfGroupsABC = signal.getGroups();			
+		listOfFramesABC = signal.getFrames();			
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesABC);
 		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");
 	}
@@ -81,10 +81,10 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfGroupsABC = signal.getGroups();			
+		listOfFramesABC = signal.getFrames();			
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
-		String dimension1 = "group/size";
-		String dimension2 = "group/letter/platonicLetter";
+		String dimension1 = "frame/size";
+		String dimension2 = "frame/letter/platonicLetter";
 		IEnumerationRelationalData enumerationRD1 = new EnumerationRelationalDataImpl(dimension1, "1,1,1");
 		IEnumerationRelationalData enumerationRD2 = new EnumerationRelationalDataImpl(dimension2, "1,2,3");
 		ISequenceRelationalData sequenceRD1 = new SequenceRelationalDataImpl(dimension1, "1,1,1", "0");
@@ -98,7 +98,7 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSymmetry(symmetry1);
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfGroupsABC);
+				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesABC);
 		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");		
 	}
@@ -108,17 +108,17 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfGroupsABC = signal.getGroups();	
+		listOfFramesABC = signal.getFrames();	
 		IGen2Size1RelationDataContainerBuilder gen2Size1ContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signal, signal.getGroups().get(0));
+				new Gen2Size1RelationDataContainerBuilderImpl(signal, signal.getFrames().get(0));
 		List<IRelationDataContainer> listOfContainers = 
 				gen2Size1ContainerBuilder.getListOfRelationDataContainers();
-		List<Group> listOfGroups = new ArrayList<Group>();
-		listOfGroups.add(signal.getGroups().get(0));
+		List<Frame> listOfFrames = new ArrayList<Frame>();
+		listOfFrames.add(signal.getFrames().get(0));
 		List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
 		for (IRelationDataContainer container : listOfContainers) {
 			INewDescriptorBuilder newDescBuilder = 
-					new NewDescriptorBuilderImpl(signal, container, listOfGroups);
+					new NewDescriptorBuilderImpl(signal, container, listOfFrames);
 			ISynTreeElement descriptor = newDescBuilder.getNewDescriptor();
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			listOfPropertyLists.add(listOfProperties);

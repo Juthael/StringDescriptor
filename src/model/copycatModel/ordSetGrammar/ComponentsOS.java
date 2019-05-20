@@ -7,29 +7,29 @@ import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class ComponentsOS extends AbstractNonMinimalOS implements IOrderedSet {
 
-	private static final String NAME = "groups";
+	private static final String NAME = "components";
 	private SizeOS size;
-	private List<GroupOS> listOfGroups;
+	private List<FrameOS> listOfFrames;
 	
-	public GroupsOS(String elementID, SizeOS size, List<GroupOS> listOfGroups) {
+	public ComponentsOS(String elementID, SizeOS size, List<FrameOS> listOfFrames) {
 		super(elementID);
 		this.size = size;
-		this.listOfGroups = listOfGroups;
+		this.listOfFrames = listOfFrames;
 	}
 	
-	public GroupsOS(String elementID, boolean isCodingElement, SizeOS size, List<GroupOS> listOfGroups) {
+	public ComponentsOS(String elementID, boolean isCodingElement, SizeOS size, List<FrameOS> listOfFrames) {
 		super(elementID, isCodingElement);
 		this.size = size;
-		this.listOfGroups = listOfGroups;
+		this.listOfFrames = listOfFrames;
 	}	
 
 	@Override
 	public List<IElement> getListOfComponents() {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(size);
-		listOfComponents.addAll(listOfGroups);
+		listOfComponents.addAll(listOfFrames);
 		return listOfComponents;
 	}
 
@@ -43,10 +43,10 @@ public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
 		super.eliminateRedundancies(idToIOrderedSet);
 		if (!size.equals(idToIOrderedSet.get(size.getElementID())))
 			size = (SizeOS) idToIOrderedSet.get(size.getElementID());
-		for (GroupOS group : listOfGroups) {
-			if (!group.equals(idToIOrderedSet.get(group.getElementID())))
-				group = (GroupOS) idToIOrderedSet.get(group.getElementID());
-			group.eliminateRedundancies(idToIOrderedSet);
+		for (FrameOS frame : listOfFrames) {
+			if (!frame.equals(idToIOrderedSet.get(frame.getElementID())))
+				frame = (FrameOS) idToIOrderedSet.get(frame.getElementID());
+			frame.eliminateRedundancies(idToIOrderedSet);
 		}
 	}		
 

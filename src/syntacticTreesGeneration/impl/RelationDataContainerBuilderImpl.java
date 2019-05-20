@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.IProperty;
 import model.synTreeModel.IPropertyContainer;
 import model.synTreeModel.ISignal;
@@ -22,14 +22,14 @@ import syntacticTreesGeneration.ISymmetryChecker;
 public class RelationDataContainerBuilderImpl implements IRelationDataContainerBuilder {
 
 	private final ISignal signal;
-	private final List<Group> listOfDescriptors;
+	private final List<Frame> listOfDescriptors;
 	private final List<IPropertyContainer> listOfPropertyContainers = new ArrayList<IPropertyContainer>();
 	
-	public RelationDataContainerBuilderImpl(ISignal signal, List<Group> listOfDescriptors) {
+	public RelationDataContainerBuilderImpl(ISignal signal, List<Frame> listOfDescriptors) {
 		this.signal = signal;
 		this.listOfDescriptors = listOfDescriptors;
-		for (Group group : this.listOfDescriptors) {
-			IPropertyContainer propertyContainer = group.getpropertyContainer();
+		for (Frame frame : this.listOfDescriptors) {
+			IPropertyContainer propertyContainer = frame.getpropertyContainer();
 			listOfPropertyContainers.add(propertyContainer);
 		}
 	}
@@ -63,7 +63,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 								componentsAreRelated = false;
 							break;
 						case "size" :
-							if (testIfThisIsAGroupsSizeCreatingRedundance(indexedPath) == true){
+							if (testIfThisIsAComponentssSizeCreatingRedundance(indexedPath) == true){
 								break;
 							}
 							else {};
@@ -71,8 +71,8 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 						case "commonDiff" :
 						case "enumeration" :
 							List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
-							for (Group group : listOfDescriptors) {
-								listOfPropertyLists.add(group.getListOfPropertiesWithPathWithoutQuantifiers());
+							for (Frame frame : listOfDescriptors) {
+								listOfPropertyLists.add(frame.getListOfPropertiesWithPathWithoutQuantifiers());
 							}
 							listsOfValues = getListsOfValuesForThisPath(indexedPath);
 							DimensionEncodingManager dimensionEncodingManager = 
@@ -199,13 +199,13 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 		return valuesAreIdentical;
 	}
 	
-	private boolean testIfThisIsAGroupsSizeCreatingRedundance(String dimension) {
-		boolean thisIsAGroupsSizeCreatingRedundance;
-		if (dimension.contains("groups/size")) {
-			thisIsAGroupsSizeCreatingRedundance = true;
+	private boolean testIfThisIsAComponentssSizeCreatingRedundance(String dimension) {
+		boolean thisIsAComponentsSizeCreatingRedundance;
+		if (dimension.contains("components/size")) {
+			thisIsAComponentsSizeCreatingRedundance = true;
 		}
-		else thisIsAGroupsSizeCreatingRedundance = false;
-		return thisIsAGroupsSizeCreatingRedundance;
+		else thisIsAComponentsSizeCreatingRedundance = false;
+		return thisIsAComponentsSizeCreatingRedundance;
 	}
 
 }

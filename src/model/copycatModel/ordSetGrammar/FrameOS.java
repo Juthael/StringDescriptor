@@ -7,14 +7,14 @@ import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.AbstractNonMinimalOS;
 
-public class GroupOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class FrameOS extends AbstractNonMinimalOS implements IOrderedSet {
 
-	private static final String NAME = "group";
+	private static final String NAME = "frame";
 	private SizeOS size;
 	private WhichPositionTypeOS positionType;
 	private RelationsOrLetterOS relationsOrLetter;
 	
-	public GroupOS(String elementID, SizeOS size, WhichPositionTypeOS positionType, 
+	public FrameOS(String elementID, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID);
 		this.size = size;
@@ -22,7 +22,7 @@ public class GroupOS extends AbstractNonMinimalOS implements IOrderedSet {
 		this.relationsOrLetter = relationsOrLetter;
 	}
 
-	public GroupOS(String elementID, boolean isCodingElement, SizeOS size, WhichPositionTypeOS positionType, 
+	public FrameOS(String elementID, boolean isCodingElement, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
 		super(elementID, isCodingElement);
 		this.size = size;

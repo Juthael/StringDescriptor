@@ -29,11 +29,11 @@ public class DescriptionCoderImplTest {
 			boolean numberOfRecipesIsUnexpected = false;
 			for (CharString descriptor : listOfDescriptors) {
 				List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
-				int numberOfUnfactorizedGroups = getNbOfUnfactorizedGroups(listOfProperties);
+				int numberOfUnfactorizedFrames = getNbOfUnfactorizedFrames(listOfProperties);
 				IDescriptionCoder descriptionCoder = new DescriptionCoderImpl(descriptor);
 				IDescriptionCodeGetter descriptionCodeGetter = descriptionCoder.getDescriptionCodeGetter();
 				List<IRecipeCodeGetter> listOfRecipeCodeGetters = descriptionCodeGetter.getListOfRecipeCodeGetters();
-				if (listOfRecipeCodeGetters.size() != numberOfUnfactorizedGroups)
+				if (listOfRecipeCodeGetters.size() != numberOfUnfactorizedFrames)
 					numberOfRecipesIsUnexpected = true;
 			}
 			assertTrue(numberOfRecipesIsUnexpected);
@@ -45,20 +45,20 @@ public class DescriptionCoderImplTest {
 		
 	}
 	
-	private int getNbOfUnfactorizedGroups(List<String> listOfProperties) {
-		int nbOfUnfactorizedGroups = -1;
+	private int getNbOfUnfactorizedFrames(List<String> listOfProperties) {
+		int nbOfUnfactorizedFrames = -1;
 		boolean nbFound = false;
 		int propertyIndex = 0;
 		while(propertyIndex < listOfProperties.size() && nbFound == false) {
 			String currentProperty = listOfProperties.get(propertyIndex);
-			if (currentProperty.contains("group/size")){
+			if (currentProperty.contains("frame/size")){
 				int lastSlashIndex = currentProperty.lastIndexOf(Settings.PATH_SEPARATOR);
-				nbOfUnfactorizedGroups = Integer.parseInt(currentProperty.substring(lastSlashIndex + 1));
+				nbOfUnfactorizedFrames = Integer.parseInt(currentProperty.substring(lastSlashIndex + 1));
 				nbFound = true;
 			}
 			propertyIndex++;
 		}
-		return nbOfUnfactorizedGroups;
+		return nbOfUnfactorizedFrames;
 	}
 
 }

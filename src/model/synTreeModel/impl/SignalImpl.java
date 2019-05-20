@@ -2,23 +2,23 @@ package model.synTreeModel.impl;
 
 import java.util.List;
 
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 
 public class SignalImpl implements Cloneable, ISignal {
 
-	private List<Group> listOfGroups;
+	private List<Frame> listOfFrames;
 	private String directionValue; // "fromLeftToRight" or "fromRightToLeft";
 	
-	public SignalImpl(List<Group> listOfGroups, String directionValue) {
-		this.listOfGroups = listOfGroups;
+	public SignalImpl(List<Frame> listOfFrames, String directionValue) {
+		this.listOfFrames = listOfFrames;
 		this.directionValue = directionValue;
 	}
 
 	//Getters
 	@Override
-	public List<Group> getGroups() {
-		return listOfGroups;
+	public List<Frame> getFrames() {
+		return listOfFrames;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class SignalImpl implements Cloneable, ISignal {
 	
 	@Override
 	public int getSignalSize() {
-		return listOfGroups.size();
+		return listOfFrames.size();
 	}
 
 }

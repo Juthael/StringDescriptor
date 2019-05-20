@@ -15,8 +15,8 @@ public class RecipeCoderImpl implements IRecipeCoder {
 
 	private IRecipeCodeGetter recipeCodeGetter;
 	
-	public RecipeCoderImpl(List<String> listOfUnfactorizedGroupProperties) throws VerbalizationException {
-		recipeCodeGetter = setRecipeCodeGetter(listOfUnfactorizedGroupProperties);
+	public RecipeCoderImpl(List<String> listOfUnfactorizedFrameProperties) throws VerbalizationException {
+		recipeCodeGetter = setRecipeCodeGetter(listOfUnfactorizedFrameProperties);
 	}
 
 	@Override
@@ -24,48 +24,48 @@ public class RecipeCoderImpl implements IRecipeCoder {
 		return recipeCodeGetter;
 	}
 	
-	private IRecipeCodeGetter setRecipeCodeGetter(List<String> listOfUnfactorizedGroupProperties) 
+	private IRecipeCodeGetter setRecipeCodeGetter(List<String> listOfUnfactorizedFrameProperties) 
 			throws VerbalizationException {
 		IRecipeCodeGetter recipeCodeGetter;
 		List<IInstructionCodeGetter> listOfInstructionCodeGetters = 
-				setListOfInstructionsRecursively(listOfUnfactorizedGroupProperties);
+				setListOfInstructionsRecursively(listOfUnfactorizedFrameProperties);
 		recipeCodeGetter = new RecipeCodeGetterImpl(listOfInstructionCodeGetters);	
 		return recipeCodeGetter;
 	}
 	
-	private List<IInstructionCodeGetter> setListOfInstructionsRecursively(List<String> groupListOfProperties) 
+	private List<IInstructionCodeGetter> setListOfInstructionsRecursively(List<String> frameListOfProperties) 
 			throws VerbalizationException {
 		List<IInstructionCodeGetter> listOfInstructionCodeGetters = 
 				new ArrayList<IInstructionCodeGetter>();
 		List<String> relationXPropertyList = new ArrayList<String>();
-		List<String> firstGroupPropertyList = new ArrayList<String>();
-		int groupSubStringIndex = -1;
+		List<String> firstFramePropertyList = new ArrayList<String>();
+		int frmaeSubStringIndex = -1;
 		String nbOfComponents = "";
-		boolean firstGroupHasBegun = false;
+		boolean firstFrameHasBegun = false;
 		int propertyIndex = 0;
 		boolean continueAnalysis = true;
-		while (continueAnalysis == true && propertyIndex < groupListOfProperties.size()) {
-			String currentProperty = groupListOfProperties.get(propertyIndex);
-			if (currentProperty.startsWith("group/relations/relation")) {
-				relationXPropertyList.add(groupListOfProperties.get(propertyIndex));
+		while (continueAnalysis == true && propertyIndex < frameListOfProperties.size()) {
+			String currentProperty = frameListOfProperties.get(propertyIndex);
+			if (currentProperty.startsWith("frame/relations/relation")) {
+				relationXPropertyList.add(frameListOfProperties.get(propertyIndex));
 			}
-			else if (currentProperty.contains("group/size")) {
+			else if (currentProperty.contains("frame/size")) {
 				if (propertyIndex == 0) {
 					int lastSlashIndex = currentProperty.lastIndexOf(Settings.PATH_SEPARATOR);
 					nbOfComponents = currentProperty.substring(lastSlashIndex + 1);
 				}
 				else {
-					if (firstGroupHasBegun == false) {
-						groupSubStringIndex = currentProperty.lastIndexOf("group");
-						firstGroupHasBegun = true;
+					if (firstFrameHasBegun == false) {
+						frmaeSubStringIndex = currentProperty.lastIndexOf("frame");
+						firstFrameHasBegun = true;
 					}
-					else if(currentProperty.startsWith("group/size", groupSubStringIndex))
+					else if(currentProperty.startsWith("frame/size", frmaeSubStringIndex))
 						continueAnalysis = false;
 				}
 			}
 			if (continueAnalysis == true) {
-				if (firstGroupHasBegun == true) {
-					firstGroupPropertyList.add(currentProperty.substring(groupSubStringIndex));
+				if (firstFrameHasBegun == true) {
+					firstFramePropertyList.add(currentProperty.substring(frmaeSubStringIndex));
 				}
 				else if (relationXPropertyList.isEmpty() && currentProperty.contains("letter/platonicLetter")){
 					relationXPropertyList.add(currentProperty);
@@ -75,8 +75,8 @@ public class RecipeCoderImpl implements IRecipeCoder {
 				propertyIndex++;
 			}
 		}
-		if (!firstGroupPropertyList.isEmpty()) {
-			listOfInstructionCodeGetters.addAll(setListOfInstructionsRecursively(firstGroupPropertyList));
+		if (!firstFramePropertyList.isEmpty()) {
+			listOfInstructionCodeGetters.addAll(setListOfInstructionsRecursively(firstFramePropertyList));
 		}
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXPropertyList); 
 		listOfInstructionCodeGetters.add(instructionCoder.getInstructionCodeGetter());

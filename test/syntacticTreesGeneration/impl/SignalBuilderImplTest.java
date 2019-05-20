@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -69,7 +69,7 @@ public class SignalBuilderImplTest {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl(legalString, legalDirection);
 			ISignal signal = signalBuilder.getSignal();
-			List<Group> listOfGroups = signal.getGroups();
+			List<Frame> listOfFrames = signal.getFrames();
 		}
 		catch (Exception expected) {
 			fail();

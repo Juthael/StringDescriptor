@@ -2,11 +2,11 @@ package syntacticTreesGeneration;
 
 import java.util.List;
 
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 
 public interface IListOfDescriptorsWithPositions {
 
-	List<Group> getListOfDescriptors();
+	List<Frame> getListOfDescriptors();
 
 	int getFirstPosition();
 

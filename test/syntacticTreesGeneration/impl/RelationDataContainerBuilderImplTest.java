@@ -19,9 +19,9 @@ import model.copycatModel.synTreeGrammar.CommonDiff;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.Direction;
 import model.copycatModel.synTreeGrammar.Enumeration;
-import model.copycatModel.synTreeGrammar.Group;
-import model.copycatModel.synTreeGrammar.GroupX;
-import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.Frame;
+import model.copycatModel.synTreeGrammar.FrameX;
+import model.copycatModel.synTreeGrammar.Components;
 import model.copycatModel.synTreeGrammar.Position;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.copycatModel.synTreeGrammar.Relations;
@@ -46,19 +46,19 @@ public class RelationDataContainerBuilderImplTest {
 	
 	ISignal signalABC;
 	ISignal signalABCD;
-	List<Group> descriptorsSignalABC;
-	List<Group> descriptorsSignalABCD;
-	Group abcGroup;
+	List<Frame> descriptorsSignalABC;
+	List<Frame> descriptorsSignalABCD;
+	Frame abcFrame;
 	CharString charStringABC;
 	
 	@Before
 	public void initialize() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
-		descriptorsSignalABC = signalABC.getGroups();
+		descriptorsSignalABC = signalABC.getFrames();
 		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		signalABCD = signalBuilderABCD.getSignal();
-		descriptorsSignalABCD = signalABCD.getGroups();
+		descriptorsSignalABCD = signalABCD.getFrames();
 		CommonDiff abcCommonDiff = new CommonDiff("1");
 		AbsCommonDiff abcAbsCommonDiff = new AbsCommonDiff("1");
 		Sequence abcSequence = new Sequence(abcCommonDiff, abcAbsCommonDiff);
@@ -66,24 +66,24 @@ public class RelationDataContainerBuilderImplTest {
 		Dimension abcDimension = new Dimension("platonicLetter");
 		SequenceRel abcRelation = new SequenceRel(abcDimension, abcEnumeration, abcSequence);
 		Size abcSize = new Size("3");
-		GroupX abcGroupX3 = new GroupX(descriptorsSignalABC);
-		Groups abcGroups = new Groups(abcSize, abcGroupX3);
-		Relations abcRelations = new Relations(abcGroups, abcDimension, abcRelation);
+		FrameX abcFrameX3 = new FrameX(descriptorsSignalABC);
+		Components abcComponents = new Components(abcSize, abcFrameX3);
+		Relations abcRelations = new Relations(abcComponents, abcDimension, abcRelation);
 		Position abcPosition = new Position(Settings.AWAITING_POSITION_VALUE);
-		Size abcGroupSize = new Size("3");
-		abcGroup = new Group(false, abcGroupSize, abcPosition, abcRelations);
-		Size abcGroupsSize = new Size("1");
-		Groups abcGroupsGroups = new Groups(abcGroupsSize, abcGroup);
+		Size abcFrameSize = new Size("3");
+		abcFrame = new Frame(false, abcFrameSize, abcPosition, abcRelations);
+		Size abcComponentsSize = new Size("1");
+		Components abcComponentsFrames = new Components(abcComponentsSize, abcFrame);
 		Size charStringSize = new Size("3");
 		Direction charStringDirection = new Direction("fromLeftToRight");
 		Relation structureRelation = getMonoStructureRelation(descriptorsSignalABC);
 		Structure structure = new Structure(charStringSize, structureRelation);
-		charStringABC = new CharString(charStringDirection, structure, abcGroupsGroups); 
+		charStringABC = new CharString(charStringDirection, structure, abcComponentsFrames); 
 	}
 
 	@Test
 	public void whenListOfDescriptorsInParameterIsEmptyThenThrowsException() {
-		List<Group> emptyList = new ArrayList<Group>();
+		List<Frame> emptyList = new ArrayList<Frame>();
 		try {
 			IRelationDataContainerBuilder relationDataContainerBuilder = 
 					new RelationDataContainerBuilderImpl(signalABC, emptyList);
@@ -96,11 +96,11 @@ public class RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void whenDescriptorsDontShareSameDimensionsThenRDContainerIsEmpty() throws SynTreeGenerationException {
-		List<Group> listOfGroupWithDifferentSetsOfDimensions = new ArrayList<Group>();
-		listOfGroupWithDifferentSetsOfDimensions.add(abcGroup);
-		listOfGroupWithDifferentSetsOfDimensions.add(descriptorsSignalABCD.get(3));
+		List<Frame> listOfFrameWithDifferentSetsOfDimensions = new ArrayList<Frame>();
+		listOfFrameWithDifferentSetsOfDimensions.add(abcFrame);
+		listOfFrameWithDifferentSetsOfDimensions.add(descriptorsSignalABCD.get(3));
 		IRelationDataContainerBuilder relationDataContainerBuilder = 
-				new RelationDataContainerBuilderImpl(signalABCD, listOfGroupWithDifferentSetsOfDimensions);
+				new RelationDataContainerBuilderImpl(signalABCD, listOfFrameWithDifferentSetsOfDimensions);
 		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
 		List<IEnumerationRelationalData> listOfEnumerationRelationalData = 
 				relationDataContainer.getListOfEnumerations();
@@ -117,11 +117,11 @@ public class RelationDataContainerBuilderImplTest {
 	
 	@Test
 	public void whenDescriptorsAreRelatedThenRDContainerIsntEmpty() throws SynTreeGenerationException {
-		List<Group> listOfRelatedGroups = new ArrayList<Group>();
-		listOfRelatedGroups.add(descriptorsSignalABC.get(0));
-		listOfRelatedGroups.add(descriptorsSignalABC.get(1));
+		List<Frame> listOfRelatedFrames = new ArrayList<Frame>();
+		listOfRelatedFrames.add(descriptorsSignalABC.get(0));
+		listOfRelatedFrames.add(descriptorsSignalABC.get(1));
 		IRelationDataContainerBuilder relationDataContainerBuilder = 
-				new RelationDataContainerBuilderImpl(signalABC, listOfRelatedGroups);
+				new RelationDataContainerBuilderImpl(signalABC, listOfRelatedFrames);
 		IRelationDataContainer relationDataContainer = relationDataContainerBuilder.getRelationDataContainer();
 		assertFalse(relationDataContainer.getListOfEnumerations().isEmpty());
 	}
@@ -140,13 +140,13 @@ public class RelationDataContainerBuilderImplTest {
 		assertTrue(containerContainsEnumAndSequence);
 	}
 	
-	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
+	private Relation getMonoStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
 		Relation structureRelation;
-		String dimension = "charString/groups/group/size";
+		String dimension = "charString/components/frame/size";
 		List<String> listOfSizeValues = new ArrayList<String>();
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
-		for(Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
+		for(Frame frame : listOfFrames) {
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(frame));
 		}
 		listOfSizeValues.add(Integer.toString(listOfLetterPositions.size()));
 		List<IRelationalData> listOfRelationalData = new ArrayList<IRelationalData>();
@@ -173,11 +173,11 @@ public class RelationDataContainerBuilderImplTest {
 		return structureRelation;	
 	}	
 	
-	private String getCharStringSizeValue(List<Group> listOfGroups) throws SynTreeGenerationException {
+	private String getCharStringSizeValue(List<Frame> listOfFrames) throws SynTreeGenerationException {
 		String charStringSizeValue;
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
-		for (Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
+		for (Frame frame : listOfFrames) {
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(frame));
 		}
 		charStringSizeValue = Integer.toString(listOfLetterPositions.size());
 		return charStringSizeValue;

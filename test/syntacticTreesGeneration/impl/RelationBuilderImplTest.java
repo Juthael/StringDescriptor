@@ -30,8 +30,8 @@ public class RelationBuilderImplTest {
 
 	@Before
 	public void buildListsOfRelationalDataInterfaces() throws SynTreeGenerationException {
-		String dimension1 = "group/letter/platonicLetter";
-		String dimension2 = "group/relations/relation/enumeration";
+		String dimension1 = "frame/letter/platonicLetter";
+		String dimension2 = "frame/relations/relation/enumeration";
 		String enumerationValue1 = "1,2,3";
 		String enumerationValue2 = "4,5";
 		String commonDiff = "1";

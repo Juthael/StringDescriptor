@@ -12,7 +12,7 @@ import exceptions.VerbalizationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
 import model.copycatModel.ordSetGrammar.CharStringOmega;
 import model.copycatModel.ordSetGrammar.DirectionOS;
-import model.copycatModel.ordSetGrammar.GroupsOS;
+import model.copycatModel.ordSetGrammar.ComponentsOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -27,20 +27,20 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 	private final static String DESCRIPTOR_NAME = "charString";
 	protected Direction direction;
 	protected Structure structure;
-	protected Groups groups;
+	protected Components components;
 
-	public CharString(Direction direction, Structure structure, Groups groups) {
+	public CharString(Direction direction, Structure structure, Components components) {
 		this.direction = direction;
 		this.structure = structure;
-		this.groups = groups;
+		this.components = components;
 	}
 	
 	@Override 
 	protected CharString clone() throws CloneNotSupportedException {
 		Direction cloneDirection = direction.clone();
 		Structure cloneStructuration = structure.clone();
-		Groups cloneGroups = groups.clone();
-		CharString cloneCharString = new CharString(cloneDirection, cloneStructuration, cloneGroups);
+		Components cloneComponents = components.clone();
+		CharString cloneCharString = new CharString(cloneDirection, cloneStructuration, cloneComponents);
 		return cloneCharString;
 	}
 	
@@ -52,7 +52,7 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 	@Override
 	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
-				Arrays.asList(direction, structure, groups));
+				Arrays.asList(direction, structure, components));
 		return componentDescriptors;
 	}
 
@@ -66,8 +66,8 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 		String charStringID = getDescriptorName().concat(charStringIndex.toString());
 		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		charStringOS = new CharStringOS(charStringID, directionOS, structureOS, groupsOS);
+		ComponentsOS componentsOS = (ComponentsOS) components.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		charStringOS = new CharStringOS(charStringID, directionOS, structureOS, componentsOS);
 		return charStringOS;
 	}
 	
@@ -90,9 +90,9 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 		String charStringID = getDescriptorName().concat(charStringIndex.toString());
 		DirectionOS directionOS = (DirectionOS) direction.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		StructureOS structureOS = (StructureOS) structure.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		ComponentsOS componentsOS = (ComponentsOS) components.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		String verbalDescription = getVerbalDescription();
-		charStringOmega = new CharStringOmega(charStringID, directionOS, structureOS, groupsOS, verbalDescription);
+		charStringOmega = new CharStringOmega(charStringID, directionOS, structureOS, componentsOS, verbalDescription);
 		return charStringOmega;
 	}
 

@@ -17,18 +17,18 @@ import verbalization.verbalStructureModel.impl.InstructionImpl;
 public class InstructionTest {
 
 	@Test
-	public void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven1() throws VerbalizationException {
+	public void whenParameterIsThisRX2FrameCodeThenExpectedVerbalDescriptionIsGiven1() throws VerbalizationException {
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
 		boolean descriptionIsUnexpected = false;
-		relationXListOfProperties.add("group/relations/relationX2/relation/dimension/size");
-		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1,1,1,1,1");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/0");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/0");
-		relationXListOfProperties.add("group/relations/relationX2/relation/dimension/letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1,2,3,4,5");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/1");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/dimension/size");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1,1,1,1,1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/0");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/0");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/dimension/letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1,2,3,4,5");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/1");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -40,18 +40,18 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void whenParameterIsThisRX2GroupCodeThenExpectedVerbalDescriptionIsGiven2() throws VerbalizationException {
+	public void whenParameterIsThisRX2FrameCodeThenExpectedVerbalDescriptionIsGiven2() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relationX2/relation/dimension/size");
-		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/2");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/2");
-		relationXListOfProperties.add("group/relations/relationX2/relation/dimension/:letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relationX2/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/commonDiff/-1");
-		relationXListOfProperties.add("group/relations/relationX2/relation/sequence/absCommonDiff/1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/dimension/size");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/2");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/2");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/dimension/:letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/-1");
+		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/1");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -64,22 +64,22 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void whenParameterIsThisRX3GroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsThisRX3FrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relationX3/relation/dimension/size");
-		relationXListOfProperties.add("group/relations/relationX3/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/commonDiff/2");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/absCommonDiff/2");
-		relationXListOfProperties.add("group/relations/relationX3/relation/dimension/:letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relationX3/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/commonDiff/-1");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/absCommonDiff/1");
-		relationXListOfProperties.add("group/relations/relationX3/relation/dimension/commonDiff");
-		relationXListOfProperties.add("group/relations/relationX3/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/commonDiff/-2");
-		relationXListOfProperties.add("group/relations/relationX3/relation/sequence/absCommonDiff/2");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/dimension/size");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/commonDiff/2");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/absCommonDiff/2");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/dimension/:letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/commonDiff/-1");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/absCommonDiff/1");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/dimension/commonDiff");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/commonDiff/-2");
+		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/absCommonDiff/2");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -95,12 +95,12 @@ public class InstructionTest {
 	}	
 	
 	@Test
-	public void whenParameterIsA2ndDegreeEnumGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsA2ndDegreeEnumFrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relation/dimension/letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relation/enumeration/1,5,2");
+		relationXListOfProperties.add("frame/relations/relation/dimension/letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relation/enumeration/1,5,2");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -111,14 +111,14 @@ public class InstructionTest {
 	}		
 	
 	@Test
-	public void whenParameterIsASize5ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASize5ConstantSequenceFrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "5"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relation/dimension/letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relation/enumeration/0");
-		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/0");
-		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/0");
+		relationXListOfProperties.add("frame/relations/relation/dimension/letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relation/enumeration/0");
+		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/0");
+		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/0");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -129,14 +129,14 @@ public class InstructionTest {
 	}	
 	
 	@Test
-	public void whenParameterIsASize2ConstantSequenceGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASize2ConstantSequenceFrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "2"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relation/dimension/letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relation/enumeration/0");
-		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/0");
-		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/0");
+		relationXListOfProperties.add("frame/relations/relation/dimension/letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relation/enumeration/0");
+		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/0");
+		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/0");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -147,14 +147,14 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void whenParameterIsAGen2Size1RelationGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsAGen2Size1RelationFrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "1"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/relations/relation/dimension/letter.platonicLetter");
-		relationXListOfProperties.add("group/relations/relation/enumeration/1");
-		relationXListOfProperties.add("group/relations/relation/sequence/commonDiff/1");
-		relationXListOfProperties.add("group/relations/relation/sequence/absCommonDiff/1");
+		relationXListOfProperties.add("frame/relations/relation/dimension/letter.platonicLetter");
+		relationXListOfProperties.add("frame/relations/relation/enumeration/1");
+		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/1");
+		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/1");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
@@ -165,14 +165,14 @@ public class InstructionTest {
 	}	
 	
 	@Test
-	public void whenParameterIsASignalElementGroupCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
+	public void whenParameterIsASignalElementFrameCodeThenExpectedVerbalDescriptionIsGiven() throws VerbalizationException {
 		boolean descriptionIsUnexpected = false;
 		String nbOfComponents = "0"; 
 		List<String> relationXListOfProperties = new ArrayList<String>();
-		relationXListOfProperties.add("group/size/1");
-		relationXListOfProperties.add("group/position/1");
-		relationXListOfProperties.add("group/letter/position/2");
-		relationXListOfProperties.add("group/letter/platonicLetter/2");
+		relationXListOfProperties.add("frame/size/1");
+		relationXListOfProperties.add("frame/position/1");
+		relationXListOfProperties.add("frame/letter/position/2");
+		relationXListOfProperties.add("frame/letter/platonicLetter/2");
 		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);

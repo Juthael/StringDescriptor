@@ -19,9 +19,9 @@ import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.Enumeration;
-import model.copycatModel.synTreeGrammar.Group;
-import model.copycatModel.synTreeGrammar.GroupX;
-import model.copycatModel.synTreeGrammar.HowManyGroups;
+import model.copycatModel.synTreeGrammar.Frame;
+import model.copycatModel.synTreeGrammar.FrameX;
+import model.copycatModel.synTreeGrammar.HowManyFrames;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.IProperty;
@@ -68,58 +68,58 @@ public class SynTreeElementImplTest {
 	@Test
 	public void whenAllComponentsArentRelevantThenContainerContainsOnlyRelevantProperties() 
 			throws Exception {
-		boolean groupX3ContainerDoesntContainPlatonicLetter2 = true;
+		boolean frameX3ContainerDoesntContainPlatonicLetter2 = true;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Group> listOfGroups = signal.getGroups();
-		HowManyGroups groupX3 = new GroupX(listOfGroups);
-		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
-		boolean groupX3containsPlatonicLetter2 = false;
-		for (String propertyWithPath : listOfGroupX3PropertiesWithPath) {
+		List<Frame> listOfFrames = signal.getFrames();
+		HowManyFrames frameX3 = new FrameX(listOfFrames);
+		List<String> listOfFrameX3PropertiesWithPath = frameX3.getListOfPropertiesWithPath();
+		boolean frameX3containsPlatonicLetter2 = false;
+		for (String propertyWithPath : listOfFrameX3PropertiesWithPath) {
 			if (propertyWithPath.contains("platonicLetter/2"))
-				groupX3containsPlatonicLetter2 = true;
+				frameX3containsPlatonicLetter2 = true;
 		}
-		if (groupX3containsPlatonicLetter2 == true) {
-			IPropertyContainer groupX3PropertyContainer = groupX3.getpropertyContainer();
+		if (frameX3containsPlatonicLetter2 == true) {
+			IPropertyContainer frameX3PropertyContainer = frameX3.getpropertyContainer();
 			Map<String, IProperty> dimensionToProperty = 
-					groupX3PropertyContainer.getIndexedPathToProperty();
+					frameX3PropertyContainer.getIndexedPathToProperty();
 			for (String dimension : dimensionToProperty.keySet()) {
 				if (dimension.contains("platonicLetter")) {
 					IProperty property = dimensionToProperty.get(dimension);
 					if (property.getValue().equals("2"))
-						groupX3ContainerDoesntContainPlatonicLetter2 = false;
+						frameX3ContainerDoesntContainPlatonicLetter2 = false;
 				}
 			}			
 		}
 		else throw new Exception();
-		assertTrue(groupX3ContainerDoesntContainPlatonicLetter2);
+		assertTrue(frameX3ContainerDoesntContainPlatonicLetter2);
 	}
 	
 	@Test
-	public void onlyClonedGroupsAreRelatedInNewDescriptor() 
+	public void onlyClonedFramesAreRelatedInNewDescriptor() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		boolean onlyClonedGroupsAreRelatedInNewDescriptor;
+		boolean onlyClonedFramesAreRelatedInNewDescriptor;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Group> listOfGroups = signal.getGroups();
-		Group group2 = listOfGroups.get(1);
-		List<String> listOfGroup2PropertiesWithpath = group2.getListOfPropertiesWithPath();
-		HowManyGroups groupX3 = new GroupX(listOfGroups);
-		List<String> listOfGroupX3PropertiesWithPath = groupX3.getListOfPropertiesWithPath();
-		boolean groupX3ContainsGroupPosition2 = false;
-		boolean group2ContainsGroupPosition2 = false;
-		for (String group2PropertyWithPath : listOfGroup2PropertiesWithpath) {
-			if (group2PropertyWithPath.contains("group/prominentPosition/position/2"))
-				group2ContainsGroupPosition2 = true;
+		List<Frame> listOfFrames = signal.getFrames();
+		Frame frame2 = listOfFrames.get(1);
+		List<String> listOfFrame2PropertiesWithpath = frame2.getListOfPropertiesWithPath();
+		HowManyFrames frameX3 = new FrameX(listOfFrames);
+		List<String> listOfFrameX3PropertiesWithPath = frameX3.getListOfPropertiesWithPath();
+		boolean frameX3ContainsFramePosition2 = false;
+		boolean frame2ContainsFramePosition2 = false;
+		for (String frame2PropertyWithPath : listOfFrame2PropertiesWithpath) {
+			if (frame2PropertyWithPath.contains("frame/prominentPosition/position/2"))
+				frame2ContainsFramePosition2 = true;
 		}		
-		for (String groupX3PropertyWithPath : listOfGroupX3PropertiesWithPath) {
-			if (groupX3PropertyWithPath.contains("group/prominentPosition/position/2"))
-				groupX3ContainsGroupPosition2 = true;
+		for (String frameX3PropertyWithPath : listOfFrameX3PropertiesWithPath) {
+			if (frameX3PropertyWithPath.contains("frame/prominentPosition/position/2"))
+				frameX3ContainsFramePosition2 = true;
 		}		
-		onlyClonedGroupsAreRelatedInNewDescriptor = 
-				(group2ContainsGroupPosition2 == false && 
-				groupX3ContainsGroupPosition2 == true);
-		assertEquals(onlyClonedGroupsAreRelatedInNewDescriptor, true);
+		onlyClonedFramesAreRelatedInNewDescriptor = 
+				(frame2ContainsFramePosition2 == false && 
+				frameX3ContainsFramePosition2 == true);
+		assertEquals(onlyClonedFramesAreRelatedInNewDescriptor, true);
 	}
 	
 	@Test

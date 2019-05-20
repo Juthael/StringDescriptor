@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.IProperty;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
@@ -17,10 +17,10 @@ import syntacticTreesGeneration.ISequenceRelationalData;
 
 public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1RelationDataContainerBuilder {
 
-	private Group gen1Descriptor;
+	private Frame gen1Descriptor;
 	private ISignal signal;
 	
-	public Gen2Size1RelationDataContainerBuilderImpl(ISignal signal, Group gen1Descriptor) {
+	public Gen2Size1RelationDataContainerBuilderImpl(ISignal signal, Frame gen1Descriptor) {
 		this.gen1Descriptor= gen1Descriptor;
 		this.signal = signal;
 	}
@@ -160,7 +160,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 				gen1DescriptorContainsLastLetter = true;
 			else gen1DescriptorContainsLastLetter = false;
 		}
-		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Frame position was not found");
 		return gen1DescriptorContainsLastLetter;
 	}
 	
@@ -190,7 +190,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			}
 			else gen1DescriptorContainsCentralLetter = false;
 		}
-		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Group position was not found");
+		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Frame position was not found");
 		return gen1DescriptorContainsCentralLetter;
 	}
 	

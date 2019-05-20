@@ -12,21 +12,21 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 	private static final String NAME = "charString";
 	private DirectionOS direction;
 	private StructureOS structure;
-	private GroupsOS groups;
+	private ComponentsOS components;
 	
-	public CharStringOS(String elementID, DirectionOS direction, StructureOS structure, GroupsOS groups) {
+	public CharStringOS(String elementID, DirectionOS direction, StructureOS structure, ComponentsOS components) {
 		super(elementID);
 		this.direction = direction;
 		this.structure = structure;
-		this.groups = groups;
+		this.components = components;
 	}
 
 	public CharStringOS(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement, DirectionOS direction, 
-			StructureOS structure, GroupsOS groups) {
+			StructureOS structure, ComponentsOS components) {
 		super(elementID, isCodingElement, mayBeTheCodedElement);
 		this.direction = direction;
 		this.structure = structure;
-		this.groups = groups;
+		this.components = components;
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.add(direction);
 		listOfComponents.add(structure);
-		listOfComponents.add(groups);
+		listOfComponents.add(components);
 		return listOfComponents;
 	}
 
@@ -54,9 +54,9 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 			structure = (StructureOS) idToIOrderedSet.get(structure.getElementID());
 			structure.eliminateRedundancies(idToIOrderedSet);
 		}
-		if (!groups.equals(idToIOrderedSet.get(groups.getElementID()))) {
-			groups = (GroupsOS) idToIOrderedSet.get(groups.getElementID());
-			groups.eliminateRedundancies(idToIOrderedSet);
+		if (!components.equals(idToIOrderedSet.get(components.getElementID()))) {
+			components = (ComponentsOS) idToIOrderedSet.get(components.getElementID());
+			components.eliminateRedundancies(idToIOrderedSet);
 		}
 	}	
 

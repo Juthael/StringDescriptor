@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.OrderedSetsGenerationException;
-import model.copycatModel.ordSetGrammar.GroupsOS;
+import model.copycatModel.ordSetGrammar.ComponentsOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.RelationsOS;
 import model.generalModel.IElement;
@@ -17,13 +17,13 @@ import settings.Settings;
 public class Relations extends RelationsOrLetter implements ISynTreeElement, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "relations";
-	private Groups groups;
+	private Components components;
 	private HowManyDimensions dimensionHM;
 	private HowManyRelations relationHM;
 	
-	public Relations(Groups groups, HowManyDimensions dimensionX, 
+	public Relations(Components components, HowManyDimensions dimensionX, 
 			HowManyRelations relationX) {
-		this.groups = groups;
+		this.components = components;
 		this.dimensionHM = dimensionX;
 		this.relationHM = relationX;
 	}
@@ -31,10 +31,10 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	@Override
 	protected Relations clone() throws CloneNotSupportedException {
 		Relations cloneRelations;
-		Groups cloneGroups = groups.clone();
+		Components cloneComponents = components.clone();
 		HowManyDimensions cloneDimensionX = dimensionHM.clone();
 		HowManyRelations cloneRelationX = relationHM.clone();
-		cloneRelations = new Relations(cloneGroups, cloneDimensionX, cloneRelationX);
+		cloneRelations = new Relations(cloneComponents, cloneDimensionX, cloneRelationX);
 		return cloneRelations;
 	}
 	
@@ -46,12 +46,12 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	@Override
 	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
-				Arrays.asList(dimensionHM, relationHM, groups));
+				Arrays.asList(dimensionHM, relationHM, components));
 		return componentDescriptors;
 	}
 	
-	public void setGroupsAsCodingDescriptors() {
-		groups.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
+	public void setComponentsAsCodingDescriptors() {
+		components.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationsID = getDescriptorName().concat(relationsIndex.toString());
-		GroupsOS groupsOS = (GroupsOS) groups.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		ComponentsOS componentsOS = (ComponentsOS) components.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		List<RelationOS> listOfRelationOS = new ArrayList<RelationOS>();
 		if (relationHM.getDescriptorName().contains("relationX")) {
 			for (IElement element : relationHM.getListOfComponents()) {
@@ -77,7 +77,7 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		}
 		else throw new OrderedSetsGenerationException("Relations.upgradeAsTheElementOfAnOrderedSet : "
 				+ "relationHM.descriptorName was unexpected (" + relationHM.getDescriptorName() + ").");
-		relationsOS = new RelationsOS(relationsID, listOfRelationOS, groupsOS);
+		relationsOS = new RelationsOS(relationsID, listOfRelationOS, componentsOS);
 		return relationsOS;		
 	}	
 }

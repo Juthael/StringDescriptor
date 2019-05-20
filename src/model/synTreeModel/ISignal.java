@@ -2,11 +2,11 @@ package model.synTreeModel;
 
 import java.util.List;
 
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 
 public interface ISignal {
 
-	List<Group> getGroups();
+	List<Frame> getFrames();
 
 	String getDirectionValue();
 

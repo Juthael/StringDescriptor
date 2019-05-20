@@ -5,7 +5,7 @@ import java.util.List;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.CharString;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
@@ -17,14 +17,14 @@ public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsB
 	private final ISignal signal;
 	private int previousGenerationNumber = 1;
 	private List<CharString> listOfDescriptorsCoveringTheWholeString = new ArrayList<CharString>();
-	private List<Group> previousGenOfFactorizableDescriptors = new ArrayList<Group>();
+	private List<Frame> previousGenOfFactorizableDescriptors = new ArrayList<Frame>();
 	private static final int[] minComponentSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	boolean thisIsTheLastGeneration = false;
 	
 	public RelationalDescriptorsBuilderImpl(ISignal signal) 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		this.signal = signal;
-		previousGenOfFactorizableDescriptors.addAll(this.signal.getGroups());
+		previousGenOfFactorizableDescriptors.addAll(this.signal.getFrames());
 		do {
 			INewGenOfDescriptorsBuilder newGenOfDescriptorsBuilder = 
 					new NewGenOfDescriptorsBuilderImpl(previousGenerationNumber, this.signal, 
@@ -36,8 +36,8 @@ public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsB
 				for (ISynTreeElement descriptor : newGenOfDescriptors) {
 					if (descriptor.getDescriptorName().equals("charString"))
 						listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
-					else if (descriptor.getDescriptorName().equals("group"))
-						previousGenOfFactorizableDescriptors.add((Group) descriptor);
+					else if (descriptor.getDescriptorName().equals("frame"))
+						previousGenOfFactorizableDescriptors.add((Frame) descriptor);
 					else throw new SynTreeGenerationException("RelationalDescriptorsBuilder : "
 							+ "unexpected type of descriptor was found.");
 				}

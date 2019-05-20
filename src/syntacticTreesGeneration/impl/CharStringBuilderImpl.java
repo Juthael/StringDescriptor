@@ -6,13 +6,13 @@ import java.util.List;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Direction;
-import model.copycatModel.synTreeGrammar.Group;
-import model.copycatModel.synTreeGrammar.Groups;
+import model.copycatModel.synTreeGrammar.Frame;
+import model.copycatModel.synTreeGrammar.Components;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.copycatModel.synTreeGrammar.Size;
 import model.copycatModel.synTreeGrammar.Structure;
 import settings.Settings;
-import syntacticTreesGeneration.IGroupsBuilder;
+import syntacticTreesGeneration.IComponentsBuilder;
 import syntacticTreesGeneration.ICharStringBuilder;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -27,44 +27,44 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 
 	private final Direction direction;
 	private final Structure structure;
-	private final Groups groups;
+	private final Components components;
 	
-	public CharStringBuilderImpl(String directionValue, List<Group> listOfGroups, 
+	public CharStringBuilderImpl(String directionValue, List<Frame> listOfFrames, 
 			IRelationDataContainer relationDataContainer) 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		direction = new Direction(directionValue);
-		String charStringSizeValue = getCharStringSizeValue(listOfGroups);
+		String charStringSizeValue = getCharStringSizeValue(listOfFrames);
 		Size size = new Size(charStringSizeValue);
 		Relation structureRelation;
-		IGroupsBuilder groupsBuilder;
+		IComponentsBuilder componentsBuilder;
 		if (relationDataContainer.getListOfEnumerations().size() == 0) {
-			groupsBuilder = new GroupsBuilderImpl(listOfGroups, Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING);
-			structureRelation = getStructureRelation(listOfGroups);
+			componentsBuilder = new ComponentsBuilderImpl(listOfFrames, Settings.LIST_OF_FRAMES_COVER_THE_FULL_STRING);
+			structureRelation = getStructureRelation(listOfFrames);
 		} 
 		else {
-			groupsBuilder = new GroupsBuilderRelationalImpl(listOfGroups, relationDataContainer, 
-					Settings.LIST_OF_GROUPS_COVER_THE_FULL_STRING);
+			componentsBuilder = new ComponentsBuilderRelationalImpl(listOfFrames, relationDataContainer, 
+					Settings.LIST_OF_FRAMES_COVER_THE_FULL_STRING);
 			if (Settings.TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE)
-				structureRelation = getStructureRelation(listOfGroups);
-			else structureRelation = getMonoStructureRelation(listOfGroups);
+				structureRelation = getStructureRelation(listOfFrames);
+			else structureRelation = getMonoStructureRelation(listOfFrames);
 		}
 		structure = new Structure(size, structureRelation);		
-		groups = groupsBuilder.getGroups();
+		components = componentsBuilder.getComponents();
 	}
 	
 	@Override
 	public CharString getCharString() throws SynTreeGenerationException {
-		CharString charString = new CharString(direction, structure, groups);
+		CharString charString = new CharString(direction, structure, components);
 		return charString;
 	}
 	
-	private Relation getStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
+	private Relation getStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
 		Relation structureRelation;
 		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();
-		for(Group group : listOfGroups) {
-			List<Integer> currentGroupLetterPositions = DescriptorSpanGetterImpl.getDescriptorSpan(group);
-			listOfSizeValues.add(Integer.toString(currentGroupLetterPositions.size()));
+		for(Frame frame : listOfFrames) {
+			List<Integer> currentFrameLetterPositions = DescriptorSpanGetterImpl.getDescriptorSpan(frame);
+			listOfSizeValues.add(Integer.toString(currentFrameLetterPositions.size()));
 		}
 		List<IRelationalData> listOfRelationalData = new ArrayList<IRelationalData>();
 		IEnumerationChecker enumerationChecker = new EnumerationCheckerImpl(true, dimension, listOfSizeValues);
@@ -90,13 +90,13 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 		return structureRelation;	
 	}
 	
-	private Relation getMonoStructureRelation(List<Group> listOfGroups) throws SynTreeGenerationException {
+	private Relation getMonoStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
 		Relation structureRelation;
 		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
-		for(Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
+		for(Frame frame : listOfFrames) {
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(frame));
 		}
 		listOfSizeValues.add(Integer.toString(listOfLetterPositions.size()));
 		List<IRelationalData> listOfRelationalData = new ArrayList<IRelationalData>();
@@ -123,11 +123,11 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 		return structureRelation;	
 	}	
 	
-	private String getCharStringSizeValue(List<Group> listOfGroups) throws SynTreeGenerationException {
+	private String getCharStringSizeValue(List<Frame> listOfFrames) throws SynTreeGenerationException {
 		String charStringSizeValue;
 		List<Integer> listOfLetterPositions = new ArrayList<Integer>();
-		for (Group group : listOfGroups) {
-			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(group));
+		for (Frame frame : listOfFrames) {
+			listOfLetterPositions.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(frame));
 		}
 		charStringSizeValue = Integer.toString(listOfLetterPositions.size());
 		return charStringSizeValue;

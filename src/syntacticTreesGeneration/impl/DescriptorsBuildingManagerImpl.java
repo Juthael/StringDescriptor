@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
@@ -21,19 +21,19 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 
 	private final ISignal signal;
 	private final int componentsMaxGenerationNumber;
-	private List<Group> listOfFactorizableDescriptors;
+	private List<Frame> listOfFactorizableDescriptors;
 	private List<IRelationDataContainer> listOfRelationDataContainers = 
 			new ArrayList<IRelationDataContainer>();	
 	
 	public DescriptorsBuildingManagerImpl(ISignal signal, int componentsGenerationNumber, 
-			List<Group> listOfFactorizableDescriptors) 
+			List<Frame> listOfFactorizableDescriptors) 
 					throws SynTreeGenerationException {
 		this.signal = signal;
 		this.componentsMaxGenerationNumber = componentsGenerationNumber;
 		this.listOfFactorizableDescriptors = listOfFactorizableDescriptors;
 		if ((this.componentsMaxGenerationNumber == 1) && (listOfFactorizableDescriptors.size() == 1)) {
-			if (listOfFactorizableDescriptors.get(0).getDescriptorName().equals("group")) {
-				Group gen1Descriptor = (Group) listOfFactorizableDescriptors.get(0);
+			if (listOfFactorizableDescriptors.get(0).getDescriptorName().equals("frame")) {
+				Frame gen1Descriptor = (Frame) listOfFactorizableDescriptors.get(0);
 				IGen2Size1RelationDataContainerBuilder gen2Size1RelationDataContainerBuilder = 
 						new Gen2Size1RelationDataContainerBuilderImpl(signal, gen1Descriptor);
 				listOfRelationDataContainers = gen2Size1RelationDataContainerBuilder.getListOfRelationDataContainers();
@@ -75,9 +75,9 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		boolean newDescriptorIsEligibleForRelation = testIfNewDescriptorIsEligibleForRelation();
 		if (relationDataContainer.getNewDescriptorWillCoverTheFullString() == true) {
 			if (newDescriptorIsEligibleForRelation == false) {
-				boolean newDescriptorIsEligibleForMultiUnrelatedGroupsDescription = 
-						testIfNewDescriptorIsEligibleForMultiUnrelatedGroupsDescription();
-				if (newDescriptorIsEligibleForMultiUnrelatedGroupsDescription == true) {
+				boolean newDescriptorIsEligibleForMultiUnrelatedComponentsDescription = 
+						testIfNewDescriptorIsEligibleForMultiUnrelatedComponentsDescription();
+				if (newDescriptorIsEligibleForMultiUnrelatedComponentsDescription == true) {
 					relationDataContainer.clear();
 					relationDataContainerIsValid = true;
 				}				
@@ -132,17 +132,17 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		return newDescriptorIsEligibleForRelation;
 	}
 	
-	private boolean testIfNewDescriptorIsEligibleForMultiUnrelatedGroupsDescription() throws SynTreeGenerationException {
-		boolean newDescriptorIsEligibleForMultiUnrelatedGroupsDescription = false;
-		if (listOfFactorizableDescriptors.size() <= Settings.MAX_NB_OF_UNRELATED_GROUPS) {
+	private boolean testIfNewDescriptorIsEligibleForMultiUnrelatedComponentsDescription() throws SynTreeGenerationException {
+		boolean newDescriptorIsEligibleForMultiUnrelatedComponentsDescription = false;
+		if (listOfFactorizableDescriptors.size() <= Settings.MAX_NB_OF_UNRELATED_FRAMES) {
 			if (componentsMaxGenerationNumber >= 2) {
 				boolean thereIsAGen2Size1Descriptor = testIfThereIsAGen2Size1Descriptor();
 				if (thereIsAGen2Size1Descriptor == false)
-					newDescriptorIsEligibleForMultiUnrelatedGroupsDescription = true;
+					newDescriptorIsEligibleForMultiUnrelatedComponentsDescription = true;
 			}
-			else newDescriptorIsEligibleForMultiUnrelatedGroupsDescription = true;
+			else newDescriptorIsEligibleForMultiUnrelatedComponentsDescription = true;
 		}
-		return newDescriptorIsEligibleForMultiUnrelatedGroupsDescription;
+		return newDescriptorIsEligibleForMultiUnrelatedComponentsDescription;
 	}
 	
 	private int checkNumberOfSimpleEnumerations(IRelationDataContainer relationDataContainer) {
@@ -177,12 +177,12 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	private boolean testIfThereIsAGen2Size1Descriptor() throws SynTreeGenerationException {
 		boolean thereIsAGen2Size1Sequence = false;
 		if (componentsMaxGenerationNumber >= 2) {
-			for (Group group : listOfFactorizableDescriptors) {
+			for (Frame frame : listOfFactorizableDescriptors) {
 				List<Integer> listOfLetterPositions = 
-						DescriptorSpanGetterImpl.getDescriptorSpan((ISynTreeElement) group);
+						DescriptorSpanGetterImpl.getDescriptorSpan((ISynTreeElement) frame);
 				if (listOfLetterPositions.size() == 1) {
-					List<String> listOfProperties = group.getListOfPropertiesWithPath();
-					if (listOfProperties.get(2).contains("group/relation"))
+					List<String> listOfProperties = frame.getListOfPropertiesWithPath();
+					if (listOfProperties.get(2).contains("frame/relation"))
 						thereIsAGen2Size1Sequence = true;
 				}
 			}

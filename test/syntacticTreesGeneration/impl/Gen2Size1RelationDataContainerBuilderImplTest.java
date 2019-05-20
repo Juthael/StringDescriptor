@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
@@ -25,13 +25,13 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 
 	ISignalBuilder signalBuilderABC;
 	ISignal signalABC;
-	List<Group> descriptorsSignalABC;	
+	List<Frame> descriptorsSignalABC;	
 	
 	@Before
 	public void initialize() throws SynTreeGenerationException {
 		signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
-		descriptorsSignalABC = signalABC.getGroups();
+		descriptorsSignalABC = signalABC.getFrames();
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 			throws SynTreeGenerationException {
 		int nbOfRDContainers = 0;
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getFrames().get(0));
 		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
 		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
@@ -57,7 +57,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 			throws SynTreeGenerationException {
 		int nbOfRDContainers = 0;
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(2));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getFrames().get(2));
 		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
 		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_THE_WORD_ENDS) {
@@ -77,7 +77,7 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABCD = signalBuilderABCD.getSignal();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABCD, signalABCD.getGroups().get(2));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABCD, signalABCD.getFrames().get(2));
 		List<IRelationDataContainer> listOfRDContainer = 
 				gen2Size1RDContainerBuilder.getListOfRelationDataContainers();
 		if (Settings.GEN2SIZE1_ENUMERATION_ALLOWED_FOR_ALL_LETTERS) {
@@ -91,46 +91,46 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 	}
 	
 	@Test
-	public void Gen2Size1RDContainerAllowsGroupBuildingWithoutThrowingException() 
+	public void gen2Size1RDContainerAllowsFrameBuildingWithoutThrowingException() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		List<ISynTreeElement> newGroups = new ArrayList<ISynTreeElement>();
+		List<ISynTreeElement> newFrames = new ArrayList<ISynTreeElement>();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderA = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(0));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getFrames().get(0));
 		List<IRelationDataContainer> listOfRDContainerA = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderB = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(1));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getFrames().get(1));
 		List<IRelationDataContainer> listOfRDContainerB = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
 		IGen2Size1RelationDataContainerBuilder gen2Size1RDContainerBuilderC = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getGroups().get(2));
+				new Gen2Size1RelationDataContainerBuilderImpl(signalABC, signalABC.getFrames().get(2));
 		List<IRelationDataContainer> listOfRDContainerC = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();		
-		List<Group> listWithGroupA = new ArrayList<Group>();
-		List<Group> listWithGroupB = new ArrayList<Group>();
-		List<Group> listWithGroupC = new ArrayList<Group>();
-		listWithGroupA.add(signalABC.getGroups().get(0));
-		listWithGroupB.add(signalABC.getGroups().get(1));
-		listWithGroupC.add(signalABC.getGroups().get(2));
+		List<Frame> listWithFrameA = new ArrayList<Frame>();
+		List<Frame> listWithFrameB = new ArrayList<Frame>();
+		List<Frame> listWithFrameC = new ArrayList<Frame>();
+		listWithFrameA.add(signalABC.getFrames().get(0));
+		listWithFrameB.add(signalABC.getFrames().get(1));
+		listWithFrameC.add(signalABC.getFrames().get(2));
 		try {
 			for (IRelationDataContainer RDContainerA : listOfRDContainerA) {
-				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerA, listWithGroupA);
-				newGroups.add(newDescriptorBuilder.getNewDescriptor());
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerA, listWithFrameA);
+				newFrames.add(newDescriptorBuilder.getNewDescriptor());
 			}
 			for (IRelationDataContainer RDContainerB : listOfRDContainerB) {
-				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerB, listWithGroupB);
-				newGroups.add(newDescriptorBuilder.getNewDescriptor());
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerB, listWithFrameB);
+				newFrames.add(newDescriptorBuilder.getNewDescriptor());
 			}
 			for (IRelationDataContainer RDContainerC : listOfRDContainerC) {
-				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerC, listWithGroupC);
-				newGroups.add(newDescriptorBuilder.getNewDescriptor());
+				INewDescriptorBuilder newDescriptorBuilder = new NewDescriptorBuilderImpl(signalABC, RDContainerC, listWithFrameC);
+				newFrames.add(newDescriptorBuilder.getNewDescriptor());
 			}			
 		}
 		catch (Exception unexpected) {
 			fail();
 		}
 		/*
-		for (AbstractDescriptorInterface descriptor : newGroups) {
+		for (AbstractDescriptorInterface descriptor : newFrames) {
 			ArrayList<String> properties = descriptor.getListOfPropertiesWithPath();
 			for (String property : properties)
 				System.out.println(property);

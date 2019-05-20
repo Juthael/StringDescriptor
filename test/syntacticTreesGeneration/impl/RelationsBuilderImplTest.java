@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.Relations;
 import model.synTreeModel.ISignal;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -49,13 +49,13 @@ public class RelationsBuilderImplTest {
 	private static	ISymmetryRelationalData symmetryRelationalData1;
 	private static IRelationDataContainer emptyContainer = new RelationDataContainerImpl();
 	private static IRelationDataContainer otherContainer;
-	private static List<Group> listOfGroups;
+	private static List<Frame> listOfFrames;
 	
 	@Before
 	public void initialize() throws SynTreeGenerationException {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		listOfGroups = signal.getGroups();
+		listOfFrames = signal.getFrames();
 		enumerationRelationalData1 = new EnumerationRelationalDataImpl(dimension1, enumerationValue1);
 		enumerationRelationalData2 = new EnumerationRelationalDataImpl(dimension2, enumerationValue2);
 		enumerationRelationalData3 = new EnumerationRelationalDataImpl(dimension3, enumerationValue3);
@@ -68,7 +68,7 @@ public class RelationsBuilderImplTest {
 	@Test
 	public void whenRDContainerIsEmptyThenThrowsException() throws CloneNotSupportedException {
 		try {
-			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(emptyContainer, listOfGroups);
+			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(emptyContainer, listOfFrames);
 			Relations relations = relationsBuilder.getRelations();
 			fail();
 		}
@@ -94,7 +94,7 @@ public class RelationsBuilderImplTest {
 		otherContainer.addEnumeration(enumerationRelationalData5);
 		otherContainer.addEnumeration(enumerationRelationalData5);		
 		try {
-			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
+			IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfFrames);
 			Relations relations = relationsBuilder.getRelations();
 			fail();
 		}
@@ -107,7 +107,7 @@ public class RelationsBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		otherContainer = new RelationDataContainerImpl();
 		otherContainer.addEnumeration(enumerationRelationalData1);
-		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfFrames);
 		Relations relations = relationsBuilder.getRelations();
 		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean simpleRelationIsBuilt = false;
@@ -127,7 +127,7 @@ public class RelationsBuilderImplTest {
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addSequence(sequenceRelationalData1);
 		otherContainer.addSymmetry(symmetryRelationalData1);
-		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfFrames);
 		Relations relations = relationsBuilder.getRelations();
 		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean enumerationIsBuilt = false;
@@ -154,7 +154,7 @@ public class RelationsBuilderImplTest {
 		otherContainer.addEnumeration(enumerationRelationalData1);
 		otherContainer.addEnumeration(enumerationRelationalData2);
 		otherContainer.addEnumeration(enumerationRelationalData3);
-		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfGroups);
+		IRelationsBuilder relationsBuilder = new RelationsBuilderImpl(otherContainer, listOfFrames);
 		Relations relations = relationsBuilder.getRelations();
 		List<String> relationsListOfPropertiesWithPath = relations.getListOfPropertiesWithPath();
 		boolean relationX3IsBuilt = false;

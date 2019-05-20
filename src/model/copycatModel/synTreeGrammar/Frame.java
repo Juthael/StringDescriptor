@@ -7,7 +7,7 @@ import java.util.Map;
 
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.GroupOS;
+import model.copycatModel.ordSetGrammar.FrameOS;
 import model.copycatModel.ordSetGrammar.RelationsOrLetterOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.copycatModel.ordSetGrammar.WhichPositionTypeOS;
@@ -17,21 +17,21 @@ import model.synTreeModel.ISynTreeElementWithPosition;
 import model.synTreeModel.impl.SynTreeElementImpl;
 import settings.Settings;
 
-public class Group extends HowManyGroups implements ISynTreeElementWithPosition, Cloneable {
+public class Frame extends HowManyFrames implements ISynTreeElementWithPosition, Cloneable {
 
-	private static final String DESCRIPTOR_NAME = "group";
+	private static final String DESCRIPTOR_NAME = "frame";
 	private Size size;
 	private WhichPositionType positionType;
 	private RelationsOrLetter relationsOrLetter;
 	
-	public Group(Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
+	public Frame(Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
 			throws SynTreeGenerationException {
 		this.size = size;
 		this.positionType = positionType;
 		this.relationsOrLetter = relationsOrLetter;
 	}
 	
-	public Group(boolean codingElement, Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
+	public Frame(boolean codingElement, Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
 			throws SynTreeGenerationException {
 		super(codingElement);
 		this.size = size;
@@ -40,7 +40,7 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	}
 	
 	@Override
-	public Group clone()  throws CloneNotSupportedException {
+	public Frame clone()  throws CloneNotSupportedException {
 		Size cloneSize = size.clone();
 		WhichPositionType clonePosition = positionType.clone();
 		RelationsOrLetter cloneRelationsOrLetter;
@@ -54,15 +54,15 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 				cloneRelationsOrLetter = letterCasted.clone();
 				break;
 			default : 
-				throw new CloneNotSupportedException("Group : error in clone() method.");
+				throw new CloneNotSupportedException("Frame : error in clone() method.");
 		}
-		Group cloneGroup;
+		Frame cloneFrame;
 		try {
-			cloneGroup = new Group(isCodingElement, cloneSize, clonePosition, cloneRelationsOrLetter);
+			cloneFrame = new Frame(isCodingElement, cloneSize, clonePosition, cloneRelationsOrLetter);
 		} catch (SynTreeGenerationException e) {
-			throw new CloneNotSupportedException("Group : error in clone() method.");
+			throw new CloneNotSupportedException("Frame : error in clone() method.");
 		}
-		return cloneGroup;
+		return cloneFrame;
 	}
 	
 	@Override
@@ -117,24 +117,24 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 				relationsOrLetter.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
 		else if (relationsOrLetter.getDescriptorName().equals("relations")) {
 			Relations relations = (Relations) relationsOrLetter;
-			relations.setGroupsAsCodingDescriptors();
+			relations.setComponentsAsCodingDescriptors();
 		}
 	}
 	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
 			throws OrderedSetsGenerationException {
-		IOrderedSet groupOS;
+		IOrderedSet frameOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
-		Integer groupIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
-		String groupID = getDescriptorName().concat(groupIndex.toString());
+		Integer frameIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String frameID = getDescriptorName().concat(frameIndex.toString());
 		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		WhichPositionTypeOS positionOS = 
 				(WhichPositionTypeOS) positionType.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		RelationsOrLetterOS relationsOrLetterOS = 
 				(RelationsOrLetterOS) relationsOrLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		groupOS = new GroupOS(groupID, isCodingElement, sizeOS, positionOS, relationsOrLetterOS);
-		return groupOS;		
+		frameOS = new FrameOS(frameID, isCodingElement, sizeOS, positionOS, relationsOrLetterOS);
+		return frameOS;		
 	}
 
 }

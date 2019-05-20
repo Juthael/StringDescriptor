@@ -8,14 +8,14 @@ public class Settings {
 	public static final String AWAITING_POSITION_VALUE = "noValueYet";
 	public static final int COMPONENT_AUTO_POSITIONING = 0;
 	public static final String NO_POSITION_INFORMATION = "";
-	public static final boolean FULL_STRING_GROUP = true;
-	public static final String CONVENTIONAL_POSITION_FOR_FULL_STRING_GROUP = "1";
+	public static final boolean FULL_STRING_FRAME = true;
+	public static final String CONVENTIONAL_POSITION_FOR_FULL_STRING_FRAME = "1";
 	public static final String IRRELEVANT_VALUE = "irrelevant";
 	public static final String PATH_SEPARATOR = "/";
 	public static final String SECOND_DEG_VALUE_SEPARATOR = ":";
 	public static final String SECOND_DEG_DIMENSION_SEPARATOR = ">";
 	public static final String PROPERTY_INDEX_SEPARATOR = "_";
-	public static final boolean LIST_OF_GROUPS_COVER_THE_FULL_STRING = true;	
+	public static final boolean LIST_OF_FRAMES_COVER_THE_FULL_STRING = true;	
 	public static final boolean TAKE_SUBCOMP_INTO_ACCOUNT_IF_CHARSTRING_HAS_MONOSTRUCTURE = true;
 	public static final String LEFT_TO_RIGHT = "fromLeftToRight";
 	public static final String RIGHT_TO_LEFT = "fromRightToLeft";
@@ -25,13 +25,13 @@ public class Settings {
 	public static final String SYMMETRY_WITH_CENTRAL_ELEMENT = "withCentralElement";
 	public static final String SYMMETRY_WITHOUT_CENTRAL_ELEMENT = "withoutCentralElement";
 	public static final String POSITION_VALUES_SEPARATOR = ":";
-	public static final String STRUCTURE_RELATION_CONVENTIONAL_DIMENSION = "group.size";
+	public static final String STRUCTURE_RELATION_CONVENTIONAL_DIMENSION = "frame.size";
 	public static final String NO_VERBAL_DESCRIPTION = "No verbal description available";
 	
 	//2.Parameters concerning the generation of syntactic trees
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
-	public static final int MAX_NB_OF_UNRELATED_GROUPS = 4;
-	public static final int MAX_NB_OF_GROUPS_IN_RELATIONS = 10; //error if >12
+	public static final int MAX_NB_OF_UNRELATED_FRAMES = 4;
+	public static final int MAX_NB_OF_FRAMES_IN_RELATIONS = 10; //error if >12
 	public static final int MAX_NB_OF_DIMENSIONS_IN_RELATIONS = 10; //error if >10
 	public static final int MAX_NB_OF_RELATIONS = 10; //error if >10
 	public static final int MAX_NB_OF_TRANSFORMATION_RELATIONS = 2; //error if >5
@@ -52,8 +52,8 @@ public class Settings {
 	public static final int MAX_NB_OF_DESCRIPTOR_GENERATIONS = 3; //error if >5
 	public static final int MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION = 4;
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
-	public static final boolean CODING_ELEM_ARE_SMALLEST_FULLSTRING_GROUPS_COMPONENTS = true;
-	public static final boolean CODING_ELEM_IS_GREATEST_GROUPS = false;
+	public static final boolean CODING_ELEM_ARE_SMALLEST_FULLSTRING_COMPONENTS_ELEM = true;
+	public static final boolean CODING_ELEM_IS_GREATEST_COMPONENTS = false;
 	
 	//3. Parameters concerning the generation of ordered sets and binary contexts
 	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;

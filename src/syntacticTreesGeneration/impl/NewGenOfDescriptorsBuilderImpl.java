@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.synTreeGrammar.Group;
+import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.ISynTreeElement;
 import settings.Settings;
@@ -18,12 +18,12 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	private final int componentsMaxGenerationNumber;
 	private final boolean thisWillBeTheLastGeneration;
 	private final ISignal signal;
-	private final List<Group> previousGenOfDescriptors;
+	private final List<Frame> previousGenOfDescriptors;
 	private final IComponentGrouper componentGrouper;
 	private static final int[] minSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	
 	public NewGenOfDescriptorsBuilderImpl(int componentsMaxGenerationNumber, ISignal signal, 
-			List<Group> previousGenOfDescriptors) throws SynTreeGenerationException {
+			List<Frame> previousGenOfDescriptors) throws SynTreeGenerationException {
 		this.componentsMaxGenerationNumber = componentsMaxGenerationNumber;
 		this.signal = signal;
 		thisWillBeTheLastGeneration = testIfThisWillBeTheLastGeneration();
@@ -37,8 +37,8 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	public List<ISynTreeElement> getNewGenOfDescriptors() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<ISynTreeElement> newGenOfDescriptors = new ArrayList<ISynTreeElement>();
-		Set<List<Group>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
-		for (List<Group> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
+		Set<List<Frame>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
+		for (List<Frame> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
 			boolean atLeastOneComponentIsFromTheLastGeneration = 
 					testIfAtLeastOneComponentIsFromTheLastGeneration(setOfFactorizableDescriptors);
 			if (atLeastOneComponentIsFromTheLastGeneration == true) {
@@ -51,12 +51,12 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 		return newGenOfDescriptors;
 	}
 	
-	private boolean testIfAtLeastOneComponentIsFromTheLastGeneration(List<Group> setOfFactorizableDescriptors) {
+	private boolean testIfAtLeastOneComponentIsFromTheLastGeneration(List<Frame> setOfFactorizableDescriptors) {
 		boolean atLeastOneComponentIsFromTheLastGeneration = false;
-		int groupIndex = 0;
-		while (atLeastOneComponentIsFromTheLastGeneration == false && groupIndex < setOfFactorizableDescriptors.size()) {
+		int frameIndex = 0;
+		while (atLeastOneComponentIsFromTheLastGeneration == false && frameIndex < setOfFactorizableDescriptors.size()) {
 			List<String> currentComponentListOfProperties = 
-					setOfFactorizableDescriptors.get(groupIndex).getListOfPropertiesWithPath();
+					setOfFactorizableDescriptors.get(frameIndex).getListOfPropertiesWithPath();
 			int propertyIndex = 0;
 			while (atLeastOneComponentIsFromTheLastGeneration == false && 
 					propertyIndex < currentComponentListOfProperties.size()) {
@@ -64,14 +64,14 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 				String[] currentPropertyArray = currentProperty.split(Settings.PATH_SEPARATOR);
 				int currentComponentGenerationNumber = 0;
 				for (String pathElement : currentPropertyArray) {
-					if (pathElement.equals("group"))
+					if (pathElement.equals("frame"))
 						currentComponentGenerationNumber++;
 				}
 				if (currentComponentGenerationNumber == componentsMaxGenerationNumber)
 					atLeastOneComponentIsFromTheLastGeneration = true;
 				propertyIndex++;
 			}
-		groupIndex++;
+		frameIndex++;
 		}
 		return atLeastOneComponentIsFromTheLastGeneration;
 	}
