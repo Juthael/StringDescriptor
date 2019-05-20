@@ -19,8 +19,8 @@ public class GroupsOS extends AbstractNonMinimalOS implements IOrderedSet {
 		this.listOfGroups = listOfGroups;
 	}
 	
-	public GroupsOS(String elementID, boolean isCodingByDecomposition, SizeOS size, List<GroupOS> listOfGroups) {
-		super(elementID, isCodingByDecomposition);
+	public GroupsOS(String elementID, boolean isCodingElement, SizeOS size, List<GroupOS> listOfGroups) {
+		super(elementID, isCodingElement);
 		this.size = size;
 		this.listOfGroups = listOfGroups;
 	}	

@@ -20,7 +20,7 @@ public class RelationalDensityCalculator implements IScoreCalculator {
 		Set<String> setOfCodingAttributesIDs = new HashSet<String>(orderedSet.getListOfCodingComponentsIDs());
 		Set<IOrderedSet> lowerSet = orderedSet.getLowerSet();
 		for (IOrderedSet subSet : lowerSet) {
-			if (subSet.getIsCodingByDecomposition() == true)
+			if (subSet.getIsCodingElement() == true)
 				setOfCodingAttributesIDs.add(subSet.getElementID());
 		}
 		Vector<FormalConcept> listOfConcepts = lattice.getConcepts();

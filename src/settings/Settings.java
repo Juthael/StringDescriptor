@@ -52,6 +52,8 @@ public class Settings {
 	public static final int MAX_NB_OF_DESCRIPTOR_GENERATIONS = 3; //error if >5
 	public static final int MAX_NB_OF_COMPONENTS_FOR_2ND_DEGREE_ENUMERATION = 4;
 	public static final int MAX_INCREMENT_ABS_VALUE = 3;
+	public static final boolean CODING_ELEM_ARE_SMALLEST_FULLSTRING_GROUPS_COMPONENTS = true;
+	public static final boolean CODING_ELEM_IS_GREATEST_GROUPS = false;
 	
 	//3. Parameters concerning the generation of ordered sets and binary contexts
 	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;
@@ -59,6 +61,6 @@ public class Settings {
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
 	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = true;
 	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = true;
-	//debug Here
+	public static final boolean CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS = false;
 
 }

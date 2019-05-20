@@ -8,12 +8,12 @@ public abstract class AbstractNonMinimalExplicitOS extends AbstractNonMinimalOS 
 		super(elementID);
 	}
 
-	public AbstractNonMinimalExplicitOS(String elementID, boolean isCodingByDecomposition) {
-		super(elementID, isCodingByDecomposition);
+	public AbstractNonMinimalExplicitOS(String elementID, boolean isCodingElement) {
+		super(elementID, isCodingElement);
 	}
 
-	public AbstractNonMinimalExplicitOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
+	public AbstractNonMinimalExplicitOS(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement) {
+		super(elementID, isCodingElement, mayBeTheCodedElement);
 	}
 
 	@Override

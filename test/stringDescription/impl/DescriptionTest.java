@@ -58,7 +58,7 @@ public class DescriptionTest {
 				Set<IOrderedSet> lowerSet1 = orderedSet1.getLowerSet();
 				List<String> listOfCodingDescriptorIDs1 = new ArrayList<String>();
 				for (IOrderedSet set : lowerSet1) {
-					if (set.getIsCodingByDecomposition() == true)
+					if (set.getIsCodingElement() == true)
 						listOfCodingDescriptorIDs1.add(set.getElementID());
 				}
 				if (listOfCodingDescriptorIDs1.isEmpty())

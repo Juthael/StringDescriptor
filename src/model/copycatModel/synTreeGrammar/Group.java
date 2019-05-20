@@ -31,9 +31,9 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 		this.relationsOrLetter = relationsOrLetter;
 	}
 	
-	public Group(boolean codingDescriptor, Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
+	public Group(boolean codingElement, Size size, WhichPositionType positionType, RelationsOrLetter relationsOrLetter) 
 			throws SynTreeGenerationException {
-		super(codingDescriptor);
+		super(codingElement);
 		this.size = size;
 		this.positionType = positionType;
 		this.relationsOrLetter = relationsOrLetter;
@@ -58,7 +58,7 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 		}
 		Group cloneGroup;
 		try {
-			cloneGroup = new Group(isCodingByDecomposition, cloneSize, clonePosition, cloneRelationsOrLetter);
+			cloneGroup = new Group(isCodingElement, cloneSize, clonePosition, cloneRelationsOrLetter);
 		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Group : error in clone() method.");
 		}
@@ -114,7 +114,7 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 	
 	public void setLetterOrRelationsComponentsAsCodingDescriptor() {
 		if (relationsOrLetter.getDescriptorName().equals("letter"))
-				relationsOrLetter.setIsCodingByDecomposition(Settings.THIS_IS_A_CODING_ELEMENT);
+				relationsOrLetter.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
 		else if (relationsOrLetter.getDescriptorName().equals("relations")) {
 			Relations relations = (Relations) relationsOrLetter;
 			relations.setGroupsAsCodingDescriptors();
@@ -133,7 +133,7 @@ public class Group extends HowManyGroups implements ISynTreeElementWithPosition,
 				(WhichPositionTypeOS) positionType.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		RelationsOrLetterOS relationsOrLetterOS = 
 				(RelationsOrLetterOS) relationsOrLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		groupOS = new GroupOS(groupID, isCodingByDecomposition, sizeOS, positionOS, relationsOrLetterOS);
+		groupOS = new GroupOS(groupID, isCodingElement, sizeOS, positionOS, relationsOrLetterOS);
 		return groupOS;		
 	}
 

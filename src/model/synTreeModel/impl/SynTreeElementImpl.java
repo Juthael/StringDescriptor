@@ -17,8 +17,8 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	public SynTreeElementImpl() {
 	}
 	
-	public SynTreeElementImpl(boolean isCodingByDecomposition) {
-		super(isCodingByDecomposition);
+	public SynTreeElementImpl(boolean isCodingElement) {
+		super(isCodingElement);
 	}
 	
 	@Override
@@ -80,8 +80,8 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	}
 	
 	@Override 
-	public void setIsCodingByDecomposition(boolean isCodingByDecomposition) {
-		this.isCodingByDecomposition = isCodingByDecomposition;
+	public void setIsCodingElement(boolean isCodingElement) {
+		this.isCodingElement = isCodingElement;
 	}
 
 	@Override

@@ -56,5 +56,10 @@ public abstract class AbstractOmegaElement extends AbstractNonMinimalOS implemen
 		}
 		return redundantMap;
 	}
+	
+	@Override
+	public boolean getIsOmegaElement() {
+		return true;
+	}	
 
 }

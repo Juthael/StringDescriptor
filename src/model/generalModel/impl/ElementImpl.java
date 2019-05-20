@@ -10,20 +10,20 @@ import settings.Settings;
 
 public abstract class ElementImpl implements IElement {
 
-	protected boolean isCodingByDecomposition;
+	protected boolean isCodingElement;
 	
 	
 	public ElementImpl() {
-		isCodingByDecomposition = false;
+		isCodingElement = false;
 	}
 	
-	public ElementImpl(boolean isCodingByDecomposition) {
-		this.isCodingByDecomposition = isCodingByDecomposition;
+	public ElementImpl(boolean isCodingElement) {
+		this.isCodingElement = isCodingElement;
 	}
 
 	@Override
-	public boolean getIsCodingByDecomposition() {
-		return isCodingByDecomposition;
+	public boolean getIsCodingElement() {
+		return isCodingElement;
 	}
 
 	@Override
@@ -60,9 +60,20 @@ public abstract class ElementImpl implements IElement {
 		return setOfAllPropertyListsAccessibleFromThisDescriptor;
 	}
 
+	@Override
 	public List<IElement> getListOfComponents(){
 		List<IElement> listOfComponents = new ArrayList<IElement>();
 		return listOfComponents;
+	}
+	
+	@Override
+	public List<IElement> getListOfCodingElements(){
+		List<IElement> listOfCodingElements = new ArrayList<IElement>();
+		if (isCodingElement == true)
+			listOfCodingElements.add(this);
+		for (IElement element : getListOfComponents())
+			listOfCodingElements.addAll(element.getListOfCodingElements());
+		return listOfCodingElements;
 	}
 	
 	@Override

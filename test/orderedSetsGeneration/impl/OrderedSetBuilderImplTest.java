@@ -38,7 +38,7 @@ public class OrderedSetBuilderImplTest {
 		Set<IOrderedSet> lowerSet = omega.getLowerSet();
 		Set<String> retrievedSetOfCodingElementsIDs = new HashSet<String>();
 		for (IOrderedSet lowerSetElement : lowerSet) {
-			if (lowerSetElement.getIsCodingByDecomposition() == true) {
+			if (lowerSetElement.getIsCodingElement() == true) {
 				retrievedSetOfCodingElementsIDs.add(lowerSetElement.getElementID());
 			}
 		}

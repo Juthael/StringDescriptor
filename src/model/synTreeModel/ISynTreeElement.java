@@ -18,5 +18,5 @@ public interface ISynTreeElement extends IElement {
 	IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
 			throws OrderedSetsGenerationException;
 	
-	void setIsCodingByDecomposition(boolean isCodingByDecomposition);
+	void setIsCodingElement(boolean isCodingElement);
 }

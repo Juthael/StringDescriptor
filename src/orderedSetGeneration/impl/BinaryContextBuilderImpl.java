@@ -26,9 +26,16 @@ public class BinaryContextBuilderImpl implements IBinaryContextBuilder {
 	private BinaryContext setContext(IOrderedSet orderedSet) throws OrderedSetsGenerationException {
 		BinaryContext context;
 		Map<String, Set<String>> relation;
-		if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
-			relation = orderedSet.getReducedRelation();
-		else relation = orderedSet.getRelation();
+		if (Settings.CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS) {
+			if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
+				relation = orderedSet.getSetOfCodingComponentsReducedRelation();
+			else relation = orderedSet.getSetOfCodingComponentsRelation();
+		}
+		else {
+			if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED)
+				relation = orderedSet.getReducedRelation();
+			else relation = orderedSet.getRelation();
+		}
 		Vector<String> attributes = new Vector<String>(relation.keySet());
 		Vector<String> objects = new Vector<String>(attributes);
 		Vector<Vector<String>> values = new Vector<Vector<String>>();

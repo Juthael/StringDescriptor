@@ -51,7 +51,7 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	}
 	
 	public void setGroupsAsCodingDescriptors() {
-		groups.setIsCodingByDecomposition(Settings.THIS_IS_A_CODING_ELEMENT);
+		groups.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
 	}
 	
 	@Override

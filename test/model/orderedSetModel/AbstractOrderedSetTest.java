@@ -121,6 +121,7 @@ public class AbstractOrderedSetTest {
 		List<String> propertiesWithPath = charStringOmega.getListOfPropertiesWithPath();
 		List<String> lowerSetMaximalChains = charStringOmega.getListOfLowerSetMaximalChains();
 		Set<IOrderedSet> lowerSet = charStringOmega.getLowerSet();
+		/*
 		for (IOrderedSet set : lowerSet) {
 			System.out.print("SET ID : ");
 			System.out.println(set.getElementID());
@@ -143,6 +144,7 @@ public class AbstractOrderedSetTest {
 		for (String maxChain : lowerSetMaximalChains) {
 			System.out.println(maxChain);
 		}
+		*/
 		Map<String, Set<String>> minimalElementToParents = new HashMap<String, Set<String>>();
 		for (String maxChain : lowerSetMaximalChains) {
 			int lastSlashIndex = maxChain.lastIndexOf(Settings.PATH_SEPARATOR);

@@ -13,8 +13,8 @@ public abstract class SynTreeElementWithPositionImpl extends SynTreeElementImpl 
 	public SynTreeElementWithPositionImpl() {
 	}
 
-	public SynTreeElementWithPositionImpl(boolean isCodingByDecomposition) {
-		super(isCodingByDecomposition);
+	public SynTreeElementWithPositionImpl(boolean isCodingElement) {
+		super(isCodingElement);
 	}
 	
 	public void updatePosition(String newPosition, List<IElement>componentDescriptors) 

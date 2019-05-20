@@ -22,9 +22,9 @@ public class GroupOS extends AbstractNonMinimalOS implements IOrderedSet {
 		this.relationsOrLetter = relationsOrLetter;
 	}
 
-	public GroupOS(String elementID, boolean isCodingByDecomposition, SizeOS size, WhichPositionTypeOS positionType, 
+	public GroupOS(String elementID, boolean isCodingElement, SizeOS size, WhichPositionTypeOS positionType, 
 			RelationsOrLetterOS relationsOrLetter) {
-		super(elementID, isCodingByDecomposition);
+		super(elementID, isCodingElement);
 		this.size = size;
 		this.positionType = positionType;
 		this.relationsOrLetter = relationsOrLetter;		

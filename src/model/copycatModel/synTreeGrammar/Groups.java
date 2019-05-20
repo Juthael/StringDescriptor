@@ -39,7 +39,8 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 		if (fullStringGroup == Settings.FULL_STRING_GROUP && groupHM.getDescriptorName().equals("group")){
 			this.size = size;
 			Group group = (Group) groupHM;
-			group.setLetterOrRelationsComponentsAsCodingDescriptor();
+			//HERE 
+			//group.setLetterOrRelationsComponentsAsCodingDescriptor();
 			this.groupHM = group;
 			List<IElement> listWithSingleGroup = new ArrayList<IElement>(); 
 			listWithSingleGroup.add(this.groupHM);
@@ -93,7 +94,7 @@ public class Groups extends SynTreeElementWithPositionImpl implements ISynTreeEl
 		}
 		else throw new OrderedSetsGenerationException("Groups.upgradeAsTheElementOfAnOrderedSet : "
 			+ "groupHM descriptor name was unexpected. (" + groupHM.getDescriptorName() + ")");
-		groupsOS = new GroupsOS(groupsID, isCodingByDecomposition, sizeOS, listOfGroupOS);
+		groupsOS = new GroupsOS(groupsID, isCodingElement, sizeOS, listOfGroupOS);
 		return groupsOS;		
 	}	
 

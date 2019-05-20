@@ -21,6 +21,7 @@ import fca.gui.lattice.element.GraphicalLattice;
 import fca.gui.lattice.element.LatticeStructure;
 import fca.gui.util.constant.LMIcons;
 import fca.gui.util.constant.LMImages;
+import launcher.utils.DescriptionKeyboardInputManager;
 import model.orderedSetModel.impl.AbstractOmegaElement;
 import model.synTreeModel.ISignal;
 import stringDescription.IDescription;
@@ -73,64 +74,46 @@ public class CalculatorsTesting {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("aabbcc", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcde", "fromLeftToRight");
 			ISignal signal = signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
-			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
-			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();
-			String firstID = listOfIDs.get(0);
-			List<String> firstIDProperties = description.getOrderedSetIDToOrderedSet().get(firstID).getListOfPropertiesWithPath();
-			List<String> firstIDMaxChains = description.getOrderedSetIDToListOfMaximalChainsMapping().get(firstID);
-			System.out.println("FIRST RESULT : ");
-			System.out.println("Syntactic tree : ");
-			for (String property : firstIDProperties) {
-				System.out.println(property);
-			}
-			System.out.println("");
-			for (String maxChain : firstIDMaxChains) {
-				System.out.println(maxChain);
-			}
-			System.out.println("");
-			System.out.print("SCORE : ");
-			System.out.println(description.getOrderedSetIDToScoreMapping().get(firstID));
-			ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(firstID);
-			BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(firstID);
-			/*LMLogger.getLMLogger();
-			LMImages.getLMImages();
-			LMIcons.getLMIcons();
-			LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
-			GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
-			LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
-			latticeViewerFirst.setVisible(true);*/
-			
-			String otherID = listOfIDs.get(listOfIDs.size()-1);
-			List<String> otherIDMaxChains = description.getOrderedSetIDToListOfMaximalChainsMapping().get(otherID);
-			List<String> otherIDProperties = description.getOrderedSetIDToOrderedSet().get(otherID).getListOfPropertiesWithPath();
-			System.out.println("OTHER RESULT : ");
-			System.out.println("Syntactic tree : ");
-			for (String property : otherIDProperties) {
-				System.out.println(property);
-			}
-			System.out.println("");
-			for (String maxChain : otherIDMaxChains) {
-				System.out.println(maxChain);
-			}
-			System.out.println("");
-			System.out.print("SCORE : ");
-			System.out.println(description.getOrderedSetIDToScoreMapping().get(otherID));
-			ConceptLattice latticeOther = orderedSetIDToConceptLattice.get(otherID);
-			BinaryContext binaryContextOther = description.getOrderedSetIDToBinaryContextMapping().get(otherID);
-			/*LMLogger.getLMLogger();
-			LMImages.getLMImages();
-			LMIcons.getLMIcons(); */
-			/* LatticeStructure latticeStructureOther = new LatticeStructure(latticeOther, binaryContextOther, LatticeStructure.BEST);
-			GraphicalLattice graphicalLatticeOther = new GraphicalLattice(latticeOther, latticeStructureOther);
-			LatticeViewer latticeViewerOther = new LatticeViewer(graphicalLatticeOther);
-			latticeViewerOther.setVisible(true);
-			System.out.println("STOP"); */
-			
+			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();			
+			for (String iD : listOfIDs) {
+				/*
+				System.out.println("Description : ");
+				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
+				System.out.println("");
+				
+				List<String> firstIDProperties = description.getOrderedSetIDToOrderedSet().get(iD).getListOfPropertiesWithPath();
+				List<String> firstIDMaxChains = description.getOrderedSetIDToListOfMaximalChainsMapping().get(iD);
+				 
+				System.out.println("Syntactic tree : ");
+				for (String property : firstIDProperties) {
+					System.out.println(property);
+				}
+				System.out.println("");
+				for (String maxChain : firstIDMaxChains) {
+					System.out.println(maxChain);
+				}
+				System.out.println("");
+				System.out.print("SCORE : ");
+				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
+				*/
+				ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
+				BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
+				/*
+				LMLogger.getLMLogger();
+				LMImages.getLMImages();
+				LMIcons.getLMIcons();
+				LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
+				GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
+				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
+				latticeViewerFirst.setVisible(true); 
+				String waitHere = DescriptionKeyboardInputManager.readString();	
+				*/
+			}		
 		}
 		catch (Exception unexpected) {
 			System.out.println(unexpected.getMessage());

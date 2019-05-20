@@ -15,13 +15,13 @@ public abstract class AbstractNonMinimalOS extends AbstractOrderedSet implements
 		setIdiosyncraticProperty();
 	}
 
-	public AbstractNonMinimalOS(String elementID, boolean isCodingByDecomposition) {
-		super(elementID, isCodingByDecomposition);
+	public AbstractNonMinimalOS(String elementID, boolean isCodingElement) {
+		super(elementID, isCodingElement);
 		setIdiosyncraticProperty();
 	}
 
-	public AbstractNonMinimalOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
+	public AbstractNonMinimalOS(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement) {
+		super(elementID, isCodingElement, mayBeTheCodedElement);
 		setIdiosyncraticProperty();
 	}
 	

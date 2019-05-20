@@ -29,7 +29,13 @@ public class GroupsBuilderRelationalImpl extends GroupsBuilderImpl implements IG
 			boolean listOfGroupsCoverTheFullString) throws SynTreeGenerationException, CloneNotSupportedException {
 		super(listOfGroups, listOfGroupsCoverTheFullString);
 		this.relationDataContainer = relationDataContainer;
-		groupBuilder = new GroupBuilderImpl(super.listOfGroups, this.relationDataContainer);
+		List<Group> listOfCodingGroups = new ArrayList<Group>();
+		for (Group group : super.listOfGroups) {
+			Group groupClone = group.clone();
+			groupClone.setIsCodingElement(true);
+			listOfCodingGroups.add(groupClone);
+		}
+		groupBuilder = new GroupBuilderImpl(listOfCodingGroups, this.relationDataContainer);
 		Group group = groupBuilder.getGroup();
 		List<Group> newListOfGroups = new ArrayList<Group>();
 		newListOfGroups.add(group);

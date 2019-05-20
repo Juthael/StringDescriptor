@@ -22,6 +22,12 @@ public class GroupBuilderImpl implements IGroupBuilder {
 		this.relationDataContainer = relationDataContainer;
 	}
 	
+	public GroupBuilderImpl(List<Group> listOfGroups, IRelationDataContainer relationDataContainer, 
+			boolean listOfGroupsCoverTheWholeString) {
+		this.listOfGroups = listOfGroups;
+		this.relationDataContainer = relationDataContainer;
+	}	
+	
 	@Override
 	public Group getGroup() throws SynTreeGenerationException, CloneNotSupportedException {
 		Group group;

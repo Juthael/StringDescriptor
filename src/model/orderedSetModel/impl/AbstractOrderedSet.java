@@ -27,14 +27,14 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		isTheCodedElement = false;
 	}
 	
-	public AbstractOrderedSet(String elementID, boolean isCodingByDecomposition) {
-		super(isCodingByDecomposition);
+	public AbstractOrderedSet(String elementID, boolean isCodingElement) {
+		super(isCodingElement);
 		this.elementID = elementID;
 		isTheCodedElement = false;
 	}
 	
-	public AbstractOrderedSet(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement) {
-		super(isCodingByDecomposition);
+	public AbstractOrderedSet(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement) {
+		super(isCodingElement);
 		this.elementID = elementID;
 		isTheCodedElement = false;
 	}
@@ -47,7 +47,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	@Override
 	public List<String> getListOfCodingComponentsIDs(){
 		List<String> listOfCodingComponentsIDs = new ArrayList<String>();
-		if (this.isCodingByDecomposition == true) {
+		if (this.isCodingElement == true) {
 			listOfCodingComponentsIDs.add(elementID);
 			for (IElement element : getListOfComponents()) {
 				IOrderedSet subset = (IOrderedSet) element;
@@ -82,6 +82,18 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 			}	
 		}
 		return reducedRelation;
+	}
+	
+	@Override
+	public Map<String, Set<String>> getSetOfCodingComponentsRelation(){
+		IOrderedSet omegaElement = buildGenericElementsWithCodingElemAsAtoms();
+		return omegaElement.getRelation();
+	}
+	
+	@Override
+	public Map<String, Set<String>> getSetOfCodingComponentsReducedRelation(){
+		IOrderedSet omegaElement = buildGenericElementsWithCodingElemAsAtoms();
+		return omegaElement.getReducedRelation();
 	}	
 	
 	@Override
@@ -113,6 +125,11 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	@Override
 	public boolean getIsTheCodedElement() {
 		return isTheCodedElement;
+	}
+	
+	@Override
+	public boolean getIsOmegaElement() {
+		return false;
 	}
 	
 	@Override
@@ -277,5 +294,21 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 
 	@Override
 	abstract public String getDescriptorName();
+	
+	private GenericOmegaElement buildGenericElementsWithCodingElemAsAtoms() {
+		String verbalDescription;
+		if (this.getIsOmegaElement() == true) {
+			AbstractOmegaElement omegaElement = (AbstractOmegaElement) this;
+			verbalDescription = omegaElement.getVerbalDescription();
+		}
+		else verbalDescription = "No description available";
+		List<IElement> listOfCodingComponents = getListOfCodingElements();
+		List<IOrderedSet> listOfCodingComponentsOS = new ArrayList<IOrderedSet>();
+		for (IElement element : listOfCodingComponents) {
+			listOfCodingComponentsOS.add((IOrderedSet) element);
+		}
+		GenericOmegaElement omegaElement = new GenericOmegaElement(listOfCodingComponentsOS, verbalDescription);
+		return omegaElement;
+	}
 
 }

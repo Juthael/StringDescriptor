@@ -21,9 +21,9 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 		this.groups = groups;
 	}
 
-	public CharStringOS(String elementID, boolean isCodingByDecomposition, boolean mayBeTheCodedElement, DirectionOS direction, 
+	public CharStringOS(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement, DirectionOS direction, 
 			StructureOS structure, GroupsOS groups) {
-		super(elementID, isCodingByDecomposition, mayBeTheCodedElement);
+		super(elementID, isCodingElement, mayBeTheCodedElement);
 		this.direction = direction;
 		this.structure = structure;
 		this.groups = groups;

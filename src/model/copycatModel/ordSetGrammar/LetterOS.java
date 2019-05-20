@@ -19,8 +19,8 @@ public class LetterOS extends AbstractNonMinimalOS implements RelationsOrLetterO
 		this.platonicLetter = platonicLetter;
 	}
 	
-	public LetterOS(String elementID, boolean isCodingByDecomposition, PositionOS position, PlatonicLetterOS platonicLetter) {
-		super(elementID, isCodingByDecomposition);
+	public LetterOS(String elementID, boolean isCodingElement, PositionOS position, PlatonicLetterOS platonicLetter) {
+		super(elementID, isCodingElement);
 		this.position = position;
 		this.platonicLetter = platonicLetter;
 	}	

@@ -35,7 +35,7 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 		Letter cloneLetter;
 		Position clonePosition = position.clone();
 		PlatonicLetter clonePlatonicLetter = platonicLetter.clone();
-		cloneLetter = new Letter(isCodingByDecomposition, clonePosition, clonePlatonicLetter);
+		cloneLetter = new Letter(isCodingElement, clonePosition, clonePlatonicLetter);
 		return cloneLetter;
 	}
 	
@@ -67,7 +67,7 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 		PositionOS positionOS = (PositionOS) position.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		PlatonicLetterOS platonicLetterOS = 
 				(PlatonicLetterOS) platonicLetter.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		letterOS = new LetterOS(letterID, isCodingByDecomposition, positionOS, platonicLetterOS);
+		letterOS = new LetterOS(letterID, isCodingElement, positionOS, platonicLetterOS);
 		return letterOS;		
 	}		
 

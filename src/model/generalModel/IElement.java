@@ -5,7 +5,7 @@ import java.util.Set;
 
 public interface IElement {
 
-	boolean getIsCodingByDecomposition();
+	boolean getIsCodingElement();
 	
 	List<String> getListOfPropertiesWithPath();
 	
@@ -14,6 +14,8 @@ public interface IElement {
 	Set<List<String>> getSetOfAllPropertyListsAccessibleFromThisDescriptor();
 	
 	List<IElement> getListOfComponents();
+	
+	List<IElement> getListOfCodingElements();
 	
 	String getDescriptorName();
 	
