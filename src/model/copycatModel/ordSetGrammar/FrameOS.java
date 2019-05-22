@@ -1,11 +1,15 @@
 package model.copycatModel.ordSetGrammar;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import settings.Settings;
 
 public class FrameOS extends AbstractNonMinimalOS implements IOrderedSet {
 
@@ -43,6 +47,15 @@ public class FrameOS extends AbstractNonMinimalOS implements IOrderedSet {
 	public String getDescriptorName() {
 		return NAME;
 	}
+	
+	@Override
+	public Map<String, Set<String>> getReducedRelation() throws OrderedSetsGenerationException {
+		if (Settings.FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION) {
+			Set<String> emptyListOfRelevantElementsIDs = new HashSet<String>();
+			return getContextualRelation(emptyListOfRelevantElementsIDs, Settings.THIS_IS_NOT_A_COMPONENT_ELEMENT);
+		}
+		else return super.getReducedRelation();
+	}	
 	
 	@Override
 	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {

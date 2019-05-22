@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 
 public interface IOrderedSet extends IElement {
@@ -12,13 +13,16 @@ public interface IOrderedSet extends IElement {
 	
 	List<String> getListOfCodingComponentsIDs();
 	
-	Map<String, Set<String>> getRelation();
+	Map<String, Set<String>> getRelation() throws OrderedSetsGenerationException;
 	
-	Map<String, Set<String>> getReducedRelation();
+	Map<String, Set<String>> getReducedRelation() throws OrderedSetsGenerationException;
 	
-	Map<String, Set<String>> getSetOfCodingComponentsRelation();
+	Map<String, Set<String>> getContextualRelation(Set<String> setOfContextuallyRelevantElements, 
+			boolean thisIsAComponentElement) throws OrderedSetsGenerationException;
 	
-	Map<String, Set<String>> getSetOfCodingComponentsReducedRelation();
+	Map<String, Set<String>> getSetOfCodingComponentsRelation() throws OrderedSetsGenerationException;
+	
+	Map<String, Set<String>> getSetOfCodingComponentsReducedRelation() throws OrderedSetsGenerationException;
 	
 	List<String> getListOfLowerSetMaximalChains();
 	
@@ -29,6 +33,8 @@ public interface IOrderedSet extends IElement {
 	Set<String> getLowerSetIDs();
 	
 	Set<String> getLowerSetInformativeIDs();	
+	
+	Set<String> getLowerSetContextuallyInformativeIDs(Set<String> setOfContextuallyRelevantElements);	
 	
 	Set<IOrderedSet> getLowerSet();
 	

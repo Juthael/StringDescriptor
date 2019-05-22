@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 import model.generalModel.impl.ElementImpl;
 import model.orderedSetModel.IOrderedSet;
@@ -58,7 +59,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	}	
 	
 	@Override
-	public Map<String, Set<String>> getRelation(){
+	public Map<String, Set<String>> getRelation() throws OrderedSetsGenerationException{
 		Map<String, Set<String>> relation = new HashMap<String, Set<String>>();
 		relation.put(getElementID(), getLowerSetIDs());
 		List<IElement> listOfComponents = getListOfComponents();
@@ -70,7 +71,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	}
 	
 	@Override
-	public Map<String, Set<String>> getReducedRelation(){
+	public Map<String, Set<String>> getReducedRelation() throws OrderedSetsGenerationException{
 		Map<String, Set<String>> reducedRelation = new HashMap<String, Set<String>>();
 		if (thisSetIsInformative == true) {
 			reducedRelation.put(getElementID(), getLowerSetInformativeIDs());
@@ -85,13 +86,44 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	}
 	
 	@Override
-	public Map<String, Set<String>> getSetOfCodingComponentsRelation(){
+	public Map<String, Set<String>> getContextualRelation(Set<String> setOfContextuallyRelevantElements, 
+			boolean thisIsAComponentElement) throws OrderedSetsGenerationException{
+		Map<String, Set<String>> contextualRelation = new HashMap<String, Set<String>>();
+		if (thisSetIsInformative == true) {
+			String iD = getElementID();
+			if (thisIsAComponentElement) {
+				//if (!setOfContextuallyRelevantElements.isEmpty()) {
+					if (setOfContextuallyRelevantElements.contains(iD)) {
+						Set<String> lowerSetInformativeIDs = getLowerSetInformativeIDs();
+						lowerSetInformativeIDs.retainAll(setOfContextuallyRelevantElements);
+						contextualRelation.put(iD, lowerSetInformativeIDs);			
+					}
+				//}
+				//else throw new OrderedSetsGenerationException("AbstractOrderedSet.getContextualRelation() : empty set of "
+						//+ "relevant elements.");
+			}
+			else {
+				contextualRelation.put(getElementID(), getLowerSetInformativeIDs());
+			}
+			List<IElement> listOfComponents = getListOfComponents();
+			for (IElement component : listOfComponents) {
+				IOrderedSet setComponent = (IOrderedSet) component;
+				contextualRelation.putAll(setComponent.getContextualRelation(
+						setOfContextuallyRelevantElements, thisIsAComponentElement));
+			}
+		}
+		return contextualRelation;	
+	}
+	
+	
+	@Override
+	public Map<String, Set<String>> getSetOfCodingComponentsRelation() throws OrderedSetsGenerationException{
 		IOrderedSet omegaElement = buildGenericElementsWithCodingElemAsAtoms();
 		return omegaElement.getRelation();
 	}
 	
 	@Override
-	public Map<String, Set<String>> getSetOfCodingComponentsReducedRelation(){
+	public Map<String, Set<String>> getSetOfCodingComponentsReducedRelation() throws OrderedSetsGenerationException{
 		IOrderedSet omegaElement = buildGenericElementsWithCodingElemAsAtoms();
 		return omegaElement.getReducedRelation();
 	}	
@@ -148,6 +180,13 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 			informativeLowerSet.addAll(getUnionOfComponentsInformativeLowerSetsIDs());
 		}
 		return informativeLowerSet;
+	}
+	
+	@Override
+	public Set<String> getLowerSetContextuallyInformativeIDs(Set<String> setOfContextuallyRelevantElements){
+		Set<String> contextuallyInformativeLowerSet = getLowerSetInformativeIDs();
+		contextuallyInformativeLowerSet.retainAll(setOfContextuallyRelevantElements);
+		return contextuallyInformativeLowerSet;
 	}
 	
 	public Set<IOrderedSet> getLowerSet(){
@@ -275,6 +314,8 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	
 	protected boolean checkThatInformativeStatusIsUpToDate() {
 		boolean thisElementHasBeenUpdated = false;
+		// HERE
+		/*
 		if (thisSetIsInformative == true) {
 			if (nbOfParents == 1 && nbOfInformativeChildren == 0) {
 				thisSetIsInformative = false;
@@ -289,6 +330,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 				}				
 			}
 		}
+		*/
 		return thisElementHasBeenUpdated;
 	}
 

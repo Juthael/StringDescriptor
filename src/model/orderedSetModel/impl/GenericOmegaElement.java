@@ -28,6 +28,7 @@ public class GenericOmegaElement extends AbstractOmegaElement implements IOrdere
 		return NAME;
 	}
 	
+	@Override
 	public List<IElement> getListOfComponents(){
 		List<IElement> listOfComponents = super.getListOfComponents();
 		listOfComponents.addAll(listOfOrderedSets);

@@ -81,7 +81,7 @@ public class CalculatorsTesting {
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
 			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();			
 			for (String iD : listOfIDs) {
-				/*
+				
 				System.out.println("Description : ");
 				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
 				System.out.println("");
@@ -100,10 +100,10 @@ public class CalculatorsTesting {
 				System.out.println("");
 				System.out.print("SCORE : ");
 				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
-				*/
+				
 				ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
 				BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
-				/*
+				
 				LMLogger.getLMLogger();
 				LMImages.getLMImages();
 				LMIcons.getLMIcons();
@@ -112,7 +112,7 @@ public class CalculatorsTesting {
 				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
 				latticeViewerFirst.setVisible(true); 
 				String waitHere = DescriptionKeyboardInputManager.readString();	
-				*/
+				
 			}		
 		}
 		catch (Exception unexpected) {

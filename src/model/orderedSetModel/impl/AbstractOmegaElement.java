@@ -21,9 +21,9 @@ public abstract class AbstractOmegaElement extends AbstractNonMinimalOS implemen
 	}
 
 	protected void eliminateRedundancies() {
-		Set<IOrderedSet> unionOfComponentsLowerSetS = getUnionOfComponentsLowerSets();
+		Set<IOrderedSet> unionOfComponentsLowerSets = getUnionOfComponentsLowerSets();
 		Map<String, IOrderedSet> idToIOrderedSet = new HashMap<String, IOrderedSet>();
-		for (IOrderedSet orderedSet : unionOfComponentsLowerSetS) {
+		for (IOrderedSet orderedSet : unionOfComponentsLowerSets) {
 			if (!idToIOrderedSet.keySet().contains(orderedSet.getElementID()))
 					idToIOrderedSet.put(orderedSet.getElementID(), orderedSet);
 		}
@@ -50,16 +50,16 @@ public abstract class AbstractOmegaElement extends AbstractNonMinimalOS implemen
 		return true;
 	}
 	
+	@Override
+	public boolean getIsOmegaElement() {
+		return true;
+	}	
+	
 	private Map<String, IOrderedSet> eliminateRedundanciesInMap(Map<String, IOrderedSet> redundantMap) {
 		for (String elementID : redundantMap.keySet()) {
 			redundantMap.get(elementID).eliminateRedundancies(redundantMap);
 		}
 		return redundantMap;
 	}
-	
-	@Override
-	public boolean getIsOmegaElement() {
-		return true;
-	}	
 
 }

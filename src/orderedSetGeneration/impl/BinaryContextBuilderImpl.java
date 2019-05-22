@@ -48,7 +48,7 @@ public class BinaryContextBuilderImpl implements IBinaryContextBuilder {
 			}
 			values.add(valuesForThisObject);
 		}
-		context = new BinaryContext("omega", objects, attributes, values);
+		context = new BinaryContext(orderedSet.getElementID(), objects, attributes, values);
 		if (Settings.BINARY_CONTEXTS_MUST_BE_CLARIFIED)
 			return context.clarifyContext();
 		else return context;

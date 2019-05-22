@@ -27,6 +27,8 @@ public class Settings {
 	public static final String POSITION_VALUES_SEPARATOR = ":";
 	public static final String STRUCTURE_RELATION_CONVENTIONAL_DIMENSION = "frame.size";
 	public static final String NO_VERBAL_DESCRIPTION = "No verbal description available";
+	public static final boolean THIS_IS_A_COMPONENT_ELEMENT = true;
+	public static final boolean THIS_IS_NOT_A_COMPONENT_ELEMENT = false;
 	
 	//2.Parameters concerning the generation of syntactic trees
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
@@ -59,8 +61,9 @@ public class Settings {
 	public static final boolean CONSTANT_SEQUENCES_CAN_BE_UPGRADED_TO_SETS = false;
 	public static final boolean ENUM_OF_IDENTICAL_ELEMENTS_CAN_NEVER_BE_UPGRADED = true; //if true, then previous boolean = false
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
-	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = true;
+	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = false;
 	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = true;
 	public static final boolean CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS = false;
+	public static final boolean FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION = true ;
 
 }
