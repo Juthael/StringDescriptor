@@ -4,25 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.CommonDiffOS;
+import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
-import settings.Settings;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.MinimalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class CommonDiff extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "commonDiff";
-	private final String commonDiffValue; 
+	private final MinimalST commonDiffValue; 
 	
-	public CommonDiff(String commonDiffValue) {
-		this.commonDiffValue = commonDiffValue;
+	public CommonDiff(String commonDiffValue) throws CloneNotSupportedException {
+		this.commonDiffValue = new MinimalST(commonDiffValue);
+		setHashCode();
 	}
 	
 	@Override
 	protected CommonDiff clone() throws CloneNotSupportedException {
-		CommonDiff cloneCommonDiff = new CommonDiff(commonDiffValue);
+		CommonDiff cloneCommonDiff = new CommonDiff(commonDiffValue.getValue());
 		return cloneCommonDiff;
 	}
 	
@@ -31,33 +34,25 @@ public class CommonDiff extends SynTreeElementImpl implements ISynTreeElement, C
 		return DESCRIPTOR_NAME;
 	}
 	
-	@Override
-	public List<String> getListOfPropertiesWithPath() {
-		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		StringBuilder sB = new StringBuilder();
-		sB.append(DESCRIPTOR_NAME);
-		sB.append(Settings.PATH_SEPARATOR);
-		sB.append(commonDiffValue);
-		listOfPropertiesWithPath.add(sB.toString());
-		return listOfPropertiesWithPath;
-	}	
-	
-	@Override
-	public List<String> getListOfRelevantPropertiesWithPath() {
-		return getListOfPropertiesWithPath();
-	}
-	
 	public String getValue() {
-		return commonDiffValue;
+		return commonDiffValue.getValue();
 	}
+	
+	@Override
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(commonDiffValue);
+		return listOfComponents;
+	}	
 
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet commonDiffOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer commonDiffIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String commonDiffID = getDescriptorName().concat(commonDiffIndex.toString());
-		MinimalOS commonDiffProperty = new MinimalOS(commonDiffValue);
+		MinimalOS commonDiffProperty = (MinimalOS) commonDiffValue.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		commonDiffOS = new CommonDiffOS(commonDiffID, commonDiffProperty);
 		return commonDiffOS;		
 	}			

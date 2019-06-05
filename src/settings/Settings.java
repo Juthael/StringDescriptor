@@ -29,6 +29,14 @@ public class Settings {
 	public static final String NO_VERBAL_DESCRIPTION = "No verbal description available";
 	public static final boolean THIS_IS_A_COMPONENT_ELEMENT = true;
 	public static final boolean THIS_IS_NOT_A_COMPONENT_ELEMENT = false;
+	public static final String ABSTRACT_TREE_NAME = "abstractFrame";
+	public static final String ABSTRACTABLE_TREE_NAME = "frame";
+	public static final String TREE_TOP_ELEMENT_GENERIC_NAME = "omega";
+	public static final boolean DO_ABSTRACT_COMPONENTS = true;
+	public static final boolean WITH_IDIOSYNCRATIC_ELEMENTS = true;
+	public static final boolean THIS_SET_IS_GENERIC = true;
+	public static final boolean CALLED_BY_GENERIC = true;
+	public static final boolean THIS_ELEMENT_IS_IDIOSYNCRATIC = true;
 	
 	//2.Parameters concerning the generation of syntactic trees
 	public static final int MAX_NB_OF_CHARS_IN_STRING = 10;
@@ -62,7 +70,7 @@ public class Settings {
 	public static final boolean ENUM_OF_IDENTICAL_ELEMENTS_CAN_NEVER_BE_UPGRADED = true; //if true, then previous boolean = false
 	public static final boolean NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED = true;
 	public static final boolean BINARY_CONTEXTS_MUST_BE_CLARIFIED = false;
-	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = true;
+	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = false;
 	public static final boolean CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS = false;
 	public static final boolean FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION = true ;
 

@@ -1,7 +1,6 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -25,11 +24,11 @@ public class CentralProminentPositionOS extends ProminentPositionOS implements W
 	}	
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!centralProminentPositionProperty.equals(idToIOrderedSet.get(centralProminentPositionProperty.getElementID())))
-			centralProminentPositionProperty = (
-					MinimalOS) idToIOrderedSet.get(centralProminentPositionProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (centralProminentPositionProperty.getElementID().equals(orderedSet.getElementID()) 
+				&& centralProminentPositionProperty != orderedSet)
+			centralProminentPositionProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

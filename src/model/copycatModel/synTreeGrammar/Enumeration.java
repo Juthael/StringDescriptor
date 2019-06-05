@@ -4,26 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
-import settings.Settings;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.MinimalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class Enumeration extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "enumeration";
-	private String enumerationValue; //"w,x,y,z" (simple enumeration) or "w,x-y,z" (2nd degree enumeration)
+	private MinimalST enumerationValue;
 	
-	public Enumeration(String enumerationValue) {
-		this.enumerationValue = enumerationValue;
+	public Enumeration(String enumerationValue) throws CloneNotSupportedException {
+		this.enumerationValue = new MinimalST(enumerationValue);
+		setHashCode();
 	}
 	
 	@Override
 	protected Enumeration clone() throws CloneNotSupportedException {
-		Enumeration cloneEnumeration = new Enumeration(enumerationValue);
+		Enumeration cloneEnumeration = new Enumeration(enumerationValue.getValue());
 		return cloneEnumeration;
 	}
 
@@ -34,33 +36,19 @@ public class Enumeration extends SynTreeElementImpl implements ISynTreeElement, 
 	
 	@Override
 	public List<IElement> getListOfComponents(){
-		List<IElement> componentDescriptors = new ArrayList<IElement>();
-		return componentDescriptors;
-	}
-	
-	@Override
-	public List<String> getListOfPropertiesWithPath() {
-		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		StringBuilder sB = new StringBuilder();
-		sB.append(DESCRIPTOR_NAME);
-		sB.append(Settings.PATH_SEPARATOR);
-		sB.append(enumerationValue);
-		listOfPropertiesWithPath.add(sB.toString());
-		return listOfPropertiesWithPath;
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(enumerationValue);
+		return listOfComponents;
 	}	
 	
 	@Override
-	public List<String> getListOfRelevantPropertiesWithPath() {
-		return getListOfPropertiesWithPath();
-	}	
-	
-	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet enumerationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer enumerationIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String enumerationID = getDescriptorName().concat(enumerationIndex.toString());
-		MinimalOS enumerationProperty = new MinimalOS(enumerationValue);
+		MinimalOS enumerationProperty = (MinimalOS) enumerationValue.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		enumerationOS = new EnumerationOS(enumerationID, enumerationProperty);
 		return enumerationOS;		
 	}

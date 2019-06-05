@@ -1,21 +1,21 @@
-package model.synTreeModel.impl;
+package model.synTreeModel.impl.utils.impl;
 
-import model.synTreeModel.IProperty;
+import model.synTreeModel.impl.utils.IProperty;
 import settings.Settings;
 
-public class PropertyImpl implements Cloneable, IProperty {
+public class Property implements Cloneable, IProperty {
 	
 	private String value;
 	
 	
-	public PropertyImpl(String value) {
+	public Property(String value) {
 		this.value = value;
 	}
 	
 	//Clone Method
 	@Override
 	public IProperty clone() throws CloneNotSupportedException {
-		IProperty cloneProperty = new PropertyImpl(this.value);
+		IProperty cloneProperty = new Property(this.value);
 		return cloneProperty;
 	}
 	

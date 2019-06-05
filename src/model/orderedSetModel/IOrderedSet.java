@@ -17,9 +17,6 @@ public interface IOrderedSet extends IElement {
 	
 	Map<String, Set<String>> getReducedRelation() throws OrderedSetsGenerationException;
 	
-	Map<String, Set<String>> getContextualRelation(Set<String> setOfContextuallyRelevantElements, 
-			boolean thisIsAComponentElement) throws OrderedSetsGenerationException;
-	
 	Map<String, Set<String>> getSetOfCodingComponentsRelation() throws OrderedSetsGenerationException;
 	
 	Map<String, Set<String>> getSetOfCodingComponentsReducedRelation() throws OrderedSetsGenerationException;
@@ -34,8 +31,6 @@ public interface IOrderedSet extends IElement {
 	
 	Set<String> getLowerSetInformativeIDs();	
 	
-	Set<String> getLowerSetContextuallyInformativeIDs(Set<String> setOfContextuallyRelevantElements);	
-	
 	Set<IOrderedSet> getLowerSet();
 	
 	Set<IOrderedSet> getInformativeLowerSet();
@@ -48,12 +43,14 @@ public interface IOrderedSet extends IElement {
 
 	boolean getThisSetIsInformative();
 	
+	boolean getThisSetIsGeneric();
+	
 	void setElementID(String elementID);
 	
 	void setMayBeTheCodedElement(boolean mayBeTheCodedElement);
 	
 	void setIsTheCodedElement(boolean isTheCodedElement);
 	
-	void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet);
+	void eliminateRedundancies(IOrderedSet orderedSet);
 
 }

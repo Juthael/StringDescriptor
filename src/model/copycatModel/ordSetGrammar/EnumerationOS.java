@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class EnumerationOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
+public class EnumerationOS extends NonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "enumeration";
 	private MinimalOS enumerationProperty;
@@ -34,10 +33,10 @@ public class EnumerationOS extends AbstractNonMinimalExplicitOS implements IOrde
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!enumerationProperty.equals(idToIOrderedSet.get(enumerationProperty.getElementID())))
-			enumerationProperty = (MinimalOS) idToIOrderedSet.get(enumerationProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (enumerationProperty.getElementID().equals(orderedSet.getElementID()) && enumerationProperty != orderedSet)
+			enumerationProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

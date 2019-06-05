@@ -6,34 +6,35 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.OrderedSetsGenerationException;
-import model.copycatModel.ordSetGrammar.ComponentsOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.copycatModel.ordSetGrammar.RelationsOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IAbstractionTriggerST;
+import model.synTreeModel.impl.AbstractionTriggerST;
 import settings.Settings;
 
-public class Relations extends RelationsOrLetter implements ISynTreeElement, Cloneable {
+public class Relations extends AbstractionTriggerST implements IRelationsOrLetter, IAbstractionTriggerST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "relations";
 	private Components components;
-	private HowManyDimensions dimensionHM;
-	private HowManyRelations relationHM;
+	private IOneOrManyDimensions dimensionHM;
+	private IOneOrManyRelations relationHM;
 	
-	public Relations(Components components, HowManyDimensions dimensionX, 
-			HowManyRelations relationX) {
+	public Relations(Components components, IOneOrManyDimensions dimensionX, 
+			IOneOrManyRelations relationX) {
 		this.components = components;
 		this.dimensionHM = dimensionX;
 		this.relationHM = relationX;
+		setHashCode();
 	}
 	
 	@Override
 	protected Relations clone() throws CloneNotSupportedException {
 		Relations cloneRelations;
 		Components cloneComponents = components.clone();
-		HowManyDimensions cloneDimensionX = dimensionHM.clone();
-		HowManyRelations cloneRelationX = relationHM.clone();
+		IOneOrManyDimensions cloneDimensionX = dimensionHM.clone();
+		IOneOrManyRelations cloneRelationX = relationHM.clone();
 		cloneRelations = new Relations(cloneComponents, cloneDimensionX, cloneRelationX);
 		return cloneRelations;
 	}
@@ -52,7 +53,7 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 	
 	public void setComponentsAsCodingDescriptors() {
 		components.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
-	}
+	}	
 	
 	@Override
 	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
@@ -61,7 +62,7 @@ public class Relations extends RelationsOrLetter implements ISynTreeElement, Clo
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer relationsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String relationsID = getDescriptorName().concat(relationsIndex.toString());
-		ComponentsOS componentsOS = (ComponentsOS) components.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		IOrderedSet componentsOS = components.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		List<RelationOS> listOfRelationOS = new ArrayList<RelationOS>();
 		if (relationHM.getDescriptorName().contains("relationX")) {
 			for (IElement element : relationHM.getListOfComponents()) {

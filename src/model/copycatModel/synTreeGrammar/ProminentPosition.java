@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElementWithPosition;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IPositionableST;
 
-public abstract class ProminentPosition extends WhichPositionType implements ISynTreeElementWithPosition, Cloneable {
+public abstract class ProminentPosition extends WhichPositionType implements IGrammaticalST, 
+	IPositionableST, Cloneable {
 
 	protected static final String DESCRIPTOR_NAME = "prominentPosition";
 	protected Position position;
 	
 	public ProminentPosition(Position position) {
 		this.position = position;
+		setHashCode();
 	}
 	
 	@Override
@@ -33,6 +37,7 @@ public abstract class ProminentPosition extends WhichPositionType implements ISy
 	}	
 
 	@Override
-	abstract public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex);
+	abstract public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException;
 
 }

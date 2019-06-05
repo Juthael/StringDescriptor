@@ -4,25 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
+import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.GenericOS;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
-import settings.Settings;
+import model.synTreeModel.impl.GrammaticalST;
+import model.synTreeModel.impl.MinimalST;
 import syntacticTreesGeneration.impl.DimensionEncodingManager;
 
-public class Dimension extends HowManyDimensions implements ISynTreeElement, Cloneable {
+public class Dimension extends GrammaticalST implements IOneOrManyDimensions, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "dimension";
-	private String indexedPath;
+	private MinimalST indexedPath;
 	
-	public Dimension(String indexedPath) {
-		this.indexedPath = getDimensionCode(indexedPath);
+	public Dimension(String indexedPath) throws CloneNotSupportedException {
+		this.indexedPath = new MinimalST(indexedPath);
+		setHashCode();
 	}
 	
 	@Override
-	protected Dimension clone() throws CloneNotSupportedException {
-		Dimension cloneDimension = new Dimension(indexedPath);
+	public Dimension clone() throws CloneNotSupportedException {
+		Dimension cloneDimension = new Dimension(indexedPath.getValue());
 		return cloneDimension;
 	}
 	
@@ -32,19 +36,29 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	public List<String> getListOfPropertiesWithPath() {
-		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		StringBuilder sB = new StringBuilder();
-		sB.append(DESCRIPTOR_NAME);
-		sB.append(Settings.PATH_SEPARATOR);
-		sB.append(indexedPath);
-		listOfPropertiesWithPath.add(sB.toString());
-		return listOfPropertiesWithPath;
+	public List<String> getListOfRelevantPropertiesWithPath() {
+		return getListOfPropertiesWithPath();
 	}
 	
 	@Override
-	public List<String> getListOfRelevantPropertiesWithPath() {
-		return getListOfPropertiesWithPath();
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(indexedPath);
+		return listOfComponents;
+	}
+	
+	@Override
+	public IOrderedSet upgradeAsTheGenericElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
+		IOrderedSet orderedSet;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer index = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String iD = getDescriptorName().concat(index.toString());
+		MinimalOS dimensionProperty = (MinimalOS) indexedPath.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		List<IOrderedSet> listOfComponents = new ArrayList<IOrderedSet>();
+		listOfComponents.add(dimensionProperty);
+		orderedSet = new GenericOS(iD, getDescriptorName(), listOfComponents);
+		return orderedSet;
 	}		
 	
 	@Override
@@ -53,7 +67,7 @@ public class Dimension extends HowManyDimensions implements ISynTreeElement, Clo
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer dimensionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String dimensionID = getDescriptorName().concat(dimensionIndex.toString());
-		MinimalOS dimensionProperty = new MinimalOS(getDimensionCode(indexedPath));
+		MinimalOS dimensionProperty = new MinimalOS(getDimensionCode(indexedPath.getValue()));
 		dimensionOS = new DimensionOS(dimensionID, dimensionProperty);
 		return dimensionOS;		
 	}	

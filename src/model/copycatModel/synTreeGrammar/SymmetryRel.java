@@ -12,19 +12,20 @@ import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.copycatModel.ordSetGrammar.SymmetryRelOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 
-public class SymmetryRel extends Relation implements ISynTreeElement, Cloneable {
+public class SymmetryRel extends Relation implements IGrammaticalST, Cloneable {
 
 	private Symmetry symmetry;
 	
 	public SymmetryRel(Dimension dimension, Enumeration enumeration, Symmetry symmetry) {
 		super(dimension, enumeration);
-		this.symmetry = symmetry;			
+		this.symmetry = symmetry;	
+		setHashCode();
 	}
 	
 	@Override
-	protected SymmetryRel clone() throws CloneNotSupportedException {
+	public SymmetryRel clone() throws CloneNotSupportedException {
 		SymmetryRel cloneSymmetryRel;
 		Dimension cloneDimension = dimension.clone();
 		Enumeration cloneEnumeration = this.enumeration.clone();

@@ -1,4 +1,4 @@
-package model.synTreeModel.impl;
+package model.synTreeModel.impl.utils.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
-import model.synTreeModel.IProperty;
-import model.synTreeModel.IPropertyContainer;
+import model.synTreeModel.impl.utils.IProperty;
+import model.synTreeModel.impl.utils.IPropertyContainer;
 import settings.Settings;
 
-public class PropertyContainerImpl implements Cloneable, IPropertyContainer {
+public class PropertyContainer implements Cloneable, IPropertyContainer {
 	
 	Map<String, IProperty> dimensionToProperty = new HashMap<String, IProperty>();
 	
-	public PropertyContainerImpl(Map<String, IProperty> dimensionToProperty) {
+	public PropertyContainer(Map<String, IProperty> dimensionToProperty) {
 		this.dimensionToProperty = dimensionToProperty;
 	}
 	

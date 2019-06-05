@@ -13,7 +13,7 @@ import model.generalModel.impl.ElementImpl;
 import model.orderedSetModel.IOrderedSet;
 import settings.Settings;
 
-public abstract class AbstractOrderedSet extends ElementImpl implements IOrderedSet {
+public abstract class OrderedSet extends ElementImpl implements IOrderedSet {
 
 	private String elementID;
 	private boolean mayBeTheCodedElement;
@@ -23,18 +23,18 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	private boolean thisSetIsInformative = true;
 	private boolean componentsNbOfParentsHaveBeenIncremented = false;
 	
-	public AbstractOrderedSet(String elementID) {
+	public OrderedSet(String elementID) {
 		this.elementID = elementID;
 		isTheCodedElement = false;
 	}
 	
-	public AbstractOrderedSet(String elementID, boolean isCodingElement) {
+	public OrderedSet(String elementID, boolean isCodingElement) {
 		super(isCodingElement);
 		this.elementID = elementID;
 		isTheCodedElement = false;
 	}
 	
-	public AbstractOrderedSet(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement) {
+	public OrderedSet(String elementID, boolean isCodingElement, boolean mayBeTheCodedElement) {
 		super(isCodingElement);
 		this.elementID = elementID;
 		isTheCodedElement = false;
@@ -83,38 +83,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 			}	
 		}
 		return reducedRelation;
-	}
-	
-	@Override
-	public Map<String, Set<String>> getContextualRelation(Set<String> setOfContextuallyRelevantElements, 
-			boolean thisIsAComponentElement) throws OrderedSetsGenerationException{
-		Map<String, Set<String>> contextualRelation = new HashMap<String, Set<String>>();
-		if (thisSetIsInformative == true) {
-			String iD = getElementID();
-			if (thisIsAComponentElement) {
-				//if (!setOfContextuallyRelevantElements.isEmpty()) {
-					if (setOfContextuallyRelevantElements.contains(iD)) {
-						Set<String> lowerSetInformativeIDs = getLowerSetInformativeIDs();
-						lowerSetInformativeIDs.retainAll(setOfContextuallyRelevantElements);
-						contextualRelation.put(iD, lowerSetInformativeIDs);			
-					}
-				//}
-				//else throw new OrderedSetsGenerationException("AbstractOrderedSet.getContextualRelation() : empty set of "
-						//+ "relevant elements.");
-			}
-			else {
-				contextualRelation.put(getElementID(), getLowerSetInformativeIDs());
-			}
-			List<IElement> listOfComponents = getListOfComponents();
-			for (IElement component : listOfComponents) {
-				IOrderedSet setComponent = (IOrderedSet) component;
-				contextualRelation.putAll(setComponent.getContextualRelation(
-						setOfContextuallyRelevantElements, thisIsAComponentElement));
-			}
-		}
-		return contextualRelation;	
-	}
-	
+	}	
 	
 	@Override
 	public Map<String, Set<String>> getSetOfCodingComponentsRelation() throws OrderedSetsGenerationException{
@@ -183,12 +152,6 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	}
 	
 	@Override
-	public Set<String> getLowerSetContextuallyInformativeIDs(Set<String> setOfContextuallyRelevantElements){
-		Set<String> contextuallyInformativeLowerSet = getLowerSetInformativeIDs();
-		contextuallyInformativeLowerSet.retainAll(setOfContextuallyRelevantElements);
-		return contextuallyInformativeLowerSet;
-	}
-	
 	public Set<IOrderedSet> getLowerSet(){
 		Set<IOrderedSet> lowerSet = new HashSet<IOrderedSet>();
 		lowerSet.add(this);
@@ -196,6 +159,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		return lowerSet;
 	}
 	
+	@Override
 	public Set<IOrderedSet> getInformativeLowerSet(){
 		Set<IOrderedSet> informativeLowerSet = new HashSet<IOrderedSet>();
 		if (thisSetIsInformative == true) {
@@ -234,6 +198,16 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	@Override 
 	public boolean getThisSetIsInformative() {
 		return thisSetIsInformative;
+	}
+	
+	@Override
+	public boolean getThisSetIsGeneric() {
+		return false;
+	}
+	
+	@Override
+	public boolean getIsMinimal() {
+		return false;
 	}
 	
 	protected Set<String> getUnionOfComponentsLowerSetsIDs() {
@@ -290,7 +264,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	protected void incrementComponentsNbOfParents() {
 		if (componentsNbOfParentsHaveBeenIncremented == false) {
 			for (IElement element : getListOfComponents()) {
-				AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
+				OrderedSet orderedSetComponent = (OrderedSet) element;
 				orderedSetComponent.incrementNbOfParents();
 				orderedSetComponent.incrementComponentsNbOfParents();
 			}
@@ -305,7 +279,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	protected void setNbOfInformativeChildren() {
 		nbOfInformativeChildren = 0;
 		for (IElement element : getListOfComponents()) {
-			AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
+			OrderedSet orderedSetComponent = (OrderedSet) element;
 			if (orderedSetComponent.getThisSetIsInformative() == true)
 				nbOfInformativeChildren++;
 			orderedSetComponent.setNbOfInformativeChildren();
@@ -337,10 +311,10 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 	@Override
 	abstract public String getDescriptorName();
 	
-	private GenericOmegaElement buildGenericElementsWithCodingElemAsAtoms() {
+	private GenericOmegaOS buildGenericElementsWithCodingElemAsAtoms() {
 		String verbalDescription;
 		if (this.getIsOmegaElement() == true) {
-			AbstractOmegaElement omegaElement = (AbstractOmegaElement) this;
+			OmegaOS omegaElement = (OmegaOS) this;
 			verbalDescription = omegaElement.getVerbalDescription();
 		}
 		else verbalDescription = "No description available";
@@ -349,7 +323,7 @@ public abstract class AbstractOrderedSet extends ElementImpl implements IOrdered
 		for (IElement element : listOfCodingComponents) {
 			listOfCodingComponentsOS.add((IOrderedSet) element);
 		}
-		GenericOmegaElement omegaElement = new GenericOmegaElement(listOfCodingComponentsOS, verbalDescription);
+		GenericOmegaOS omegaElement = new GenericOmegaOS(listOfCodingComponentsOS, verbalDescription);
 		return omegaElement;
 	}
 

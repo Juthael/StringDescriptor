@@ -1,17 +1,13 @@
 package model.copycatModel.ordSetGrammar;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
+import model.orderedSetModel.IFrameOS;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
-import settings.Settings;
+import model.orderedSetModel.impl.NonMinimalOS;
 
-public class FrameOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class FrameOS extends NonMinimalOS implements IOrderedSet, IFrameOS {
 
 	private static final String NAME = "frame";
 	private SizeOS size;
@@ -46,28 +42,22 @@ public class FrameOS extends AbstractNonMinimalOS implements IOrderedSet {
 	@Override
 	public String getDescriptorName() {
 		return NAME;
-	}
-	
-	@Override
-	public Map<String, Set<String>> getReducedRelation() throws OrderedSetsGenerationException {
-		if (Settings.FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION) {
-			Set<String> emptyListOfRelevantElementsIDs = new HashSet<String>();
-			return getContextualRelation(emptyListOfRelevantElementsIDs, Settings.THIS_IS_NOT_A_COMPONENT_ELEMENT);
-		}
-		else return super.getReducedRelation();
 	}	
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!size.equals(idToIOrderedSet.get(size.getElementID())))
-			size = (SizeOS) idToIOrderedSet.get(size.getElementID());
-		size.eliminateRedundancies(idToIOrderedSet);
-		if (!positionType.equals(idToIOrderedSet.get(positionType.getElementID())))
-			positionType = (WhichPositionTypeOS) idToIOrderedSet.get(positionType.getElementID());
-		positionType.eliminateRedundancies(idToIOrderedSet);
-		if (!relationsOrLetter.equals(idToIOrderedSet.get(relationsOrLetter.getElementID())))
-			relationsOrLetter = (RelationsOrLetterOS) idToIOrderedSet.get(relationsOrLetter.getElementID());
-		relationsOrLetter.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (size.getElementID().equals(orderedSet.getElementID()) && size != orderedSet) {
+			size = (SizeOS) orderedSet;
+		}
+		else size.eliminateRedundancies(orderedSet);
+		if (positionType.getElementID().equals(orderedSet.getElementID()) && positionType != orderedSet) {
+			positionType = (WhichPositionTypeOS) orderedSet;			
+		}
+		else positionType.eliminateRedundancies(orderedSet);
+		if (relationsOrLetter.getElementID().equals(orderedSet.getElementID()) && relationsOrLetter != orderedSet) {
+			relationsOrLetter = (RelationsOrLetterOS) orderedSet;			
+		}
+		else relationsOrLetter.eliminateRedundancies(orderedSet);
 	}
 }

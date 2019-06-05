@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.synTreeGrammar.Components;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.DimensionX;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.copycatModel.synTreeGrammar.Components;
-import model.copycatModel.synTreeGrammar.HowManyDimensions;
-import model.copycatModel.synTreeGrammar.HowManyRelations;
+import model.copycatModel.synTreeGrammar.IOneOrManyDimensions;
+import model.copycatModel.synTreeGrammar.IOneOrManyRelations;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.copycatModel.synTreeGrammar.RelationX;
 import model.copycatModel.synTreeGrammar.Relations;
 import settings.Settings;
-import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IComponentsBuilder;
+import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
 import syntacticTreesGeneration.IRelationalData;
 import syntacticTreesGeneration.IRelationsBuilder;
@@ -36,13 +36,14 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 		List<Relation> listOfRelations = buildListOfRelations(relationDataContainer);
 		IComponentsBuilder componentsBuilder = new ComponentsBuilderImpl(listOfFrames);
 		Components components = componentsBuilder.getComponents();
-		HowManyDimensions howManyDimensions = buildHowManyDimensions(listOfDimensions);
-		HowManyRelations howManyRelations = getHowManyRelations(listOfRelations);
+		IOneOrManyDimensions howManyDimensions = buildHowManyDimensions(listOfDimensions);
+		IOneOrManyRelations howManyRelations = getHowManyRelations(listOfRelations);
 		Relations relations = new Relations(components, howManyDimensions, howManyRelations);
 		return relations;
 	}
 	
-	private List<Dimension> buildListOfDimensions(IRelationDataContainer relationDataContainer){
+	private List<Dimension> buildListOfDimensions(IRelationDataContainer relationDataContainer) 
+			throws CloneNotSupportedException{
 		List<Dimension> listOfDimensions = new ArrayList<Dimension>();
 		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
 			Dimension dimension = new Dimension(enumerationRelationalData.getIndexedPath());
@@ -51,9 +52,9 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 		return listOfDimensions;
 	}
 	
-	private HowManyDimensions buildHowManyDimensions(List<Dimension> listOfDimensions) 
+	private IOneOrManyDimensions buildHowManyDimensions(List<Dimension> listOfDimensions) 
 			throws SynTreeGenerationException {
-		HowManyDimensions howManyDimensions;
+		IOneOrManyDimensions howManyDimensions;
 		if (!listOfDimensions.isEmpty() && listOfDimensions.size() <= Settings.MAX_NB_OF_DIMENSIONS_IN_RELATIONS) {
 			if (listOfDimensions.size() == 1) {
 				howManyDimensions = listOfDimensions.get(0);
@@ -67,7 +68,7 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 	}	
 	
 	private List<Relation> buildListOfRelations(IRelationDataContainer relationDataContainer) 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<Relation> listOfRelations = new ArrayList<Relation>();
 		for (IEnumerationRelationalData enumerationRelationalData : relationDataContainer.getListOfEnumerations()) {
 			Relation relation;
@@ -99,8 +100,8 @@ public class RelationsBuilderImpl implements IRelationsBuilder {
 		return listOfRelations;		
 	}
 	
-	private HowManyRelations getHowManyRelations(List<Relation> listOfRelations) throws SynTreeGenerationException {
-		HowManyRelations howManyRelations;
+	private IOneOrManyRelations getHowManyRelations(List<Relation> listOfRelations) throws SynTreeGenerationException {
+		IOneOrManyRelations howManyRelations;
 		if (!listOfRelations.isEmpty() && listOfRelations.size() <= Settings.MAX_NB_OF_RELATIONS) {
 			if (listOfRelations.size() == 1) {
 				howManyRelations = listOfRelations.get(0);

@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
@@ -17,12 +17,12 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 
 	private final int componentsMaxGenerationNumber;
 	private final boolean thisWillBeTheLastGeneration;
-	private final ISignal signal;
+	private final ICopycatSignal signal;
 	private final List<Frame> previousGenOfDescriptors;
 	private final IComponentGrouper componentGrouper;
 	private static final int[] minSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	
-	public NewGenOfDescriptorsBuilderImpl(int componentsMaxGenerationNumber, ISignal signal, 
+	public NewGenOfDescriptorsBuilderImpl(int componentsMaxGenerationNumber, ICopycatSignal signal, 
 			List<Frame> previousGenOfDescriptors) throws SynTreeGenerationException {
 		this.componentsMaxGenerationNumber = componentsMaxGenerationNumber;
 		this.signal = signal;
@@ -34,9 +34,9 @@ public class NewGenOfDescriptorsBuilderImpl implements INewGenOfDescriptorsBuild
 	}
 	
 	@Override
-	public List<ISynTreeElement> getNewGenOfDescriptors() 
+	public List<IGrammaticalST> getNewGenOfDescriptors() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		List<ISynTreeElement> newGenOfDescriptors = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> newGenOfDescriptors = new ArrayList<IGrammaticalST>();
 		Set<List<Frame>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Frame> setOfFactorizableDescriptors : listOfFactorizableDescriptorSets) {
 			boolean atLeastOneComponentIsFromTheLastGeneration = 

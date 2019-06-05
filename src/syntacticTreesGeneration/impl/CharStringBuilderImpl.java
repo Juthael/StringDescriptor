@@ -58,7 +58,8 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 		return charString;
 	}
 	
-	private Relation getStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
+	private Relation getStructureRelation(List<Frame> listOfFrames) 
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		Relation structureRelation;
 		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();
@@ -90,7 +91,8 @@ public class CharStringBuilderImpl implements ICharStringBuilder {
 		return structureRelation;	
 	}
 	
-	private Relation getMonoStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
+	private Relation getMonoStructureRelation(List<Frame> listOfFrames) 
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		Relation structureRelation;
 		String dimension = Settings.STRUCTURE_RELATION_CONVENTIONAL_DIMENSION;
 		List<String> listOfSizeValues = new ArrayList<String>();

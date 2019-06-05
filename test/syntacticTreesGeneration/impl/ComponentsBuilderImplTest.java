@@ -11,6 +11,7 @@ import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.FrameX;
 import model.copycatModel.synTreeGrammar.Components;
 import model.copycatModel.synTreeGrammar.Size;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -22,8 +23,8 @@ public class ComponentsBuilderImplTest {
 		boolean framePositionsUpdatedAsExpected = true;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> listOfFrames = signal.getFrames();
-		for (Frame frame : listOfFrames) {
+		List<IFrame> listOfFrames = signal.getFrames();
+		for (IFrame frame : listOfFrames) {
 			List<String> listOfProperties = frame.getListOfPropertiesWithPath();
 			for (String property : listOfProperties) {
 				if (property.contains("frame/prominentPosition/position/1") 

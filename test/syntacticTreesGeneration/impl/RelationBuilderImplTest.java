@@ -101,7 +101,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationThenRelationIsBuilt() 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		Relation relation = RelationBuilderImpl.buildRelation(conformList);
@@ -112,7 +112,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceThenSequenceRelIsBuilt() 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);
@@ -124,7 +124,7 @@ public class RelationBuilderImplTest {
 	
 	@Test
 	public void WhenParameterContainsEnumerationSequenceSymmetryThenSequenceAndSymmetryRelIsBuilt() 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		List<IRelationalData> conformList = new ArrayList<IRelationalData>();
 		conformList.add(enumerationRelationalData1);
 		conformList.add(sequenceRelationalData1);

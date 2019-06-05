@@ -8,9 +8,11 @@ import java.util.List;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IFrame;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -38,7 +40,9 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfFramesABC = signal.getFrames();	
+		listOfFramesABC = new ArrayList<Frame>();
+		for (IFrame iFrame : signal.getFrames())
+			listOfFramesABC.add((Frame) iFrame);
 		List<Frame> listOfFramesAB = new ArrayList<Frame>();
 		listOfFramesAB.add(listOfFramesABC.get(0));
 		listOfFramesAB.add(listOfFramesABC.get(1));
@@ -57,23 +61,32 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSequence(sequenceRD2);
 		relationDataContainer.addSymmetry(symmetry1);
 		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesAB);
-		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
+				new NewDescriptorBuilderImpl((ICopycatSignal) signal, relationDataContainer, listOfFramesAB);
+		IGrammaticalST descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "frame");
 	}
 	
 	@Test
 	public void whenComponentsCoverTheWholeStringAndRDContainerEmptyThenCharStringIsBuilt() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
-		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
-		signal = signalBuilder.getSignal();
-		listOfFramesABC = signal.getFrames();			
-		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
-		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
-		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesABC);
-		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
-		assertEquals(descriptor.getDescriptorName(), "charString");
+		try {
+			signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+			signal = signalBuilder.getSignal();
+			listOfFramesABC = new ArrayList<Frame>();
+			for (IFrame iFrame : signal.getFrames())
+				listOfFramesABC.add((Frame) iFrame);			
+			IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
+			relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
+			INewDescriptorBuilder newDescriptorBuilder = 
+					new NewDescriptorBuilderImpl((ICopycatSignal) signal, relationDataContainer, listOfFramesABC);
+			IGrammaticalST descriptor = newDescriptorBuilder.getNewDescriptor();
+			assertEquals(descriptor.getDescriptorName(), "charString");
+		}
+		catch (Exception e) {
+			System.out.print(e.getMessage());
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
@@ -81,7 +94,9 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfFramesABC = signal.getFrames();			
+		listOfFramesABC = new ArrayList<Frame>();
+		for (IFrame iFrame : signal.getFrames())
+			listOfFramesABC.add((Frame) iFrame);
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		String dimension1 = "frame/size";
 		String dimension2 = "frame/letter/platonicLetter";
@@ -98,8 +113,8 @@ public class NewDescriptorBuilderImplTest {
 		relationDataContainer.addSymmetry(symmetry1);
 		relationDataContainer.setNewDescriptorWillCoverTheWholeString(true);
 		INewDescriptorBuilder newDescriptorBuilder = 
-				new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFramesABC);
-		ISynTreeElement descriptor = newDescriptorBuilder.getNewDescriptor();
+				new NewDescriptorBuilderImpl((ICopycatSignal) signal, relationDataContainer, listOfFramesABC);
+		IGrammaticalST descriptor = newDescriptorBuilder.getNewDescriptor();
 		assertEquals(descriptor.getDescriptorName(), "charString");		
 	}
 	
@@ -108,18 +123,20 @@ public class NewDescriptorBuilderImplTest {
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signal = signalBuilder.getSignal();
-		listOfFramesABC = signal.getFrames();	
+		listOfFramesABC = new ArrayList<Frame>();
+		for (IFrame iFrame : signal.getFrames())
+			listOfFramesABC.add((Frame) iFrame);
 		IGen2Size1RelationDataContainerBuilder gen2Size1ContainerBuilder = 
-				new Gen2Size1RelationDataContainerBuilderImpl(signal, signal.getFrames().get(0));
+				new Gen2Size1RelationDataContainerBuilderImpl(signal, (Frame) signal.getFrames().get(0));
 		List<IRelationDataContainer> listOfContainers = 
 				gen2Size1ContainerBuilder.getListOfRelationDataContainers();
 		List<Frame> listOfFrames = new ArrayList<Frame>();
-		listOfFrames.add(signal.getFrames().get(0));
+		listOfFrames.add((Frame) signal.getFrames().get(0));
 		List<List<String>> listOfPropertyLists = new ArrayList<List<String>>();
 		for (IRelationDataContainer container : listOfContainers) {
 			INewDescriptorBuilder newDescBuilder = 
-					new NewDescriptorBuilderImpl(signal, container, listOfFrames);
-			ISynTreeElement descriptor = newDescBuilder.getNewDescriptor();
+					new NewDescriptorBuilderImpl((ICopycatSignal) signal, container, listOfFrames);
+			IGrammaticalST descriptor = newDescBuilder.getNewDescriptor();
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			listOfPropertyLists.add(listOfProperties);
 			/* for (String property : listOfProperties)

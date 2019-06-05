@@ -7,9 +7,10 @@ import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.FrameX;
 import model.copycatModel.synTreeGrammar.Components;
-import model.copycatModel.synTreeGrammar.HowManyFrames;
+import model.copycatModel.synTreeGrammar.IOneOrManyFrames;
 import model.copycatModel.synTreeGrammar.Size;
 import model.generalModel.IElement;
+import model.synTreeModel.IFrame;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentsBuilder;
 
@@ -34,7 +35,7 @@ public class ComponentsBuilderImpl implements IComponentsBuilder {
 	@Override
 	public Components getComponents() throws SynTreeGenerationException, CloneNotSupportedException {
 		Components components;
-		HowManyFrames howManyFrames;
+		IOneOrManyFrames howManyFrames;
 		Size size;
 		int listOfFramesSize = listOfFrames.size();
 		if (listOfFramesSize <= Settings.MAX_NB_OF_FRAMES_IN_RELATIONS && listOfFramesSize > 0) {
@@ -54,7 +55,7 @@ public class ComponentsBuilderImpl implements IComponentsBuilder {
 			}
 			else {
 				size = new Size (Integer.toString(listOfFramesSize));
-				List<Frame> cloneListOfFrames = new ArrayList<Frame>();
+				List<IFrame> cloneListOfFrames = new ArrayList<IFrame>();
 				for (Frame frame : listOfFrames) {
 					Frame frameClone = frame.clone();
 					if (listOfFramesCoverTheFullString == true 
@@ -65,9 +66,6 @@ public class ComponentsBuilderImpl implements IComponentsBuilder {
 				}					
 				howManyFrames = new FrameX(cloneListOfFrames);
 				components = new Components(size, howManyFrames);
-				// HERE
-				List<IElement> test = components.getListOfCodingElements();
-				//HERE
 				if (listOfFramesCoverTheFullString == true && Settings.CODING_ELEM_IS_GREATEST_COMPONENTS == true) {
 					components.setIsCodingElement(Settings.THIS_IS_A_CODING_ELEMENT);
 				}

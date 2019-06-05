@@ -9,7 +9,9 @@ public interface IElement {
 	
 	List<String> getListOfPropertiesWithPath();
 	
-	List<String> getListOfPropertiesWithPathWithoutQuantifiers();	
+	List<String> getListOfPropertiesWithPathWithoutQuantifiers();
+	
+	List<String> getListOfPropertiesWithPath(boolean calledByGeneric);
 	
 	Set<List<String>> getSetOfAllPropertyListsAccessibleFromThisDescriptor();
 	
@@ -18,5 +20,7 @@ public interface IElement {
 	List<IElement> getListOfCodingElements();
 	
 	String getDescriptorName();
+	
+	boolean getIsMinimal();
 	
 }

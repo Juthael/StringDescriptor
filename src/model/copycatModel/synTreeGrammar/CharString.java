@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
+import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
 import model.copycatModel.ordSetGrammar.CharStringOmega;
@@ -16,13 +17,14 @@ import model.copycatModel.ordSetGrammar.ComponentsOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractOmegaElement;
-import model.synTreeModel.ISynTreeStartElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.orderedSetModel.impl.OmegaOS;
+import model.synTreeModel.ISyntacticTree;
+import model.synTreeModel.IStartElementST;
+import model.synTreeModel.impl.GrammaticalST;
 import verbalization.dataEncoding.encoders.IVerbalizer;
 import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
 
-public class CharString extends SynTreeElementImpl implements ISynTreeStartElement, Cloneable {
+public class CharString extends GrammaticalST implements IStartElementST, Cloneable {
 	
 	private final static String DESCRIPTOR_NAME = "charString";
 	protected Direction direction;
@@ -33,6 +35,15 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 		this.direction = direction;
 		this.structure = structure;
 		this.components = components;
+		setHashCode();
+	}
+	
+	public CharString(CharString charString) {
+		List<IElement> listOfComponents = charString.getListOfComponents();
+		this.direction = (Direction) listOfComponents.get(0);
+		this.structure = (Structure) listOfComponents.get(1);
+		this.components = (Components) listOfComponents.get(2);
+		hashCode = getListOfPropertiesWithPath().size();
 	}
 	
 	@Override 
@@ -72,9 +83,9 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 	}
 	
 	@Override
-	public AbstractOmegaElement upgradeAsTheSupremumOfAnOrderedSet() 
+	public OmegaOS upgradeAsTheSupremumOfAnOrderedSet() 
 			throws OrderedSetsGenerationException, VerbalizationException {
-		AbstractOmegaElement charStringOmega;
+		OmegaOS charStringOmega;
 		Integer charStringIndex = 1;
 		Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
 		int mapIndex = 1;
@@ -102,6 +113,18 @@ public class CharString extends SynTreeElementImpl implements ISynTreeStartEleme
 		IVerbalizer verbalizer = new VerbalizerImpl(this);
 		verbalDescription = verbalizer.getTranslationInNaturalLanguage();
 		return verbalDescription;
+	}
+
+	@Override
+	public ISyntacticTree getTreeWithAbstractFrames() 
+			throws VerbalizationException, CloneNotSupportedException, SynTreeGenerationException, 
+			OrderedSetsGenerationException {
+		ISyntacticTree treeWithAbstractFrames;
+		String verbalDescription = this.getVerbalDescription();
+		CharString cloneCharString = this.clone();
+		cloneCharString.proceedFrameAbstraction();
+		treeWithAbstractFrames = new CharStringWithAbstractFrames(cloneCharString, verbalDescription);
+		return treeWithAbstractFrames;
 	}
 	
 }

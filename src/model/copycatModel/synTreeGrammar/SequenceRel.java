@@ -12,22 +12,23 @@ import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.copycatModel.ordSetGrammar.SequenceRelOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 
-public class SequenceRel extends Relation implements ISynTreeElement, Cloneable {
+public class SequenceRel extends Relation implements IGrammaticalST, Cloneable {
 
 	private Sequence sequence;
 	
 	public SequenceRel(Dimension dimension, Enumeration enumeration, 
 			Sequence sequence) {
 		super(dimension, enumeration);
-		this.sequence = sequence;			
+		this.sequence = sequence;
+		setHashCode();
 	}
 	
 	@Override
-	protected SequenceRel clone() throws CloneNotSupportedException {
+	public SequenceRel clone() throws CloneNotSupportedException {
 		SequenceRel cloneSequenceRel;
 		Dimension cloneDimension = dimension.clone();
 		Enumeration cloneEnumeration = this.enumeration.clone();
@@ -44,10 +45,10 @@ public class SequenceRel extends Relation implements ISynTreeElement, Cloneable 
 	}	
 	
 	@Override
-	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>();
+	protected List<IGrammaticalST> buildListOfRelevantComponentsForRelationBuilding() {
+		List<IGrammaticalST> listOfRelevantComponents = new ArrayList<IGrammaticalST>();
 		for (IElement component : getListOfComponents())
-			listOfRelevantComponents.add((SynTreeElementImpl) component);
+			listOfRelevantComponents.add((GrammaticalST) component);
 		return listOfRelevantComponents;
 	}	
 	

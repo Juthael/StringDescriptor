@@ -21,23 +21,24 @@ import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.Enumeration;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.FrameX;
-import model.copycatModel.synTreeGrammar.HowManyFrames;
+import model.copycatModel.synTreeGrammar.IOneOrManyFrames;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.IProperty;
-import model.synTreeModel.IPropertyContainer;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.ISignal;
+import model.synTreeModel.impl.utils.IProperty;
+import model.synTreeModel.impl.utils.IPropertyContainer;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
-public class SynTreeElementImplTest {
+public class GrammaticalSTTest {
 
 	@Test
 	public void whenAllComponentsAreRelevantForRelationBuildingThenContainerContainsAllProperties() 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean containerContainsAllProperties = true;
 		Dimension dimension = new Dimension("dimension1");
 		Enumeration enumeration = new Enumeration("1");
@@ -71,8 +72,8 @@ public class SynTreeElementImplTest {
 		boolean frameX3ContainerDoesntContainPlatonicLetter2 = true;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> listOfFrames = signal.getFrames();
-		HowManyFrames frameX3 = new FrameX(listOfFrames);
+		List<IFrame> listOfFrames = signal.getFrames();
+		IOneOrManyFrames frameX3 = new FrameX(listOfFrames);
 		List<String> listOfFrameX3PropertiesWithPath = frameX3.getListOfPropertiesWithPath();
 		boolean frameX3containsPlatonicLetter2 = false;
 		for (String propertyWithPath : listOfFrameX3PropertiesWithPath) {
@@ -101,10 +102,10 @@ public class SynTreeElementImplTest {
 		boolean onlyClonedFramesAreRelatedInNewDescriptor;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> listOfFrames = signal.getFrames();
-		Frame frame2 = listOfFrames.get(1);
+		List<IFrame> listOfFrames = signal.getFrames();
+		Frame frame2 = (Frame) listOfFrames.get(1);
 		List<String> listOfFrame2PropertiesWithpath = frame2.getListOfPropertiesWithPath();
-		HowManyFrames frameX3 = new FrameX(listOfFrames);
+		IOneOrManyFrames frameX3 = new FrameX(listOfFrames);
 		List<String> listOfFrameX3PropertiesWithPath = frameX3.getListOfPropertiesWithPath();
 		boolean frameX3ContainsFramePosition2 = false;
 		boolean frame2ContainsFramePosition2 = false;

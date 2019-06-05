@@ -1,13 +1,12 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import model.orderedSetModel.impl.NonMinimalOS;
 
-public class RelationOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class RelationOS extends NonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "relation";
 	private DimensionOS dimension;
@@ -33,14 +32,16 @@ public class RelationOS extends AbstractNonMinimalOS implements IOrderedSet {
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!dimension.equals(idToIOrderedSet.get(dimension.getElementID())))
-			dimension = (DimensionOS) idToIOrderedSet.get(dimension.getElementID());
-		dimension.eliminateRedundancies(idToIOrderedSet);
-		if (!enumeration.equals(idToIOrderedSet.get(enumeration.getElementID())))
-			enumeration = (EnumerationOS) idToIOrderedSet.get(enumeration.getElementID());
-		enumeration.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (dimension.getElementID().equals(orderedSet.getElementID()) && dimension != orderedSet) {
+			dimension = (DimensionOS) orderedSet;
+		}
+		else dimension.eliminateRedundancies(orderedSet);
+		if (enumeration.getElementID().equals(orderedSet.getElementID()) && enumeration != orderedSet) {
+			enumeration = (EnumerationOS) orderedSet;
+		}
+		else enumeration.eliminateRedundancies(orderedSet);
 	}	
 	
 }

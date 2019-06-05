@@ -1,13 +1,12 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
+import model.orderedSetModel.impl.NonMinimalOS;
 
-public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
+public class CharStringOS extends NonMinimalOS implements IOrderedSet {
 
 	private static final String NAME = "charString";
 	private DirectionOS direction;
@@ -44,20 +43,20 @@ public class CharStringOS extends AbstractNonMinimalOS implements IOrderedSet {
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!direction.equals(idToIOrderedSet.get(direction.getElementID()))) {
-			direction= (DirectionOS) idToIOrderedSet.get(direction.getElementID());
-			direction.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (direction.getElementID().equals(orderedSet.getElementID()) && direction != orderedSet) {
+			direction = (DirectionOS) orderedSet;
 		}
-		if (!structure.equals(idToIOrderedSet.get(structure.getElementID()))) {
-			structure = (StructureOS) idToIOrderedSet.get(structure.getElementID());
-			structure.eliminateRedundancies(idToIOrderedSet);
+		else direction.eliminateRedundancies(orderedSet);
+		if (structure.getElementID().equals(orderedSet.getElementID()) && structure != orderedSet) {
+			structure = (StructureOS) orderedSet;
 		}
-		if (!components.equals(idToIOrderedSet.get(components.getElementID()))) {
-			components = (ComponentsOS) idToIOrderedSet.get(components.getElementID());
-			components.eliminateRedundancies(idToIOrderedSet);
+		else direction.eliminateRedundancies(orderedSet);
+		if (components.getElementID().equals(orderedSet.getElementID()) && components != orderedSet) {
+			components = (ComponentsOS) orderedSet;
 		}
+		else components.eliminateRedundancies(orderedSet);
 	}	
 
 }

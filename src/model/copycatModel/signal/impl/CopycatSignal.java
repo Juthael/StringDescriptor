@@ -1,23 +1,23 @@
-package model.synTreeModel.impl;
+package model.copycatModel.signal.impl;
 
 import java.util.List;
 
-import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.ISignal;
+import model.copycatModel.signal.ICopycatSignal;
+import model.synTreeModel.IFrame;
 
-public class SignalImpl implements Cloneable, ISignal {
+public class CopycatSignal implements Cloneable, ICopycatSignal {
 
-	private List<Frame> listOfFrames;
+	private List<IFrame> listOfFrames;
 	private String directionValue; // "fromLeftToRight" or "fromRightToLeft";
 	
-	public SignalImpl(List<Frame> listOfFrames, String directionValue) {
+	public CopycatSignal(List<IFrame> listOfFrames, String directionValue) {
 		this.listOfFrames = listOfFrames;
 		this.directionValue = directionValue;
 	}
 
 	//Getters
 	@Override
-	public List<Frame> getFrames() {
+	public List<IFrame> getFrames() {
 		return listOfFrames;
 	}
 

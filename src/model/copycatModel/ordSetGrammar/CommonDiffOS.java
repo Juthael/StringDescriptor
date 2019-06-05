@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class CommonDiffOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
+public class CommonDiffOS extends NonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "commonDiff";
 	private MinimalOS commonDiffProperty;
@@ -34,10 +33,10 @@ public class CommonDiffOS extends AbstractNonMinimalExplicitOS implements IOrder
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!commonDiffProperty.equals(idToIOrderedSet.get(commonDiffProperty.getElementID())))
-			commonDiffProperty = (MinimalOS) idToIOrderedSet.get(commonDiffProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (commonDiffProperty.getElementID().equals(orderedSet.getElementID()) && commonDiffProperty != orderedSet)
+			commonDiffProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

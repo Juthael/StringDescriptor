@@ -22,7 +22,8 @@ import fca.gui.lattice.element.LatticeStructure;
 import fca.gui.util.constant.LMIcons;
 import fca.gui.util.constant.LMImages;
 import launcher.utils.DescriptionKeyboardInputManager;
-import model.orderedSetModel.impl.AbstractOmegaElement;
+import model.copycatModel.signal.ICopycatSignal;
+import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.ISignal;
 import stringDescription.IDescription;
 import stringDescription.IScoreCalculator;
@@ -75,7 +76,7 @@ public class CalculatorsTesting {
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcde", "fromLeftToRight");
-			ISignal signal = signalBuilder.getSignal();
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
@@ -103,7 +104,7 @@ public class CalculatorsTesting {
 				
 				ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
 				BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
-				
+				/*
 				LMLogger.getLMLogger();
 				LMImages.getLMImages();
 				LMIcons.getLMIcons();
@@ -112,7 +113,7 @@ public class CalculatorsTesting {
 				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
 				latticeViewerFirst.setVisible(true); 
 				String waitHere = DescriptionKeyboardInputManager.readString();	
-				
+				*/
 			}		
 		}
 		catch (Exception unexpected) {

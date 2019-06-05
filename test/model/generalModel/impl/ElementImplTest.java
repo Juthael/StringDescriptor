@@ -14,12 +14,12 @@ import model.copycatModel.synTreeGrammar.Position;
 public class ElementImplTest {
 
 	@Test
-	public void whenAllAccessiblePropertyListsAreRequestedThenExpectedNumberOfListsReturned() {
+	public void whenAllAccessiblePropertyListsAreRequestedThenExpectedNumberOfListsReturned() throws CloneNotSupportedException {
 		Position position = new Position("1");
 		PlatonicLetter platonicLetter = new PlatonicLetter("a");
 		Letter letter = new Letter(position, platonicLetter);
 		Set<List<String>> listOfAllAccessibleListsOfProperties = letter.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
-		assertTrue(listOfAllAccessibleListsOfProperties.size() == 3);
+		assertTrue(listOfAllAccessibleListsOfProperties.size() == 5);
 	}
 
 }

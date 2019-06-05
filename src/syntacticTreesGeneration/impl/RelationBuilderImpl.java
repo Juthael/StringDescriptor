@@ -32,7 +32,7 @@ public class RelationBuilderImpl implements IRelationBuilder {
 	}
 	
 	public static Relation buildRelation(List<IRelationalData> relationData) 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		Dimension dimension = buildDimension(relationData);
 		Relation relation = buildRelation(dimension, relationData);
 		return relation;
@@ -53,7 +53,7 @@ public class RelationBuilderImpl implements IRelationBuilder {
 	}
 	
 	private static Relation buildRelation(Dimension dimension, List<IRelationalData> relationalDataList) 
-			throws SynTreeGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		Relation relation;
 		switch (relationalDataList.size()) {
 			case 1:

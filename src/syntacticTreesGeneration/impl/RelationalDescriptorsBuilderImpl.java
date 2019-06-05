@@ -4,36 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IFrame;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
 
 public class RelationalDescriptorsBuilderImpl implements IRelationalDescriptorsBuilder {
 
-	private final ISignal signal;
+	private final ICopycatSignal signal;
 	private int previousGenerationNumber = 1;
 	private List<CharString> listOfDescriptorsCoveringTheWholeString = new ArrayList<CharString>();
 	private List<Frame> previousGenOfFactorizableDescriptors = new ArrayList<Frame>();
 	private static final int[] minComponentSizeForIndexGeneration = new int[] {0,1,1,3,6,12};	
 	boolean thisIsTheLastGeneration = false;
 	
-	public RelationalDescriptorsBuilderImpl(ISignal signal) 
+	public RelationalDescriptorsBuilderImpl(ICopycatSignal signal) 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		this.signal = signal;
-		previousGenOfFactorizableDescriptors.addAll(this.signal.getFrames());
+		for (IFrame frame : this.signal.getFrames()) {
+			previousGenOfFactorizableDescriptors.add((Frame) frame);
+		}
 		do {
 			INewGenOfDescriptorsBuilder newGenOfDescriptorsBuilder = 
 					new NewGenOfDescriptorsBuilderImpl(previousGenerationNumber, this.signal, 
 							previousGenOfFactorizableDescriptors);
 			previousGenerationNumber++;
-			List<ISynTreeElement> newGenOfDescriptors = 
+			List<IGrammaticalST> newGenOfDescriptors = 
 					newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
 			if (!newGenOfDescriptors.isEmpty()) {
-				for (ISynTreeElement descriptor : newGenOfDescriptors) {
+				for (IGrammaticalST descriptor : newGenOfDescriptors) {
 					if (descriptor.getDescriptorName().equals("charString"))
 						listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 					else if (descriptor.getDescriptorName().equals("frame"))

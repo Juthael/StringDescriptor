@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -19,13 +19,13 @@ import syntacticTreesGeneration.ISymmetryRelationalData;
 
 public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManager {
 
-	private final ISignal signal;
+	private final ICopycatSignal signal;
 	private final int componentsMaxGenerationNumber;
 	private List<Frame> listOfFactorizableDescriptors;
 	private List<IRelationDataContainer> listOfRelationDataContainers = 
 			new ArrayList<IRelationDataContainer>();	
 	
-	public DescriptorsBuildingManagerImpl(ISignal signal, int componentsGenerationNumber, 
+	public DescriptorsBuildingManagerImpl(ICopycatSignal signal, int componentsGenerationNumber, 
 			List<Frame> listOfFactorizableDescriptors) 
 					throws SynTreeGenerationException {
 		this.signal = signal;
@@ -54,15 +54,15 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 	}
 	
 	@Override
-	public List<ISynTreeElement> getListOfNewDescriptors() 
+	public List<IGrammaticalST> getListOfNewDescriptors() 
 			throws SynTreeGenerationException, CloneNotSupportedException{
-		List<ISynTreeElement> listOfNewDescriptors = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> listOfNewDescriptors = new ArrayList<IGrammaticalST>();
 		for (IRelationDataContainer relationDataContainer : listOfRelationDataContainers) {
 			boolean relationDataContainerIsValid = testIfRelationDataContainerIsValid(relationDataContainer);
 			if (relationDataContainerIsValid == true) {
 				INewDescriptorBuilder iNewDescriptorBuilder = 
 						new NewDescriptorBuilderImpl(signal, relationDataContainer, listOfFactorizableDescriptors);
-				ISynTreeElement newDescriptor = iNewDescriptorBuilder.getNewDescriptor();
+				IGrammaticalST newDescriptor = iNewDescriptorBuilder.getNewDescriptor();
 				listOfNewDescriptors.add(newDescriptor);
 			}
 		}
@@ -179,7 +179,7 @@ public class DescriptorsBuildingManagerImpl implements IDescriptorsBuildingManag
 		if (componentsMaxGenerationNumber >= 2) {
 			for (Frame frame : listOfFactorizableDescriptors) {
 				List<Integer> listOfLetterPositions = 
-						DescriptorSpanGetterImpl.getDescriptorSpan((ISynTreeElement) frame);
+						DescriptorSpanGetterImpl.getDescriptorSpan((IGrammaticalST) frame);
 				if (listOfLetterPositions.size() == 1) {
 					List<String> listOfProperties = frame.getListOfPropertiesWithPath();
 					if (listOfProperties.get(2).contains("frame/relation"))

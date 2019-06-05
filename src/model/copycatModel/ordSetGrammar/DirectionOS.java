@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class DirectionOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
+public class DirectionOS extends NonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "direction";
 	private MinimalOS directionProperty;
@@ -34,10 +33,10 @@ public class DirectionOS extends AbstractNonMinimalExplicitOS implements IOrdere
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!directionProperty.equals(idToIOrderedSet.get(directionProperty.getElementID())))
-			directionProperty = (MinimalOS) idToIOrderedSet.get(directionProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (directionProperty.getElementID().equals(orderedSet.getElementID()) && directionProperty != orderedSet)
+			directionProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

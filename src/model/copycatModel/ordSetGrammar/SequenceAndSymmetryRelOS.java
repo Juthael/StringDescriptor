@@ -1,7 +1,6 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -16,22 +15,6 @@ public class SequenceAndSymmetryRelOS extends RelationOS implements IOrderedSet 
 		super(elementID, dimension, enumeration);
 		this.sequence = sequence;
 		this.symmetry = symmetry;
-		//HERE
-		System.out.println("SET" + getElementID());
-		List<String> listOfProperties = getListOfPropertiesWithPath();
-		List<String> maxChains = getListOfLowerSetMaximalChains();
-		System.out.println("Properties : ");
-		for (String property : listOfProperties) {
-			System.out.println(property);
-		}
-		System.out.println("");
-		System.out.print("Max chains");
-		for (String maxChain : maxChains) {
-			System.out.println(maxChain);
-		}
-		System.out.println("");
-		System.out.println("*******************");
-		System.out.println("");
 	}
 	
 	@Override
@@ -43,14 +26,16 @@ public class SequenceAndSymmetryRelOS extends RelationOS implements IOrderedSet 
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!sequence.equals(idToIOrderedSet.get(sequence.getElementID())))
-			sequence = (SequenceOS) idToIOrderedSet.get(sequence.getElementID());
-		sequence.eliminateRedundancies(idToIOrderedSet);
-		if (!symmetry.equals(idToIOrderedSet.get(symmetry.getElementID())))
-			symmetry = (SymmetryOS) idToIOrderedSet.get(symmetry.getElementID());
-		symmetry.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (sequence.getElementID().equals(orderedSet.getElementID()) && sequence != orderedSet) {
+			sequence = (SequenceOS) orderedSet;
+		}
+		else sequence.eliminateRedundancies(orderedSet);
+		if (symmetry.getElementID().equals(orderedSet.getElementID()) && symmetry != orderedSet) {
+			symmetry = (SymmetryOS) orderedSet;
+		}
+		else symmetry.eliminateRedundancies(orderedSet);
 	}		
 
 }

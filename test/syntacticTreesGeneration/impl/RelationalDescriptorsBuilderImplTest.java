@@ -9,6 +9,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.synTreeModel.ISignal;
 import settings.Settings;
@@ -46,7 +47,7 @@ public class RelationalDescriptorsBuilderImplTest {
 		ISignal signal = signalBuilder.getSignal();
 		start = System.currentTimeMillis();
 		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = 
-				new RelationalDescriptorsBuilderImpl(signal);
+				new RelationalDescriptorsBuilderImpl((ICopycatSignal) signal);
 		wholeStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 		done = System.currentTimeMillis();
 		if (wholeStringDescriptors.isEmpty() ||	(done - start) > 5000)
@@ -79,7 +80,7 @@ public class RelationalDescriptorsBuilderImplTest {
 		ISignal signal = signalBuilder.getSignal();
 		start = System.currentTimeMillis();
 		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = 
-				new RelationalDescriptorsBuilderImpl(signal);
+				new RelationalDescriptorsBuilderImpl((ICopycatSignal) signal);
 		wholeStringDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 		done = System.currentTimeMillis();
 		if (wholeStringDescriptors.isEmpty() ||	(done - start) > 5000)

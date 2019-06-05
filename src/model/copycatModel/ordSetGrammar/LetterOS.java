@@ -1,13 +1,12 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalOS;
 
-public class LetterOS extends AbstractNonMinimalOS implements RelationsOrLetterOS {
+public class LetterOS extends NonMinimalOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "letter";
 	private PositionOS position;
@@ -39,14 +38,16 @@ public class LetterOS extends AbstractNonMinimalOS implements RelationsOrLetterO
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!position.equals(idToIOrderedSet.get(position.getElementID())))
-			position = (PositionOS) idToIOrderedSet.get(position.getElementID());
-		position.eliminateRedundancies(idToIOrderedSet);
-		if (!platonicLetter.equals(idToIOrderedSet.get(platonicLetter.getElementID())))
-			platonicLetter = (PlatonicLetterOS) idToIOrderedSet.get(platonicLetter.getElementID());
-		platonicLetter.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (position.getElementID().equals(orderedSet.getElementID()) && position != orderedSet) {
+			position = (PositionOS) orderedSet;			
+		}
+		else position.eliminateRedundancies(orderedSet);
+		if (platonicLetter.getElementID().equals(orderedSet.getElementID()) && platonicLetter != orderedSet) {
+			platonicLetter = (PlatonicLetterOS) orderedSet;			
+		}
+		else platonicLetter.eliminateRedundancies(orderedSet);
 	}		
 
 }

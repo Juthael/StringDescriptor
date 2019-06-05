@@ -11,6 +11,7 @@ import org.junit.Test;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.Relations;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.ISignal;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IRelationDataContainer;
@@ -52,10 +53,13 @@ public class RelationsBuilderImplTest {
 	private static List<Frame> listOfFrames;
 	
 	@Before
-	public void initialize() throws SynTreeGenerationException {
+	public void initialize() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		listOfFrames = signal.getFrames();
+		listOfFrames = new ArrayList<Frame>();
+		for (IFrame iFrame : signal.getFrames()) {
+			listOfFrames.add((Frame) iFrame);
+		}
 		enumerationRelationalData1 = new EnumerationRelationalDataImpl(dimension1, enumerationValue1);
 		enumerationRelationalData2 = new EnumerationRelationalDataImpl(dimension2, enumerationValue2);
 		enumerationRelationalData3 = new EnumerationRelationalDataImpl(dimension3, enumerationValue3);

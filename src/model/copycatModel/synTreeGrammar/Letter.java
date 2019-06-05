@@ -5,15 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.LetterOS;
 import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
 import model.copycatModel.ordSetGrammar.PositionOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class Letter extends RelationsOrLetter implements ISynTreeElement, Cloneable {
+public class Letter extends GrammaticalST implements IRelationsOrLetter, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "letter";
 	private Position position;
@@ -22,12 +23,14 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	public Letter(Position position, PlatonicLetter platonicLetter) {
 		this.position = position;
 		this.platonicLetter = platonicLetter;
+		setHashCode();
 	}
 	
 	public Letter(boolean codingDescriptor, Position position, PlatonicLetter platonicLetter) {
 		super(codingDescriptor);
 		this.position = position;
 		this.platonicLetter = platonicLetter;
+		setHashCode();
 	}	
 	
 	@Override
@@ -52,14 +55,15 @@ public class Letter extends RelationsOrLetter implements ISynTreeElement, Clonea
 	}
 	
 	@Override
-	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> componentDescriptors = new ArrayList<SynTreeElementImpl>(
+	protected List<IGrammaticalST> buildListOfRelevantComponentsForRelationBuilding() {
+		List<IGrammaticalST> componentDescriptors = new ArrayList<IGrammaticalST>(
 				Arrays.asList(platonicLetter));
 		return componentDescriptors;
 	}	
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet letterOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer letterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

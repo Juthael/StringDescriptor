@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.OrderedSetsGenerationException;
+import model.copycatModel.synTreeGrammar.IOneOrManyRelations;
 import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.RelationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.impl.GrammaticalST;;
 
-public class Relation extends HowManyRelations implements ISynTreeElement, Cloneable {
+public class Relation extends GrammaticalST implements IOneOrManyRelations, Cloneable {
 	
 	protected static final String DESCRIPTOR_NAME = "relation";
 	protected Dimension dimension;
@@ -22,10 +23,11 @@ public class Relation extends HowManyRelations implements ISynTreeElement, Clone
 	public Relation(Dimension dimension, Enumeration enumeration) {
 		this.dimension = dimension;
 		this.enumeration = enumeration;
+		setHashCode();
 	}
 	
 	@Override
-	protected Relation clone() throws CloneNotSupportedException {
+	public Relation clone() throws CloneNotSupportedException {
 		Relation cloneRelation;
 		Dimension cloneDimension = dimension.clone();
 		Enumeration cloneEnumeration = enumeration.clone();

@@ -4,26 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
+import model.copycatModel.signal.impl.CopycatSignal;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.Letter;
 import model.copycatModel.synTreeGrammar.PlatonicLetter;
 import model.copycatModel.synTreeGrammar.Position;
 import model.copycatModel.synTreeGrammar.Size;
-import model.synTreeModel.ISignal;
-import model.synTreeModel.impl.SignalImpl;
+import model.synTreeModel.IFrame;
 import settings.Settings;
 import syntacticTreesGeneration.ISignalBuilder;
 
 public class SignalBuilderImpl implements ISignalBuilder {
 
-	private ISignal signal;
+	private ICopycatSignal signal;
 	
-	public SignalBuilderImpl(String charString, String directionValue) throws SynTreeGenerationException {
+	public SignalBuilderImpl(String charString, String directionValue) 
+			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean charStringIsLegal = testIfCharStringIsLegal(charString);
 		boolean directionValueIsLegal = testIfDirectionValueIsLegal(directionValue);
 		if (charStringIsLegal == true && directionValueIsLegal == true) {
 			char[] chars = charString.toCharArray();
-			List<Frame> listOfFrames = new ArrayList<Frame>();
+			List<IFrame> listOfFrames = new ArrayList<IFrame>();
 			for (int i=0 ; i<chars.length ; i++) {
 				char iChar = chars[i];
 				String iString = getLetterAlphabeticPositionString(iChar);
@@ -33,17 +35,17 @@ public class SignalBuilderImpl implements ISignalBuilder {
 				Frame frame = new Frame(iSize, iPosition, iLetter);
 				listOfFrames.add(frame);
 			}
-			signal = new SignalImpl(listOfFrames, directionValue);			
+			signal = new CopycatSignal(listOfFrames, directionValue);			
 		}
 		else throw new SynTreeGenerationException("SignalBuilder : illegal parameter.");
 	}
 	
 	@Override
-	public ISignal getSignal(){
+	public ICopycatSignal getSignal(){
 		return signal;
 	}
 	
-	private Letter getLetter(String platonicLetterValue, String positionValue) {
+	private Letter getLetter(String platonicLetterValue, String positionValue) throws CloneNotSupportedException {
 		Position position = new Position(positionValue);
 		PlatonicLetter platonicLetter = new PlatonicLetter(platonicLetterValue);
 		Letter letter = new Letter(position, platonicLetter);

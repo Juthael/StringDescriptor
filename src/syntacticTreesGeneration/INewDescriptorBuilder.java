@@ -1,11 +1,11 @@
 package syntacticTreesGeneration;
 
 import exceptions.SynTreeGenerationException;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 
 public interface INewDescriptorBuilder {
 
-	ISynTreeElement getNewDescriptor()
+	IGrammaticalST getNewDescriptor()
 			throws SynTreeGenerationException, CloneNotSupportedException;
 
 }

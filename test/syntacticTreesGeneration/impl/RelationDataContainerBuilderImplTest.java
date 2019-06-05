@@ -29,6 +29,7 @@ import model.copycatModel.synTreeGrammar.Sequence;
 import model.copycatModel.synTreeGrammar.SequenceRel;
 import model.copycatModel.synTreeGrammar.Size;
 import model.copycatModel.synTreeGrammar.Structure;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
@@ -55,10 +56,16 @@ public class RelationDataContainerBuilderImplTest {
 	public void initialize() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilderABC = new SignalBuilderImpl("abc", "fromLeftToRight");
 		signalABC = signalBuilderABC.getSignal();
-		descriptorsSignalABC = signalABC.getFrames();
+		List<Frame> listOfFramesABC = new ArrayList<Frame>();
+		for (IFrame iFrame : signalABC.getFrames())
+			listOfFramesABC.add((Frame) iFrame);
+		descriptorsSignalABC = listOfFramesABC;
 		ISignalBuilder signalBuilderABCD = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		signalABCD = signalBuilderABCD.getSignal();
-		descriptorsSignalABCD = signalABCD.getFrames();
+		List<Frame> listOfFramesABCD = new ArrayList<Frame>();
+		for (IFrame iFrame : signalABCD.getFrames())
+			listOfFramesABCD.add((Frame) iFrame);		
+		descriptorsSignalABCD = listOfFramesABCD;
 		CommonDiff abcCommonDiff = new CommonDiff("1");
 		AbsCommonDiff abcAbsCommonDiff = new AbsCommonDiff("1");
 		Sequence abcSequence = new Sequence(abcCommonDiff, abcAbsCommonDiff);
@@ -66,7 +73,7 @@ public class RelationDataContainerBuilderImplTest {
 		Dimension abcDimension = new Dimension("platonicLetter");
 		SequenceRel abcRelation = new SequenceRel(abcDimension, abcEnumeration, abcSequence);
 		Size abcSize = new Size("3");
-		FrameX abcFrameX3 = new FrameX(descriptorsSignalABC);
+		FrameX abcFrameX3 = new FrameX(signalABC.getFrames());
 		Components abcComponents = new Components(abcSize, abcFrameX3);
 		Relations abcRelations = new Relations(abcComponents, abcDimension, abcRelation);
 		Position abcPosition = new Position(Settings.AWAITING_POSITION_VALUE);
@@ -140,7 +147,7 @@ public class RelationDataContainerBuilderImplTest {
 		assertTrue(containerContainsEnumAndSequence);
 	}
 	
-	private Relation getMonoStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException {
+	private Relation getMonoStructureRelation(List<Frame> listOfFrames) throws SynTreeGenerationException, CloneNotSupportedException {
 		Relation structureRelation;
 		String dimension = "charString/components/frame/size";
 		List<String> listOfSizeValues = new ArrayList<String>();

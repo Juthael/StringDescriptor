@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class DimensionOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
+public class DimensionOS extends NonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "dimension";
 	private MinimalOS dimensionProperty;
@@ -34,10 +33,10 @@ public class DimensionOS extends AbstractNonMinimalExplicitOS implements IOrdere
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!dimensionProperty.equals(idToIOrderedSet.get(dimensionProperty.getElementID())))
-			dimensionProperty = (MinimalOS) idToIOrderedSet.get(dimensionProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (dimensionProperty.getElementID().equals(orderedSet.getElementID()) && dimensionProperty != orderedSet)
+			dimensionProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

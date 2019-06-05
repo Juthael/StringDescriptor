@@ -1,29 +1,26 @@
 package syntacticTreesGeneration.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IFrame;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
 import syntacticTreesGeneration.IDescriptorsBuildingManager;
 import syntacticTreesGeneration.INewGenOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.ComponentGrouperImpl;
-import syntacticTreesGeneration.impl.DescriptorSpanGetterImpl;
-import syntacticTreesGeneration.impl.DescriptorsBuildingManagerImpl;
-import syntacticTreesGeneration.impl.NewGenOfDescriptorsBuilderImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
 
 public class DescriptorsBuildingManagerImplTest {
 
@@ -33,12 +30,12 @@ public class DescriptorsBuildingManagerImplTest {
 		boolean expectedNumberOfGen2Size1DescriptorsIsBuilt;
 		ISignalBuilder signalbuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalbuilder.getSignal();
-		Frame gen1DescriptorA = signal.getFrames().get(0);
+		Frame gen1DescriptorA = (Frame) signal.getFrames().get(0);
 		ArrayList<Frame> listOfComponents = new ArrayList<Frame>();
 		listOfComponents.add(gen1DescriptorA);
 		IDescriptorsBuildingManager descriptorsBuildingManager = 
-				new DescriptorsBuildingManagerImpl(signal, 1, listOfComponents);
-		List<ISynTreeElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
+				new DescriptorsBuildingManagerImpl((ICopycatSignal) signal, 1, listOfComponents);
+		List<IGrammaticalST> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface newDescriptor : listOfNewDescriptors) {
 			ArrayList<String> propertiesWithPath = newDescriptor.getListOfPropertiesWithPath();
 			for (String property : propertiesWithPath)
@@ -65,10 +62,10 @@ public class DescriptorsBuildingManagerImplTest {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		List<Frame> descriptorsAB = new ArrayList<Frame>();
 		ISignal signalABC = signalBuilder.getSignal();
-		descriptorsAB.add(signalABC.getFrames().get(0));
-		descriptorsAB.add(signalABC.getFrames().get(1));
-		IDescriptorsBuildingManager descriptorsBuildingManager = new DescriptorsBuildingManagerImpl(signalABC, 1, descriptorsAB);
-		List<ISynTreeElement> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
+		descriptorsAB.add((Frame) signalABC.getFrames().get(0));
+		descriptorsAB.add((Frame) signalABC.getFrames().get(1));
+		IDescriptorsBuildingManager descriptorsBuildingManager = new DescriptorsBuildingManagerImpl((ICopycatSignal) signalABC, 1, descriptorsAB);
+		List<IGrammaticalST> listOfNewDescriptors = descriptorsBuildingManager.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface newDescriptor : listOfNewDescriptors) {
 			ArrayList<String> propertiesWithPath = newDescriptor.getListOfPropertiesWithPath();
 			for (String property : propertiesWithPath)
@@ -83,14 +80,18 @@ public class DescriptorsBuildingManagerImplTest {
 	public void whenSetsOfGen1ComponentsThenNewDescriptorsAreBuiltForEachSet() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean descriptorsAreBuiltForEachSet = true;
-		List<ISynTreeElement> newDescriptors = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> newDescriptors = new ArrayList<IGrammaticalST>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABC = signalBuilder.getSignal();
-		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABC, signalABC.getFrames());
+		List<Frame> listOfFramesABC = new ArrayList<Frame>();
+		for (IFrame frame : signalABC.getFrames()) {
+			listOfFramesABC.add((Frame) frame);
+		}
+		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABC, listOfFramesABC);
 		Set<List<Frame>> setsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Frame> setToBeFactorized : setsToBeFactorized) {
-			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl(signalABC, 1, setToBeFactorized);
-			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl((ICopycatSignal) signalABC, 1, setToBeFactorized);
+			List<IGrammaticalST> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			if (newDescriptorsForThisSet.isEmpty())
 				descriptorsAreBuiltForEachSet = false;
 			newDescriptors.addAll(newDescriptorsForThisSet);
@@ -108,20 +109,24 @@ public class DescriptorsBuildingManagerImplTest {
 	@Test
 	public void whenSetsOfGen2ComponentsThenNewDescriptorsAreBuilt() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean newDescriptorsAreBuilt = true;
-		List<ISynTreeElement> newDescriptors = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> newDescriptors = new ArrayList<IGrammaticalST>();
 		List<Frame> factorizableNewDescriptors = new ArrayList<Frame>();
-		List<ISynTreeElement> newGen3Descriptors = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> newGen3Descriptors = new ArrayList<IGrammaticalST>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signalABCD = signalBuilder.getSignal();
-		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABCD, signalABCD.getFrames());
+		List<Frame> listOfFramesABCD = new ArrayList<Frame>();
+		for (IFrame frame : signalABCD.getFrames()) {
+			listOfFramesABCD.add((Frame) frame);
+		}		
+		IComponentGrouper componentGrouper = new ComponentGrouperImpl(1, false, signalABCD, listOfFramesABCD);
 		Set<List<Frame>> setsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
 		for (List<Frame> setToBeFactorized : setsToBeFactorized) {
-			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl(signalABCD, 1, setToBeFactorized);
-			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+			IDescriptorsBuildingManager buildingManager = new DescriptorsBuildingManagerImpl((ICopycatSignal) signalABCD, 1, setToBeFactorized);
+			List<IGrammaticalST> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newDescriptors.addAll(newDescriptorsForThisSet);
 		}
 		/*System.out.println("*********GEN2********"); */
-		for (ISynTreeElement newDescriptor : newDescriptors) {
+		for (IGrammaticalST newDescriptor : newDescriptors) {
 			/* for (String property : newDescriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
 			}
@@ -137,11 +142,11 @@ public class DescriptorsBuildingManagerImplTest {
 		/* System.out.println("*********GEN3********"); */
 		for (List<Frame> setToBeFactorized : newSetsToBeFactorized) {
 			IDescriptorsBuildingManager buildingManager = 
-					new DescriptorsBuildingManagerImpl(signalABCD, 2, setToBeFactorized);
-			List<ISynTreeElement> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
+					new DescriptorsBuildingManagerImpl((ICopycatSignal) signalABCD, 2, setToBeFactorized);
+			List<IGrammaticalST> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newGen3Descriptors.addAll(newDescriptorsForThisSet);
 		}	
-		for (ISynTreeElement descriptor : newGen3Descriptors) {
+		for (IGrammaticalST descriptor : newGen3Descriptors) {
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
 			/* for (String property : listOfProperties) {
 				System.out.println(property);
@@ -156,8 +161,12 @@ public class DescriptorsBuildingManagerImplTest {
 	public void whenStringIsSize1ThenDescriptorsAreBuilt() throws SynTreeGenerationException, CloneNotSupportedException {
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("a", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		IDescriptorsBuildingManager descriptorsBM = new DescriptorsBuildingManagerImpl(signal, 1, signal.getFrames());
-		List<ISynTreeElement> descriptors = descriptorsBM.getListOfNewDescriptors();
+		List<Frame> listOfFramesA = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			listOfFramesA.add((Frame) frame);
+		}		
+		IDescriptorsBuildingManager descriptorsBM = new DescriptorsBuildingManagerImpl((ICopycatSignal) signal, 1, listOfFramesA);
+		List<IGrammaticalST> descriptors = descriptorsBM.getListOfNewDescriptors();
 		/* for (AbstractDescriptorInterface descriptor : descriptors) {
 			for (String property : descriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
@@ -173,15 +182,17 @@ public class DescriptorsBuildingManagerImplTest {
 		List<CharString> listOfDescriptorsCoveringTheWholeString = new ArrayList<CharString>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcde", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfFactorizableDescriptors = signal.getFrames();
+		List<Frame> previousGenOfFactorizableDescriptors = new ArrayList<Frame>();
+		for (IFrame iFrame : signal.getFrames())
+			previousGenOfFactorizableDescriptors.add((Frame) iFrame);
 		try {
 			// System.out.println("GEN1 : ");
 			// printSetOfFrames(previousGenOfFactorizableDescriptors);
 			INewGenOfDescriptorsBuilder newGenOfDescriptorsBuilder = 
-						new NewGenOfDescriptorsBuilderImpl(1, signal, previousGenOfFactorizableDescriptors);
+						new NewGenOfDescriptorsBuilderImpl(1,(ICopycatSignal) signal, previousGenOfFactorizableDescriptors);
 			previousGenOfFactorizableDescriptors = new ArrayList<Frame>();
-			List<ISynTreeElement> newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
-			for (ISynTreeElement descriptor : newGenOfDescriptors) {
+			List<IGrammaticalST> newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
+			for (IGrammaticalST descriptor : newGenOfDescriptors) {
 				if (descriptor.getDescriptorName().equals("charString"))
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("frame"))
@@ -193,10 +204,10 @@ public class DescriptorsBuildingManagerImplTest {
 			// printSetOfFrames(previousGenOfFactorizableDescriptors);
 			// printSetOfCharString(listOfDescriptorsCoveringTheWholeString);
 			newGenOfDescriptorsBuilder = 
-					new NewGenOfDescriptorsBuilderImpl(2, signal, previousGenOfFactorizableDescriptors);
+					new NewGenOfDescriptorsBuilderImpl(2, (ICopycatSignal) signal, previousGenOfFactorizableDescriptors);
 			previousGenOfFactorizableDescriptors = new ArrayList<Frame>();
 			newGenOfDescriptors = newGenOfDescriptorsBuilder.getNewGenOfDescriptors();
-			for (ISynTreeElement descriptor : newGenOfDescriptors) {
+			for (IGrammaticalST descriptor : newGenOfDescriptors) {
 				if (descriptor.getDescriptorName().equals("charString"))
 					listOfDescriptorsCoveringTheWholeString.add((CharString) descriptor);
 				else if (descriptor.getDescriptorName().equals("frame"))

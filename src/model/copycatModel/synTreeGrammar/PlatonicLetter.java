@@ -4,24 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.PlatonicLetterOS;
+import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
-import settings.Settings;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.MinimalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class PlatonicLetter extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "platonicLetter";
-	private String platonicLetterValue; 
+	private MinimalST platonicLetterValue; 
 	
-	public PlatonicLetter(String platonicLetterValue) {
-		this.platonicLetterValue = platonicLetterValue;
+	public PlatonicLetter(String platonicLetterValue) throws CloneNotSupportedException {
+		this.platonicLetterValue = new MinimalST(platonicLetterValue);
+		setHashCode();
 	}
 	
 	protected PlatonicLetter clone() throws CloneNotSupportedException {
-		PlatonicLetter clonePlatonicLetter = new PlatonicLetter(platonicLetterValue);
+		PlatonicLetter clonePlatonicLetter = new PlatonicLetter(platonicLetterValue.getValue());
 		return clonePlatonicLetter;
 	}
 
@@ -31,28 +34,21 @@ public class PlatonicLetter extends SynTreeElementImpl implements ISynTreeElemen
 	}
 	
 	@Override
-	public List<String> getListOfPropertiesWithPath() {
-		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		StringBuilder sB = new StringBuilder();
-		sB.append(DESCRIPTOR_NAME);
-		sB.append(Settings.PATH_SEPARATOR);
-		sB.append(platonicLetterValue);
-		listOfPropertiesWithPath.add(sB.toString());
-		return listOfPropertiesWithPath;
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(platonicLetterValue);
+		return listOfComponents;
 	}	
 	
 	@Override
-	public List<String> getListOfRelevantPropertiesWithPath() {
-		return getListOfPropertiesWithPath();
-	}	
-	
-	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet platonicLetterOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer platonicLetterIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String platonicLetterID = getDescriptorName().concat(platonicLetterIndex.toString());
-		MinimalOS platonicLetterProperty = new MinimalOS(platonicLetterValue);
+		MinimalOS platonicLetterProperty = 
+				(MinimalOS) platonicLetterValue.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		platonicLetterOS = new PlatonicLetterOS(platonicLetterID, platonicLetterProperty);
 		return platonicLetterOS;		
 	}	

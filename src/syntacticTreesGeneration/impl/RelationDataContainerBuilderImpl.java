@@ -7,10 +7,10 @@ import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.IProperty;
-import model.synTreeModel.IPropertyContainer;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.utils.IProperty;
+import model.synTreeModel.impl.utils.IPropertyContainer;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationChecker;
 import syntacticTreesGeneration.IEnumerationRelationalData;
@@ -38,7 +38,7 @@ public class RelationDataContainerBuilderImpl implements IRelationDataContainerB
 	public IRelationDataContainer getRelationDataContainer() throws SynTreeGenerationException {
 		IRelationDataContainer relationDataContainer = new RelationDataContainerImpl();
 		if (listOfDescriptors.size() > 1) {
-			List<ISynTreeElement> listOfAbstractDescriptors = new ArrayList<ISynTreeElement>();
+			List<IGrammaticalST> listOfAbstractDescriptors = new ArrayList<IGrammaticalST>();
 			listOfAbstractDescriptors.addAll(listOfDescriptors);
 			boolean wholeStringIsDescribed = 
 					DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOfAbstractDescriptors);

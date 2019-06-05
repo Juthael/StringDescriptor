@@ -5,15 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.AbsCommonDiffOS;
 import model.copycatModel.ordSetGrammar.CommonDiffOS;
 import model.copycatModel.ordSetGrammar.SequenceOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class Sequence extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "sequence";
 	private CommonDiff commonDiff;
@@ -22,6 +23,7 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 	public Sequence(CommonDiff commonDiff, AbsCommonDiff absCommonDiff) {
 		this.commonDiff = commonDiff;
 		this.absCommonDiff = absCommonDiff;	
+		setHashCode();
 	}
 	
 	@Override
@@ -52,14 +54,15 @@ public class Sequence extends SynTreeElementImpl implements ISynTreeElement, Clo
 		return thisIsAConstantSequence;
 	}
 	
-	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> componentDescriptors = new ArrayList<SynTreeElementImpl>(
+	protected List<IGrammaticalST> buildListOfRelevantComponentsForRelationBuilding() {
+		List<IGrammaticalST> componentDescriptors = new ArrayList<IGrammaticalST>(
 				Arrays.asList(commonDiff));
 		return componentDescriptors;
 	}	
 
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet sequenceOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

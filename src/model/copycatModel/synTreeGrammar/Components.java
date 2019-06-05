@@ -7,52 +7,71 @@ import java.util.Map;
 
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
-import model.copycatModel.ordSetGrammar.FrameOS;
 import model.copycatModel.ordSetGrammar.ComponentsOS;
+import model.copycatModel.ordSetGrammar.FrameOS;
 import model.copycatModel.ordSetGrammar.SizeOS;
 import model.generalModel.IElement;
+import model.orderedSetModel.IFrameOS;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElementWithPosition;
-import model.synTreeModel.impl.SynTreeElementWithPositionImpl;
+import model.orderedSetModel.impl.GenericOS;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IPositionableST;
+import model.synTreeModel.ISyntacticTree;
+import model.synTreeModel.impl.GenericST;
+import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 
-public class Components extends SynTreeElementWithPositionImpl implements ISynTreeElementWithPosition, Cloneable {
+public class Components extends GrammaticalST implements IGrammaticalST, IPositionableST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "components";
 	private Size size;
-	private HowManyFrames frameHM;
+	private ISyntacticTree oneOrManyFrames;
 	
-	public Components(Size size, HowManyFrames frameHM) 
-			throws SynTreeGenerationException, CloneNotSupportedException {
+	public Components(Size size, IOneOrManyFrames frameHM) throws SynTreeGenerationException {
 		this.size = size;
 		if (frameHM.getDescriptorName().equals("frame")) {
-			this.frameHM = (Frame) frameHM;
+			this.oneOrManyFrames = (Frame) frameHM;
 			List<IElement> listWithSingleFrame = new ArrayList<IElement>(); 
-			listWithSingleFrame.add(this.frameHM);
+			listWithSingleFrame.add(this.oneOrManyFrames);
 			updateComponentsPosition("1", listWithSingleFrame);
 		}
-		else this.frameHM = frameHM;
+		else this.oneOrManyFrames = frameHM;
+		setHashCode();
 	}
 	
-	public Components(Size size, HowManyFrames frameHM, boolean fullStringFrame) 
-			throws SynTreeGenerationException {
-		if (fullStringFrame == Settings.FULL_STRING_FRAME && frameHM.getDescriptorName().equals("frame")){
+	public Components(Size size, IOneOrManyFrames frameHM, boolean wholeStringFrame) throws SynTreeGenerationException {
+		if (wholeStringFrame == Settings.FULL_STRING_FRAME && frameHM.getDescriptorName().equals("frame")){
 			this.size = size;
-			Frame frame = (Frame) frameHM;
-			this.frameHM = frame;
+			Frame castFrame = (Frame) frameHM;
+			this.oneOrManyFrames = castFrame;
 			List<IElement> listWithSingleFrame = new ArrayList<IElement>(); 
-			listWithSingleFrame.add(this.frameHM);
+			listWithSingleFrame.add(this.oneOrManyFrames);
 			updateComponentsPosition(Settings.CONVENTIONAL_POSITION_FOR_FULL_STRING_FRAME, listWithSingleFrame);				
 		} else throw new SynTreeGenerationException("Components : illegal parameter values in constructor");
+		setHashCode();
 	}
+	
+	public Components(Size size, GenericST abstractFrame) throws SynTreeGenerationException, CloneNotSupportedException {
+		this.size = size;
+		this.oneOrManyFrames = abstractFrame;
+		setHashCode();
+	}		
 	
 	@Override
 	protected Components clone() throws CloneNotSupportedException {
 		Components cloneComponents;
 		Size cloneSize = size.clone();
-		HowManyFrames cloneFrameHM = frameHM.clone();
 		try {
-			cloneComponents = new Components(cloneSize, cloneFrameHM);
+			if (!oneOrManyFrames.getDescriptorName().equals(Settings.ABSTRACT_TREE_NAME)) {
+				IOneOrManyFrames frameHM = (IOneOrManyFrames) this.oneOrManyFrames;
+				IOneOrManyFrames cloneFrameHM1 = frameHM.clone();
+				cloneComponents = new Components(cloneSize, cloneFrameHM1);
+			}
+			else {
+				GenericST abstractFrame = (GenericST) oneOrManyFrames;
+				GenericST cloneFrameHM2 = abstractFrame.clone();
+				cloneComponents = new Components(cloneSize, cloneFrameHM2);
+			}	
 		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Components : error in clone() method");
 		}
@@ -67,7 +86,7 @@ public class Components extends SynTreeElementWithPositionImpl implements ISynTr
 	@Override
 	public List<IElement> getListOfComponents(){
 		List<IElement> componentDescriptors = new ArrayList<IElement>(
-				Arrays.asList(size, frameHM));
+				Arrays.asList(size, oneOrManyFrames));
 		return componentDescriptors;
 	}
 	
@@ -79,21 +98,112 @@ public class Components extends SynTreeElementWithPositionImpl implements ISynTr
 		Integer componentsIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String componentsID = getDescriptorName().concat(componentsIndex.toString());
 		SizeOS sizeOS = (SizeOS) size.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
-		List<FrameOS> listOfFrameOS = new ArrayList<FrameOS>();
-		if (frameHM.getDescriptorName().contains("frameX")) {
-			for (IElement element : frameHM.getListOfComponents()) {
-				Frame frame = (Frame) element;
-				listOfFrameOS.add((FrameOS) frame.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+		List<IFrameOS> listOfFrameOS = new ArrayList<IFrameOS>();
+		if (!oneOrManyFrames.getDescriptorName().equals(Settings.ABSTRACT_TREE_NAME)) {
+			if (oneOrManyFrames.getDescriptorName().contains("frameX")) {
+				for (IElement element : oneOrManyFrames.getListOfComponents()) {
+					ISyntacticTree synTree = (ISyntacticTree) element;
+					IFrameOS castframeOS = (IFrameOS) synTree.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+					listOfFrameOS.add(castframeOS);
+				}
+			}
+			else if (oneOrManyFrames.getDescriptorName().equals("frame")){
+				Frame castFrame = (Frame) oneOrManyFrames;
+				listOfFrameOS.add((FrameOS) castFrame.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			}
+			else throw new OrderedSetsGenerationException("Components.upgradeAsTheElementOfAnOrderedSet() : "
+					+ "frame descriptor name '" + oneOrManyFrames.getDescriptorName() + "' is inconsistant.");
+			componentsOS = new ComponentsOS(componentsID, isCodingElement, sizeOS, listOfFrameOS);
+		}
+		else {
+			List<IOrderedSet> listOfElements = new ArrayList<IOrderedSet>();
+			listOfElements.add(oneOrManyFrames.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+			listOfElements.add(sizeOS);
+			componentsOS = new GenericOS(componentsID, getDescriptorName(), listOfElements);			
+		}
+		return componentsOS;		
+	}	
+	
+	@Override
+	public void updatePosition(String newPosition, List<IElement>componentDescriptors) throws SynTreeGenerationException {
+		doUpdatePosition(newPosition);
+		updateComponentsPosition(newPosition, componentDescriptors);
+	}
+	
+	protected void doUpdatePosition(String newPosition) throws SynTreeGenerationException {
+	}	
+	
+	protected void updateComponentsPosition(String newPosition,	List<IElement> componentDescriptors) 
+			throws SynTreeGenerationException {
+		for (IElement componentDescriptor : componentDescriptors) {
+			if (checkIfThisElementIfPositionable(componentDescriptor) == true) {
+				List<IElement> listOfPositionnableSubComponents = new ArrayList<IElement>();
+				for (IElement subComponent : componentDescriptor.getListOfComponents()) {
+					boolean thisSubComponentIsPositionable = checkIfThisElementIfPositionable(subComponent);
+					if (thisSubComponentIsPositionable == true)
+						listOfPositionnableSubComponents.add((IPositionableST) subComponent);
+				}
+				IPositionableST synTreeComponent = (IPositionableST) componentDescriptor;
+				synTreeComponent.updatePosition(newPosition, listOfPositionnableSubComponents);
 			}
 		}
-		else if (frameHM.getDescriptorName().contentEquals("frame")){
-			Frame frame = (Frame) frameHM;
-			listOfFrameOS.add((FrameOS) frame.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex));
+	}	
+	
+	protected void updateComponentsPosition(int autoPosition, List<IPositionableST> componentDescriptors) 
+			throws SynTreeGenerationException {
+		if (autoPosition == Settings.COMPONENT_AUTO_POSITIONING) {
+			int positionIndex = 1;
+			StringBuilder sB;
+			for (IPositionableST componentDescriptor : componentDescriptors) {
+				if (checkIfThisElementIfPositionable(componentDescriptor) == true) {
+					sB = new StringBuilder();
+					String positionValue = Integer.toString(positionIndex);
+					String specialPositionValue = getSpecialPositionValue(positionIndex, componentDescriptors.size());
+					sB.append(positionValue);
+					if (!specialPositionValue.isEmpty()) {
+						sB.append(Settings.POSITION_VALUES_SEPARATOR);
+						sB.append(specialPositionValue);	
+					}
+					List<IElement> listOfPositionnableSubComponents = new ArrayList<IElement>();
+					for (IElement subComponent : componentDescriptor.getListOfComponents()) {
+						boolean thisSubComponentIsPositionnable = checkIfThisElementIfPositionable(subComponent);
+						if (thisSubComponentIsPositionnable == true)
+							listOfPositionnableSubComponents.add((IPositionableST) subComponent);
+					}
+					componentDescriptor.updatePosition(sB.toString(), listOfPositionnableSubComponents);
+					positionIndex++;
+				}
+			}
+		} else throw new SynTreeGenerationException(
+				"AbstractDescriptor.updateComponents() : illegal constant value.");
+	}		
+	
+	private String getSpecialPositionValue(int positionIndex, int nbOfComponentDescriptors) {
+		String specialPositionValue = "";
+		if (nbOfComponentDescriptors > 1) {
+			if (positionIndex == 1)
+				specialPositionValue = Settings.FIRST_POSITION;
+			else if (positionIndex == nbOfComponentDescriptors) {
+				specialPositionValue = Settings.LAST_POSITION;
+			}
+			else if (nbOfComponentDescriptors % 2 == 1) {
+				int halfIntegerPart = (int) nbOfComponentDescriptors/2;
+				if (positionIndex == (halfIntegerPart + 1))
+					specialPositionValue = Settings.CENTRAL_POSITION;
+			}
 		}
-		else throw new OrderedSetsGenerationException("Components.upgradeAsTheElementOfAnOrderedSet : "
-			+ "frameHM descriptor name was unexpected. (" + frameHM.getDescriptorName() + ")");
-		componentsOS = new ComponentsOS(componentsID, isCodingElement, sizeOS, listOfFrameOS);
-		return componentsOS;		
+		return specialPositionValue;
+	}	
+	
+	private boolean checkIfThisElementIfPositionable(IElement element) {
+		boolean thisElementIsPositionnable = false;
+		Class<?> subComponentClass = element.getClass();
+		Class<?>[] subComponentInterfaceClasses = subComponentClass.getInterfaces();
+		for (Class<?> interfaceClass : subComponentInterfaceClasses) {
+			if (interfaceClass == IPositionableST.class)
+				thisElementIsPositionnable = true;
+		}
+		return thisElementIsPositionnable;
 	}	
 
 }

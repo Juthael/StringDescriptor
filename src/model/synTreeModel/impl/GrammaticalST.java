@@ -6,18 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import model.generalModel.IElement;
-import model.generalModel.impl.ElementImpl;
-import model.synTreeModel.IProperty;
-import model.synTreeModel.IPropertyContainer;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.utils.IProperty;
+import model.synTreeModel.impl.utils.IPropertyContainer;
+import model.synTreeModel.impl.utils.impl.Property;
+import model.synTreeModel.impl.utils.impl.PropertyContainer;
 import settings.Settings;
 
-public abstract class SynTreeElementImpl extends ElementImpl implements Cloneable, ISynTreeElement {
+public abstract class GrammaticalST extends SyntacticTree implements Cloneable, IGrammaticalST {
 
-	public SynTreeElementImpl() {
+	public GrammaticalST() {
 	}
 	
-	public SynTreeElementImpl(boolean isCodingElement) {
+	public GrammaticalST(boolean isCodingElement) {
 		super(isCodingElement);
 	}
 	
@@ -25,8 +26,8 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	public IPropertyContainer getpropertyContainer() {
 		IPropertyContainer propertyContainer;
 		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (SynTreeElementImpl relevantComponentDescriptor : listOfRelevantComponents) {
+		List<IGrammaticalST> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (IGrammaticalST relevantComponentDescriptor : listOfRelevantComponents) {
 			List<String> listOfRelevantComponentPropertiesWithPath = 
 					relevantComponentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfRelevantComponentPropertiesWithPath){
@@ -51,19 +52,19 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 			stringBuilder.append(dimension);
 			indexedDimension = stringBuilder.toString();
 			propertyValue = propertyWithPath.substring(lastSlashIndex + 1);
-			property = new PropertyImpl(propertyValue);
+			property = new Property(propertyValue);
 			dimensionToProperty.put(indexedDimension, property);
 			dimensionToPropertyIndex++;
 		}
-		propertyContainer = new PropertyContainerImpl(dimensionToProperty);
+		propertyContainer = new PropertyContainer(dimensionToProperty);
 		return propertyContainer;
 	}
 	
 	@Override
 	public List<String> getListOfRelevantPropertiesWithPath(){
 		List<String> listOfRelevantPropertiesWithPath = new ArrayList<String>();
-		List<SynTreeElementImpl> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
-		for (SynTreeElementImpl componentDescriptor : listOfRelevantComponents) {
+		List<IGrammaticalST> listOfRelevantComponents = buildListOfRelevantComponentsForRelationBuilding();
+		for (IGrammaticalST componentDescriptor : listOfRelevantComponents) {
 			List<String> listOfComponentRelevantPropertiesWithPath = 
 					componentDescriptor.getListOfRelevantPropertiesWithPath();
 			for (String propertyWithPath : listOfComponentRelevantPropertiesWithPath){
@@ -75,7 +76,7 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 		return listOfRelevantPropertiesWithPath;
 	}	
 	
-	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
+	protected List<IGrammaticalST> buildListOfRelevantComponentsForRelationBuilding() {
 		return getListOfAllComponentsForRelationBuilding();
 	}
 	
@@ -85,12 +86,12 @@ public abstract class SynTreeElementImpl extends ElementImpl implements Cloneabl
 	}
 
 	@Override
-	abstract protected SynTreeElementImpl clone() throws CloneNotSupportedException;
+	abstract protected GrammaticalST clone() throws CloneNotSupportedException;
 	
-	private List<SynTreeElementImpl> getListOfAllComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> listOfAllComponents = new ArrayList<SynTreeElementImpl>();
+	private List<IGrammaticalST> getListOfAllComponentsForRelationBuilding() {
+		List<IGrammaticalST> listOfAllComponents = new ArrayList<IGrammaticalST>();
 		for (IElement component : getListOfComponents()) {
-			listOfAllComponents.add((SynTreeElementImpl) component);
+			listOfAllComponents.add((IGrammaticalST) component);
 		}
 		return listOfAllComponents;
 	}

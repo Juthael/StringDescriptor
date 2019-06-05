@@ -1,4 +1,4 @@
-package model.synTreeModel;
+package model.synTreeModel.impl.utils;
 
 import java.util.List;
 import java.util.Map;

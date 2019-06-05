@@ -6,9 +6,9 @@ import java.util.Map;
 
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.synTreeGrammar.Frame;
-import model.synTreeModel.IProperty;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.utils.IProperty;
 import settings.Settings;
 import syntacticTreesGeneration.IEnumerationRelationalData;
 import syntacticTreesGeneration.IGen2Size1RelationDataContainerBuilder;
@@ -30,7 +30,7 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			throws SynTreeGenerationException {
 		List<IRelationDataContainer> listOfRelationDataContainers = 
 				new ArrayList<IRelationDataContainer>();
-		List<ISynTreeElement> listOf1Descriptor = new ArrayList<ISynTreeElement>();
+		List<IGrammaticalST> listOf1Descriptor = new ArrayList<IGrammaticalST>();
 		listOf1Descriptor.add(gen1Descriptor);
 		boolean newDescriptorWillCoverTheWholeString = 
 				DescriptorSpanGetterImpl.testIfWholeStringIsDescribed(signal, listOf1Descriptor);
@@ -82,7 +82,6 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 							restrictedSequenceAllowed = true;
 					}
 				}
-
 			}
 		}
 		else sequenceAllowed = true;

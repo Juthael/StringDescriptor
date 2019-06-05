@@ -12,7 +12,6 @@ public abstract class ElementImpl implements IElement {
 
 	protected boolean isCodingElement;
 	
-	
 	public ElementImpl() {
 		isCodingElement = false;
 	}
@@ -40,6 +39,11 @@ public abstract class ElementImpl implements IElement {
 		}
 		return listOfPropertiesWithPath;
 	}
+	
+	@Override
+	public List<String> getListOfPropertiesWithPath(boolean calledByGeneric){
+		return getListOfPropertiesWithPath();
+	}	
 	
 	@Override
 	public List<String> getListOfPropertiesWithPathWithoutQuantifiers() {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.DimensionOS;
 import model.copycatModel.ordSetGrammar.EnumerationOS;
 import model.copycatModel.ordSetGrammar.SequenceAndSymmetryRelOS;
@@ -13,11 +14,10 @@ import model.copycatModel.ordSetGrammar.SymmetryOS;
 import model.copycatModel.ordSetGrammar.SymmetryRelOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 
-public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement, Cloneable {
+public class SequenceAndSymmetryRel extends Relation implements IGrammaticalST, Cloneable {
 
 	private Sequence sequence;
 	private Symmetry symmetry;
@@ -26,11 +26,12 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 			Sequence sequence, Symmetry symmetry) {
 		super(dimension, enumeration);
 		this.sequence = sequence;
-		this.symmetry = symmetry;				
+		this.symmetry = symmetry;
+		setHashCode();
 	}
 	
 	@Override
-	protected SequenceAndSymmetryRel clone() throws CloneNotSupportedException {
+	public SequenceAndSymmetryRel clone() throws CloneNotSupportedException {
 		SequenceAndSymmetryRel cloneSequenceAndSymmetryRel;
 		Dimension cloneDimension = dimension.clone();
 		Enumeration cloneEnumeration = enumeration.clone();
@@ -49,8 +50,8 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	}	
 	
 	@Override
-	protected List<SynTreeElementImpl> buildListOfRelevantComponentsForRelationBuilding() {
-		List<SynTreeElementImpl> listOfRelevantComponents = new ArrayList<SynTreeElementImpl>(
+	protected List<IGrammaticalST> buildListOfRelevantComponentsForRelationBuilding() {
+		List<IGrammaticalST> listOfRelevantComponents = new ArrayList<IGrammaticalST>(
 				Arrays.asList(dimension, sequence));
 		return listOfRelevantComponents;
 	}
@@ -62,7 +63,8 @@ public class SequenceAndSymmetryRel extends Relation implements ISynTreeElement,
 	}	
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet relationOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer sequenceAndSymmetryRelIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

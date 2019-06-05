@@ -12,10 +12,10 @@ import model.copycatModel.ordSetGrammar.StructureOS;
 import model.copycatModel.ordSetGrammar.StructureWithRelationOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.GrammaticalST;
 
-public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class Structure extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private final static String DESCRIPTOR_NAME = "structure";
 	private Size size;
@@ -24,6 +24,7 @@ public class Structure extends SynTreeElementImpl implements ISynTreeElement, Cl
 	public Structure(Size size, Relation relation) {
 		this.size = size;
 		this.relation = relation;
+		setHashCode();
 	}
 	
 	@Override

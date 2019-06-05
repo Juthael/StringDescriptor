@@ -1,4 +1,4 @@
-package model.synTreeModel;
+package model.synTreeModel.impl.utils;
 
 public interface IProperty {
 

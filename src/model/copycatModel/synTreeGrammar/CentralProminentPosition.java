@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.CentralProminentPositionOS;
 import model.copycatModel.ordSetGrammar.PositionOS;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.GenericOS;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IPositionableST;
 import settings.Settings;
 
-public class CentralProminentPosition extends ProminentPosition implements ISynTreeElement, Cloneable {
+public class CentralProminentPosition extends ProminentPosition implements IGrammaticalST, 
+	IPositionableST, Cloneable {
 
 	public CentralProminentPosition(Position position) {
 		super(position);
+		setHashCode();
 	}
 
 	@Override
@@ -44,7 +49,24 @@ public class CentralProminentPosition extends ProminentPosition implements ISynT
 	}	
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheGenericElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
+		IOrderedSet centralProminentPositionOS;
+		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
+		Integer prominentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
+		String prominentPositionID = getDescriptorName().concat(prominentPositionIndex.toString());
+		IOrderedSet positionOS = position.upgradeAsTheGenericElementOfAnOrderedSet(listOfPropertiesToIndex);
+		MinimalOS centralPositionProperty = new MinimalOS(Settings.CENTRAL_POSITION);
+		List<IOrderedSet> listOfComponents = new ArrayList<IOrderedSet>();
+		listOfComponents.add(positionOS);
+		listOfComponents.add(centralPositionProperty);
+		centralProminentPositionOS = new GenericOS(prominentPositionID, getDescriptorName(), listOfComponents);
+		return centralProminentPositionOS;	
+	}	
+	
+	@Override
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet centralProminentPositionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer prominentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

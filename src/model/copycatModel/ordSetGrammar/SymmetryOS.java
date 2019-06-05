@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
 
-public class SymmetryOS extends AbstractNonMinimalExplicitOS implements IOrderedSet {
+public class SymmetryOS extends NonMinimalExplicitOS implements IOrderedSet {
 
 	private static final String NAME = "symmetry";
 	private MinimalOS symmetryProperty;
@@ -34,10 +33,10 @@ public class SymmetryOS extends AbstractNonMinimalExplicitOS implements IOrdered
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!symmetryProperty.equals(idToIOrderedSet.get(symmetryProperty.getElementID())))
-			symmetryProperty = (MinimalOS) idToIOrderedSet.get(symmetryProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (symmetryProperty.getElementID().equals(orderedSet.getElementID()) && symmetryProperty != orderedSet)
+			symmetryProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

@@ -3,20 +3,23 @@ package model.copycatModel.synTreeGrammar;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import model.copycatModel.ordSetGrammar.EndPositionOS;
 import model.copycatModel.ordSetGrammar.EndProminentPositionOS;
 import model.copycatModel.ordSetGrammar.PositionOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElementWithPosition;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IPositionableST;
 
-public class EndProminentPosition extends ProminentPosition implements ISynTreeElementWithPosition, Cloneable {
+public class EndProminentPosition extends ProminentPosition implements IGrammaticalST, IPositionableST, Cloneable {
 
 	private EndPosition endPosition;
 	
 	public EndProminentPosition(Position position, EndPosition endPosition) {
 		super(position);
 		this.endPosition = endPosition;
+		setHashCode();
 	}
 
 	@Override
@@ -36,7 +39,8 @@ public class EndProminentPosition extends ProminentPosition implements ISynTreeE
 	}
 	
 	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet endProminentPositionOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer endProminentPositionIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);

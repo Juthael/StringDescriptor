@@ -11,12 +11,12 @@ import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractOmegaElement;
-import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.ISynTreeStartElement;
+import model.orderedSetModel.impl.OmegaOS;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IStartElementST;
 import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
 import orderedSetGeneration.impl.BinaryContextBuilderImpl;
@@ -28,22 +28,22 @@ import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 
 public class Description implements IDescription {
 
-	private ISignal signal;
+	private ICopycatSignal  signal;
 	private IScoreCalculator scoreCalculator;
-	private List<ISynTreeStartElement> listOfSyntacticTrees;
+	private List<IStartElementST> listOfSyntacticTrees;
 	private Map<String, IOrderedSet> orderedSetIDToOrderedSet = new HashMap<String, IOrderedSet>();
 	private Map<String, BinaryContext> orderedSetIDToBinaryContext = new HashMap<String, BinaryContext>();
 	private Map<String, ConceptLattice> orderedSetIDToConceptLattice = new HashMap<String, ConceptLattice>();
 	private Map<String, Double> orderedSetIDToScore = new HashMap<String, Double>();
 	private List<String> orderedListOfOrderedSetIDs;
 	
-	public Description(ISignal signal, IScoreCalculator scoreCalculator) 
+	public Description(ICopycatSignal signal, IScoreCalculator scoreCalculator) 
 			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		this.signal = signal;
 		this.scoreCalculator = scoreCalculator;
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl(this.signal);
-		this.listOfSyntacticTrees = new ArrayList<ISynTreeStartElement>(listOfDescriptorsBuilder.getListOfStringDescriptors()); 
-		for (ISynTreeStartElement startElement : listOfSyntacticTrees) {
+		this.listOfSyntacticTrees = new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfStringDescriptors()); 
+		for (IStartElementST startElement : listOfSyntacticTrees) {
 			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(startElement);
 			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();
 			orderedSetIDToOrderedSet.put(orderedSet.getElementID(), orderedSet);
@@ -59,9 +59,9 @@ public class Description implements IDescription {
 	}
 
 	@Override
-	public List<ISynTreeElement> getListOfStringSyntacticTrees() {
-		List<ISynTreeElement> listOfStringDescriptors = new ArrayList<ISynTreeElement>();
-		for (ISynTreeElement synTree : listOfSyntacticTrees)
+	public List<IGrammaticalST> getListOfStringSyntacticTrees() {
+		List<IGrammaticalST> listOfStringDescriptors = new ArrayList<IGrammaticalST>();
+		for (IGrammaticalST synTree : listOfSyntacticTrees)
 			listOfStringDescriptors.add((CharString) synTree);
 		return listOfStringDescriptors;
 	}
@@ -98,7 +98,7 @@ public class Description implements IDescription {
 	public Map<String, String> getOrderedSetIDToVerbalDescriptionMapping() {
 		Map<String, String> orderedSetIDToVerbalDescription = new HashMap<String, String>();
 		for (String orderedSetID : orderedSetIDToOrderedSet.keySet()) {
-			AbstractOmegaElement orderedSet = (AbstractOmegaElement) orderedSetIDToOrderedSet.get(orderedSetID);
+			OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedSetID);
 			orderedSetIDToVerbalDescription.put(orderedSetID, orderedSet.getVerbalDescription());
 		}
 		return orderedSetIDToVerbalDescription;
@@ -134,7 +134,7 @@ public class Description implements IDescription {
 	public Map<String, Double> getVerbalDescriptionToScoreMapping() {
 		Map<String, Double> verbalDescriptionToScore = new HashMap<String, Double>();
 		for (String orderedSetID : orderedListOfOrderedSetIDs) {
-			AbstractOmegaElement orderedSet = (AbstractOmegaElement) orderedSetIDToOrderedSet.get(orderedSetID);
+			OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedSetID);
 			String verbalDescription = orderedSet.getVerbalDescription();
 			Double score = orderedSetIDToScore.get(orderedSetID);
 			verbalDescriptionToScore.put(verbalDescription, score);
@@ -161,7 +161,7 @@ public class Description implements IDescription {
 	@Override
 	public String getBestDescriptionVerbalDescription() {
 		String verbalDescription;
-		AbstractOmegaElement orderedSet = (AbstractOmegaElement) orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(0));
+		OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(0));
 		verbalDescription = orderedSet.getVerbalDescription();
 		return verbalDescription;
 	}
@@ -189,7 +189,7 @@ public class Description implements IDescription {
 	@Override
 	public String getDescriptionVerbalDescription(int index) {
 		String verbalDescription;
-		AbstractOmegaElement orderedSet = (AbstractOmegaElement) orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index));
+		OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index));
 		verbalDescription = orderedSet.getVerbalDescription();
 		return verbalDescription;
 	}

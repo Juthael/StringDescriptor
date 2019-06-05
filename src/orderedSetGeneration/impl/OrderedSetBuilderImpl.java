@@ -10,41 +10,44 @@ import java.util.Set;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.VerbalizationException;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.AbstractOmegaElement;
-import model.orderedSetModel.impl.GenericOmegaElement;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.ISynTreeStartElement;
+import model.orderedSetModel.impl.OmegaOS;
+import model.orderedSetModel.impl.GenericOmegaOS;
+import model.synTreeModel.ISyntacticTree;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.IStartElementST;
 import orderedSetGeneration.IOrderedSetBuilder;
 import settings.Settings;
 
 public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 
-	private AbstractOmegaElement omega;
+	private OmegaOS omega;
 	private int mapIndex = 1;
 	private Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
 	
-	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement, String verbalDescription) throws OrderedSetsGenerationException {
+	public OrderedSetBuilderImpl(List<ISyntacticTree> listOfSynTreeElement, String verbalDescription) 
+			throws OrderedSetsGenerationException {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
 		List<IOrderedSet> listOfSubMaximalPowerSetElements = new ArrayList<IOrderedSet>();
-		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
-			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		for (ISyntacticTree synTreeGrammElement : listOfSynTreeElement) {
+			IOrderedSet subMaximalPowerSetElement = synTreeGrammElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
-		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements, verbalDescription);
+		omega = new GenericOmegaOS(listOfSubMaximalPowerSetElements, verbalDescription);
 	}
 	
-	public OrderedSetBuilderImpl(List<ISynTreeElement> listOfSynTreeElement) throws OrderedSetsGenerationException {
+	public OrderedSetBuilderImpl(List<ISyntacticTree> listOfSynTreeElement) throws OrderedSetsGenerationException {
 		setListOfPropertiesToIndexMap(listOfSynTreeElement);
 		List<IOrderedSet> listOfSubMaximalPowerSetElements = new ArrayList<IOrderedSet>();
-		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
-			IOrderedSet subMaximalPowerSetElement = synTreeElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
+		for (ISyntacticTree synTreeGrammElement : listOfSynTreeElement) {
+			IOrderedSet subMaximalPowerSetElement = synTreeGrammElement.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 			listOfSubMaximalPowerSetElements.add(subMaximalPowerSetElement);
 		}
-		omega = new GenericOmegaElement(listOfSubMaximalPowerSetElements, Settings.NO_VERBAL_DESCRIPTION);
+		omega = new GenericOmegaOS(listOfSubMaximalPowerSetElements, Settings.NO_VERBAL_DESCRIPTION);
 	}	
 	
-	public OrderedSetBuilderImpl(ISynTreeStartElement startElement) throws OrderedSetsGenerationException, VerbalizationException {
-		List<ISynTreeElement> listOfSynTreeElement = new ArrayList<ISynTreeElement>();
+	public OrderedSetBuilderImpl(IStartElementST startElement) 
+			throws OrderedSetsGenerationException, VerbalizationException {
+		List<IGrammaticalST> listOfSynTreeElement = new ArrayList<IGrammaticalST>();
 		listOfSynTreeElement.add(startElement);
 		omega = startElement.upgradeAsTheSupremumOfAnOrderedSet();
 		omega.setElementID("charString".concat(getRandomIDNumber()));
@@ -60,9 +63,9 @@ public class OrderedSetBuilderImpl implements IOrderedSetBuilder {
 		return omega.getRelation();
 	}
 	
-	private void setListOfPropertiesToIndexMap(List<ISynTreeElement> listOfSynTreeElement) {
-		for (ISynTreeElement synTreeElement : listOfSynTreeElement) {
-			Set<List<String>> setOfPropertyLists = synTreeElement.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
+	private void setListOfPropertiesToIndexMap(List<ISyntacticTree> listOfSynTreeElement) {
+		for (ISyntacticTree syntacticTree : listOfSynTreeElement) {
+			Set<List<String>> setOfPropertyLists = syntacticTree.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
 			for (List<String> listOfPropertiesWithPath : setOfPropertyLists) {
 				if (!listOfPropertiesToIndex.containsKey(listOfPropertiesWithPath)) {
 					listOfPropertiesToIndex.put(listOfPropertiesWithPath, mapIndex);

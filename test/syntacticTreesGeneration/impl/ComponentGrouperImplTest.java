@@ -12,6 +12,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import exceptions.SynTreeGenerationException;
+import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.AbsCommonDiff;
 import model.copycatModel.synTreeGrammar.CommonDiff;
 import model.copycatModel.synTreeGrammar.Dimension;
@@ -20,15 +21,16 @@ import model.copycatModel.synTreeGrammar.Enumeration;
 import model.copycatModel.synTreeGrammar.Frame;
 import model.copycatModel.synTreeGrammar.FrameX;
 import model.copycatModel.synTreeGrammar.Components;
-import model.copycatModel.synTreeGrammar.HowManyFrames;
+import model.copycatModel.synTreeGrammar.IOneOrManyFrames;
+import model.copycatModel.synTreeGrammar.IRelationsOrLetter;
 import model.copycatModel.synTreeGrammar.Position;
 import model.copycatModel.synTreeGrammar.Relation;
 import model.copycatModel.synTreeGrammar.RelationX;
 import model.copycatModel.synTreeGrammar.Relations;
-import model.copycatModel.synTreeGrammar.RelationsOrLetter;
 import model.copycatModel.synTreeGrammar.Sequence;
 import model.copycatModel.synTreeGrammar.SequenceRel;
 import model.copycatModel.synTreeGrammar.Size;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.ISignal;
 import settings.Settings;
 import syntacticTreesGeneration.IComponentGrouper;
@@ -40,13 +42,16 @@ import syntacticTreesGeneration.ISignalBuilder;
 public class ComponentGrouperImplTest {
 
 	@Test
-	public void AllSetsCoverAdjacentLetters() throws SynTreeGenerationException {
+	public void AllSetsCoverAdjacentLetters() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean setsCoverAdjacentLetters = true;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		IComponentGrouper componentGrouper = 
 				new ComponentGrouperImpl(generationNumber, nextGenerationWillBeTheLast, signal, previousGenOfDescriptors);
 		Set<List<Frame>> setOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
@@ -73,7 +78,7 @@ public class ComponentGrouperImplTest {
 	}	
 	
 	@Test
-	public void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws SynTreeGenerationException {
+	public void whenComponentsAre1stGenerationThenPositionsCoveredAreAsExpectedBelow() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean positionsCoveredAreAsExpectedBelow;
 		Set<List<Integer>> setOfPositionListsExpectedForABCD = new HashSet<List<Integer>>();
 		Set<List<Integer>> setOfPositionListsFounForABCD = new HashSet<List<Integer>>();
@@ -101,7 +106,10 @@ public class ComponentGrouperImplTest {
 		boolean nextGenerationWillBeTheLast = false;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		IComponentGrouper componentGrouper = 
 				new ComponentGrouperImpl(generationNumber, nextGenerationWillBeTheLast, signal, previousGenOfDescriptors);
 		Set<List<Frame>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
@@ -118,13 +126,16 @@ public class ComponentGrouperImplTest {
 	}	
 	
 	@Test
-	public void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws SynTreeGenerationException {
+	public void whenComponentsAre1stGenerationThenSetsCanBeOfSize1() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean oneSetAtLeastIsSize1 = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		IComponentGrouper componentGrouper = 
 				new ComponentGrouperImpl(generationNumber, nextGenerationWillBeTheLast, signal, previousGenOfDescriptors);
 		Set<List<Frame>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
@@ -144,7 +155,10 @@ public class ComponentGrouperImplTest {
 		ArrayList<Frame> previousDescriptors = new ArrayList<Frame>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		CommonDiff commonDiff1 = new CommonDiff("1");
 		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff("1");
 		CommonDiff commonDiff0 = new CommonDiff("0");
@@ -166,7 +180,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersA = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerA : gen2Size1RDContainersA) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerA, listOf1ComponentA);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerA, listOf1ComponentA);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}
@@ -179,7 +193,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersB = 
 				gen2Size1RDContainerBuilderB.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerB : gen2Size1RDContainersB) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerB, listOf1ComponentB);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerB, listOf1ComponentB);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}		
@@ -192,7 +206,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersC = 
 				gen2Size1RDContainerBuilderC.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerC : gen2Size1RDContainersC) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerC, listOf1ComponentC);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerC, listOf1ComponentC);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}			
@@ -209,12 +223,12 @@ public class ComponentGrouperImplTest {
 		listOfRelationsAB.add(relationABplatonicLetter);
 		listOfRelationsAB.add(relationABSize);
 		RelationX relationX2AB = new RelationX(listOfRelationsAB);
-		List<Frame> previousGenOfDescriptors01 = new ArrayList<Frame>();
+		List<IFrame> previousGenOfDescriptors01 = new ArrayList<IFrame>();
 		previousGenOfDescriptors01.add(previousGenOfDescriptors.get(0));
 		previousGenOfDescriptors01.add(previousGenOfDescriptors.get(1));
-		HowManyFrames frameX2AB = new FrameX(previousGenOfDescriptors01);
+		IOneOrManyFrames frameX2AB = new FrameX(previousGenOfDescriptors01);
 		Components componentsAB = new Components(size2, frameX2AB);
-		RelationsOrLetter relationsAB = new Relations(componentsAB, dimensionX2, relationX2AB);
+		IRelationsOrLetter relationsAB = new Relations(componentsAB, dimensionX2, relationX2AB);
 		Position positionAB = new Position(Settings.AWAITING_POSITION_VALUE);
 		Frame frameAB = new Frame(false, size2, positionAB, relationsAB);
 		previousDescriptors.add(frameAB);
@@ -225,12 +239,12 @@ public class ComponentGrouperImplTest {
 		listOfRelationsBC.add(relationBCplatonicLetter);
 		listOfRelationsBC.add(relationBCSize);
 		RelationX relationX2BC = new RelationX(listOfRelationsBC);
-		List<Frame> previousGenOfDescriptors12 = new ArrayList<Frame>();
+		List<IFrame> previousGenOfDescriptors12 = new ArrayList<IFrame>();
 		previousGenOfDescriptors12.add(previousGenOfDescriptors.get(1));
 		previousGenOfDescriptors12.add(previousGenOfDescriptors.get(2));
-		HowManyFrames frameX2BC = new FrameX(previousGenOfDescriptors12);
+		IOneOrManyFrames frameX2BC = new FrameX(previousGenOfDescriptors12);
 		Components componentsBC = new Components(size2, frameX2BC);
-		RelationsOrLetter relationsBC = new Relations(componentsBC, dimensionX2, relationX2BC);
+		IRelationsOrLetter relationsBC = new Relations(componentsBC, dimensionX2, relationX2BC);
 		Position positionBC = new Position(Settings.AWAITING_POSITION_VALUE);
 		Frame frameBC = new Frame(false, size2, positionBC, relationsBC);
 		previousDescriptors.add(frameBC);		
@@ -256,13 +270,16 @@ public class ComponentGrouperImplTest {
 	}
 	
 	@Test
-	public void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws SynTreeGenerationException {
+	public void whenNextGenerationWontBeTheLastThenSetsDontHaveToCoverTheWholeString() throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean oneSetAtLeastDoNotCoverTheWholeString = false;
 		int generationNumber = 1;
 		boolean nextGenerationWillBeTheLast = false;
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		IComponentGrouper componentGrouper = 
 				new ComponentGrouperImpl(generationNumber, nextGenerationWillBeTheLast, signal, previousGenOfDescriptors);
 		Set<List<Frame>> listOfFactorizableDescriptorSets = componentGrouper.getSetsOfFactorizableDescriptors();
@@ -288,7 +305,10 @@ public class ComponentGrouperImplTest {
 		ArrayList<Frame> previousDescriptors = new ArrayList<Frame>();
 		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
-		List<Frame> previousGenOfDescriptors = signal.getFrames();
+		List<Frame> previousGenOfDescriptors = new ArrayList<Frame>();
+		for (IFrame frame : signal.getFrames()) {
+			previousGenOfDescriptors.add((Frame) frame);
+		}
 		CommonDiff commonDiff1 = new CommonDiff("1");
 		AbsCommonDiff absCommonDiff1 = new AbsCommonDiff("1");
 		CommonDiff commonDiff0 = new CommonDiff("0");
@@ -310,7 +330,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersA = 
 				gen2Size1RDContainerBuilderA.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerA : gen2Size1RDContainersA) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerA, listOf1ComponentA);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerA, listOf1ComponentA);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}
@@ -323,7 +343,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersB = 
 				gen2Size1RDContainerBuilderB.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerB : gen2Size1RDContainersB) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerB, listOf1ComponentB);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerB, listOf1ComponentB);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}		
@@ -336,7 +356,7 @@ public class ComponentGrouperImplTest {
 		List<IRelationDataContainer> gen2Size1RDContainersC = 
 				gen2Size1RDContainerBuilderC.getListOfRelationDataContainers();
 		for (IRelationDataContainer gen2Size1RDContainerC : gen2Size1RDContainersC) {
-			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl(signal, gen2Size1RDContainerC, listOf1ComponentC);
+			INewDescriptorBuilder newDescBuilder = new NewDescriptorBuilderImpl((ICopycatSignal) signal, gen2Size1RDContainerC, listOf1ComponentC);
 			Frame thisDescriptor = (Frame) newDescBuilder.getNewDescriptor();
 			previousDescriptors.add(thisDescriptor);
 		}			
@@ -353,12 +373,12 @@ public class ComponentGrouperImplTest {
 		listOfRelationsAB.add(relationABplatonicLetter);
 		listOfRelationsAB.add(relationABSize);		
 		RelationX relationX2AB = new RelationX(listOfRelationsAB);
-		List<Frame> previousGenOfDescriptors01B = new ArrayList<Frame>();
+		List<IFrame> previousGenOfDescriptors01B = new ArrayList<IFrame>();
 		previousGenOfDescriptors01B.add(previousGenOfDescriptors.get(0));
 		previousGenOfDescriptors01B.add(previousGenOfDescriptors.get(1));		
-		HowManyFrames frameX2AB = new FrameX(previousGenOfDescriptors01B);
+		IOneOrManyFrames frameX2AB = new FrameX(previousGenOfDescriptors01B);
 		Components componentsAB = new Components(size2, frameX2AB);
-		RelationsOrLetter relationsAB = new Relations(componentsAB, dimensionX2, relationX2AB);
+		IRelationsOrLetter relationsAB = new Relations(componentsAB, dimensionX2, relationX2AB);
 		Position positionAB = new Position(Settings.AWAITING_POSITION_VALUE);
 		Frame frameAB = new Frame(false, size2, positionAB, relationsAB);
 		previousDescriptors.add(frameAB);
@@ -369,12 +389,12 @@ public class ComponentGrouperImplTest {
 		listOfRelationsBC.add(relationBCplatonicLetter);
 		listOfRelationsBC.add(relationBCSize);
 		RelationX relationX2BC = new RelationX(listOfRelationsBC);
-		List<Frame> previousGenOfDescriptors12B = new ArrayList<Frame>();
+		List<IFrame> previousGenOfDescriptors12B = new ArrayList<IFrame>();
 		previousGenOfDescriptors12B.add(previousGenOfDescriptors.get(1));
 		previousGenOfDescriptors12B.add(previousGenOfDescriptors.get(2));		
-		HowManyFrames frameX2BC = new FrameX(previousGenOfDescriptors12B);
+		IOneOrManyFrames frameX2BC = new FrameX(previousGenOfDescriptors12B);
 		Components componentsBC = new Components(size2, frameX2BC);
-		RelationsOrLetter relationsBC = new Relations(componentsBC, dimensionX2, relationX2BC);
+		IRelationsOrLetter relationsBC = new Relations(componentsBC, dimensionX2, relationX2BC);
 		Position positionBC = new Position(Settings.AWAITING_POSITION_VALUE);
 		Frame frameBC = new Frame(false, size2, positionBC, relationsBC);
 		previousDescriptors.add(frameBC);		

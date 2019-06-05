@@ -6,11 +6,11 @@ import java.util.Map;
 import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
 import model.orderedSetModel.IOrderedSet;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 
 public interface IDescription {
 	
-	List<ISynTreeElement> getListOfStringSyntacticTrees();
+	List<IGrammaticalST> getListOfStringSyntacticTrees();
 	
 	List<String> getOrderedListOfOrderedSetIDs();
 	

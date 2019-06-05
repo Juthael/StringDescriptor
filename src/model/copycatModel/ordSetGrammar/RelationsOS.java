@@ -2,19 +2,18 @@ package model.copycatModel.ordSetGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
-import model.orderedSetModel.impl.AbstractNonMinimalOS;
 import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalOS;
 
-public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLetterOS {
+public class RelationsOS extends NonMinimalOS implements RelationsOrLetterOS {
 
 	private static final String NAME = "relations";
 	private List<RelationOS> listOfRelations;
-	private ComponentsOS components;
+	private IOrderedSet components;
 	
-	public RelationsOS(String elementID, List<RelationOS> listOfRelations, ComponentsOS components) {
+	public RelationsOS(String elementID, List<RelationOS> listOfRelations, IOrderedSet components) {
 		super(elementID);
 		this.listOfRelations = listOfRelations;
 		this.components = components;	
@@ -34,18 +33,20 @@ public class RelationsOS extends AbstractNonMinimalOS implements RelationsOrLett
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		List<RelationOS> listOfRelationsWithNoRedundancy = new ArrayList<RelationOS>();
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		List<RelationOS> cleanListOfRelations = new ArrayList<RelationOS>();
 		for (RelationOS relation : listOfRelations) {
-			RelationOS rightRelation = (RelationOS) idToIOrderedSet.get(relation.getElementID());
-			rightRelation.eliminateRedundancies(idToIOrderedSet);
-			listOfRelationsWithNoRedundancy.add(rightRelation);
+			if (relation.getElementID().equals(orderedSet.getElementID()) && relation != orderedSet)
+				relation = (RelationOS) orderedSet;
+			else relation.eliminateRedundancies(orderedSet);
+			cleanListOfRelations.add(relation);
 		}
-		listOfRelations = listOfRelationsWithNoRedundancy;
-		if (!components.equals(idToIOrderedSet.get(components.getElementID())))
-			components = (ComponentsOS) idToIOrderedSet.get(components.getElementID());
-		components.eliminateRedundancies(idToIOrderedSet);
+		listOfRelations = cleanListOfRelations;
+		if (components.getElementID().equals(orderedSet.getElementID()) && components != orderedSet) {
+			components = orderedSet;
+		}
+		else components.eliminateRedundancies(orderedSet);
 	}	
 
 }

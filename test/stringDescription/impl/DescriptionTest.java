@@ -19,6 +19,7 @@ import fca.gui.lattice.element.GraphicalLattice;
 import fca.gui.lattice.element.LatticeStructure;
 import fca.gui.util.constant.LMIcons;
 import fca.gui.util.constant.LMImages;
+import model.copycatModel.signal.ICopycatSignal;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISignal;
 import stringDescription.IScoreCalculator;
@@ -31,7 +32,7 @@ public class DescriptionTest {
 	public void whenSignalEnteredThenSetOfOrderedSetsIDsCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ISignal signal = signalBuilder.getSignal();
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
@@ -48,7 +49,7 @@ public class DescriptionTest {
 	public void whenSignalEnteredThenCodingElementsIDsCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder1 = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ISignal signal1 = signalBuilder1.getSignal();
+			ICopycatSignal signal1 = (ICopycatSignal) signalBuilder1.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description1 = new Description(signal1, scoreCalculator);
 			List<String> listOfOrderedSets1 = description1.getOrderedListOfOrderedSetIDs();
@@ -85,7 +86,7 @@ public class DescriptionTest {
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToOrderedSetCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ISignal signal = signalBuilder.getSignal();
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
@@ -103,7 +104,7 @@ public class DescriptionTest {
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToVerbalDescriptionCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ISignal signal = signalBuilder.getSignal();
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
@@ -121,7 +122,7 @@ public class DescriptionTest {
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ISignal signal = signalBuilder.getSignal();
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();

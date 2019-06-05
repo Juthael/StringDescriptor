@@ -1,7 +1,6 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -23,11 +22,12 @@ public class SequenceRelOS extends RelationOS implements IOrderedSet {
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!sequence.equals(idToIOrderedSet.get(sequence.getElementID())))
-			sequence = (SequenceOS) idToIOrderedSet.get(sequence.getElementID());
-		sequence.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (sequence.getElementID().equals(orderedSet.getElementID()) && sequence != orderedSet) {
+			sequence = (SequenceOS) orderedSet;
+		}
+		else sequence.eliminateRedundancies(orderedSet);
 	}	
 
 }

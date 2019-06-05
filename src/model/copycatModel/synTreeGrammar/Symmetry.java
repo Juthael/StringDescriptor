@@ -4,32 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import model.copycatModel.ordSetGrammar.SymmetryOS;
+import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.MinimalOS;
-import model.synTreeModel.ISynTreeElement;
-import model.synTreeModel.impl.SynTreeElementImpl;
+import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.impl.MinimalST;
+import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 
-public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Cloneable {
+public class Symmetry extends GrammaticalST implements IGrammaticalST, Cloneable {
 
 	private static final String DESCRIPTOR_NAME = "symmetry";
-	private final String symmetryValue;
+	private final MinimalST symmetryValue;
 	
-	public Symmetry(String symmetryValue) throws SynTreeGenerationException {
+	public Symmetry(String symmetryValue) throws SynTreeGenerationException, CloneNotSupportedException {
 		if (symmetryValue.equals(Settings.SYMMETRY_WITH_CENTRAL_ELEMENT) 
 				|| symmetryValue.equals(Settings.SYMMETRY_WITHOUT_CENTRAL_ELEMENT)) {
-			this.symmetryValue = symmetryValue;
+			this.symmetryValue = new MinimalST(symmetryValue);
 		}
 		else throw new SynTreeGenerationException(
 				"Symmetry() : unexpected symmetryValue parameter (" + symmetryValue + ").");
+		setHashCode();
 	}
 	
 	@Override
 	protected Symmetry clone() throws CloneNotSupportedException {
 		try {
-			Symmetry cloneSymmetry = new Symmetry(symmetryValue);
+			Symmetry cloneSymmetry = new Symmetry(symmetryValue.getValue());
 			return cloneSymmetry;
 		}
 		catch (SynTreeGenerationException e) {
@@ -43,28 +47,20 @@ public class Symmetry extends SynTreeElementImpl implements ISynTreeElement, Clo
 	}
 	
 	@Override
-	public List<String> getListOfPropertiesWithPath() {
-		List<String> listOfPropertiesWithPath = new ArrayList<String>();
-		StringBuilder sB = new StringBuilder();
-		sB.append(DESCRIPTOR_NAME);
-		sB.append(Settings.PATH_SEPARATOR);
-		sB.append(symmetryValue);
-		listOfPropertiesWithPath.add(sB.toString());
-		return listOfPropertiesWithPath;
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>();
+		listOfComponents.add(symmetryValue);
+		return listOfComponents;
 	}	
 	
 	@Override
-	public List<String> getListOfRelevantPropertiesWithPath() {
-		return getListOfPropertiesWithPath();
-	}	
-	
-	@Override
-	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) {
+	public IOrderedSet upgradeAsTheElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
+			throws OrderedSetsGenerationException {
 		IOrderedSet symmetryOS;
 		List<String> listOfPropertiesWithPath = getListOfPropertiesWithPath();
 		Integer symmetryIndex = listOfPropertiesToIndex.get(listOfPropertiesWithPath);
 		String symmetryID = getDescriptorName().concat(symmetryIndex.toString());
-		MinimalOS symmetryProperty = new MinimalOS(symmetryValue);
+		MinimalOS symmetryProperty = (MinimalOS) symmetryValue.upgradeAsTheElementOfAnOrderedSet(listOfPropertiesToIndex);
 		symmetryOS = new SymmetryOS(symmetryID, symmetryProperty);
 		return symmetryOS;		
 	}	

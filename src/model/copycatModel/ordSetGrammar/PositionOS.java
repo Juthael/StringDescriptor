@@ -1,15 +1,14 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
+import model.orderedSetModel.IOrderedSet;
+import model.orderedSetModel.impl.NonMinimalExplicitOS;
 import model.orderedSetModel.impl.MinimalOS;
 import settings.Settings;
-import model.orderedSetModel.impl.AbstractNonMinimalExplicitOS;
-import model.orderedSetModel.IOrderedSet;
 
-public class PositionOS extends AbstractNonMinimalExplicitOS implements WhichPositionTypeOS {
+public class PositionOS extends NonMinimalExplicitOS implements WhichPositionTypeOS {
 
 	private static final String NAME = "position";
 	private MinimalOS positionProperty;
@@ -34,10 +33,10 @@ public class PositionOS extends AbstractNonMinimalExplicitOS implements WhichPos
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!positionProperty.equals(idToIOrderedSet.get(positionProperty.getElementID())))
-			positionProperty = (MinimalOS) idToIOrderedSet.get(positionProperty.getElementID());
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (positionProperty.getElementID().equals(orderedSet.getElementID()) && positionProperty != orderedSet)
+			positionProperty = (MinimalOS) orderedSet;
 	}
 
 	@Override

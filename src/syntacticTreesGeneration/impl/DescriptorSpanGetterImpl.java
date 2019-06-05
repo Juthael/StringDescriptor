@@ -7,16 +7,16 @@ import java.util.Set;
 
 import exceptions.SynTreeGenerationException;
 import model.synTreeModel.ISignal;
-import model.synTreeModel.ISynTreeElement;
+import model.synTreeModel.IGrammaticalST;
 import settings.Settings;
 import syntacticTreesGeneration.IDescriptorSpanGetter;
 
 public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 
-	public static List<Integer> getDescriptorSpan (ISynTreeElement synTreeElement) 
+	public static List<Integer> getDescriptorSpan (IGrammaticalST grammaticalST) 
 			throws SynTreeGenerationException {
 		List<Integer> listOfLetterPositionsOccupied = new ArrayList<Integer>();
-		List<String> listOfPropertiesWithPath = synTreeElement.getListOfPropertiesWithPath();
+		List<String> listOfPropertiesWithPath = grammaticalST.getListOfPropertiesWithPath();
 		for (String propertyWithPath : listOfPropertiesWithPath) {
 			if (propertyWithPath.contains("letter/position")) {
 				int lastSlashIndex = propertyWithPath.lastIndexOf(Settings.PATH_SEPARATOR);
@@ -32,11 +32,11 @@ public class DescriptorSpanGetterImpl implements IDescriptorSpanGetter {
 	}
 	
 	public static boolean testIfWholeStringIsDescribed(ISignal signal, 
-			List<ISynTreeElement> listOfDescriptors) 
+			List<IGrammaticalST> listOfDescriptors) 
 			throws SynTreeGenerationException {
 		boolean wholeStringIsDescribed;
 		Set<Integer> setOfLetterPositionsOccupied = new HashSet<Integer>();
-		for (ISynTreeElement descriptor : listOfDescriptors) {
+		for (IGrammaticalST descriptor : listOfDescriptors) {
 			setOfLetterPositionsOccupied.addAll(DescriptorSpanGetterImpl.getDescriptorSpan(descriptor));
 		}
 		wholeStringIsDescribed = (setOfLetterPositionsOccupied.size() == signal.getSignalSize());

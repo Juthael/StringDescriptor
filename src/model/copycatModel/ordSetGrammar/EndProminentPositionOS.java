@@ -1,7 +1,6 @@
 package model.copycatModel.ordSetGrammar;
 
 import java.util.List;
-import java.util.Map;
 
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
@@ -23,12 +22,12 @@ public class EndProminentPositionOS extends ProminentPositionOS implements Which
 	}
 	
 	@Override
-	public void eliminateRedundancies(Map<String, IOrderedSet> idToIOrderedSet) {
-		super.eliminateRedundancies(idToIOrderedSet);
-		if (!endPosition.equals(idToIOrderedSet.get(endPosition.getElementID()))) {
-			endPosition = (EndPositionOS) idToIOrderedSet.get(endPosition.getElementID());
-			endPosition.eliminateRedundancies(idToIOrderedSet);
+	public void eliminateRedundancies(IOrderedSet orderedSet) {
+		super.eliminateRedundancies(orderedSet);
+		if (endPosition.getElementID().equals(orderedSet.getElementID()) && endPosition != orderedSet) {
+			endPosition = (EndPositionOS) orderedSet;
 		}
+		else endPosition.eliminateRedundancies(orderedSet);
 	}
 
 	@Override
