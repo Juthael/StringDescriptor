@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import exceptions.VerbalizationException;
 import verbalization.dataEncoding.encoders.IInstructionCoder;
-import verbalization.dataEncoding.encoders.impl.InstructionCoderImpl;
+import verbalization.dataEncoding.encoders.impl.InstructionCoder;
 import verbalization.dataEncoding.encodingModel.IInstructionCodeGetter;
 import verbalization.verbalStructureModel.IInstruction;
 import verbalization.verbalStructureModel.impl.InstructionImpl;
@@ -29,7 +29,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1,2,3,4,5");
 		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/1");
 		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/1");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		// System.out.println(instruction.getVerbalInstruction());
@@ -52,7 +52,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relationX2/relation/enumeration/1");
 		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/commonDiff/-1");
 		relationXListOfProperties.add("frame/relations/relationX2/relation/sequence/absCommonDiff/1");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -80,7 +80,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relationX3/relation/enumeration/1");
 		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/commonDiff/-2");
 		relationXListOfProperties.add("frame/relations/relationX3/relation/sequence/absCommonDiff/2");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -101,7 +101,7 @@ public class InstructionTest {
 		List<String> relationXListOfProperties = new ArrayList<String>();
 		relationXListOfProperties.add("frame/relations/relation/dimension/letter.platonicLetter");
 		relationXListOfProperties.add("frame/relations/relation/enumeration/1,5,2");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -119,7 +119,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relation/enumeration/0");
 		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/0");
 		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/0");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -137,7 +137,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relation/enumeration/0");
 		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/0");
 		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/0");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -155,7 +155,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/relations/relation/enumeration/1");
 		relationXListOfProperties.add("frame/relations/relation/sequence/commonDiff/1");
 		relationXListOfProperties.add("frame/relations/relation/sequence/absCommonDiff/1");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());
@@ -173,7 +173,7 @@ public class InstructionTest {
 		relationXListOfProperties.add("frame/position/1");
 		relationXListOfProperties.add("frame/letter/position/2");
 		relationXListOfProperties.add("frame/letter/platonicLetter/2");
-		IInstructionCoder instructionCoder = new InstructionCoderImpl(nbOfComponents, relationXListOfProperties);
+		IInstructionCoder instructionCoder = new InstructionCoder(nbOfComponents, relationXListOfProperties);
 		IInstructionCodeGetter instructionCodeGetter = instructionCoder.getInstructionCodeGetter();
 		IInstruction instruction = new InstructionImpl(instructionCodeGetter);
 		//System.out.println(instruction.getVerbalInstruction());

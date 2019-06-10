@@ -23,7 +23,7 @@ import model.synTreeModel.IStartElementST;
 import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 import verbalization.dataEncoding.encoders.IVerbalizer;
-import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
+import verbalization.dataEncoding.encoders.impl.Verbalizer;
 
 public class CharString extends GrammaticalST implements IStartElementST, Cloneable {
 	
@@ -111,7 +111,7 @@ public class CharString extends GrammaticalST implements IStartElementST, Clonea
 	@Override
 	public String getVerbalDescription() throws VerbalizationException {
 		String verbalDescription;
-		IVerbalizer verbalizer = new VerbalizerImpl(this);
+		IVerbalizer verbalizer = new Verbalizer(this);
 		verbalDescription = verbalizer.getTranslationInNaturalLanguage();
 		return verbalDescription;
 	}

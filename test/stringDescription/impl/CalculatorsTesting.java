@@ -32,10 +32,10 @@ import stringDescription.impl.Description;
 import stringDescription.impl.KnowledgeEfficiencyCalculator;
 import stringDescription.impl.RelationalDensityCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
+import syntacticTreesGeneration.impl.SignalBuilder;
 import verbalization.dataEncoding.encoders.IVerbalizer;
-import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
+import verbalization.dataEncoding.encoders.impl.Verbalizer;
 
 public class CalculatorsTesting {
 
@@ -79,7 +79,7 @@ public class CalculatorsTesting {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("jeeppp", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("ooopoq", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
@@ -109,7 +109,7 @@ public class CalculatorsTesting {
 				System.out.println("");
 				System.out.print("SCORE : ");
 				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
-				/*
+				
 				System.out.println("If you want to see the lattice, press 'y'");
 				entry = DescriptionKeyboardInputManager.readString();
 				if (entry.equals("y")) {
@@ -124,7 +124,7 @@ public class CalculatorsTesting {
 					LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
 					latticeViewerFirst.setVisible(true); 
 				}
-				*/
+				
 			}		
 		}
 		catch (Exception unexpected) {
@@ -138,7 +138,7 @@ public class CalculatorsTesting {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided2() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("gshhsg", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("jkkl", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
@@ -187,12 +187,12 @@ public class CalculatorsTesting {
 	
 	@Test
 	public void temp() throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
-		ISignalBuilder signalBuilder = new SignalBuilderImpl("xyyzzz", "fromLeftToRight");
+		ISignalBuilder signalBuilder = new SignalBuilder("xyyzzz", "fromLeftToRight");
 		ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-		ListOfDescriptorsBuilderImpl builder = new ListOfDescriptorsBuilderImpl(signal);
+		ListOfDescriptorsBuilder builder = new ListOfDescriptorsBuilder(signal);
 		List<CharString> listOfCharStrings = builder.getListOfComprehensiveDescriptors();
 		for (CharString descriptor : listOfCharStrings) {
-			IVerbalizer verbalizer = new VerbalizerImpl(descriptor);
+			IVerbalizer verbalizer = new Verbalizer(descriptor);
 			String description = verbalizer.getTranslationInNaturalLanguage();
 			System.out.println(description);
 			// System.out.

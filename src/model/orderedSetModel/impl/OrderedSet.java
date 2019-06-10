@@ -9,11 +9,11 @@ import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
 import model.generalModel.IElement;
-import model.generalModel.impl.ElementImpl;
+import model.generalModel.impl.Element;
 import model.orderedSetModel.IOrderedSet;
 import settings.Settings;
 
-public abstract class OrderedSet extends ElementImpl implements IOrderedSet {
+public abstract class OrderedSet extends Element implements IOrderedSet {
 
 	private String elementID;
 	private boolean mayBeTheCodedElement;

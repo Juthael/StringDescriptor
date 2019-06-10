@@ -15,8 +15,8 @@ import model.copycatModel.signal.ICopycatSignal;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
+import syntacticTreesGeneration.impl.SignalBuilder;
 
 public class CharStringTest {
 
@@ -25,8 +25,8 @@ public class CharStringTest {
 			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
 		
 		try{
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", Settings.LEFT_TO_RIGHT);
-			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl((ICopycatSignal) signalBuilder.getSignal());
+			ISignalBuilder signalBuilder = new SignalBuilder("abcd", Settings.LEFT_TO_RIGHT);
+			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilder((ICopycatSignal) signalBuilder.getSignal());
 			List<CharString> descriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 			Map<CharString, CharStringWithAbstractFrames> charStringToAbstract = new HashMap<CharString, CharStringWithAbstractFrames>();
 			for (CharString descriptor : descriptors) {

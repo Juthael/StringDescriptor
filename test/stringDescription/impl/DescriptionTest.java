@@ -24,14 +24,14 @@ import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISignal;
 import stringDescription.IScoreCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.SignalBuilder;
 
 public class DescriptionTest {
 
 	@Test
 	public void whenSignalEnteredThenSetOfOrderedSetsIDsCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
@@ -48,7 +48,7 @@ public class DescriptionTest {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToOrderedSetCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
@@ -66,7 +66,7 @@ public class DescriptionTest {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToVerbalDescriptionCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);
@@ -84,7 +84,7 @@ public class DescriptionTest {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
 			Description description = new Description(signal, scoreCalculator);

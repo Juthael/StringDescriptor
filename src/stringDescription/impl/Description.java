@@ -11,6 +11,12 @@ import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
+import fca.exception.LMLogger;
+import fca.gui.lattice.LatticeViewer;
+import fca.gui.lattice.element.GraphicalLattice;
+import fca.gui.lattice.element.LatticeStructure;
+import fca.gui.util.constant.LMIcons;
+import fca.gui.util.constant.LMImages;
 import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.orderedSetModel.IOrderedSet;
@@ -19,12 +25,12 @@ import model.synTreeModel.IGrammaticalST;
 import model.synTreeModel.IStartElementST;
 import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
-import orderedSetGeneration.impl.BinaryContextBuilderImpl;
-import orderedSetGeneration.impl.OrderedSetBuilderImpl;
+import orderedSetGeneration.impl.BinaryContextBuilder;
+import orderedSetGeneration.impl.OrderedSetBuilder;
 import stringDescription.IDescription;
 import stringDescription.IScoreCalculator;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 
 public class Description implements IDescription {
 
@@ -42,18 +48,32 @@ public class Description implements IDescription {
 			VerbalizationException {
 		this.signal = signal;
 		this.scoreCalculator = scoreCalculator;
-		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl(this.signal);
+		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilder(this.signal);
 		this.listOfSyntacticTrees = 
 				new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfDescriptorsWithAbstractComponents()); 
 		for (IStartElementST startElement : listOfSyntacticTrees) {
-			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(startElement);
+			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilder(startElement);
 			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();
 			orderedSetIDToOrderedSet.put(orderedSet.getElementID(), orderedSet);
-			IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilderImpl(orderedSet);
+			IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilder(orderedSet);
 			BinaryContext binaryContext = binaryContextBuilder.getContext();
 			orderedSetIDToBinaryContext.put(orderedSet.getElementID(), binaryContext);
 			ConceptLattice lattice = new ConceptLattice(binaryContext);
 			orderedSetIDToConceptLattice.put(orderedSet.getElementID(), lattice);
+			
+			//HERE
+			try {
+				LMLogger.getLMLogger();
+				LMImages.getLMImages();
+				LMIcons.getLMIcons();
+				LatticeStructure latticeStructureFirst = new LatticeStructure(lattice, binaryContext, LatticeStructure.BEST);
+				GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(lattice, latticeStructureFirst);
+				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
+				latticeViewerFirst.setVisible(true);
+			}
+			catch (Exception e) {System.out.println("STOP");}
+			//
+			
 			double score = this.scoreCalculator.calculateScore(orderedSet, lattice);
 			orderedSetIDToScore.put(orderedSet.getElementID(), score);
 		}

@@ -33,8 +33,8 @@ import model.synTreeModel.impl.utils.IPropertyContainer;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
-import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
+import syntacticTreesGeneration.impl.SignalBuilder;
 
 public class GrammaticalSTTest {
 
@@ -72,7 +72,7 @@ public class GrammaticalSTTest {
 	public void whenAllComponentsArentRelevantThenContainerContainsOnlyRelevantProperties() 
 			throws Exception {
 		boolean frameX3ContainerDoesntContainPlatonicLetter2 = true;
-		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+		ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<IFrame> listOfFrames = signal.getFrames();
 		IOneOrManyFrames frameX3 = new FrameX(listOfFrames);
@@ -102,7 +102,7 @@ public class GrammaticalSTTest {
 	public void onlyClonedFramesAreRelatedInNewDescriptor() 
 			throws SynTreeGenerationException, CloneNotSupportedException {
 		boolean onlyClonedFramesAreRelatedInNewDescriptor;
-		ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");
+		ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 		ISignal signal = signalBuilder.getSignal();
 		List<IFrame> listOfFrames = signal.getFrames();
 		Frame frame2 = (Frame) listOfFrames.get(1);
@@ -129,7 +129,7 @@ public class GrammaticalSTTest {
 	public void whenSynTreeElementsAreUpgradedThenOrderedSetElementsAreReturned() 
 			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
-				new ListOfDescriptorsBuilderImpl("abcde", "fromLeftToRight");
+				new ListOfDescriptorsBuilder("abcde", "fromLeftToRight");
 		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 		Set<List<String>> setOfAccessibleListOfProperties = new HashSet<List<String>>();
 		for (CharString charString : listOfDescriptors) {

@@ -22,8 +22,8 @@ import model.synTreeModel.impl.GenericST;
 import model.synTreeModel.impl.utils.IAbstractionOperator;
 import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
-import orderedSetGeneration.impl.BinaryContextBuilderImpl;
-import orderedSetGeneration.impl.OrderedSetBuilderImpl;
+import orderedSetGeneration.impl.BinaryContextBuilder;
+import orderedSetGeneration.impl.OrderedSetBuilder;
 import settings.Settings;
 
 public class AbstractionOperator implements IAbstractionOperator {
@@ -39,13 +39,13 @@ public class AbstractionOperator implements IAbstractionOperator {
 	public AbstractionOperator(Set<ISyntacticTree> setOfSynTreeElements) 
 			throws OrderedSetsGenerationException, SynTreeGenerationException {
 		this.listOfSynTreeElements = new ArrayList<ISyntacticTree>(setOfSynTreeElements);
-		IOrderedSetBuilder oSBuilder = new OrderedSetBuilderImpl(listOfSynTreeElements);
+		IOrderedSetBuilder oSBuilder = new OrderedSetBuilder(listOfSynTreeElements);
 		localOrderedSet = oSBuilder.getOrderedSet();
 		Set<IOrderedSet> lowerSet = localOrderedSet.getLowerSet();
 		for (IOrderedSet set : lowerSet) {
 			orderedSetIDsToDescriptorName.put(set.getElementID(), set.getDescriptorName());
 		}
-		IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilderImpl(localOrderedSet);
+		IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilder(localOrderedSet);
 		BinaryContext binaryContext = binaryContextBuilder.getContext();
 		localConceptLattice = new ConceptLattice(binaryContext);
 		localConceptLattice.findGenerators();

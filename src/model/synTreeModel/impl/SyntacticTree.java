@@ -9,14 +9,14 @@ import java.util.Set;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import model.generalModel.IElement;
-import model.generalModel.impl.ElementImpl;
+import model.generalModel.impl.Element;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.GenericOS;
 import model.orderedSetModel.impl.MinimalOS;
 import model.synTreeModel.IFrame;
 import model.synTreeModel.ISyntacticTree;
 
-public abstract class SyntacticTree extends ElementImpl implements ISyntacticTree {
+public abstract class SyntacticTree extends Element implements ISyntacticTree {
 
 	protected int hashCode = -1;
 	private boolean isWaitingForAbstraction = false;

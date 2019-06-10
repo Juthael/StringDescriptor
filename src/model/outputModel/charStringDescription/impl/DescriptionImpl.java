@@ -6,7 +6,7 @@ import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.outputModel.charStringDescription.IDescription;
 import verbalization.dataEncoding.encoders.IVerbalizer;
-import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
+import verbalization.dataEncoding.encoders.impl.Verbalizer;
 
 public class DescriptionImpl implements IDescription {
 
@@ -29,7 +29,7 @@ public class DescriptionImpl implements IDescription {
 	@Override
 	public String getDescriptionInNaturalLanguage() throws VerbalizationException{
 		String descriptionInNaturalLanguage;
-		IVerbalizer verbalizer = new VerbalizerImpl(wholeStringDescriptor);
+		IVerbalizer verbalizer = new Verbalizer(wholeStringDescriptor);
 		descriptionInNaturalLanguage = verbalizer.getTranslationInNaturalLanguage();
 		return descriptionInNaturalLanguage;
 	}	

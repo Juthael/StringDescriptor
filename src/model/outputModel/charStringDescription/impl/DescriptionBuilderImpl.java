@@ -13,7 +13,7 @@ import model.outputModel.charStringDescription.IDescription;
 import model.outputModel.charStringDescription.IDescriptionBuilder;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 
 public class DescriptionBuilderImpl implements IDescriptionBuilder {
 	
@@ -42,12 +42,12 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 		try {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
-				IListOfDescriptorsBuilder descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderImpl(
+				IListOfDescriptorsBuilder descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilder(
 						stringToBeDescribed, Settings.LEFT_TO_RIGHT);
 				listOfWholeStringDescriptors.addAll(descriptorsBuilderLeftToRight.getListOfDescriptorsWithAbstractComponents());
 				if (stringCanBeReadInBothDirections == true) {
 					StringBuilder sB = new StringBuilder(stringToBeDescribed);
-					IListOfDescriptorsBuilder descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilderImpl(
+					IListOfDescriptorsBuilder descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilder(
 							sB.reverse().toString(), Settings.RIGHT_TO_LEFT);
 					listOfWholeStringDescriptors.addAll(
 							descriptorsBuilderRightToLeft.getListOfDescriptorsWithAbstractComponents());
