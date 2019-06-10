@@ -125,12 +125,16 @@ public class DescriptorsBuildingManagerImplTest {
 			List<IGrammaticalST> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newDescriptors.addAll(newDescriptorsForThisSet);
 		}
-		/*System.out.println("*********GEN2********"); */
+		
+		System.out.println("*********GEN2********");
+		
 		for (IGrammaticalST newDescriptor : newDescriptors) {
-			/* for (String property : newDescriptor.getListOfPropertiesWithPath()) {
+			
+			for (String property : newDescriptor.getListOfPropertiesWithPath()) {
 				System.out.println(property);
 			}
-			System.out.println(""); */		
+			System.out.println("");
+			
 			boolean thisDescriptorDoesntCoverTheWholeString = 
 					(DescriptorSpanGetterImpl.getDescriptorSpan(newDescriptor).size() != signalABCD.getSignalSize());
 			if (thisDescriptorDoesntCoverTheWholeString == true) {
@@ -139,20 +143,52 @@ public class DescriptorsBuildingManagerImplTest {
 		}
 		componentGrouper = new ComponentGrouperImpl(2, true, signalABCD, factorizableNewDescriptors);
 		Set<List<Frame>> newSetsToBeFactorized = componentGrouper.getSetsOfFactorizableDescriptors();
-		/* System.out.println("*********GEN3********"); */
+		
+		 System.out.println("*********GEN3********");
+		
 		for (List<Frame> setToBeFactorized : newSetsToBeFactorized) {
+			
+			int index = 1;
+			for (Frame frame : setToBeFactorized) {
+				List<String> listOfProperties = frame.getListOfPropertiesWithPath();
+				System.out.println("frame n." + index);
+				for (String property : listOfProperties) {
+					System.out.println(property);
+				}
+				System.out.println("");
+				index++;
+			}
+			System.out.println("");
+			
 			IDescriptorsBuildingManager buildingManager = 
 					new DescriptorsBuildingManagerImpl((ICopycatSignal) signalABCD, 2, setToBeFactorized);
 			List<IGrammaticalST> newDescriptorsForThisSet = buildingManager.getListOfNewDescriptors();
 			newGen3Descriptors.addAll(newDescriptorsForThisSet);
-		}	
+			
+			/*
+			for (IGrammaticalST descriptor : newDescriptorsForThisSet) {
+				List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();		
+				for (String property : listOfProperties) {
+					System.out.println(property);
+				}
+				System.out.println("");	
+			}
+			System.out.println("");
+			*/
+				
+		}
+		
+		/*
 		for (IGrammaticalST descriptor : newGen3Descriptors) {
 			List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();
-			/* for (String property : listOfProperties) {
+			
+			for (String property : listOfProperties) {
 				System.out.println(property);
 			}
-			System.out.println(""); */
-		} 	
+			System.out.println("");	
+		} 
+		*/	
+		
 		newDescriptorsAreBuilt = (!newGen3Descriptors.isEmpty());
 		assertTrue(newDescriptorsAreBuilt);
 	}

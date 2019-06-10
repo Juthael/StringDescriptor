@@ -9,20 +9,19 @@ import exceptions.SynTreeGenerationException;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.IFrame;
-import model.synTreeModel.IFrameContainerST;
 import model.synTreeModel.IGrammaticalST;
 import model.synTreeModel.IPositionableST;
-import model.synTreeModel.impl.FrameContainerST;
+import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 
-public class FrameX extends FrameContainerST implements IFrameContainerST, IOneOrManyFrames, IPositionableST, IFrameX, Cloneable {
+public class FrameX2Unabstractable extends GrammaticalST implements IOneOrManyFrames, IPositionableST, IFrameX, Cloneable {
 
 	private static final String DESCRIPTOR_PARTIAL_NAME = "frameX";
 	private List<IFrame> listOfFrames;
 	
-	public FrameX(List<IFrame> listOfFrames) throws SynTreeGenerationException, CloneNotSupportedException {
+	public FrameX2Unabstractable(List<IFrame> listOfFrames) throws SynTreeGenerationException, CloneNotSupportedException {
 		if (listOfFrames.size() < 2 || listOfFrames.size() > Settings.MAX_NB_OF_FRAMES_IN_RELATIONS)
-			throw new SynTreeGenerationException("FrameX() : unexpected number of frames (" + listOfFrames.size() + ")");
+			throw new SynTreeGenerationException("FrameX() : illegal number of frames (" + listOfFrames.size() + ")");
 		else {
 			this.listOfFrames = listOfFrames;
 			List<IPositionableST> synTreeComponents = new ArrayList<IPositionableST>();
@@ -30,31 +29,17 @@ public class FrameX extends FrameContainerST implements IFrameContainerST, IOneO
 				synTreeComponents.add((IPositionableST) component);
 			updateComponentsPosition(Settings.COMPONENT_AUTO_POSITIONING, synTreeComponents);	
 		}
-		setHashCode();
-	}
-	
-	public FrameX(List<IFrame> listOfFrames, boolean waitingForAbstraction) throws SynTreeGenerationException, CloneNotSupportedException {
-		if (listOfFrames.size() > 1 || listOfFrames.size() > Settings.MAX_NB_OF_FRAMES_IN_RELATIONS)
-			throw new SynTreeGenerationException("FrameX() : unexpected number of frames (" + listOfFrames.size() + ")");
-		else {
-			this.listOfFrames = listOfFrames;
-			List<IPositionableST> synTreeComponents = new ArrayList<IPositionableST>();
-			for (IElement component : getListOfComponents())
-				synTreeComponents.add((IPositionableST) component);
-			updateComponentsPosition(Settings.COMPONENT_AUTO_POSITIONING, synTreeComponents);	
-		}
-		setIsWaitingForAbstraction(waitingForAbstraction);
 		setHashCode();
 	}
 	
 	@Override
-	public FrameX clone() throws CloneNotSupportedException {
-		FrameX cloneFrameX;
+	public FrameX2Unabstractable clone() throws CloneNotSupportedException {
+		FrameX2Unabstractable cloneFrameX;
 		List<IFrame> cloneListOfFrames = new ArrayList<IFrame>();
 		for (IFrame frame : listOfFrames)
 			cloneListOfFrames.add(frame.clone());
 		try {
-			cloneFrameX = new FrameX(cloneListOfFrames);
+			cloneFrameX = new FrameX2Unabstractable(cloneListOfFrames);
 		} catch (SynTreeGenerationException e) {
 			throw new CloneNotSupportedException("Frame.clone() : " + e.getMessage());
 		}
@@ -179,19 +164,9 @@ public class FrameX extends FrameContainerST implements IFrameContainerST, IOneO
 		}
 		return thisElementIsPositionnable;
 	}
-
-	@Override
-	public List<IFrame> getListOfChildrenFrames() {
-		return listOfFrames;
-	}
-
-	@Override
-	public void setNewListOfChildrenFrames(List<IFrame> newListOfFrames) {
-		listOfFrames = newListOfFrames;
-	}		
 	
 	public boolean isAbstractable() {
-		return true;
-	}
+		return false;
+	}	
 
 }

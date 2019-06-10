@@ -6,6 +6,8 @@ import model.copycatModel.synTreeGrammar.CharString;
 
 public interface IListOfDescriptorsBuilder {
 
-	List<CharString> getListOfStringDescriptors();
+	List<CharString> getListOfComprehensiveDescriptors();
+	
+	List<CharString> getListOfDescriptorsWithAbstractComponents();
 
 }

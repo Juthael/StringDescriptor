@@ -25,10 +25,10 @@ import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 public class AbstractOrderedSetTest {
 	
 	@Test
-	public void whenOrderedSetIsBuiltThenRelationMapCanBeProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+	public void whenOrderedSetIsBuiltThenRelationMapCanBeProvided() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 		Set<List<String>> setOfAccessibleListOfProperties = new HashSet<List<String>>();
 		for (CharString charString : listOfDescriptors) {
 			setOfAccessibleListOfProperties.addAll(charString.getSetOfAllPropertyListsAccessibleFromThisDescriptor());
@@ -75,7 +75,7 @@ public class AbstractOrderedSetTest {
 			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abc", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 		CharString charString = listOfDescriptors.get(0);
 		IOrderedSet charStringOmega = charString.upgradeAsTheSupremumOfAnOrderedSet();
 		Set<IOrderedSet> lowerSet = charStringOmega.getLowerSet();
@@ -113,57 +113,59 @@ public class AbstractOrderedSetTest {
 	@Test
 	public void whenOrderedSetIsBuiltThenReducedSetCanBeProvided() 
 			throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException, VerbalizationException {
-		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
-				new ListOfDescriptorsBuilderImpl("aabbcc", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
-		CharString charString = listOfDescriptors.get(9);
-		IOrderedSet charStringOmega = charString.upgradeAsTheSupremumOfAnOrderedSet();
-		List<String> propertiesWithPath = charStringOmega.getListOfPropertiesWithPath();
-		List<String> lowerSetMaximalChains = charStringOmega.getListOfLowerSetMaximalChains();
-		Set<IOrderedSet> lowerSet = charStringOmega.getLowerSet();
-		/*
-		for (IOrderedSet set : lowerSet) {
-			System.out.print("SET ID : ");
-			System.out.println(set.getElementID());
-			System.out.print("HASHCODE : ");
-			System.out.println(set.hashCode());
-			System.out.print("NB OF PARENTS :");
-			System.out.println(set.getNbOfParents());
-			System.out.print("NB OF INFORMATIVE CHILDREN : ");
-			System.out.println(set.getNbOfInformativeChildren());
-			System.out.print("INFORMATIVE : ");
-			System.out.println(set.getThisSetIsInformative());
+		if (Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED) {
+			IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
+					new ListOfDescriptorsBuilderImpl("aabbcc", "fromLeftToRight");
+			List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
+			CharString charString = listOfDescriptors.get(9);
+			IOrderedSet charStringOmega = charString.upgradeAsTheSupremumOfAnOrderedSet();
+			List<String> propertiesWithPath = charStringOmega.getListOfPropertiesWithPath();
+			List<String> lowerSetMaximalChains = charStringOmega.getListOfLowerSetMaximalChains();
+			Set<IOrderedSet> lowerSet = charStringOmega.getLowerSet();
+			/*
+			for (IOrderedSet set : lowerSet) {
+				System.out.print("SET ID : ");
+				System.out.println(set.getElementID());
+				System.out.print("HASHCODE : ");
+				System.out.println(set.hashCode());
+				System.out.print("NB OF PARENTS :");
+				System.out.println(set.getNbOfParents());
+				System.out.print("NB OF INFORMATIVE CHILDREN : ");
+				System.out.println(set.getNbOfInformativeChildren());
+				System.out.print("INFORMATIVE : ");
+				System.out.println(set.getThisSetIsInformative());
+				System.out.println("");
+			} 
+			System.out.println("DESCRIPTION : ");
+			for (String property : propertiesWithPath) {
+				System.out.println(property);
+			}
 			System.out.println("");
-		} 
-		System.out.println("DESCRIPTION : ");
-		for (String property : propertiesWithPath) {
-			System.out.println(property);
-		}
-		System.out.println("");
-		System.out.println("SET : ");
-		for (String maxChain : lowerSetMaximalChains) {
-			System.out.println(maxChain);
-		}
-		*/
-		Map<String, Set<String>> minimalElementToParents = new HashMap<String, Set<String>>();
-		for (String maxChain : lowerSetMaximalChains) {
-			int lastSlashIndex = maxChain.lastIndexOf(Settings.PATH_SEPARATOR);
-			int beforeLastIndex = maxChain.substring(0, lastSlashIndex).lastIndexOf(Settings.PATH_SEPARATOR);
-			String minimalElement = maxChain.substring(lastSlashIndex+1);
-			String parent = maxChain.substring(beforeLastIndex + 1, lastSlashIndex);
-			if (minimalElementToParents.containsKey(minimalElement)) {
-				minimalElementToParents.get(minimalElement).add(parent);
+			System.out.println("SET : ");
+			for (String maxChain : lowerSetMaximalChains) {
+				System.out.println(maxChain);
 			}
-			else {
-				Set<String> listOfParents = new HashSet<String>();
-				listOfParents.add(parent);
-				minimalElementToParents.put(minimalElement, listOfParents);
+			*/
+			Map<String, Set<String>> minimalElementToParents = new HashMap<String, Set<String>>();
+			for (String maxChain : lowerSetMaximalChains) {
+				int lastSlashIndex = maxChain.lastIndexOf(Settings.PATH_SEPARATOR);
+				int beforeLastIndex = maxChain.substring(0, lastSlashIndex).lastIndexOf(Settings.PATH_SEPARATOR);
+				String minimalElement = maxChain.substring(lastSlashIndex+1);
+				String parent = maxChain.substring(beforeLastIndex + 1, lastSlashIndex);
+				if (minimalElementToParents.containsKey(minimalElement)) {
+					minimalElementToParents.get(minimalElement).add(parent);
+				}
+				else {
+					Set<String> listOfParents = new HashSet<String>();
+					listOfParents.add(parent);
+					minimalElementToParents.put(minimalElement, listOfParents);
+				}
 			}
-		}
-		for (String minimalElement : minimalElementToParents.keySet()) {
-			if (minimalElementToParents.get(minimalElement).size() <=1) {
-				fail();
-			}	
+			for (String minimalElement : minimalElementToParents.keySet()) {
+				if (minimalElementToParents.get(minimalElement).size() <=1) {
+					fail();
+				}	
+			}
 		}
 	}
 	
@@ -172,7 +174,7 @@ public class AbstractOrderedSetTest {
 			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 		List<IOrderedSet> listOfOrderedSetElements = new ArrayList<IOrderedSet>();
 		for (CharString descriptor : listOfDescriptors)
 			listOfOrderedSetElements.add(descriptor.upgradeAsTheSupremumOfAnOrderedSet());
@@ -201,7 +203,7 @@ public class AbstractOrderedSetTest {
 				System.out.println("");
 			}
 		} */
-		assertTrue(relation.size() > reducedRelation.size());
+		assertTrue(relation.size() > reducedRelation.size() || !Settings.NON_INFORMATIVE_ELEMENTS_MUST_BE_REMOVED);
 	}
 
 }

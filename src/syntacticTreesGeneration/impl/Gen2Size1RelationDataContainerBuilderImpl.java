@@ -58,8 +58,8 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 		else enumerationAllowed = true;
 		if (enumerationAllowed == true) {
 			IRelationDataContainer enumerationDataContainer = new RelationDataContainerImpl();
-			enumerationDataContainer.addEnumeration(sizeEnumerationRelationalData);
 			enumerationDataContainer.addEnumeration(letterEnumerationRelationalData);
+			enumerationDataContainer.addEnumeration(sizeEnumerationRelationalData);
 			enumerationDataContainer.setNewDescriptorWillCoverTheWholeString(newDescriptorWillCoverTheWholeString);
 			listOfRelationDataContainers.add(enumerationDataContainer);			
 		}
@@ -102,10 +102,10 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 						buildLetterSequenceRelationalData(letterEnumerationRelationalData, i);
 				ISequenceRelationalData sizeSequenceRelationalData = 
 						buildSizeSequenceRelationalData(sizeEnumerationRelationalData);
-				iSequenceDataContainer.addEnumeration(sizeEnumerationRelationalData);
 				iSequenceDataContainer.addEnumeration(letterEnumerationRelationalData);
-				iSequenceDataContainer.addSequence(sizeSequenceRelationalData);
+				iSequenceDataContainer.addEnumeration(sizeEnumerationRelationalData);
 				iSequenceDataContainer.addSequence(iSequenceRelationalData);
+				iSequenceDataContainer.addSequence(sizeSequenceRelationalData);
 				iSequenceDataContainer.setNewDescriptorWillCoverTheWholeString(newDescriptorWillCoverTheWholeString);
 				listOfRelationDataContainers.add(iSequenceDataContainer);
 			}			
@@ -211,7 +211,8 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			else keyIndex++;
 		}
 		if (!enumerationValue.isEmpty()) {
-			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(indexedPath, enumerationValue);
+			String dimensionCode = DimensionEncodingManager.getDimensionCodeFromIndexedPath(indexedPath);
+			letterEnumerationRelationalData = new EnumerationRelationalDataImpl(dimensionCode, enumerationValue);
 			return letterEnumerationRelationalData;
 		}
 		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : platonicLetter value was not found.");				
@@ -233,20 +234,21 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 			else keyIndex++;
 		}
 		if (indexedPathWasFound == true) {
-			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(indexedPath, enumerationValue);
+			String dimensionCode = DimensionEncodingManager.getDimensionCodeFromIndexedPath(indexedPath);
+			sizeEnumerationRelationalData = new EnumerationRelationalDataImpl(dimensionCode, enumerationValue);
 			return sizeEnumerationRelationalData;
 		}
 		else throw new SynTreeGenerationException("Gen2Size1DescriptorBuilder : Size value was not found.");			
 	}
 	
 	private ISequenceRelationalData buildLetterSequenceRelationalData(
-			IEnumerationRelationalData letterEnumerationRelationalData, 
-			int incrementValue) throws SynTreeGenerationException {
+			IEnumerationRelationalData letterEnumerationRelationalData,	int incrementValue) throws SynTreeGenerationException {
 		ISequenceRelationalData letterSequenceRelationalData;
 		String indexedPath = letterEnumerationRelationalData.getIndexedPath();
 		String enumerationValue = letterEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		letterSequenceRelationalData = new SequenceRelationalDataImpl(indexedPath, enumerationValue, commonDifference);
+		String dimensionCode = DimensionEncodingManager.getDimensionCodeFromIndexedPath(indexedPath);
+		letterSequenceRelationalData = new SequenceRelationalDataImpl(dimensionCode, enumerationValue, commonDifference);
 		return letterSequenceRelationalData;		
 	}
 	
@@ -257,7 +259,8 @@ public class Gen2Size1RelationDataContainerBuilderImpl implements IGen2Size1Rela
 		String indexedPath = sizeEnumerationRelationalData.getIndexedPath();
 		String enumerationValue = sizeEnumerationRelationalData.getEnumerationValue();
 		String commonDifference = Integer.toString(incrementValue);
-		sizeSequenceRelationalData = new SequenceRelationalDataImpl(indexedPath, enumerationValue, commonDifference);
+		String dimensionCode = DimensionEncodingManager.getDimensionCodeFromIndexedPath(indexedPath);		
+		sizeSequenceRelationalData = new SequenceRelationalDataImpl(dimensionCode, enumerationValue, commonDifference);
 		return sizeSequenceRelationalData;		
 	}
 	

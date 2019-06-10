@@ -17,13 +17,13 @@ public interface ISyntacticTree extends IElement {
 	IOrderedSet upgradeAsTheGenericElementOfAnOrderedSet(Map<List<String>, Integer> listOfPropertiesToIndex) 
 			throws OrderedSetsGenerationException;
 	
-	void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException;
+	void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException;
 	
 	void setIsWaitingForAbstraction(boolean isWaitingForAbstraction);
 	
 	boolean getIsWaitingForAbstraction();
 	
-	Set<ISyntacticTree> getFramesToAbstract();
+	Set<ISyntacticTree> getFramesToAbstract() throws SynTreeGenerationException, CloneNotSupportedException;
 	
 	boolean replaceByAbstractFrame(IFrame abstractFrame) throws SynTreeGenerationException;
 

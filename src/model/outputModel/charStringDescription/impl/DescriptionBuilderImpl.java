@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.StringFormatException;
 import exceptions.SynTreeGenerationException;
+import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.outputModel.charStringDescription.IDescription;
 import model.outputModel.charStringDescription.IDescriptionBuilder;
@@ -33,26 +35,30 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 		return this;
 	}
 
-
 	@Override
 	public List<IDescription> buildList(String stringToBeDescribed) 
-			throws SynTreeGenerationException, StringFormatException {
+			throws SynTreeGenerationException, StringFormatException, VerbalizationException, OrderedSetsGenerationException {
 		List<IDescription> listOfDescriptions = new ArrayList<>();
 		try {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
 				IListOfDescriptorsBuilder descriptorsBuilderLeftToRight = new ListOfDescriptorsBuilderImpl(
 						stringToBeDescribed, Settings.LEFT_TO_RIGHT);
-				listOfWholeStringDescriptors.addAll(descriptorsBuilderLeftToRight.getListOfStringDescriptors());
+				listOfWholeStringDescriptors.addAll(descriptorsBuilderLeftToRight.getListOfDescriptorsWithAbstractComponents());
 				if (stringCanBeReadInBothDirections == true) {
 					StringBuilder sB = new StringBuilder(stringToBeDescribed);
 					IListOfDescriptorsBuilder descriptorsBuilderRightToLeft = new ListOfDescriptorsBuilderImpl(
 							sB.reverse().toString(), Settings.RIGHT_TO_LEFT);
-					listOfWholeStringDescriptors.addAll(descriptorsBuilderRightToLeft.getListOfStringDescriptors());
+					listOfWholeStringDescriptors.addAll(
+							descriptorsBuilderRightToLeft.getListOfDescriptorsWithAbstractComponents());
 				}
 				if (listOfWholeStringDescriptors.isEmpty())
 					throw new SynTreeGenerationException("Unexpected error. List of Descriptors is empty");
 				for (CharString descriptor : listOfWholeStringDescriptors) {
+					System.out.println("");
+					for (String property : descriptor.getListOfPropertiesWithPath()) {
+						System.out.println(property);
+					}
 					IDescription description = new DescriptionImpl(descriptor);
 					listOfDescriptions.add(description);
 				}

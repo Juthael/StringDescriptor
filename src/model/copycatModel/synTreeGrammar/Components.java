@@ -2,8 +2,10 @@ package model.copycatModel.synTreeGrammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
@@ -14,6 +16,7 @@ import model.generalModel.IElement;
 import model.orderedSetModel.IFrameOS;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.GenericOS;
+import model.synTreeModel.IFrame;
 import model.synTreeModel.IGrammaticalST;
 import model.synTreeModel.IPositionableST;
 import model.synTreeModel.ISyntacticTree;
@@ -129,6 +132,29 @@ public class Components extends GrammaticalST implements IGrammaticalST, IPositi
 		doUpdatePosition(newPosition);
 		updateComponentsPosition(newPosition, componentDescriptors);
 	}
+	
+	public void preventFrameAbstraction() throws SynTreeGenerationException, CloneNotSupportedException {
+		if (oneOrManyFrames.getDescriptorName().contains("frameX")){
+			IFrameX iFrameX = (IFrameX) oneOrManyFrames;
+			if (iFrameX.isAbstractable()) {
+				FrameX manyFrames = (FrameX) oneOrManyFrames;
+				List<IFrame> listOfFrames = manyFrames.getListOfChildrenFrames();
+				FrameX2Unabstractable sanctuarizedFrames = new FrameX2Unabstractable(listOfFrames);
+				oneOrManyFrames = sanctuarizedFrames;
+			}
+		}
+	}
+	
+	@Override
+	public Set<ISyntacticTree> getFramesToAbstract() throws SynTreeGenerationException, CloneNotSupportedException {
+		if (oneOrManyFrames.getDescriptorName().equals("frame")) {
+			List<IFrame> listOfFrames = new ArrayList<IFrame>();
+			listOfFrames.add((IFrame) oneOrManyFrames);
+			FrameX frameX = new FrameX(listOfFrames, getIsWaitingForAbstraction());
+			oneOrManyFrames = frameX;
+		}
+		return super.getFramesToAbstract();
+	}	
 	
 	protected void doUpdatePosition(String newPosition) throws SynTreeGenerationException {
 	}	

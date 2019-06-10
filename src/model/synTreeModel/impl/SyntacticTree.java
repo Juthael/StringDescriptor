@@ -59,7 +59,7 @@ public abstract class SyntacticTree extends ElementImpl implements ISyntacticTre
 	}
 	
 	@Override
-	public void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException {
+	public void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException {
 		for (IElement element : getListOfComponents()) {
 			ISyntacticTree syntacticTree = (ISyntacticTree) element;
 			syntacticTree.proceedFrameAbstraction();
@@ -81,7 +81,7 @@ public abstract class SyntacticTree extends ElementImpl implements ISyntacticTre
 	}
 	
 	@Override
-	public Set<ISyntacticTree> getFramesToAbstract() {
+	public Set<ISyntacticTree> getFramesToAbstract() throws SynTreeGenerationException, CloneNotSupportedException {
 		Set<ISyntacticTree> setOfFrames = new HashSet<ISyntacticTree>();
 		if (this.isWaitingForAbstraction) {
 			for (IElement element : getListOfComponents()) {

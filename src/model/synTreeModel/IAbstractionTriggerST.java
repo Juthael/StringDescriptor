@@ -5,6 +5,6 @@ import exceptions.SynTreeGenerationException;
 
 public interface IAbstractionTriggerST extends IGrammaticalST {
 	
-	void triggerAbstractionProcess() throws OrderedSetsGenerationException, SynTreeGenerationException;
+	void triggerAbstractionProcess() throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException;
 
 }

@@ -27,13 +27,14 @@ public class CharStringTest {
 		try{
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcd", Settings.LEFT_TO_RIGHT);
 			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl((ICopycatSignal) signalBuilder.getSignal());
-			List<CharString> descriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+			List<CharString> descriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 			Map<CharString, CharStringWithAbstractFrames> charStringToAbstract = new HashMap<CharString, CharStringWithAbstractFrames>();
 			for (CharString descriptor : descriptors) {
 				CharStringWithAbstractFrames descWithAbstractFrames = 
 						(CharStringWithAbstractFrames) descriptor.getTreeWithAbstractFrames();
 				charStringToAbstract.put(descriptor, descWithAbstractFrames);
 			}
+			/*
 			for (CharString charString : descriptors) {
 				String verbalDescription = charString.getVerbalDescription();
 				List<String> properties = charString.getListOfPropertiesWithPath();
@@ -51,6 +52,7 @@ public class CharStringTest {
 				}
 				System.out.println("");
 			}
+			*/
 		}
 		catch (Exception unexpected) {
 			System.out.println(unexpected.getMessage());

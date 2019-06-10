@@ -21,7 +21,7 @@ public abstract class FrameContainerST extends GrammaticalST implements IFrameCo
 	}
 	
 	@Override
-	public Set<ISyntacticTree> getFramesToAbstract() {
+	public Set<ISyntacticTree> getFramesToAbstract() throws SynTreeGenerationException, CloneNotSupportedException {
 		Set<ISyntacticTree> framesToAbstract = new HashSet<ISyntacticTree>();
 		boolean isWaitingForAbstraction = getIsWaitingForAbstraction();
 		if (isWaitingForAbstraction) {
@@ -44,7 +44,7 @@ public abstract class FrameContainerST extends GrammaticalST implements IFrameCo
 			for (int i=1 ; i<listOfFrames.size() ; i++) {
 				ISyntacticTree currentFrame = listOfFrames.get(i);
 				if (currentFrame.replaceByAbstractFrame(abstractFrame) != frameReplaced)
-					throw new SynTreeGenerationException("FrameContainerST.replaceByAbstractFrame() : inconsistent return.");
+					throw new SynTreeGenerationException("FrameContainerST.replaceByAbstractFrame() : inconsistent return.");					
 			}
 			if (frameReplaced == false) {
 				List<IFrame> newListOfFrames = new ArrayList<IFrame>();

@@ -38,11 +38,13 @@ public class Description implements IDescription {
 	private List<String> orderedListOfOrderedSetIDs;
 	
 	public Description(ICopycatSignal signal, IScoreCalculator scoreCalculator) 
-			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, 
+			VerbalizationException {
 		this.signal = signal;
 		this.scoreCalculator = scoreCalculator;
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl(this.signal);
-		this.listOfSyntacticTrees = new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfStringDescriptors()); 
+		this.listOfSyntacticTrees = 
+				new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfDescriptorsWithAbstractComponents()); 
 		for (IStartElementST startElement : listOfSyntacticTrees) {
 			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(startElement);
 			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();

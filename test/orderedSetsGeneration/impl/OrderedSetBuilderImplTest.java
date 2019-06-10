@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
+import exceptions.VerbalizationException;
 import model.copycatModel.signal.ICopycatSignal;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISignal;
@@ -28,13 +29,13 @@ public class OrderedSetBuilderImplTest {
 
 	@Test
 	public void whenOrderedSetIsBuiltThenCodingElementsCanBeRetrieved() 
-			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		String thisString = "abcd";
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 
 		ISignal signal = signalBuilder.getSignal();
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl((ICopycatSignal) signal);
 		List<ISyntacticTree> listOfDescriptors = 
-				new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfStringDescriptors());
+				new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfComprehensiveDescriptors());
 		IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(listOfDescriptors);
 		IOrderedSet omega = orderedSetBuilder.getOrderedSet();
 		Set<IOrderedSet> lowerSet = omega.getLowerSet();
@@ -48,14 +49,14 @@ public class OrderedSetBuilderImplTest {
 	}
 	
 	@Test
-	public void whenOrderedSetIsBuiltThenCodedElementsCanBeRetrieved() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException {
+	public void whenOrderedSetIsBuiltThenCodedElementsCanBeRetrieved() throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, VerbalizationException {
 		int nbOfCodedElements;
 		String thisString = "abcd";
 		ISignalBuilder signalBuilder = new SignalBuilderImpl(thisString, "fromLeftToRight"); 
 		ISignal signal = signalBuilder.getSignal();
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl((ICopycatSignal) signal);
 		List<ISyntacticTree> listOfDescriptors = 
-				new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfStringDescriptors());
+				new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfComprehensiveDescriptors());
 		nbOfCodedElements = listOfDescriptors.size();
 		IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(listOfDescriptors);
 		IOrderedSet omega = orderedSetBuilder.getOrderedSet();
@@ -79,7 +80,7 @@ public class OrderedSetBuilderImplTest {
 			ISignal signal = signalBuilder.getSignal();
 			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl((ICopycatSignal) signal);
 			List<ISyntacticTree> listOfDescriptors = 
-					new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfStringDescriptors());
+					new ArrayList<ISyntacticTree>(listOfDescriptorsBuilder.getListOfComprehensiveDescriptors());
 			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilderImpl(listOfDescriptors);
 			IOrderedSet omega = orderedSetBuilder.getOrderedSet();
 			Map<String, Set<String>> relation = omega.getRelation();

@@ -21,6 +21,7 @@ import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.ISyntacticTree;
 import model.synTreeModel.IStartElementST;
 import model.synTreeModel.impl.GrammaticalST;
+import settings.Settings;
 import verbalization.dataEncoding.encoders.IVerbalizer;
 import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
 
@@ -88,13 +89,13 @@ public class CharString extends GrammaticalST implements IStartElementST, Clonea
 		OmegaOS charStringOmega;
 		Integer charStringIndex = 1;
 		Map<List<String>, Integer> listOfPropertiesToIndex = new HashMap<List<String>, Integer>();
-		int mapIndex = 1;
+		Settings.orderedSetIndex = 1;
 		for (IElement element : getListOfComponents()) {
 			Set<List<String>> setOfPropertyLists = element.getSetOfAllPropertyListsAccessibleFromThisDescriptor();
 			for (List<String> listOfPropertiesWithPath : setOfPropertyLists) {
 				if (!listOfPropertiesToIndex.containsKey(listOfPropertiesWithPath)) {
-					listOfPropertiesToIndex.put(listOfPropertiesWithPath, mapIndex);
-					mapIndex++;
+					listOfPropertiesToIndex.put(listOfPropertiesWithPath, Settings.orderedSetIndex);
+					Settings.orderedSetIndex++;
 				}
 			}
 		}

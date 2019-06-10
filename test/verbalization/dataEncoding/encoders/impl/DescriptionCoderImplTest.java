@@ -25,7 +25,7 @@ public class DescriptionCoderImplTest {
 			throws VerbalizationException, SynTreeGenerationException, CloneNotSupportedException {
 		try {
 			IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilderImpl("abcd", "fromLeftToRight");
-			List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+			List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 			boolean numberOfRecipesIsUnexpected = false;
 			for (CharString descriptor : listOfDescriptors) {
 				List<String> listOfProperties = descriptor.getListOfPropertiesWithPath();

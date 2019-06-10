@@ -132,14 +132,14 @@ public class Gen2Size1RelationDataContainerBuilderImplTest {
 		catch (Exception unexpected) {
 			fail();
 		}
-		/*
-		for (AbstractDescriptorInterface descriptor : newFrames) {
-			ArrayList<String> properties = descriptor.getListOfPropertiesWithPath();
+		
+		for (IGrammaticalST descriptor : newFrames) {
+			List<String> properties = descriptor.getListOfPropertiesWithPath();
 			for (String property : properties)
 				System.out.println(property);
 			System.out.println("");			
 		}
-		*/
+		
 	}
 
 }

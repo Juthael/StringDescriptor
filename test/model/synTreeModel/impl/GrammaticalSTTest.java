@@ -15,7 +15,9 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
+import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
 import model.copycatModel.synTreeGrammar.Dimension;
 import model.copycatModel.synTreeGrammar.Enumeration;
@@ -125,10 +127,10 @@ public class GrammaticalSTTest {
 	
 	@Test
 	public void whenSynTreeElementsAreUpgradedThenOrderedSetElementsAreReturned() 
-			throws SynTreeGenerationException, CloneNotSupportedException {
+			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = 
 				new ListOfDescriptorsBuilderImpl("abcde", "fromLeftToRight");
-		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfStringDescriptors();
+		List<CharString> listOfDescriptors = listOfDescriptorsBuilder.getListOfComprehensiveDescriptors();
 		Set<List<String>> setOfAccessibleListOfProperties = new HashSet<List<String>>();
 		for (CharString charString : listOfDescriptors) {
 			setOfAccessibleListOfProperties.addAll(charString.getSetOfAllPropertyListsAccessibleFromThisDescriptor());

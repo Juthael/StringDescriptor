@@ -19,12 +19,12 @@ public abstract class AbstractionTriggerST extends GrammaticalST implements IAbs
 		super(isCodingElement);
 	}
 
-	public void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException {
+	public void proceedFrameAbstraction() throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException {
 		triggerAbstractionProcess();
 	}
 	
 	@Override
-	public void triggerAbstractionProcess() throws OrderedSetsGenerationException, SynTreeGenerationException {
+	public void triggerAbstractionProcess() throws OrderedSetsGenerationException, SynTreeGenerationException, CloneNotSupportedException {
 		setIsWaitingForAbstraction(true);
 		Set<ISyntacticTree> setOfFrames = getFramesToAbstract();
 		while (setOfFrames.size() > 1) {

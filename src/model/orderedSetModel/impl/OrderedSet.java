@@ -288,8 +288,6 @@ public abstract class OrderedSet extends ElementImpl implements IOrderedSet {
 	
 	protected boolean checkThatInformativeStatusIsUpToDate() {
 		boolean thisElementHasBeenUpdated = false;
-		// HERE
-		/*
 		if (thisSetIsInformative == true) {
 			if (nbOfParents == 1 && nbOfInformativeChildren == 0) {
 				thisSetIsInformative = false;
@@ -297,14 +295,13 @@ public abstract class OrderedSet extends ElementImpl implements IOrderedSet {
 			}	
 			else {
 				for (IElement element : getListOfComponents()) {
-					AbstractOrderedSet orderedSetComponent = (AbstractOrderedSet) element;
+					OrderedSet orderedSetComponent = (OrderedSet) element;
 					boolean thisComponentHasBeenUpdated = orderedSetComponent.checkThatInformativeStatusIsUpToDate();
 					if (thisComponentHasBeenUpdated == true)
 						thisElementHasBeenUpdated = true;
 				}				
 			}
 		}
-		*/
 		return thisElementHasBeenUpdated;
 	}
 

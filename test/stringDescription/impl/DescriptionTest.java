@@ -46,43 +46,6 @@ public class DescriptionTest {
 	}
 	
 	@Test
-	public void whenSignalEnteredThenCodingElementsIDsCanBeProvided() {
-		try {
-			ISignalBuilder signalBuilder1 = new SignalBuilderImpl("abc", "fromLeftToRight");
-			ICopycatSignal signal1 = (ICopycatSignal) signalBuilder1.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
-			Description description1 = new Description(signal1, scoreCalculator);
-			List<String> listOfOrderedSets1 = description1.getOrderedListOfOrderedSetIDs();
-			boolean anEmptyListOfCodingDescriptorsWasFound = false;
-			for (int i=0 ; i<listOfOrderedSets1.size() ; i++) {
-				IOrderedSet orderedSet1 = description1.getOrderedSetIDToOrderedSet().get(listOfOrderedSets1.get(i));
-				Set<IOrderedSet> lowerSet1 = orderedSet1.getLowerSet();
-				List<String> listOfCodingDescriptorIDs1 = new ArrayList<String>();
-				for (IOrderedSet set : lowerSet1) {
-					if (set.getIsCodingElement() == true)
-						listOfCodingDescriptorIDs1.add(set.getElementID());
-				}
-				if (listOfCodingDescriptorIDs1.isEmpty())
-					anEmptyListOfCodingDescriptorsWasFound = true;
-				List<String> maxChains1 = orderedSet1.getListOfLowerSetMaximalChains();
-				/* for (String maxChain : maxChains1) {
-					System.out.println(maxChain);
-				}
-				System.out.println("");
-				for (String codingID : listOfCodingDescriptorIDs1)
-					System.out.println(codingID);
-				System.out.println(""); */
-			}
-			assertFalse(anEmptyListOfCodingDescriptorsWasFound);
-		}
-		catch (Exception unexpected) {
-			System.out.println(unexpected.getMessage());
-			unexpected.printStackTrace();
-			fail();
-		}
-	}	
-	
-	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToOrderedSetCanBeProvided() {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilderImpl("abc", "fromLeftToRight");

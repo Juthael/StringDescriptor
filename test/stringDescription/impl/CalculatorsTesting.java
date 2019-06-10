@@ -23,6 +23,7 @@ import fca.gui.util.constant.LMIcons;
 import fca.gui.util.constant.LMImages;
 import launcher.utils.DescriptionKeyboardInputManager;
 import model.copycatModel.signal.ICopycatSignal;
+import model.copycatModel.synTreeGrammar.CharString;
 import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.ISignal;
 import stringDescription.IDescription;
@@ -31,7 +32,10 @@ import stringDescription.impl.Description;
 import stringDescription.impl.KnowledgeEfficiencyCalculator;
 import stringDescription.impl.RelationalDensityCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
+import syntacticTreesGeneration.impl.ListOfDescriptorsBuilderImpl;
 import syntacticTreesGeneration.impl.SignalBuilderImpl;
+import verbalization.dataEncoding.encoders.IVerbalizer;
+import verbalization.dataEncoding.encoders.impl.VerbalizerImpl;
 
 public class CalculatorsTesting {
 
@@ -75,13 +79,16 @@ public class CalculatorsTesting {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilderImpl("abcde", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilderImpl("jeeppp", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
 			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();			
 			for (String iD : listOfIDs) {
+				
+				System.out.println("press A key");
+				String entry = DescriptionKeyboardInputManager.readString();
 				
 				System.out.println("Description : ");
 				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
@@ -95,24 +102,28 @@ public class CalculatorsTesting {
 					System.out.println(property);
 				}
 				System.out.println("");
+				System.out.println("Ordered set : ");
 				for (String maxChain : firstIDMaxChains) {
 					System.out.println(maxChain);
 				}
 				System.out.println("");
 				System.out.print("SCORE : ");
 				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
-				
-				ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
-				BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
 				/*
-				LMLogger.getLMLogger();
-				LMImages.getLMImages();
-				LMIcons.getLMIcons();
-				LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
-				GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
-				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
-				latticeViewerFirst.setVisible(true); 
-				String waitHere = DescriptionKeyboardInputManager.readString();	
+				System.out.println("If you want to see the lattice, press 'y'");
+				entry = DescriptionKeyboardInputManager.readString();
+				if (entry.equals("y")) {
+					ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
+					BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
+					
+					LMLogger.getLMLogger();
+					LMImages.getLMImages();
+					LMIcons.getLMIcons();
+					LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
+					GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
+					LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
+					latticeViewerFirst.setVisible(true); 
+				}
 				*/
 			}		
 		}
@@ -123,4 +134,68 @@ public class CalculatorsTesting {
 		}
 	}	
 
+	
+	@Test
+	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided2() {
+		try {
+			ISignalBuilder signalBuilder = new SignalBuilderImpl("gshhsg", "fromLeftToRight");
+			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
+			Description description = new Description(signal, scoreCalculator);
+			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
+			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();	
+			int descIndex = 1;
+			for (String iD : listOfIDs) {
+				
+				System.out.println("Description n. " + descIndex + ": ");
+				descIndex++;
+				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
+				System.out.println("");
+				
+				/*
+				
+				List<String> firstIDProperties = description.getOrderedSetIDToOrderedSet().get(iD).getListOfPropertiesWithPath();
+				List<String> firstIDMaxChains = description.getOrderedSetIDToListOfMaximalChainsMapping().get(iD);
+				
+				System.out.println("Syntactic tree : ");
+				for (String property : firstIDProperties) {
+					System.out.println(property);
+				}
+				System.out.println("");
+				System.out.println("Ordered set : ");
+				for (String maxChain : firstIDMaxChains) {
+					System.out.println(maxChain);
+				}
+				
+				*/
+				
+				
+				System.out.print("SCORE : ");
+				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
+				System.out.println("");
+				System.out.println("");
+				
+				
+			}		
+		}
+		catch (Exception unexpected) {
+			System.out.println(unexpected.getMessage());
+			unexpected.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void temp() throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
+		ISignalBuilder signalBuilder = new SignalBuilderImpl("xyyzzz", "fromLeftToRight");
+		ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
+		ListOfDescriptorsBuilderImpl builder = new ListOfDescriptorsBuilderImpl(signal);
+		List<CharString> listOfCharStrings = builder.getListOfComprehensiveDescriptors();
+		for (CharString descriptor : listOfCharStrings) {
+			IVerbalizer verbalizer = new VerbalizerImpl(descriptor);
+			String description = verbalizer.getTranslationInNaturalLanguage();
+			System.out.println(description);
+			// System.out.
+		}
+	}
 }

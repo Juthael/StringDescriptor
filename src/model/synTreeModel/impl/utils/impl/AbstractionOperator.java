@@ -15,13 +15,6 @@ import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
 import fca.core.lattice.FormalConcept;
 import fca.core.util.BasicSet;
-import fca.exception.LMLogger;
-import fca.gui.lattice.LatticeViewer;
-import fca.gui.lattice.element.GraphicalLattice;
-import fca.gui.lattice.element.LatticeStructure;
-import fca.gui.util.constant.LMIcons;
-import fca.gui.util.constant.LMImages;
-import launcher.utils.DescriptionKeyboardInputManager;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.IFrame;
 import model.synTreeModel.ISyntacticTree;
@@ -55,32 +48,6 @@ public class AbstractionOperator implements IAbstractionOperator {
 		IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilderImpl(localOrderedSet);
 		BinaryContext binaryContext = binaryContextBuilder.getContext();
 		localConceptLattice = new ConceptLattice(binaryContext);
-		// HERE
-		/*
-		try {
-			System.out.println("Press a key");
-			String entry = DescriptionKeyboardInputManager.readString();
-			// if (entry.equals("y")) {
-				List<String> localMaxChains = localOrderedSet.getListOfLowerSetMaximalChains();
-				System.out.println("MAX CHAIN");
-				System.out.println("MAX CHAIN");
-				for (String maxChain : localMaxChains) {
-					System.out.println(maxChain);
-				}
-				System.out.println("MAX CHAIN");
-				LMLogger.getLMLogger();
-				LMImages.getLMImages();
-				LMIcons.getLMIcons();
-				LatticeStructure latticeStructureFirst = new LatticeStructure(localConceptLattice, binaryContext, LatticeStructure.BEST);
-				GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(localConceptLattice, latticeStructureFirst);
-				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
-				latticeViewerFirst.setVisible(true);
-				// DescriptionKeyboardInputManager.readString();
-			// }
-		}
-		catch (Exception e) {}
-		*/
-		// HERE
 		localConceptLattice.findGenerators();
 		bottomConcept = localConceptLattice.getBottomConcept();
 		topConcept = localConceptLattice.getTopConcept();
