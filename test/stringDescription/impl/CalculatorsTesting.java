@@ -1,12 +1,9 @@
 package stringDescription.impl;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Test;
 
@@ -24,13 +21,7 @@ import fca.gui.util.constant.LMImages;
 import launcher.utils.DescriptionKeyboardInputManager;
 import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
-import model.orderedSetModel.impl.OmegaOS;
-import model.synTreeModel.ISignal;
-import stringDescription.IDescription;
 import stringDescription.IScoreCalculator;
-import stringDescription.impl.Description;
-import stringDescription.impl.KnowledgeEfficiencyCalculator;
-import stringDescription.impl.RelationalDensityCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.SignalBuilder;

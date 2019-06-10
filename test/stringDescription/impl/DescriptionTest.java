@@ -33,7 +33,7 @@ public class DescriptionTest {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			assertTrue(!orderedSetsIDS.isEmpty());
@@ -50,7 +50,7 @@ public class DescriptionTest {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			Map<String, IOrderedSet> orderedSetIDToOrderedSet = description.getOrderedSetIDToOrderedSet();
@@ -68,7 +68,7 @@ public class DescriptionTest {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			Map<String, String> orderedSetIDToVerbalDescription = description.getOrderedSetIDToVerbalDescriptionMapping();
@@ -86,7 +86,7 @@ public class DescriptionTest {
 		try {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
-			IScoreCalculator scoreCalculator = new KnowledgeEfficiencyCalculator();
+			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			Description description = new Description(signal, scoreCalculator);
 			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
 			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
