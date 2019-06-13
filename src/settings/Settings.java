@@ -75,5 +75,8 @@ public class Settings {
 	public static final boolean MAKE_ELEMENT_ID_MORE_EXPLICIT = false;
 	public static final boolean CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS = false;
 	public static final boolean FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION = true ;
+	
+	//4. Parameters concerning the description of pairs
+	public static final boolean FRAME_COMPONENTS_ARE_ABSTRACTED = false;
 
 }

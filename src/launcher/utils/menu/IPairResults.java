@@ -1,11 +1,11 @@
 package launcher.utils.menu;
 
-import stringDescription.IPairDescription;
+import description.impl.DescriptionValuator;
 
 public interface IPairResults extends IMenuPairSubPage {
 	
-	void seeBestDescription(IPairDescription description, String string1, String string2);
+	void seeBestDescription(DescriptionValuator valuator, String string1, String string2);
 	
-	void seeAllDescriptions(IPairDescription description, String string1, String string2);
+	void seeAllDescriptions(DescriptionValuator valuator, String string1, String string2);
 
 }

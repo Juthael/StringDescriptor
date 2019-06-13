@@ -10,11 +10,10 @@ import java.util.Set;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.VerbalizationException;
 import model.orderedSetModel.IOrderedSet;
-import model.orderedSetModel.impl.OmegaOS;
 import model.orderedSetModel.impl.GenericOmegaOS;
-import model.synTreeModel.ISyntacticTree;
-import model.synTreeModel.IGrammaticalST;
+import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.IStartElementST;
+import model.synTreeModel.ISyntacticTree;
 import orderedSetGeneration.IOrderedSetBuilder;
 import settings.Settings;
 
@@ -47,8 +46,6 @@ public class OrderedSetBuilder implements IOrderedSetBuilder {
 	
 	public OrderedSetBuilder(IStartElementST startElement) 
 			throws OrderedSetsGenerationException, VerbalizationException {
-		List<IGrammaticalST> listOfSynTreeElement = new ArrayList<IGrammaticalST>();
-		listOfSynTreeElement.add(startElement);
 		omega = startElement.upgradeAsTheSupremumOfAnOrderedSet();
 		omega.setElementID("charString".concat(getRandomIDNumber()));
 	}

@@ -11,6 +11,9 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import description.IScoreCalculator;
+import description.impl.DescriptionValuator;
+import description.impl.InformationQuantityCalculator;
 import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
 import fca.exception.LMLogger;
@@ -22,11 +25,10 @@ import fca.gui.util.constant.LMImages;
 import model.copycatModel.signal.ICopycatSignal;
 import model.orderedSetModel.IOrderedSet;
 import model.synTreeModel.ISignal;
-import stringDescription.IScoreCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.SignalBuilder;
 
-public class DescriptionTest {
+public class StringDescriptionValuatorTest {
 
 	@Test
 	public void whenSignalEnteredThenSetOfOrderedSetsIDsCanBeProvided() {
@@ -34,8 +36,8 @@ public class DescriptionTest {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Set<String> orderedSetsIDS = valuator.getOrderedSetIDToBinaryContextMapping().keySet();
 			assertTrue(!orderedSetsIDS.isEmpty());
 		}
 		catch (Exception unexpected) {
@@ -51,9 +53,9 @@ public class DescriptionTest {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
-			Map<String, IOrderedSet> orderedSetIDToOrderedSet = description.getOrderedSetIDToOrderedSet();
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Set<String> orderedSetsIDS = valuator.getOrderedSetIDToBinaryContextMapping().keySet();
+			Map<String, IOrderedSet> orderedSetIDToOrderedSet = valuator.getOrderedSetIDToOrderedSet();
 			assertTrue(!orderedSetIDToOrderedSet.isEmpty());
 		}
 		catch (Exception unexpected) {
@@ -69,9 +71,9 @@ public class DescriptionTest {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
-			Map<String, String> orderedSetIDToVerbalDescription = description.getOrderedSetIDToVerbalDescriptionMapping();
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Set<String> orderedSetsIDS = valuator.getOrderedSetIDToBinaryContextMapping().keySet();
+			Map<String, String> orderedSetIDToVerbalDescription = valuator.getOrderedSetIDToVerbalDescriptionMapping();
 			assertTrue(!orderedSetIDToVerbalDescription.isEmpty());
 		}
 		catch (Exception unexpected) {
@@ -87,14 +89,14 @@ public class DescriptionTest {
 			ISignalBuilder signalBuilder = new SignalBuilder("abc", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Set<String> orderedSetsIDS = description.getOrderedSetIDToBinaryContextMapping().keySet();
-			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Set<String> orderedSetsIDS = valuator.getOrderedSetIDToBinaryContextMapping().keySet();
+			Map<String, ConceptLattice> orderedSetIDToConceptLattice = valuator.getOrderedSetIDToConceptLatticeMapping();
 			List<String> listOfIDs = new ArrayList<String>(orderedSetIDToConceptLattice.keySet());
 			String firstID = listOfIDs.get(0);
 			String otherID = listOfIDs.get(listOfIDs.size()-1);
 			ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(listOfIDs.get(0));
-			BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(listOfIDs.get(0));
+			BinaryContext binaryContextFirst = valuator.getOrderedSetIDToBinaryContextMapping().get(listOfIDs.get(0));
 			LMLogger.getLMLogger();
 			LMImages.getLMImages();
 			LMIcons.getLMIcons();

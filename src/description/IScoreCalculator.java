@@ -1,4 +1,4 @@
-package stringDescription;
+package description;
 
 import fca.core.lattice.ConceptLattice;
 import model.orderedSetModel.IOrderedSet;

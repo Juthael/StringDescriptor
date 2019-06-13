@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import description.IScoreCalculator;
+import description.impl.DescriptionValuator;
+import description.impl.InformationQuantityCalculator;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
@@ -21,7 +24,6 @@ import fca.gui.util.constant.LMImages;
 import launcher.utils.DescriptionKeyboardInputManager;
 import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
-import stringDescription.IScoreCalculator;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.SignalBuilder;
@@ -36,20 +38,20 @@ public class CalculatorsTesting {
 			ISignalBuilder signalBuilder = new SignalBuilder("ooopoq", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
-			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();			
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Map<String, ConceptLattice> orderedSetIDToConceptLattice = valuator.getOrderedSetIDToConceptLatticeMapping();
+			List<String> listOfIDs = valuator.getOrderedListOfOrderedSetIDs();			
 			for (String iD : listOfIDs) {
 				
 				System.out.println("press A key");
 				String entry = DescriptionKeyboardInputManager.readString();
 				
 				System.out.println("Description : ");
-				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
+				System.out.println(valuator.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
 				System.out.println("");
 				
-				List<String> firstIDProperties = description.getOrderedSetIDToOrderedSet().get(iD).getListOfPropertiesWithPath();
-				List<String> firstIDMaxChains = description.getOrderedSetIDToListOfMaximalChainsMapping().get(iD);
+				List<String> firstIDProperties = valuator.getOrderedSetIDToOrderedSet().get(iD).getListOfPropertiesWithPath();
+				List<String> firstIDMaxChains = valuator.getOrderedSetIDToListOfMaximalChainsMapping().get(iD);
 				 
 				System.out.println("Syntactic tree : ");
 				for (String property : firstIDProperties) {
@@ -62,13 +64,13 @@ public class CalculatorsTesting {
 				}
 				System.out.println("");
 				System.out.print("SCORE : ");
-				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
+				System.out.println(valuator.getOrderedSetIDToScoreMapping().get(iD));
 				
 				System.out.println("If you want to see the lattice, press 'y'");
 				entry = DescriptionKeyboardInputManager.readString();
 				if (entry.equals("y")) {
 					ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
-					BinaryContext binaryContextFirst = description.getOrderedSetIDToBinaryContextMapping().get(iD);
+					BinaryContext binaryContextFirst = valuator.getOrderedSetIDToBinaryContextMapping().get(iD);
 					
 					LMLogger.getLMLogger();
 					LMImages.getLMImages();
@@ -95,15 +97,15 @@ public class CalculatorsTesting {
 			ISignalBuilder signalBuilder = new SignalBuilder("jkkl", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
-			Description description = new Description(signal, scoreCalculator);
-			Map<String, ConceptLattice> orderedSetIDToConceptLattice = description.getOrderedSetIDToConceptLatticeMapping();
-			List<String> listOfIDs = description.getOrderedListOfOrderedSetIDs();	
+			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);
+			Map<String, ConceptLattice> orderedSetIDToConceptLattice = valuator.getOrderedSetIDToConceptLatticeMapping();
+			List<String> listOfIDs = valuator.getOrderedListOfOrderedSetIDs();	
 			int descIndex = 1;
 			for (String iD : listOfIDs) {
 				
 				System.out.println("Description n. " + descIndex + ": ");
 				descIndex++;
-				System.out.println(description.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
+				System.out.println(valuator.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
 				System.out.println("");
 				
 				/*
@@ -125,7 +127,7 @@ public class CalculatorsTesting {
 				
 				
 				System.out.print("SCORE : ");
-				System.out.println(description.getOrderedSetIDToScoreMapping().get(iD));
+				System.out.println(valuator.getOrderedSetIDToScoreMapping().get(iD));
 				System.out.println("");
 				System.out.println("");
 				

@@ -2,9 +2,9 @@ package model.copycatModel.synTreeGrammar;
 
 import exceptions.VerbalizationException;
 import model.synTreeModel.ISyntacticTree;
-import model.synTreeModel.IStartElementST;
+import model.synTreeModel.IStartGrammElementST;
 
-public class CharStringWithAbstractFrames extends CharString implements IStartElementST, Cloneable {
+public class CharStringWithAbstractFrames extends CharString implements IStartGrammElementST, Cloneable {
 
 	private String verbalDescription;
 	

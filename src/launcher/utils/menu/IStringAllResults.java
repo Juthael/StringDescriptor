@@ -1,11 +1,11 @@
 package launcher.utils.menu;
 
-import stringDescription.IDescription;
+import description.impl.DescriptionValuator;
 
 public interface IStringAllResults extends IMenuStringSubPage, IMenuResultSubPage {
 	
-	void seeAllVerbalDescriptions(IDescription description, String string);
+	void seeAllVerbalDescriptions(DescriptionValuator valuator, String string);
 	
-	void seeAllDescriptions1by1(IDescription description, String string);
+	void seeAllDescriptions1by1(DescriptionValuator valuato, String string);
 
 }

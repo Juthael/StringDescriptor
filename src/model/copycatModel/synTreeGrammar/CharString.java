@@ -19,13 +19,13 @@ import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.ISyntacticTree;
-import model.synTreeModel.IStartElementST;
+import model.synTreeModel.IStartGrammElementST;
 import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
 import verbalization.dataEncoding.encoders.IVerbalizer;
 import verbalization.dataEncoding.encoders.impl.Verbalizer;
 
-public class CharString extends GrammaticalST implements IStartElementST, Cloneable {
+public class CharString extends GrammaticalST implements IStartGrammElementST, Cloneable {
 	
 	private final static String DESCRIPTOR_NAME = "charString";
 	protected Direction direction;

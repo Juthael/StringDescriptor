@@ -1,15 +1,15 @@
-package stringDescription.impl;
+package description.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import description.IScoreCalculator;
+import description.impl.utils.InfoMeasurer;
 import fca.core.lattice.ConceptLattice;
 import fca.core.lattice.FormalConcept;
 import model.orderedSetModel.IOrderedSet;
-import stringDescription.IScoreCalculator;
-import stringDescription.impl.utils.InfoMeasurer;
 
 public class InformationQuantityCalculator implements IScoreCalculator {
 

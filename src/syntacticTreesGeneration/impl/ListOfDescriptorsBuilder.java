@@ -8,6 +8,7 @@ import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
+import model.synTreeModel.ISignal;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.IRelationalDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -39,12 +40,13 @@ public class ListOfDescriptorsBuilder implements IListOfDescriptorsBuilder {
 			
 	}
 	
-	public ListOfDescriptorsBuilder(ICopycatSignal signal) 
+	public ListOfDescriptorsBuilder(ISignal signal) 
 			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
+		ICopycatSignal copycatSignal = (ICopycatSignal) signal;
 		charString = "unknown";
-		directionValue = signal.getDirectionValue();
-		this.signal = signal;
-		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = new RelationalDescriptorsBuilder(signal);
+		directionValue = copycatSignal.getDirectionValue();
+		this.signal = copycatSignal;
+		IRelationalDescriptorsBuilder relationalDescriptorsBuilder = new RelationalDescriptorsBuilder(copycatSignal);
 		listOfComprehensiveDescriptors = relationalDescriptorsBuilder.getListOfDescriptorsCoveringTheWholeString();
 		listOfDescWithAbstractFrames = new ArrayList<CharString>();
 		for (CharString descriptor : listOfComprehensiveDescriptors) {

@@ -1,4 +1,4 @@
-package stringDescription.impl.utils;
+package description.impl.utils;
 
 public class InfoMeasurer {
 	

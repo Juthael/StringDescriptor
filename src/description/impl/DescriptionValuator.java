@@ -1,4 +1,4 @@
-package stringDescription.impl;
+package description.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,51 +6,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import description.IDescriptionValuator;
+import description.IScoreCalculator;
+import description.IStringSyntaxer;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import fca.core.context.binary.BinaryContext;
 import fca.core.lattice.ConceptLattice;
-import fca.exception.LMLogger;
-import fca.gui.lattice.LatticeViewer;
-import fca.gui.lattice.element.GraphicalLattice;
-import fca.gui.lattice.element.LatticeStructure;
-import fca.gui.util.constant.LMIcons;
-import fca.gui.util.constant.LMImages;
-import model.copycatModel.signal.ICopycatSignal;
-import model.copycatModel.synTreeGrammar.CharString;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.OmegaOS;
-import model.synTreeModel.IGrammaticalST;
+import model.synTreeModel.ISignal;
 import model.synTreeModel.IStartElementST;
 import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
 import orderedSetGeneration.impl.BinaryContextBuilder;
 import orderedSetGeneration.impl.OrderedSetBuilder;
-import stringDescription.IDescription;
-import stringDescription.IScoreCalculator;
-import syntacticTreesGeneration.IListOfDescriptorsBuilder;
-import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 
-public class Description implements IDescription {
+public class DescriptionValuator extends StringSyntaxer implements IDescriptionValuator {
 
-	private ICopycatSignal  signal;
-	private IScoreCalculator scoreCalculator;
-	private List<IStartElementST> listOfSyntacticTrees;
-	private Map<String, IOrderedSet> orderedSetIDToOrderedSet = new HashMap<String, IOrderedSet>();
-	private Map<String, BinaryContext> orderedSetIDToBinaryContext = new HashMap<String, BinaryContext>();
-	private Map<String, ConceptLattice> orderedSetIDToConceptLattice = new HashMap<String, ConceptLattice>();
-	private Map<String, Double> orderedSetIDToScore = new HashMap<String, Double>();
-	private List<String> orderedListOfOrderedSetIDs;
+	protected IScoreCalculator scoreCalculator;
+	protected Map<String, IOrderedSet> orderedSetIDToOrderedSet = new HashMap<String, IOrderedSet>();
+	protected Map<String, BinaryContext> orderedSetIDToBinaryContext = new HashMap<String, BinaryContext>();
+	protected Map<String, ConceptLattice> orderedSetIDToConceptLattice = new HashMap<String, ConceptLattice>();
+	protected Map<String, Double> orderedSetIDToScore = new HashMap<String, Double>();
+	protected List<String> orderedListOfOrderedSetIDs;
 	
-	public Description(ICopycatSignal signal, IScoreCalculator scoreCalculator) 
-			throws SynTreeGenerationException, CloneNotSupportedException, OrderedSetsGenerationException, 
-			VerbalizationException {
-		this.signal = signal;
+	public DescriptionValuator(ISignal signal, IScoreCalculator scoreCalculator) 
+			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
+		super(signal);
 		this.scoreCalculator = scoreCalculator;
-		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilder(this.signal);
-		this.listOfSyntacticTrees = 
-				new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfDescriptorsWithAbstractComponents()); 
 		for (IStartElementST startElement : listOfSyntacticTrees) {
 			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilder(startElement);
 			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();
@@ -60,44 +45,35 @@ public class Description implements IDescription {
 			orderedSetIDToBinaryContext.put(orderedSet.getElementID(), binaryContext);
 			ConceptLattice lattice = new ConceptLattice(binaryContext);
 			orderedSetIDToConceptLattice.put(orderedSet.getElementID(), lattice);
-			
-			//HERE
-			try {
-				LMLogger.getLMLogger();
-				LMImages.getLMImages();
-				LMIcons.getLMIcons();
-				LatticeStructure latticeStructureFirst = new LatticeStructure(lattice, binaryContext, LatticeStructure.BEST);
-				GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(lattice, latticeStructureFirst);
-				LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
-				latticeViewerFirst.setVisible(true);
-			}
-			catch (Exception e) {System.out.println("STOP");}
-			//
-			
-			double score = this.scoreCalculator.calculateScore(orderedSet, lattice);
+			double score = scoreCalculator.calculateScore(orderedSet, lattice);
 			orderedSetIDToScore.put(orderedSet.getElementID(), score);
 		}
 		orderedListOfOrderedSetIDs = setOrderedListOfOrderedSetIDs();
 	}
-
-	@Override
-	public List<IGrammaticalST> getListOfStringSyntacticTrees() {
-		List<IGrammaticalST> listOfStringDescriptors = new ArrayList<IGrammaticalST>();
-		for (IGrammaticalST synTree : listOfSyntacticTrees)
-			listOfStringDescriptors.add((CharString) synTree);
-		return listOfStringDescriptors;
-	}
 	
+	public DescriptionValuator(IStringSyntaxer syntaxer1, IStringSyntaxer syntaxer2, IScoreCalculator scoreCalculator) 
+			throws VerbalizationException, OrderedSetsGenerationException {
+		super(syntaxer1, syntaxer2);
+		for (IStartElementST startElement : listOfSyntacticTrees) {
+			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilder(startElement);
+			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();
+			orderedSetIDToOrderedSet.put(orderedSet.getElementID(), orderedSet);
+			IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilder(orderedSet);
+			BinaryContext binaryContext = binaryContextBuilder.getContext();
+			orderedSetIDToBinaryContext.put(orderedSet.getElementID(), binaryContext);
+			ConceptLattice lattice = new ConceptLattice(binaryContext);
+			orderedSetIDToConceptLattice.put(orderedSet.getElementID(), lattice);
+			double score = scoreCalculator.calculateScore(orderedSet, lattice);
+			orderedSetIDToScore.put(orderedSet.getElementID(), score);
+		}
+		orderedListOfOrderedSetIDs = setOrderedListOfOrderedSetIDs();
+	}	
+
 	@Override
 	public List<String> getOrderedListOfOrderedSetIDs() {
 		return orderedListOfOrderedSetIDs;
-	}	
+	}
 	
-	@Override
-	public Map<String, IOrderedSet> getOrderedSetIDToOrderedSet() {
-		return orderedSetIDToOrderedSet;
-	}	
-
 	@Override
 	public Map<String, List<String>> getOrderedSetIDToListOfPropertiesMapping() {
 		Map<String, List<String>> orderedSetIDToListOfProperties = new HashMap<String, List<String>>();
@@ -105,8 +81,23 @@ public class Description implements IDescription {
 			orderedSetIDToListOfProperties.put(orderedSetID, orderedSetIDToOrderedSet.get(orderedSetID).getListOfPropertiesWithPath());
 		}
 		return orderedSetIDToListOfProperties;
-	}
+	}	
 	
+	@Override
+	public Map<String, String> getOrderedSetIDToVerbalDescriptionMapping() {
+		Map<String, String> orderedSetIDToVerbalDescription = new HashMap<String, String>();
+		for (String orderedSetID : orderedSetIDToOrderedSet.keySet()) {
+			OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedSetID);
+			orderedSetIDToVerbalDescription.put(orderedSetID, orderedSet.getVerbalDescription());
+		}
+		return orderedSetIDToVerbalDescription;
+	}	
+
+	@Override
+	public Map<String, IOrderedSet> getOrderedSetIDToOrderedSet() {
+		return orderedSetIDToOrderedSet;
+	}
+
 	@Override
 	public Map<String, List<String>> getOrderedSetIDToListOfMaximalChainsMapping() {
 		Map<String, List<String>> orderedSetIDToListOfMaxChains = new HashMap<String, List<String>>();
@@ -117,30 +108,20 @@ public class Description implements IDescription {
 	}	
 
 	@Override
-	public Map<String, String> getOrderedSetIDToVerbalDescriptionMapping() {
-		Map<String, String> orderedSetIDToVerbalDescription = new HashMap<String, String>();
-		for (String orderedSetID : orderedSetIDToOrderedSet.keySet()) {
-			OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedSetID);
-			orderedSetIDToVerbalDescription.put(orderedSetID, orderedSet.getVerbalDescription());
-		}
-		return orderedSetIDToVerbalDescription;
-	}	
-	
-	@Override
 	public Map<String, BinaryContext> getOrderedSetIDToBinaryContextMapping(){
 		return orderedSetIDToBinaryContext;
 	}
-	
+
 	@Override
 	public Map<String, ConceptLattice> getOrderedSetIDToConceptLatticeMapping(){
 		return orderedSetIDToConceptLattice;
 	}
-
+	
 	@Override
 	public Map<String, Double> getOrderedSetIDToScoreMapping() {
 		return orderedSetIDToScore;
 	}
-
+	
 	@Override
 	public Map<List<String>, Double> getListOfPropertiesToScoreMapping() {
 		Map<List<String>, Double> listOfPropertiesToScore = new HashMap<List<String>, Double>();
@@ -150,8 +131,8 @@ public class Description implements IDescription {
 			listOfPropertiesToScore.put(listOfProperties, score);
 		}
 		return listOfPropertiesToScore;
-	}
-
+	}	
+	
 	@Override
 	public Map<String, Double> getVerbalDescriptionToScoreMapping() {
 		Map<String, Double> verbalDescriptionToScore = new HashMap<String, Double>();
@@ -162,23 +143,28 @@ public class Description implements IDescription {
 			verbalDescriptionToScore.put(verbalDescription, score);
 		}
 		return verbalDescriptionToScore;
+	}	
+
+	@Override
+	public int getTotalNbOfAlternativeDescriptions() {
+		return orderedListOfOrderedSetIDs.size();
 	}
 
 	@Override
 	public String getBestDescriptionOrderedSetID() {
 		return orderedListOfOrderedSetIDs.get(0);
 	}
-
+	
 	@Override
 	public List<String> getBestDescriptionListOfProperties() {
 		List<String> listOfProperties = orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(0)).getListOfPropertiesWithPath();
 		return listOfProperties;
 	}
-	
+
 	@Override
 	public List<String> getBestDescriptionListOfMaximalChains() {
 		return orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(0)).getListOfLowerSetMaximalChains();
-	}	
+	}
 
 	@Override
 	public String getBestDescriptionVerbalDescription() {
@@ -189,31 +175,26 @@ public class Description implements IDescription {
 	}
 
 	@Override
-	public int getTotalNbOfAlternativeDescriptions() {
-		return orderedListOfOrderedSetIDs.size();
-	}
-
-	@Override
 	public String getDescriptionOrderedSetID(int index) {
 		return orderedListOfOrderedSetIDs.get(index);
 	}
-
+	
 	@Override
 	public List<String> getDescriptionListOfProperties(int index) {
 		return orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index)).getListOfPropertiesWithPath();
-	}
+	}		
 	
-	@Override
-	public List<String> getDescriptionListOfMaximalChains(int index) {
-		return orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index)).getListOfLowerSetMaximalChains();
-	}	
-
 	@Override
 	public String getDescriptionVerbalDescription(int index) {
 		String verbalDescription;
 		OmegaOS orderedSet = (OmegaOS) orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index));
 		verbalDescription = orderedSet.getVerbalDescription();
 		return verbalDescription;
+	}		
+
+	@Override
+	public List<String> getDescriptionListOfMaximalChains(int index) {
+		return orderedSetIDToOrderedSet.get(orderedListOfOrderedSetIDs.get(index)).getListOfLowerSetMaximalChains();
 	}
 	
 	private List<String> setOrderedListOfOrderedSetIDs() {

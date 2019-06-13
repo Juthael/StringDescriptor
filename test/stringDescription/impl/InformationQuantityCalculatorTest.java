@@ -12,6 +12,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import description.IScoreCalculator;
+import description.impl.InformationQuantityCalculator;
 import exceptions.OrderedSetsGenerationException;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
@@ -34,7 +36,6 @@ import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
 import orderedSetGeneration.impl.BinaryContextBuilder;
 import orderedSetGeneration.impl.OrderedSetBuilder;
-import stringDescription.IScoreCalculator;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.ISignalBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
