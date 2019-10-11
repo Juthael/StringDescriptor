@@ -45,6 +45,8 @@ public class InformationQuantityCalculatorTest {
 
 	@Test
 	public void whenSetOfCoatomsAndLatticeEnteredThenInfGeneratorSetsOfCoatomsReturned() throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException, AlreadyExistsException, InvalidTypeException {
+		/*
+		//HERE
 		boolean setsOfCoatomsReturnedAreInfGenerator = true;
 		InformationQuantityCalculator calculator = new InformationQuantityCalculator();
 		ISignalBuilder signalBuilder = new SignalBuilder("abcd", "fromLeftToRight");
@@ -58,8 +60,7 @@ public class InformationQuantityCalculatorTest {
 			IBinaryContextBuilder contextBuilder = new BinaryContextBuilder(oSBuilder.getOrderedSet());
 			BinaryContext context = contextBuilder.getContext();
 			ConceptLattice lattice = new ConceptLattice(context);
-			/*
-			//HERE
+			
 			LMLogger.getLMLogger();
 			LMImages.getLMImages();
 			LMIcons.getLMIcons();
