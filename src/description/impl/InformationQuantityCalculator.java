@@ -19,8 +19,7 @@ public class InformationQuantityCalculator implements IScoreCalculator {
 	@Override
 	public double calculateScore(IOrderedSet orderedSet, ConceptLattice lattice) {
 		double informationQuantity = 0;
-		Set<FormalConcept> setOfCoatoms = setSetOfCoatoms(lattice);
-		Set<Set<FormalConcept>> setOfInfGeneratorSets = setSetOfInfGeneratorSets(setOfCoatoms, lattice);
+		Set<Set<FormalConcept>> setOfInfGeneratorSets = setSetOfInfGeneratorSets(lattice);
 		Map<Set<FormalConcept>, InfoMeasurer> infGeneratorSetToInfoMeasure = setInfoMeasureMap(setOfInfGeneratorSets);
 		for (Set<FormalConcept> infGenSet : setOfInfGeneratorSets) {
 			informationQuantity = informationQuantity + infGeneratorSetToInfoMeasure.get(infGenSet).getInformationMeasure();
@@ -28,14 +27,16 @@ public class InformationQuantityCalculator implements IScoreCalculator {
 		return informationQuantity;
 	}
 	
-	public Set<FormalConcept> setSetOfCoatoms(ConceptLattice lattice) {
-		Set<FormalConcept> setOfCoatoms = new HashSet<FormalConcept>();
-		FormalConcept topConcept = lattice.getTopConcept();
-		setOfCoatoms.addAll(topConcept.getChildren());
-		return setOfCoatoms;
-	}
+	public double measureInfo(Set<Set<FormalConcept>> setOfInfGeneratorSets) {
+		double informationQuantity = 0;
+		Map<Set<FormalConcept>, InfoMeasurer> infGeneratorSetToInfoMeasure = setInfoMeasureMap(setOfInfGeneratorSets);
+		for (Set<FormalConcept> infGenSet : setOfInfGeneratorSets) {
+			informationQuantity = informationQuantity + infGeneratorSetToInfoMeasure.get(infGenSet).getInformationMeasure();
+		}
+		return informationQuantity;
+	}	
 	
-	public Set<Set<FormalConcept>> setSetOfInfGeneratorSets(Set<FormalConcept> setOfCoatoms, ConceptLattice lattice) {
+	public Set<Set<FormalConcept>> getSetOfInfGeneratorSets(Set<FormalConcept> setOfCoatoms, ConceptLattice lattice) {
 		Set<Set<FormalConcept>> setOfInfGeneratorSets = new HashSet<Set<FormalConcept>>();
 		for (FormalConcept concept : lattice.getConcepts()) {
 			if (!setOfCoatoms.contains(concept)) {
@@ -51,6 +52,23 @@ public class InformationQuantityCalculator implements IScoreCalculator {
 		return setOfInfGeneratorSets;
 	}
 	
+	public Set<Set<FormalConcept>> setSetOfInfGeneratorSets(ConceptLattice lattice) {
+		Set<FormalConcept> setOfCoatoms = setSetOfCoatoms(lattice);
+		Set<Set<FormalConcept>> setOfInfGeneratorSets = new HashSet<Set<FormalConcept>>();
+		for (FormalConcept concept : lattice.getConcepts()) {
+			if (!setOfCoatoms.contains(concept)) {
+				Set<FormalConcept> conceptCoatomUpperBounds = new HashSet<FormalConcept>();
+				for (FormalConcept coatom : setOfCoatoms) {
+					if (concept.getIntent().isIncluding(coatom.getIntent()))
+						conceptCoatomUpperBounds.add(coatom);
+				}
+				if (!conceptCoatomUpperBounds.isEmpty())
+					setOfInfGeneratorSets.add(conceptCoatomUpperBounds);
+			}
+		}
+		return setOfInfGeneratorSets;
+	}	
+	
 	public Map<Set<FormalConcept>, InfoMeasurer> setInfoMeasureMap(Set<Set<FormalConcept>> setOfInfGeneratorSets) {
 		Map<Set<FormalConcept>, InfoMeasurer> nbOfUpperBoundsMap = new HashMap<Set<FormalConcept>, InfoMeasurer>();
 		for (Set<FormalConcept> infGeneratorSet : setOfInfGeneratorSets) {
@@ -65,5 +83,12 @@ public class InformationQuantityCalculator implements IScoreCalculator {
 		}
 		return nbOfUpperBoundsMap;
 	}
+	
+	private Set<FormalConcept> setSetOfCoatoms(ConceptLattice lattice) {
+		Set<FormalConcept> setOfCoatoms = new HashSet<FormalConcept>();
+		FormalConcept topConcept = lattice.getTopConcept();
+		setOfCoatoms.addAll(topConcept.getChildren());
+		return setOfCoatoms;
+	}	
 
 }

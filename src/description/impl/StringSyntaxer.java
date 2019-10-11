@@ -22,7 +22,7 @@ public class StringSyntaxer implements IStringSyntaxer {
 	public StringSyntaxer(ISignal signal) 
 			throws SynTreeGenerationException, CloneNotSupportedException, VerbalizationException, OrderedSetsGenerationException {
 		IListOfDescriptorsBuilder listOfDescriptorsBuilder = new ListOfDescriptorsBuilder(signal);
-		if (!Settings.FRAME_COMPONENTS_ARE_ABSTRACTED) {
+		if (!Settings.FRAME_COMPONENTS_ARE_ABSTRACTED_FOR_PAIRS) {
 			listOfSyntacticTrees = 
 					new ArrayList<IStartElementST>(listOfDescriptorsBuilder.getListOfComprehensiveDescriptors());
 		}

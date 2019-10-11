@@ -9,36 +9,36 @@ import exceptions.StringFormatException;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
-import model.outputModel.charStringDescription.IDescription;
-import model.outputModel.charStringDescription.IDescriptionBuilder;
+import model.outputModel.charStringDescription.IDeprecatedDescription;
+import model.outputModel.charStringDescription.IDeprecatedDescriptionBuilder;
 import settings.Settings;
 import syntacticTreesGeneration.IListOfDescriptorsBuilder;
 import syntacticTreesGeneration.impl.ListOfDescriptorsBuilder;
 
-public class DescriptionBuilderImpl implements IDescriptionBuilder {
+public class DeprecatedDescriptionBuilderImpl implements IDeprecatedDescriptionBuilder {
 	
 	private boolean stringCanBeReadInBothDirections = false;
 	private Predicate<String> validator;
 
-	public DescriptionBuilderImpl() {
+	public DeprecatedDescriptionBuilderImpl() {
 	}
 	
 	@Override
-	public IDescriptionBuilder validatedBy(Predicate<String> predicate) {
+	public IDeprecatedDescriptionBuilder validatedBy(Predicate<String> predicate) {
 		this.validator = predicate;
 		return this;
 	}
 
 	@Override
-	public IDescriptionBuilder stringCanBeReadInBothDirections(boolean stringCanBeReadInBothDirections) {
+	public IDeprecatedDescriptionBuilder stringCanBeReadInBothDirections(boolean stringCanBeReadInBothDirections) {
 		this.stringCanBeReadInBothDirections = stringCanBeReadInBothDirections;
 		return this;
 	}
 
 	@Override
-	public List<IDescription> buildList(String stringToBeDescribed) 
+	public List<IDeprecatedDescription> buildList(String stringToBeDescribed) 
 			throws SynTreeGenerationException, StringFormatException, VerbalizationException, OrderedSetsGenerationException {
-		List<IDescription> listOfDescriptions = new ArrayList<>();
+		List<IDeprecatedDescription> listOfDescriptions = new ArrayList<>();
 		try {
 			if (validator==null || validator.test(stringToBeDescribed)) {
 				List<CharString> listOfWholeStringDescriptors = new ArrayList<CharString>();
@@ -59,8 +59,8 @@ public class DescriptionBuilderImpl implements IDescriptionBuilder {
 					for (String property : descriptor.getListOfPropertiesWithPath()) {
 						System.out.println(property);
 					}
-					IDescription description = new DescriptionImpl(descriptor);
-					listOfDescriptions.add(description);
+					IDeprecatedDescription deprecatedDescription = new DeprecatedDescriptionImpl(descriptor);
+					listOfDescriptions.add(deprecatedDescription);
 				}
 			}
 			else throw new StringFormatException("String entered is invalid.");

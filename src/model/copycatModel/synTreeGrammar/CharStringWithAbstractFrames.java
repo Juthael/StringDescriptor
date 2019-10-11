@@ -1,7 +1,7 @@
 package model.copycatModel.synTreeGrammar;
 
 import exceptions.VerbalizationException;
-import model.synTreeModel.ISyntacticTree;
+import model.synTreeModel.IStartElementST;
 import model.synTreeModel.IStartGrammElementST;
 
 public class CharStringWithAbstractFrames extends CharString implements IStartGrammElementST, Cloneable {
@@ -14,7 +14,7 @@ public class CharStringWithAbstractFrames extends CharString implements IStartGr
 	}
 
 	@Override
-	public ISyntacticTree getTreeWithAbstractFrames() {
+	public IStartElementST getTreeWithAbstractFrames() {
 		return this;
 	}
 	

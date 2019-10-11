@@ -1,8 +1,8 @@
 package launcher.utils.menu;
 
-public interface IStringAllResults1By1 extends IMenuStringSubPage, IMenuResultSubPage {
+public interface IStringBestResult extends IMenuStringSubPage, IMenuResultSubPage {
 	
-	void displayNextResult();
+	void displayVerbalDescription();
 	
 	void displaySyntacticTree();
 	

@@ -2,6 +2,7 @@ package stringDescription.impl;
 
 import static org.junit.Assert.fail;
 
+import java.awt.Frame;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ import fca.gui.lattice.element.GraphicalLattice;
 import fca.gui.lattice.element.LatticeStructure;
 import fca.gui.util.constant.LMIcons;
 import fca.gui.util.constant.LMImages;
-import launcher.utils.DescriptionKeyboardInputManager;
+import launcher.utils.KeyboardInputManager;
 import model.copycatModel.signal.ICopycatSignal;
 import model.copycatModel.synTreeGrammar.CharString;
 import syntacticTreesGeneration.ISignalBuilder;
@@ -44,7 +45,7 @@ public class CalculatorsTesting {
 			for (String iD : listOfIDs) {
 				
 				System.out.println("press A key");
-				String entry = DescriptionKeyboardInputManager.readString();
+				String entry = KeyboardInputManager.readString();
 				
 				System.out.println("Description : ");
 				System.out.println(valuator.getOrderedSetIDToVerbalDescriptionMapping().get(iD));
@@ -67,7 +68,7 @@ public class CalculatorsTesting {
 				System.out.println(valuator.getOrderedSetIDToScoreMapping().get(iD));
 				
 				System.out.println("If you want to see the lattice, press 'y'");
-				entry = DescriptionKeyboardInputManager.readString();
+				entry = KeyboardInputManager.readString();
 				if (entry.equals("y")) {
 					ConceptLattice latticeFirst = orderedSetIDToConceptLattice.get(iD);
 					BinaryContext binaryContextFirst = valuator.getOrderedSetIDToBinaryContextMapping().get(iD);
@@ -78,6 +79,7 @@ public class CalculatorsTesting {
 					LatticeStructure latticeStructureFirst = new LatticeStructure(latticeFirst, binaryContextFirst, LatticeStructure.BEST);
 					GraphicalLattice graphicalLatticeFirst = new GraphicalLattice(latticeFirst, latticeStructureFirst);
 					LatticeViewer latticeViewerFirst = new LatticeViewer(graphicalLatticeFirst);
+					latticeViewerFirst.setExtendedState(Frame.MAXIMIZED_BOTH);
 					latticeViewerFirst.setVisible(true); 
 				}
 				
@@ -94,7 +96,7 @@ public class CalculatorsTesting {
 	@Test
 	public void whenSignalEnteredThenMappingOfOrderedSetIDToConceptLatticeCanBeProvided2() {
 		try {
-			ISignalBuilder signalBuilder = new SignalBuilder("jkkl", "fromLeftToRight");
+			ISignalBuilder signalBuilder = new SignalBuilder("mmnnoo", "fromLeftToRight");
 			ICopycatSignal signal = (ICopycatSignal) signalBuilder.getSignal();
 			IScoreCalculator scoreCalculator = new InformationQuantityCalculator();
 			DescriptionValuator valuator = new DescriptionValuator(signal, scoreCalculator);

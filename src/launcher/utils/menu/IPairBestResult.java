@@ -1,13 +1,13 @@
 package launcher.utils.menu;
 
-public interface IStringAllResults1By1 extends IMenuStringSubPage, IMenuResultSubPage {
+public interface IPairBestResult extends IMenuPairSubPage, IMenuResultSubPage {
 	
-	void displayNextResult();
+	void displayVerbalDescription();
 	
 	void displaySyntacticTree();
 	
 	void displayOrderedSet();
 	
 	void displayLattice();
-
+	
 }

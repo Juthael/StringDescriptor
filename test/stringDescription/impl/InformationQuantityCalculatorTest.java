@@ -69,8 +69,9 @@ public class InformationQuantityCalculatorTest {
 			latticeViewerFirst.setVisible(true); 
 			//
 			*/
+			/*
 			Set<FormalConcept> setOfCoatoms = calculator.setSetOfCoatoms(lattice);
-			Set<Set<FormalConcept>> setOfInfGeneratorSets = calculator.setSetOfInfGeneratorSets(setOfCoatoms, lattice);
+			Set<Set<FormalConcept>> setOfInfGeneratorSets = calculator.getSetOfInfGeneratorSets(setOfCoatoms, lattice);
 			List<Set<FormalConcept>> listOfInfGenerators = new ArrayList<Set<FormalConcept>>(setOfInfGeneratorSets);
 			boolean everySetElemIsInfGenerator = true;
 			int infGenSetIndex = 0;
@@ -93,7 +94,7 @@ public class InformationQuantityCalculatorTest {
 			}
 			descIndex++;
 		}
-		
+		*/
 	}
 	
 	private int getSmallestIntentIndex(List<Set<String>> lowerBoundConceptIntents) {

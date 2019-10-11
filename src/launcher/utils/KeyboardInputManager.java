@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 
 import exceptions.StringFormatException;
 
-public class DescriptionKeyboardInputManager {
+public class KeyboardInputManager {
 
-	public DescriptionKeyboardInputManager() {
+	public KeyboardInputManager() {
 	}
 	
 	public static String readString() {

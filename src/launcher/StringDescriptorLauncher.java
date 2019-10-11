@@ -1,6 +1,7 @@
 package launcher;
 
-import launcher.utils.CmdController;
+import launcher.utils.menu.IStringDescriptorCmd;
+import launcher.utils.menu.impl.StringDescriptorCmd;
 
 public class StringDescriptorLauncher {
 
@@ -8,7 +9,8 @@ public class StringDescriptorLauncher {
 	}
 
 	public static void main(String[] args) {
-		CmdController.analyzeStrings();
+		IStringDescriptorCmd cmd = new StringDescriptorCmd(); 
+		cmd.mainMenu();
 	}
 
 }

@@ -1,6 +1,7 @@
 package launcher.utils.menu.impl;
 
 import launcher.utils.menu.IMenuText;
+import settings.Settings;
 
 public class MenuTextEng implements IMenuText {
 
@@ -77,9 +78,11 @@ newLine + "***** SCORE CALCULATION *****" + newLine + newLine +
 "properties of a given context. Each contextually salient property is associated with a " + newLine + 
 "probability - depending on the lattice structure - of being maintained in a future " + newLine + 
 "expansion of the context. Shannon's formula (- log2 p) then makes it possible to deduce" + newLine + 
-"the amount of information contained in each description." + newLine;	
+"the amount of information contained in each description." + newLine + newLine + 
+
+"Would you like to : " + newLine;
 	
-	private static final String I_PAIR_OF_STRINGS_SCORE_CALCULATION = "TO DO";
+	private static final String I_PAIR_OF_STRINGS_SCORE_CALCULATION = "TO DO" + newLine + "Would you like to : ";
 	
 	private static final String J_PAIR_OF_STRINGS_DESCRIPTION = 
 			
@@ -169,30 +172,30 @@ newLine + "*** Description n°REPLACE1 . Score : REPLACE2 ***" + newLine + newLin
 	@Override
 	public String getdSingleStringResults(String string) {
 		String dText = D_SINGLE_STRING_RESULTS;
-		dText.replace(replace, string);
+		dText = dText.replace(replace, string);
 		return dText;
 	}
 
 	@Override
 	public String geteSingleStringUniqueResult(String string) {
 		String eText = E_SINGLE_STRING_UNIQUE_RESULT;
-		eText.replace(replace, string);
+		eText = eText.replace(replace, string);
 		return eText;
 	}
 
 	@Override
 	public String getfSingleStringAllResults(String string) {
 		String fText = F_SINGLE_STRING_ALL_RESULTS;
-		fText.replace(replace, string);
+		fText = fText.replace(replace, string);
 		return fText;
 	}
 
 	@Override
 	public String getgSingleStringAllResults1By1(int index, double score, String verbalDescription) {
 		String gText = G_SINGLE_STRING_ALL_RESULTS_1_BY_1;
-		gText.replace(replace1, Integer.toString(index));
-		gText.replace(replace2, Double.toString(score));
-		gText.replace(replace3, verbalDescription);
+		gText = gText.replace(replace1, Integer.toString(index));
+		gText = gText.replace(replace2, Double.toString(score));
+		gText = gText.replace(replace3, verbalDescription);
 		return gText;
 	}
 
@@ -214,33 +217,33 @@ newLine + "*** Description n°REPLACE1 . Score : REPLACE2 ***" + newLine + newLin
 	@Override
 	public String getkPairOfStringsResults(String string1, String string2) {
 		String kText = K_PAIR_OF_STRINGS_RESULTS;
-		kText.replace(replace1, string1);
-		kText.replace(replace2, string2);
+		kText = kText.replace(replace1, string1);
+		kText = kText.replace(replace2, string2);
 		return kText;
 	}
 
 	@Override
 	public String getlPairOfStringsUniqueResult(String string1, String string2) {
 		String lText = L_PAIR_OF_STRINGS_UNIQUE_RESULT;
-		lText.replace(replace1, string1);
-		lText.replace(replace2, string2);
+		lText = lText.replace(replace1, string1);
+		lText = lText.replace(replace2, string2);
 		return lText;
 	}
 
 	@Override
 	public String getmPairOfStringsAllResults(String string1, String string2) {
 		String mText = M_PAIR_OF_STRINGS_ALL_RESULTS;
-		mText.replace(replace1, string1);
-		mText.replace(replace2, string2);
+		mText = mText.replace(replace1, string1);
+		mText = mText.replace(replace2, string2);
 		return mText;
 	}
 
 	@Override
-	public String getnPairOfStringsAllResults1By1(int index, double score, String verbalDescription) {
+	public String getnPairOfStringsAllResults1By1(int index, double score, String description) {
 		String nText = N_PAIR_OF_STRINGS_ALL_RESULTS_1_BY_1;
-		nText.replace(replace1, Integer.toString(index));
-		nText.replace(replace2, Double.toString(score));
-		nText.replace(replace3, verbalDescription);
+		nText = nText.replace(replace1, Integer.toString(index));
+		nText = nText.replace(replace2, Double.toString(score));
+		nText = nText.replace(replace3, description);
 		return nText;
 	}
 
@@ -271,7 +274,15 @@ newLine + "*** Description n°REPLACE1 . Score : REPLACE2 ***" + newLine + newLin
 
 	@Override
 	public String getZ6SeeResultsB() {
-		return Z6_SEE_RESULTS_B;
+		String letterCase;
+		if (Settings.USE_LOWERCASE_LETTER)
+			letterCase = "lower case";
+		else letterCase = "upper case";
+		String stringMaxSize = Integer.toString(Settings.MAX_NB_OF_CHARS_IN_STRING);
+		String text = Z6_SEE_RESULTS_B;
+		text = text.replace(replace1, letterCase);
+		text = text.replace(replace2, stringMaxSize);
+		return text;
 	}
 
 	@Override

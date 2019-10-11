@@ -18,6 +18,7 @@ import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.ISignal;
 import model.synTreeModel.IStartElementST;
+import model.synTreeModel.IStartGrammElementST;
 import orderedSetGeneration.IBinaryContextBuilder;
 import orderedSetGeneration.IOrderedSetBuilder;
 import orderedSetGeneration.impl.BinaryContextBuilder;
@@ -37,7 +38,9 @@ public class DescriptionValuator extends StringSyntaxer implements IDescriptionV
 		super(signal);
 		this.scoreCalculator = scoreCalculator;
 		for (IStartElementST startElement : listOfSyntacticTrees) {
-			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilder(startElement);
+			IStartGrammElementST startGrammElement = (IStartGrammElementST) startElement;
+			IOrderedSetBuilder orderedSetBuilder = 
+					new OrderedSetBuilder(startGrammElement.getTreeWithAbstractFrames());
 			IOrderedSet orderedSet = orderedSetBuilder.getOrderedSet();
 			orderedSetIDToOrderedSet.put(orderedSet.getElementID(), orderedSet);
 			IBinaryContextBuilder binaryContextBuilder = new BinaryContextBuilder(orderedSet);
@@ -52,7 +55,7 @@ public class DescriptionValuator extends StringSyntaxer implements IDescriptionV
 	}
 	
 	public DescriptionValuator(IStringSyntaxer syntaxer1, IStringSyntaxer syntaxer2, IScoreCalculator scoreCalculator) 
-			throws VerbalizationException, OrderedSetsGenerationException {
+			throws VerbalizationException, OrderedSetsGenerationException, CloneNotSupportedException, SynTreeGenerationException {
 		super(syntaxer1, syntaxer2);
 		for (IStartElementST startElement : listOfSyntacticTrees) {
 			IOrderedSetBuilder orderedSetBuilder = new OrderedSetBuilder(startElement);

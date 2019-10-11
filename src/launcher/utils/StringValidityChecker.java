@@ -4,9 +4,9 @@ import java.util.function.Predicate;
 
 import settings.Settings;
 
-public class DescriptionValidityChecker implements Predicate<String> {
+public class StringValidityChecker implements Predicate<String> {
 
-	public DescriptionValidityChecker() {
+	public StringValidityChecker() {
 	}
 
 	public boolean test(String stringToBeChecked) {

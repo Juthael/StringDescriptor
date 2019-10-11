@@ -1,5 +1,10 @@
 package settings;
 
+import description.IScoreCalculator;
+import description.impl.CodageEfficiencyCalculator;
+import description.impl.InformationQuantityCalculator;
+import description.impl.NoiseQuantityCalculator;
+
 public class Settings {
 
 	//1.Conventions
@@ -76,7 +81,12 @@ public class Settings {
 	public static final boolean CODING_ELEMENTS_ARE_ORDERED_SET_ATOMS = false;
 	public static final boolean FRAMED_COMPONENTS_RETURNS_CONTEXTUAL_RELATION = true ;
 	
-	//4. Parameters concerning the description of pairs
-	public static final boolean FRAME_COMPONENTS_ARE_ABSTRACTED = false;
+	//4. Parameters concerning the valuation
+	public static final boolean FRAME_COMPONENTS_ARE_ABSTRACTED_FOR_PAIRS = false;
+	private static final IScoreCalculator SCORE_CALCULATOR = new InformationQuantityCalculator();
+	
+	public static IScoreCalculator getScoreCalculator() {
+		return SCORE_CALCULATOR;
+	}
 
 }

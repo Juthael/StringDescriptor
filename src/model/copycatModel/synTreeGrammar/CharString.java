@@ -12,13 +12,13 @@ import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 import model.copycatModel.ordSetGrammar.CharStringOS;
 import model.copycatModel.ordSetGrammar.CharStringOmega;
-import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.copycatModel.ordSetGrammar.ComponentsOS;
+import model.copycatModel.ordSetGrammar.DirectionOS;
 import model.copycatModel.ordSetGrammar.StructureOS;
 import model.generalModel.IElement;
 import model.orderedSetModel.IOrderedSet;
 import model.orderedSetModel.impl.OmegaOS;
-import model.synTreeModel.ISyntacticTree;
+import model.synTreeModel.IStartElementST;
 import model.synTreeModel.IStartGrammElementST;
 import model.synTreeModel.impl.GrammaticalST;
 import settings.Settings;
@@ -117,10 +117,10 @@ public class CharString extends GrammaticalST implements IStartGrammElementST, C
 	}
 
 	@Override
-	public ISyntacticTree getTreeWithAbstractFrames() 
+	public IStartElementST getTreeWithAbstractFrames() 
 			throws VerbalizationException, CloneNotSupportedException, SynTreeGenerationException, 
 			OrderedSetsGenerationException {
-		ISyntacticTree treeWithAbstractFrames;
+		IStartElementST treeWithAbstractFrames;
 		String verbalDescription = this.getVerbalDescription();
 		CharString cloneCharString = this.clone();
 		cloneCharString.proceedFrameAbstraction();

@@ -8,13 +8,13 @@ import exceptions.StringFormatException;
 import exceptions.SynTreeGenerationException;
 import exceptions.VerbalizationException;
 
-public interface IDescriptionBuilder {
+public interface IDeprecatedDescriptionBuilder {
 	
-	IDescriptionBuilder validatedBy(Predicate<String> predicate);
+	IDeprecatedDescriptionBuilder validatedBy(Predicate<String> predicate);
 	
-	List<IDescription> buildList(String input) 
+	List<IDeprecatedDescription> buildList(String input) 
 			throws SynTreeGenerationException, CloneNotSupportedException, StringFormatException, VerbalizationException, 
 			OrderedSetsGenerationException;
 
-	IDescriptionBuilder stringCanBeReadInBothDirections(boolean stringCanBeReadInBothDirections);
+	IDeprecatedDescriptionBuilder stringCanBeReadInBothDirections(boolean stringCanBeReadInBothDirections);
 }

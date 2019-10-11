@@ -2,5 +2,12 @@ package launcher.utils.menu;
 
 public interface IMenuPage {
 
-	String getPagePresentation();
+	void exec();
+	
+	void getPagePresentation();
+	
+	void presentChoice();
+	
+	void manageSelection();	
+	
 }

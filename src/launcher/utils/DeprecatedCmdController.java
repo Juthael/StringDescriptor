@@ -4,14 +4,14 @@ import java.util.List;
 
 import exceptions.StringFormatException;
 import exceptions.VerbalizationException;
-import model.outputModel.charStringDescription.IDescription;
-import model.outputModel.charStringDescription.IDescriptionBuilder;
-import model.outputModel.charStringDescription.impl.DescriptionBuilderImpl;
+import model.outputModel.charStringDescription.IDeprecatedDescription;
+import model.outputModel.charStringDescription.IDeprecatedDescriptionBuilder;
+import model.outputModel.charStringDescription.impl.DeprecatedDescriptionBuilderImpl;
 import settings.Settings;
 
-public class CmdController {
+public class DeprecatedCmdController {
 
-	private CmdController() {
+	private DeprecatedCmdController() {
 	}
 	
 	public static void analyzeStrings() {
@@ -43,9 +43,9 @@ public class CmdController {
 		System.out.println("Letters must be " + letterCase + " and the string cannot contain more than " + maxSize + " characters.");
 		System.out.println("Please enter a String : ");
 		System.out.println("");
-		stringToBeDescribed = DescriptionKeyboardInputManager.readString();
-		IDescriptionBuilder builder = new DescriptionBuilderImpl().validatedBy(new DescriptionValidityChecker());
-		List<IDescription> setOfDescriptions;
+		stringToBeDescribed = KeyboardInputManager.readString();
+		IDeprecatedDescriptionBuilder builder = new DeprecatedDescriptionBuilderImpl().validatedBy(new StringValidityChecker());
+		List<IDeprecatedDescription> setOfDescriptions;
 		try {
 			setOfDescriptions = builder.buildList(stringToBeDescribed);
 			System.out.println("The string analysis has been completed.");
@@ -60,7 +60,7 @@ public class CmdController {
 	
 	}
 	
-	private static void displayResults(List<IDescription> listOfDescriptions) {
+	private static void displayResults(List<IDeprecatedDescription> listOfDescriptions) {
 		System.out.println("");
 		System.out.println("How would you like the results to be displayed ?");
 		System.out.println("1 - as verbal descriptions.");
@@ -70,7 +70,7 @@ public class CmdController {
 		System.out.println("Please make your selection : ");
 		int displayMode = -1;
 		try {
-			displayMode = DescriptionKeyboardInputManager.readInt();
+			displayMode = KeyboardInputManager.readInt();
 		}
 		catch(StringFormatException err) {
 			System.out.println(err.getMessage());
@@ -81,30 +81,30 @@ public class CmdController {
 		chooseWhatToDoNext();
 	}
 	
-	private static void displayNextBatch(int descriptionIndex, int displayMode, List<IDescription> listOfDescriptions) {
+	private static void displayNextBatch(int descriptionIndex, int displayMode, List<IDeprecatedDescription> listOfDescriptions) {
 		int lastBatchIndexIndex = descriptionIndex + 10;
 		if (lastBatchIndexIndex > listOfDescriptions.size())
 			lastBatchIndexIndex = listOfDescriptions.size();
 		while (descriptionIndex <= lastBatchIndexIndex) {
-			IDescription description = listOfDescriptions.get(descriptionIndex - 1);
+			IDeprecatedDescription deprecatedDescription = listOfDescriptions.get(descriptionIndex - 1);
 			try {
 				System.out.println("");
 				System.out.println("***** Description n°" + descriptionIndex + " *****");
 				System.out.println("");
 				switch(displayMode) {
-					case 1 : String translationInNL1 = description.getDescriptionInNaturalLanguage();
+					case 1 : String translationInNL1 = deprecatedDescription.getDescriptionInNaturalLanguage();
 						System.out.println(translationInNL1);
 						break;
-					case 2 : List<String> listOfProperties2 = description.getCompleteDescription();
+					case 2 : List<String> listOfProperties2 = deprecatedDescription.getCompleteDescription();
 						for (String property : listOfProperties2) {
 							System.out.println(property);
 						}
 						System.out.println("");
 						break;
-					case 3 : String translationInNL3 = description.getDescriptionInNaturalLanguage();
+					case 3 : String translationInNL3 = deprecatedDescription.getDescriptionInNaturalLanguage();
 						System.out.println(translationInNL3);
 						System.out.println("");
-						List<String> listOfProperties3 = description.getCompleteDescription();
+						List<String> listOfProperties3 = deprecatedDescription.getCompleteDescription();
 						for (String property : listOfProperties3) {
 							System.out.println(property);
 						}
@@ -128,7 +128,7 @@ public class CmdController {
 		if (descriptionIndex < listOfDescriptions.size()) {
 			System.out.println("");
 			System.out.println("Press enter to continue.");
-			DescriptionKeyboardInputManager.readString();
+			KeyboardInputManager.readString();
 			System.out.println("");
 			displayNextBatch(descriptionIndex, displayMode, listOfDescriptions);
 		}
@@ -144,7 +144,7 @@ public class CmdController {
 		System.out.println("Please make your selection :");
 		int whatToDoNext = -1;
 		try {
-			whatToDoNext = DescriptionKeyboardInputManager.readInt();
+			whatToDoNext = KeyboardInputManager.readInt();
 		}
 		catch(StringFormatException err) {
 			System.out.println(err.getMessage());

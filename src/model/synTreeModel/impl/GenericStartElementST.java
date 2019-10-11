@@ -14,6 +14,7 @@ import model.orderedSetModel.impl.GenericOmegaOS;
 import model.orderedSetModel.impl.OmegaOS;
 import model.synTreeModel.IStartElementST;
 import model.synTreeModel.IStartGrammElementST;
+import model.synTreeModel.ISyntacticTree;
 import settings.Settings;
 import verbalization.dataEncoding.encoders.IVerbalizer;
 import verbalization.dataEncoding.encoders.impl.Verbalizer;
@@ -76,6 +77,12 @@ public class GenericStartElementST extends SyntacticTree implements IStartElemen
 		}
 		verbalDescription = stringBuilder.toString();
 		return verbalDescription;
+	}
+	
+	@Override
+	public List<IElement> getListOfComponents(){
+		List<IElement> listOfComponents = new ArrayList<IElement>(this.listOfComponents);
+		return listOfComponents;
 	}
 
 	@Override

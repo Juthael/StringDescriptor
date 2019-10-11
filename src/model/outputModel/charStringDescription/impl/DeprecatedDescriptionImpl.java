@@ -4,15 +4,15 @@ import java.util.List;
 
 import exceptions.VerbalizationException;
 import model.copycatModel.synTreeGrammar.CharString;
-import model.outputModel.charStringDescription.IDescription;
+import model.outputModel.charStringDescription.IDeprecatedDescription;
 import verbalization.dataEncoding.encoders.IVerbalizer;
 import verbalization.dataEncoding.encoders.impl.Verbalizer;
 
-public class DescriptionImpl implements IDescription {
+public class DeprecatedDescriptionImpl implements IDeprecatedDescription {
 
 	private CharString wholeStringDescriptor;
 	
-	public DescriptionImpl(CharString wholeStringDescriptor) {
+	public DeprecatedDescriptionImpl(CharString wholeStringDescriptor) {
 		this.wholeStringDescriptor = wholeStringDescriptor;
 	}
 	

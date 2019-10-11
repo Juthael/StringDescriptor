@@ -4,7 +4,7 @@ import java.util.List;
 
 import exceptions.VerbalizationException;
 
-public interface IDescription {
+public interface IDeprecatedDescription {
 
 	List<String> getCompleteDescription();
 
